@@ -1,0 +1,456 @@
+{
+  "_comment": "Netherrealm card database \u2014 all 46 cards with auto-learned icon texture mappings",
+  "_version": "1.0.0",
+  "_rarity_map": {
+    "0": "blue",
+    "1": "purple",
+    "2": "orange",
+    "3": "rainbow"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "name": "Uptight",
+      "category": "sandlord",
+      "rarity": "rainbow",
+      "description": "5 additional Empowered Sand Pirates appear"
+    },
+    {
+      "id": 2,
+      "name": "Conceited",
+      "category": "outlaw",
+      "rarity": "rainbow",
+      "description": "Bounty orders guaranteed to be Astronomical"
+    },
+    {
+      "id": 3,
+      "name": "Sloppy",
+      "category": "legendary_gear",
+      "rarity": "rainbow",
+      "description": "10% chance that 1 Supernova Explosions will drop with Legendary Gear"
+    },
+    {
+      "id": 4,
+      "name": "Harsh",
+      "category": "commodity",
+      "rarity": "rainbow",
+      "description": "52% chance for fuel upgrade"
+    },
+    {
+      "id": 5,
+      "name": "Perplexed",
+      "category": "commodity",
+      "rarity": "rainbow",
+      "description": "20 additional FE from boss"
+    },
+    {
+      "id": 6,
+      "name": "Numb",
+      "category": "commodity",
+      "rarity": "rainbow",
+      "description": "10% chance of ember become Ultimate"
+    },
+    {
+      "id": 7,
+      "name": "Frustrated",
+      "category": "commodity",
+      "rarity": "rainbow",
+      "description": "1 additional ultimate ember from boss"
+    },
+    {
+      "id": 8,
+      "name": "Fearful",
+      "category": "memory_fragment",
+      "rarity": "rainbow",
+      "description": "Monsters have 1.5% chance to drop 1 additional memory"
+    },
+    {
+      "id": 9,
+      "name": "Woeful",
+      "category": "memory_fragment",
+      "rarity": "rainbow",
+      "description": "8 memories from bosses"
+    },
+    {
+      "id": 10,
+      "name": "Rampant",
+      "category": "global_drops",
+      "rarity": "rainbow",
+      "description": "Lots of mystery chests appear"
+    },
+    {
+      "id": 11,
+      "name": "Anxious",
+      "category": "global_drops",
+      "rarity": "rainbow",
+      "description": "4 additional blessed monsters"
+    },
+    {
+      "id": 12,
+      "name": "Reckless",
+      "category": "global_drops",
+      "rarity": "rainbow",
+      "description": "11% chance drops will be stolen by goblin, goblin has +30% rarity"
+    },
+    {
+      "id": 13,
+      "name": "Pompous",
+      "category": "netherrealm",
+      "rarity": "rainbow",
+      "description": "5 additional compasses from boss"
+    },
+    {
+      "id": 14,
+      "name": "Alarmed",
+      "category": "legendary_gear",
+      "rarity": "orange",
+      "description": "20% chance that portal will appear with rare monsters, 50% chance from that monsters to get legendary gear"
+    },
+    {
+      "id": 15,
+      "name": "Hypocritical",
+      "category": "commodity",
+      "rarity": "orange",
+      "description": "2 FE from boss"
+    },
+    {
+      "id": 16,
+      "name": "Depressed",
+      "category": "commodity",
+      "rarity": "orange",
+      "description": "Replaces magic monsters with monsters that have 7% chance to drop 1 more ember"
+    },
+    {
+      "id": 17,
+      "name": "Distressed",
+      "category": "netherrealm",
+      "rarity": "orange",
+      "description": "Queen Disciple appear, they have chance to drop lots of beacons"
+    },
+    {
+      "id": 18,
+      "name": "Arrogance",
+      "category": "global_drops",
+      "rarity": "orange",
+      "description": "4-6 chests in stage"
+    },
+    {
+      "id": 19,
+      "name": "Impetuous",
+      "category": "global_drops",
+      "rarity": "orange",
+      "description": "1 additional blessed monsters"
+    },
+    {
+      "id": 20,
+      "name": "Impulsive",
+      "category": "global_drops",
+      "rarity": "orange",
+      "description": "Rare monsters have 80% to have +80% drop rarity"
+    },
+    {
+      "id": 21,
+      "name": "Dogmatic",
+      "category": "outlaw",
+      "rarity": "orange",
+      "description": "30% chance for additional bounty"
+    },
+    {
+      "id": 22,
+      "name": "Jealous",
+      "category": "other",
+      "rarity": "purple",
+      "description": "+50% gear quant"
+    },
+    {
+      "id": 23,
+      "name": "Hesitate",
+      "category": "commodity",
+      "rarity": "purple",
+      "description": "+30% more FE quant"
+    },
+    {
+      "id": 24,
+      "name": "Trance",
+      "category": "commodity",
+      "rarity": "purple",
+      "description": "Rare monsters have 14% to drop 1 FE"
+    },
+    {
+      "id": 25,
+      "name": "Reluctant",
+      "category": "commodity",
+      "rarity": "purple",
+      "description": "24% more embers"
+    },
+    {
+      "id": 26,
+      "name": "Depressed",
+      "category": "commodity",
+      "rarity": "purple",
+      "description": "Magic monsters have 3% chance to drop 1 more FE"
+    },
+    {
+      "id": 27,
+      "name": "Melancholy",
+      "category": "memory_fragment",
+      "rarity": "purple",
+      "description": "11% chance for memories to replicate"
+    },
+    {
+      "id": 28,
+      "name": "Frivolous",
+      "category": "global_drops",
+      "rarity": "purple",
+      "description": "+30% drop quant"
+    },
+    {
+      "id": 29,
+      "name": "Rash",
+      "category": "global_drops",
+      "rarity": "purple",
+      "description": "+45% drop rarity"
+    },
+    {
+      "id": 30,
+      "name": "Scornful",
+      "category": "global_drops",
+      "rarity": "purple",
+      "description": "15 more groups of normal monsters"
+    },
+    {
+      "id": 31,
+      "name": "Contemptuous",
+      "category": "global_drops",
+      "rarity": "purple",
+      "description": "5 more groups of magic monsters"
+    },
+    {
+      "id": 32,
+      "name": "Despicable",
+      "category": "global_drops",
+      "rarity": "purple",
+      "description": "2 more rare monsters"
+    },
+    {
+      "id": 33,
+      "name": "Narrow",
+      "category": "netherrealm",
+      "rarity": "purple",
+      "description": "+40% more compasses"
+    },
+    {
+      "id": 34,
+      "name": "Dogmatic",
+      "category": "outlaw",
+      "rarity": "purple",
+      "description": "15% chance for additional bounty chest"
+    },
+    {
+      "id": 35,
+      "name": "Jealous",
+      "category": "other",
+      "rarity": "blue",
+      "description": "+30% gear quant"
+    },
+    {
+      "id": 36,
+      "name": "Hesitate",
+      "category": "commodity",
+      "rarity": "blue",
+      "description": "+20% more FE quant"
+    },
+    {
+      "id": 37,
+      "name": "Trance",
+      "category": "commodity",
+      "rarity": "blue",
+      "description": "Rare monsters have 9% chance to drop 1 FE"
+    },
+    {
+      "id": 38,
+      "name": "Reluctant",
+      "category": "commodity",
+      "rarity": "blue",
+      "description": "+16% more embers quant"
+    },
+    {
+      "id": 39,
+      "name": "Melancholy",
+      "category": "memory_fragment",
+      "rarity": "blue",
+      "description": "8% chance for memories to replicate"
+    },
+    {
+      "id": 40,
+      "name": "Frivolous",
+      "category": "global_drops",
+      "rarity": "blue",
+      "description": "+20% drop quant"
+    },
+    {
+      "id": 41,
+      "name": "Rash",
+      "category": "global_drops",
+      "rarity": "blue",
+      "description": "+30% drop rarity"
+    },
+    {
+      "id": 42,
+      "name": "Scornful",
+      "category": "global_drops",
+      "rarity": "blue",
+      "description": "10 more groups of normal monsters"
+    },
+    {
+      "id": 43,
+      "name": "Contemptuous",
+      "category": "global_drops",
+      "rarity": "blue",
+      "description": "3 more groups of magic monsters"
+    },
+    {
+      "id": 44,
+      "name": "Despicable",
+      "category": "global_drops",
+      "rarity": "blue",
+      "description": "1 more rare on map"
+    },
+    {
+      "id": 45,
+      "name": "Narrow",
+      "category": "netherrealm",
+      "rarity": "blue",
+      "description": "+20% more compasses"
+    },
+    {
+      "id": 46,
+      "name": "Dogmatic",
+      "category": "outlaw",
+      "rarity": "blue",
+      "description": "10% chance for additional bounty chest"
+    }
+  ],
+  "texture_to_card": {
+    "Gear_02": {
+      "card_ids": [
+        22,
+        35
+      ],
+      "note": "Jealous (Other). Blue=35, Purple=22. Rarity from EffectSwitcher"
+    },
+    "Monster_03": {
+      "card_ids": [
+        20,
+        32
+      ],
+      "note": "Rare monsters (Impulsive, Despicable). Orange=20, Purple=32"
+    },
+    "Ash_01": {
+      "card_ids": [
+        6,
+        7,
+        16,
+        25,
+        38
+      ],
+      "note": "Embers (Reluctant, Depressed, Numb, Frustrated). Blue=38, Purple=25, Orange=16,7, Rainbow=6"
+    },
+    "Mystic_03": {
+      "card_ids": [
+        13,
+        33,
+        45
+      ],
+      "note": "Compasses (Narrow, Pompous). Blue=45, Purple=33, Rainbow=13"
+    },
+    "Outlaw_01": {
+      "card_ids": [
+        21,
+        34,
+        46
+      ],
+      "note": "Dogmatic (Outlaw). Blue=46, Purple=34, Orange=21. Rarity from EffectSwitcher"
+    },
+    "Aember_01": {
+      "card_ids": [],
+      "note": "DEFAULT empty texture \u00e2\u20ac\u201d never a real card"
+    },
+    "Monster_01": {
+      "card_ids": [
+        30,
+        42
+      ],
+      "note": "Normal monsters (Scornful Blueprint). Blue=42, Purple=30"
+    },
+    "Mystic_04": {
+      "card_ids": [
+        17
+      ],
+      "note": "Beacons (Distressed). Orange=17"
+    },
+    "Monster_02": {
+      "card_ids": [
+        26,
+        31,
+        43
+      ],
+      "note": "Magic monsters (Contemptuous, Depressed). Blue=43, Purple=26,31"
+    },
+    "Basic_02": {
+      "card_ids": [
+        29,
+        41
+      ],
+      "note": "Drop Rarity (Rash). Blue=41, Purple=29"
+    }
+  },
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46
+  ]
+}

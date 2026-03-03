@@ -1,0 +1,36 @@
+[INFO] Torchlight Infinite Bot V2 v2.7.0 started
+[INFO] [Hotkeys] Global hotkeys registered: F9=Start, F10=Stop, F11=Pause, F5=Record, F6=PauseRec
+[INFO] Attached to process: torchlight_infinite.exe (PID: 528)
+[INFO] Attached to torchlight_infinite.exe
+[INFO] Found game window by class 'UnrealWindow' + PID 528 (HWND: 196726)
+[INFO] [Input] Target window set: HWND=196726, mode=hardware
+[INFO] [Input] Hardware mode: will focus window before each input
+[DEBUG] Module torchlight_infinite.exe base: 0x7FF6478F0000
+[INFO] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary) | pos=(-1800, 2700)
+[INFO] [Scanner] Scanning for FNamePool...
+[INFO] [Scanner] Cannot read zone name - FNamePool not resolved yet
+[INFO] [Scanner]   Trying FNamePool pattern 1/6...
+[INFO] [Scanner] Cannot read zone name - FNamePool not resolved yet
+[INFO] [Input] Target window set: HWND=196726, mode=hardware
+[INFO] [Input] Hardware mode: will focus window before each input
+[INFO] [Scanner]   FNamePool found at 0x7FF64F611D40 (pattern 1)
+[INFO] [Scanner]   Validation: 3/5 indices readable, FName[3] = 'ByteProperty'
+[INFO] [Scanner] Scanning for GObjects...
+[INFO] [Scanner]   Trying GObjects pattern 1/3...
+[INFO] [Scanner] Zone FName[2548881] = 'DD_ZaWuJieQu000' (GWorld 0x1CE88E11BE0)
+[INFO] [Scanner]   Trying GObjects pattern 2/3...
+[INFO] [Scanner]   GObjects found at 0x7FF64F62ADE8 (pattern 2)
+[INFO] [Scanner]   NumElements=173638, NumChunks=3
+[INFO] Portal detector initialized (deferred)
+[DEBUG] [GObjects] Found 4 instances of class 'EGameplay'
+[DEBUG] [GObjects] Found 57 instances of class 'ECfgComponent'
+[DEBUG] [GObjects] Found 4 instances of class 'EGameplay'
+[DEBUG] [UE4 Scanner] Found 4 EGameplay instances (by class)
+[DEBUG] [GObjects] Found 57 instances of class 'ECfgComponent'
+[DEBUG] [UE4 Scanner] Found 57 ECfgComponent instances (by class)
+[DEBUG] [UE4 Scanner] Matched 4 ECfgComponent->EGameplay pairs
+[DEBUG] [UE4 Scanner]   OTHER: EventInfo(type=Unknown_0x0, cfg_id=0x0, pos=(0, 0), addr=0x1CD2375F020)
+[DEBUG] [UE4 Scanner]   OTHER: EventInfo(type=Unknown_0x0, cfg_id=0x0, pos=(0, 0), addr=0x1CE70B721C0)
+[DEBUG] [UE4 Scanner]   OTHER: EventInfo(type=Unknown_0x0, cfg_id=0x0, pos=(6050, -2400), addr=0x1CE677311E0)
+[DEBUG] [UE4 Scanner]   OTHER: EventInfo(type=Unknown_0x0, cfg_id=0x0, pos=(0, 0), addr=0x1CE3B68C080)
+

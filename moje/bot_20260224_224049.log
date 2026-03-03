@@ -1,0 +1,265 @@
+22:40:49 [INFO   ] === Torchlight Infinite Bot V2 v3.2.8 starting ===
+22:40:49 [INFO   ] Config loaded from config.json
+22:40:49 [INFO   ] Loaded 8 addresses from addresses.json
+22:40:49 [INFO   ] [Input] Initialized with mode: hardware
+22:40:49 [INFO   ] [ScaleCalibrator] Loaded calibrations for 1 maps: ['Swirling Mines']
+22:40:49 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+22:40:49 [INFO   ] Torchlight Infinite Bot V2 v3.2.8 started
+22:40:49 [INFO   ] [Hotkeys] Global hotkeys registered: F9=Start, F10=Stop, F11=Pause, F5=Record, F6=PauseRec
+22:40:56 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 25596)
+22:40:56 [INFO   ] Attached to torchlight_infinite.exe
+22:40:56 [INFO   ] Found game window by class 'UnrealWindow' + PID 25596 (HWND: 134534)
+22:40:56 [INFO   ] [Input] Target window set: HWND=134534, mode=hardware
+22:40:56 [INFO   ] [Input] Hardware mode: will focus window before each input
+22:40:56 [DEBUG  ] Module torchlight_infinite.exe base: 0x7FF7CA760000
+22:40:56 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary) | pos=(282, 159)
+22:40:56 [INFO   ] [Scanner] Scanning for FNamePool...
+22:40:56 [INFO   ] [Scanner] Cannot read zone name - FNamePool not resolved yet
+22:40:56 [INFO   ] [Scanner]   Trying FNamePool pattern 1/6...
+22:40:56 [DEBUG  ] Config saved
+22:40:56 [INFO   ] [MapDetect] Auto-detected map: 'Singing Sand' from position (282, 159)
+22:40:56 [INFO   ] [Scanner] Cannot read zone name - FNamePool not resolved yet
+22:40:56 [INFO   ] [Input] Target window set: HWND=134534, mode=hardware
+22:40:56 [INFO   ] [Input] Hardware mode: will focus window before each input
+22:40:56 [INFO   ] [AddrMgr] Attached - using scan results from attach
+22:40:57 [INFO   ] [Scanner]   FNamePool found at 0x7FF7D2481D40 (pattern 1)
+22:40:57 [INFO   ] [Scanner]   Validation: 3/5 indices readable, FName[3] = 'ByteProperty'
+22:40:57 [INFO   ] [Scanner] Scanning for GObjects...
+22:40:57 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+22:40:57 [INFO   ] [Scanner] Zone FName[2732583] = 'DD_TingYuanMiGong200' (GWorld 0x2CFC6E109A0)
+22:40:57 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+22:40:57 [INFO   ] [Scanner]   GObjects found at 0x7FF7D249ADE8 (pattern 2)
+22:40:57 [INFO   ] [Scanner]   NumElements=158817, NumChunks=3
+22:40:57 [INFO   ] Portal detector initialized (deferred)
+22:40:57 [INFO   ] [AddrMgr] FNamePool auto-populated: 0x7FF7D2481D40
+22:41:03 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CFE0D93740)
+22:41:03 [INFO   ] [Scanner] Zone FName[2732583] = 'DD_TingYuanMiGong200' (GWorld 0x2CFC6E109A0)
+22:41:12 [INFO   ] [ScaleCalibrator] Starting calibration for map: High Court Maze - keep game focused!
+22:41:12 [INFO   ] [ScaleCalibrator] Starting calibration for map: High Court Maze
+22:41:13 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1584,752)
+22:41:15 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1885,750)
+22:41:15 [INFO   ] [Input] Hardware click left at (1252,569)
+22:41:15 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0) [X-axis]
+22:41:17 [INFO   ] [ScaleCalibrator] X-axis: pixel_offset=(300,0) -> world_delta=(307.0, 402.0)
+22:41:17 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,753)
+22:41:20 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1585,1052)
+22:41:20 [INFO   ] [Input] Hardware click left at (952,869)
+22:41:20 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300) [Y-axis]
+22:41:22 [INFO   ] [ScaleCalibrator] Y-axis: pixel_offset=(0,300) -> world_delta=(-505.0, 491.0)
+22:41:22 [INFO   ] [ScaleCalibrator] Per-pixel vectors: right=(1.0233, 1.3400) down=(-1.6833, 1.6367)
+22:41:22 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,750)
+22:41:22 [INFO   ] [ScaleCalibrator] Calibration complete for 'High Court Maze' — saved to data\map_calibrations.json
+22:41:22 [INFO   ] [ScaleCalibrator] Calibration saved for 'High Court Maze'
+22:41:27 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFDE84A4C0)
+22:41:34 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2CF9D976E00)
+22:41:38 [INFO   ] [ScaleCalibrator] Starting calibration for map: Defiled Side Chamber - keep game focused!
+22:41:38 [INFO   ] [ScaleCalibrator] Starting calibration for map: Defiled Side Chamber
+22:41:38 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1581,750)
+22:41:41 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1883,751)
+22:41:41 [INFO   ] [Input] Hardware click left at (1252,569)
+22:41:41 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0) [X-axis]
+22:41:43 [INFO   ] [ScaleCalibrator] X-axis: pixel_offset=(300,0) -> world_delta=(-400.7, 302.5)
+22:41:43 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1585,753)
+22:41:45 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1582,1050)
+22:41:45 [INFO   ] [Input] Hardware click left at (952,869)
+22:41:45 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300) [Y-axis]
+22:41:47 [INFO   ] [ScaleCalibrator] Y-axis: pixel_offset=(0,300) -> world_delta=(-485.0, -505.0)
+22:41:47 [INFO   ] [ScaleCalibrator] Per-pixel vectors: right=(-1.3356, 1.0083) down=(-1.6167, -1.6833)
+22:41:47 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1585,752)
+22:41:47 [INFO   ] [ScaleCalibrator] Calibration complete for 'Defiled Side Chamber' — saved to data\map_calibrations.json
+22:41:47 [INFO   ] [ScaleCalibrator] Calibration saved for 'Defiled Side Chamber'
+22:41:55 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CEAFDB9BA0)
+22:41:58 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CFCFE78960)
+22:41:58 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CEAFDB9BA0)
+22:42:03 [INFO   ] [Scanner] Zone FName[2793071] = 'DD_ZaWuJieQu000' (GWorld 0x2CFD6495BC0)
+22:42:06 [INFO   ] [ScaleCalibrator] Starting calibration for map: Deserted District - keep game focused!
+22:42:06 [INFO   ] [ScaleCalibrator] Starting calibration for map: Deserted District
+22:42:06 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1582,753)
+22:42:09 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1884,751)
+22:42:09 [INFO   ] [Input] Hardware click left at (1252,569)
+22:42:09 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0) [X-axis]
+22:42:11 [INFO   ] [ScaleCalibrator] X-axis: pixel_offset=(300,0) -> world_delta=(402.0, -305.0)
+22:42:11 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1585,750)
+22:42:14 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1582,1052)
+22:42:14 [INFO   ] [Input] Hardware click left at (952,869)
+22:42:14 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300) [Y-axis]
+22:42:16 [INFO   ] [ScaleCalibrator] Y-axis: pixel_offset=(0,300) -> world_delta=(489.0, 507.0)
+22:42:16 [INFO   ] [ScaleCalibrator] Per-pixel vectors: right=(1.3400, -1.0167) down=(1.6300, 1.6900)
+22:42:16 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,754)
+22:42:16 [INFO   ] [ScaleCalibrator] Calibration complete for 'Deserted District' — saved to data\map_calibrations.json
+22:42:16 [INFO   ] [ScaleCalibrator] Calibration saved for 'Deserted District'
+22:42:24 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFB432EDC0)
+22:42:27 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CFB0CD9BA0)
+22:42:28 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFB432EDC0)
+22:42:28 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CFB0CD9BA0)
+22:42:29 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFB432EDC0)
+22:42:31 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CFB0CD9BA0)
+22:42:32 [INFO   ] [Scanner] Zone FName[2808161] = 'SQ_MingShaJuLuo100' (GWorld 0x2CFBDCDF6E0)
+22:42:35 [INFO   ] [ScaleCalibrator] Starting calibration for map: Singing Sand - keep game focused!
+22:42:35 [INFO   ] [ScaleCalibrator] Starting calibration for map: Singing Sand
+22:42:35 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1585,752)
+22:42:38 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1882,754)
+22:42:38 [INFO   ] [Input] Hardware click left at (1252,569)
+22:42:38 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0) [X-axis]
+22:42:40 [INFO   ] [ScaleCalibrator] X-axis: pixel_offset=(300,0) -> world_delta=(-404.0, 296.0)
+22:42:40 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,751)
+22:42:42 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1583,1050)
+22:42:43 [INFO   ] [Input] Hardware click left at (952,869)
+22:42:43 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300) [Y-axis]
+22:42:44 [INFO   ] [ScaleCalibrator] Y-axis: pixel_offset=(0,300) -> world_delta=(-487.0, -503.0)
+22:42:44 [INFO   ] [ScaleCalibrator] Per-pixel vectors: right=(-1.3467, 0.9867) down=(-1.6233, -1.6767)
+22:42:45 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1582,752)
+22:42:45 [INFO   ] [ScaleCalibrator] Calibration complete for 'Singing Sand' — saved to data\map_calibrations.json
+22:42:45 [INFO   ] [ScaleCalibrator] Calibration saved for 'Singing Sand'
+22:42:50 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFC16C09A0)
+22:42:59 [INFO   ] [Scanner] Zone FName[1443045] = 'SD_GeBuLinShanZhai' (GWorld 0x2CFB03EC020)
+22:43:02 [INFO   ] [ScaleCalibrator] Starting calibration for map: SD_GeBuLinShanZhai - keep game focused!
+22:43:02 [INFO   ] [ScaleCalibrator] Starting calibration for map: SD_GeBuLinShanZhai
+22:43:02 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1581,753)
+22:43:05 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1885,751)
+22:43:05 [INFO   ] [Input] Hardware click left at (1252,569)
+22:43:05 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0) [X-axis]
+22:43:07 [INFO   ] [ScaleCalibrator] X-axis: pixel_offset=(300,0) -> world_delta=(-69.0, 502.0)
+22:43:07 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1585,754)
+22:43:10 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1584,1051)
+22:43:10 [INFO   ] [Input] Hardware click left at (952,869)
+22:43:10 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300) [Y-axis]
+22:43:12 [INFO   ] [ScaleCalibrator] Y-axis: pixel_offset=(0,300) -> world_delta=(-702.0, -10.0)
+22:43:12 [INFO   ] [ScaleCalibrator] Per-pixel vectors: right=(-0.2300, 1.6733) down=(-2.3400, -0.0333)
+22:43:12 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1585,751)
+22:43:12 [INFO   ] [ScaleCalibrator] Calibration complete for 'SD_GeBuLinShanZhai' — saved to data\map_calibrations.json
+22:43:12 [INFO   ] [ScaleCalibrator] Calibration saved for 'SD_GeBuLinShanZhai'
+22:43:18 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFDB588960)
+22:43:24 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CF3F4809A0)
+22:43:25 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFDB588960)
+22:43:28 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CF3F4809A0)
+22:43:29 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFDB588960)
+22:43:29 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CF3F4809A0)
+22:43:30 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFDB588960)
+22:43:30 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CF3F4809A0)
+22:43:31 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFDB588960)
+22:43:31 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CF3F4809A0)
+22:43:32 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFDB588960)
+22:43:40 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CF3F4809A0)
+22:43:40 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFDB588960)
+22:43:43 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CF3F4809A0)
+22:43:44 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFDB588960)
+22:43:46 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CF3F4809A0)
+22:43:46 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFDB588960)
+22:43:56 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CF3F4809A0)
+22:43:56 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFDB588960)
+22:43:57 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CF3F4809A0)
+22:43:57 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFDB588960)
+22:43:58 [INFO   ] [Scanner] Zone FName[1438375] = 'KD_AiRenKuangDong01' (GWorld 0x2CFA789C020)
+22:44:04 [INFO   ] [ScaleCalibrator] Starting calibration for map: KD_AiRenKuangDong01 - keep game focused!
+22:44:04 [INFO   ] [ScaleCalibrator] Starting calibration for map: KD_AiRenKuangDong01
+22:44:04 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1581,754)
+22:44:06 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1885,754)
+22:44:06 [INFO   ] [Input] Hardware click left at (1252,569)
+22:44:06 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0) [X-axis]
+22:44:08 [INFO   ] [ScaleCalibrator] X-axis: pixel_offset=(300,0) -> world_delta=(-75.0, 501.0)
+22:44:08 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,750)
+22:44:11 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1582,1050)
+22:44:11 [INFO   ] [Input] Hardware click left at (952,869)
+22:44:11 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300) [Y-axis]
+22:44:13 [INFO   ] [ScaleCalibrator] Y-axis: pixel_offset=(0,300) -> world_delta=(-700.0, -13.0)
+22:44:13 [INFO   ] [ScaleCalibrator] Per-pixel vectors: right=(-0.2500, 1.6700) down=(-2.3333, -0.0433)
+22:44:13 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1584,751)
+22:44:13 [INFO   ] [ScaleCalibrator] Calibration complete for 'KD_AiRenKuangDong01' — saved to data\map_calibrations.json
+22:44:13 [INFO   ] [ScaleCalibrator] Calibration saved for 'KD_AiRenKuangDong01'
+22:44:32 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFC16CB700)
+22:44:39 [INFO   ] [Scanner] Zone FName[1444228] = 'YL_YinYiZhiDi201' (GWorld 0x2CFD66C52A0)
+22:44:43 [INFO   ] [ScaleCalibrator] Starting calibration for map: YL_YinYiZhiDi201 - keep game focused!
+22:44:43 [INFO   ] [ScaleCalibrator] Starting calibration for map: YL_YinYiZhiDi201
+22:44:43 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1582,754)
+22:44:46 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1881,752)
+22:44:46 [INFO   ] [Input] Hardware click left at (1252,569)
+22:44:46 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0) [X-axis]
+22:44:48 [INFO   ] [ScaleCalibrator] X-axis: pixel_offset=(300,0) -> world_delta=(-72.0, 494.0)
+22:44:48 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1582,752)
+22:44:50 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1584,1054)
+22:44:50 [INFO   ] [Input] Hardware click left at (952,869)
+22:44:50 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300) [Y-axis]
+22:44:52 [INFO   ] [ScaleCalibrator] Y-axis: pixel_offset=(0,300) -> world_delta=(-708.0, -11.0)
+22:44:52 [INFO   ] [ScaleCalibrator] Per-pixel vectors: right=(-0.2399, 1.6465) down=(-2.3600, -0.0367)
+22:44:52 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1584,753)
+22:44:52 [INFO   ] [ScaleCalibrator] Calibration complete for 'YL_YinYiZhiDi201' — saved to data\map_calibrations.json
+22:44:52 [INFO   ] [ScaleCalibrator] Calibration saved for 'YL_YinYiZhiDi201'
+22:44:58 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2D01990C940)
+22:45:04 [INFO   ] [Scanner] Zone FName[1438407] = 'KD_WeiJiKuangDong01' (GWorld 0x2CEAFDB2500)
+22:45:07 [INFO   ] [ScaleCalibrator] Starting calibration for map: Swirling Mines - keep game focused!
+22:45:07 [INFO   ] [ScaleCalibrator] Starting calibration for map: Swirling Mines
+22:45:07 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1582,751)
+22:45:10 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1884,753)
+22:45:10 [INFO   ] [Input] Hardware click left at (1252,569)
+22:45:10 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0) [X-axis]
+22:45:12 [INFO   ] [ScaleCalibrator] X-axis: pixel_offset=(300,0) -> world_delta=(-73.0, 499.0)
+22:45:12 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1584,754)
+22:45:15 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1582,1051)
+22:45:15 [INFO   ] [Input] Hardware click left at (952,869)
+22:45:15 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300) [Y-axis]
+22:45:17 [INFO   ] [ScaleCalibrator] Y-axis: pixel_offset=(0,300) -> world_delta=(-701.0, -14.0)
+22:45:17 [INFO   ] [ScaleCalibrator] Per-pixel vectors: right=(-0.2433, 1.6633) down=(-2.3367, -0.0467)
+22:45:17 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,753)
+22:45:17 [INFO   ] [ScaleCalibrator] Calibration complete for 'Swirling Mines' — saved to data\map_calibrations.json
+22:45:17 [INFO   ] [ScaleCalibrator] Calibration saved for 'Swirling Mines'
+22:45:21 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CFB8C75BC0)
+22:45:28 [INFO   ] [Scanner] Zone FName[2936083] = 'YL_BeiFengLinDi201' (GWorld 0x2CFB3382E20)
+22:45:34 [INFO   ] [ScaleCalibrator] Starting calibration for map: YL_BeiFengLinDi201 - keep game focused!
+22:45:34 [INFO   ] [ScaleCalibrator] Starting calibration for map: YL_BeiFengLinDi201
+22:45:34 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1582,753)
+22:45:37 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1881,753)
+22:45:37 [INFO   ] [Input] Hardware click left at (1252,569)
+22:45:37 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0) [X-axis]
+22:45:39 [INFO   ] [ScaleCalibrator] X-axis: pixel_offset=(300,0) -> world_delta=(297.0, 401.3)
+22:45:39 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1585,754)
+22:45:42 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1584,1050)
+22:45:42 [INFO   ] [Input] Hardware click left at (952,869)
+22:45:42 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300) [Y-axis]
+22:45:44 [INFO   ] [ScaleCalibrator] Y-axis: pixel_offset=(0,300) -> world_delta=(-503.0, 487.0)
+22:45:44 [INFO   ] [ScaleCalibrator] Per-pixel vectors: right=(0.9898, 1.3376) down=(-1.6767, 1.6233)
+22:45:44 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1582,750)
+22:45:44 [INFO   ] [ScaleCalibrator] Calibration complete for 'YL_BeiFengLinDi201' — saved to data\map_calibrations.json
+22:45:44 [INFO   ] [ScaleCalibrator] Calibration saved for 'YL_BeiFengLinDi201'
+22:45:49 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CF9D5B6E00)
+22:45:53 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CEAD30EDC0)
+22:45:54 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CF9D5B6E00)
+22:45:56 [INFO   ] [Scanner] Zone FName[2951129] = 'SD_ZhongXiGaoQiang200' (GWorld 0x2CFE5A512C0)
+22:45:59 [INFO   ] [ScaleCalibrator] Starting calibration for map: SD_ZhongXiGaoQiang200 - keep game focused!
+22:45:59 [INFO   ] [ScaleCalibrator] Starting calibration for map: SD_ZhongXiGaoQiang200
+22:46:00 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1581,751)
+22:46:02 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1882,751)
+22:46:02 [INFO   ] [Input] Hardware click left at (1252,569)
+22:46:02 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0) [X-axis]
+22:46:04 [INFO   ] [ScaleCalibrator] X-axis: pixel_offset=(300,0) -> world_delta=(-400.0, 302.0)
+22:46:04 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1584,750)
+22:46:07 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1583,1050)
+22:46:07 [INFO   ] [Input] Hardware click left at (952,869)
+22:46:07 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300) [Y-axis]
+22:46:09 [INFO   ] [ScaleCalibrator] Y-axis: pixel_offset=(0,300) -> world_delta=(-487.0, -504.0)
+22:46:09 [INFO   ] [ScaleCalibrator] Per-pixel vectors: right=(-1.3333, 1.0067) down=(-1.6233, -1.6800)
+22:46:09 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,752)
+22:46:09 [INFO   ] [ScaleCalibrator] Calibration complete for 'SD_ZhongXiGaoQiang200' — saved to data\map_calibrations.json
+22:46:09 [INFO   ] [ScaleCalibrator] Calibration saved for 'SD_ZhongXiGaoQiang200'
+22:46:15 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CF9CFEDB80)
+22:46:18 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CFC2FD64E0)
+22:46:19 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CF9CFEDB80)
+22:46:20 [INFO   ] [Scanner] Zone FName[1919597] = 'UIMainLevelV2' (GWorld 0x2CFC2FD64E0)
+22:46:20 [INFO   ] [Scanner] Zone FName[1443066] = 'SD_GeBuLinYingDi' (GWorld 0x2CFD2BB7720)
+22:46:23 [INFO   ] [ScaleCalibrator] Starting calibration for map: SD_GeBuLinYingDi - keep game focused!
+22:46:23 [INFO   ] [ScaleCalibrator] Starting calibration for map: SD_GeBuLinYingDi
+22:46:23 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1582,751)
+22:46:26 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1881,753)
+22:46:26 [INFO   ] [Input] Hardware click left at (1252,569)
+22:46:26 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0) [X-axis]
+22:46:28 [INFO   ] [ScaleCalibrator] X-axis: pixel_offset=(300,0) -> world_delta=(-72.0, 494.0)
+22:46:28 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1585,751)
+22:46:31 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1585,1051)
+22:46:31 [INFO   ] [Input] Hardware click left at (952,869)
+22:46:31 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300) [Y-axis]
+22:46:33 [INFO   ] [ScaleCalibrator] Y-axis: pixel_offset=(0,300) -> world_delta=(-701.0, -9.0)
+22:46:33 [INFO   ] [ScaleCalibrator] Per-pixel vectors: right=(-0.2400, 1.6467) down=(-2.3367, -0.0300)
+22:46:33 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1581,753)
+22:46:33 [INFO   ] [ScaleCalibrator] Calibration complete for 'SD_GeBuLinYingDi' — saved to data\map_calibrations.json
+22:46:33 [INFO   ] [ScaleCalibrator] Calibration saved for 'SD_GeBuLinYingDi'
+22:46:38 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2CEABA5DB80)

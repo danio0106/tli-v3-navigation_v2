@@ -1,0 +1,90 @@
+SDK Dump Analysis — Key Findings
+Files Reviewed
+[torchlight_infinite]_Objects_Dump_*.txt — UE4 class/field/instance dump: contains the runtime class hierarchy with exact field offsets + all live runtime instances across different game states
+[torchlight_infinite]_Names_Dump_*.txt — FNamePool dump: [Number][InternalIndex] → string mapping
+Multiple Pasted-Running-EGameplay-explorer-*.txt — bot's own live memory output from previous sessions
+1. CfgInfo struct confirmed (Objects dump, line 24697)
+Code
+ScriptStruct /Script/UE_game.CfgInfo  (Instance 3: always 0 at runtime!)
+  [Offset:0x000] IntProperty    CfgInfo:ID        ← always 0x00000000 at runtime
+  [Offset:0x004] EnumProperty   CfgInfo:Type      ← always 0x00 (EInfo_none) at runtime
+  [Offset:0x008] IntProperty    CfgInfo:ExtendId  ← always 0x00000000 at runtime
+The existing EGAMEPLAY_CARJACK_IDS = {0xD8} and EGAMEPLAY_SANDLORD_IDS = {0xDB, 0xDD, 0xDE} are the right IDs — they just are never loaded into CfgInfo by the game server. This confirms why CfgInfo-based detection was always broken.
+
+2. EEntity class confirmed (no missing fields in class body)
+Code
+EEntity class:
+  [Offset:0x288] MapProperty  ueComponents  ← TMap<UClass*, EComponent*>, size 0x50
+  [Offset:0x720] BoolProperty bValid
+Every EGameplay instance in GObjects has exactly 3 children: ECfgComponent (ECfg), EMsgComponent (EMsg), SceneComponent (UserEntity). No type-identifying child component exists — they're all identical.
+
+3. 🎯 CRITICAL DISCOVERY: FightMgr.MapGamePlay at offset 0x800
+The FightMgr class (found as a singleton in GObjects at /Engine/Transient) has:
+
+Code
+[Offset:0x7B0] MapProperty FightMgr:MapCustomTrap  ← TMap<int32 entity_id, EMapCustomTrap*>
+[Offset:0x800] MapProperty FightMgr:MapGamePlay    ← TMap<int32 entity_id, EGameplay*>  ← !!
+[Offset:0x850] MapProperty FightMgr:MapServant
+[Offset:0x8A0] ObjectProperty FightMgr:LevelInfo
+These two maps are completely missing from FIGHTMGR_OFFSETS in constants.py!
+
+The MapGamePlay TMap maps int32 logic_entity_id → EGameplay*. The logic entity IDs ARE the values from our existing constants (0xD8 for Carjack, 0xDB/0xDD/0xDE for Sandlord). By reading this TMap we get:
+
+Which entity type is active (the int32 key matches EGAMEPLAY_CARJACK_IDS or EGAMEPLAY_SANDLORD_IDS)
+The exact EGameplay pointer (the value) → read its RootComponent position
+The existing portal_detector.py already has a working TMap reader (_detect_tmap_layout(), strides [24, 32, 16], value offsets [0x10, 0x08, 0x18]) for FightMgr.MapPortal. The exact same infrastructure reads MapGamePlay — we just also need to read the key at offset 0 (4-byte int32 before the pointer).
+
+4. TMap element layout for TMap<int32, EEntity*>
+Code
+struct TSetElement {
+  int32   Key    @ offset 0   ← logic_entity_id (0xD8, 0xDB, etc.)
+  int32   _pad   @ offset 4   ← alignment padding
+  EEntity* Value @ offset 8   ← EGameplay* we already use
+  int32   HashNext @ offset 16
+  int32   HashIndex @ offset 20
+}
+Total stride = 24 bytes  ← already tried by portal_detector!
+Value offset = 0x08      ← already tried by portal_detector!
+Key offset = 0x00        ← just read an extra int32 at this position
+5. EMapCustomTrap — the physical carjack vehicle
+Code
+EMapCustomTrap (tracked in FightMgr.MapCustomTrap at 0x7B0):
+  - Has EInteractiveComponent → player presses F on it
+  - Has EMapCustomTrapComponent:
+    [Offset:0x128] SoftObjectProperty AppearMontage
+    [Offset:0x150] IntProperty AppearVfXCfgId
+    etc.
+The carjack vehicle (EMapCustomTrap) is a separate entity from the EGameplay event manager. For navigation, we should navigate to the EMapCustomTrap's position (via FightMgr.MapCustomTrap), not the EGameplay's position.
+
+6. Missing FIGHTMGR_OFFSETS in constants.py
+The SDK dump reveals the full FightMgr map roster. Currently constants.py only defines up to MapFollower (0x490). Missing:
+
+Offset	Map Name
+0x4E0	MapElevator
+0x530	MapCheckPoint
+0x580	MapBuffArea
+0x5D0	MapProximityShield
+0x620	MapObstacle
+0x670	MapGroundEffect
+0x6C0	MapNPC
+0x710	MapInteractiveItem
+0x760	MapUnit
+0x7B0	MapCustomTrap ← for carjack vehicle navigation
+0x800	MapGamePlay ← for event type identification
+0x850	MapServant
+7. The Winning Strategy
+Instead of scanning GObjects by class name and guessing positions → read FightMgr.MapGamePlay directly:
+
+Find FightMgr in GObjects (already done in portal_detector.py)
+Read TMap at FightMgr + 0x800
+For each entry: read key (int32 at elem+0x00) and value (EEntity* at elem+0x08)
+key in EGAMEPLAY_CARJACK_IDS → this is the Carjack EGameplay, get its position
+key in EGAMEPLAY_SANDLORD_IDS → this is the Sandlord EGameplay, player step-on
+For Carjack specifically: also read FightMgr + 0x7B0 (MapCustomTrap) to navigate to the actual vehicle
+This eliminates all guessing/phantom filtering/position tricks currently in place.
+
+Next Steps (when user is ready to code)
+Add MapCustomTrap: 0x7B0 and MapGamePlay: 0x800 (and other missing maps) to FIGHTMGR_OFFSETS in constants.py
+Extend portal_detector's FightMgr reader (or add a method in scanner.py) to read MapGamePlay and MapCustomTrap TMaps, returning {logic_id: egameplay_ptr} dicts
+Update scanner's event detection to use FightMgr.MapGamePlay instead of GObjects class-name scan + position filtering
+Update _handle_map_events() in bot_engine.py to use the new typed event info

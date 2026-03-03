@@ -1,0 +1,89 @@
+{
+  "active_positions": [],
+  "cards": [
+    {
+      "map_name": "High Court Maze",
+      "hex_position": 0,
+      "rarity": "BLUE",
+      "attempts_remaining": 4,
+      "is_active": false
+    },
+    {
+      "map_name": "Shadow Outpost",
+      "hex_position": 1,
+      "rarity": "BLUE",
+      "attempts_remaining": 4,
+      "is_active": false
+    },
+    {
+      "map_name": "Rainforest of Divine Legacy",
+      "hex_position": 2,
+      "rarity": "BLUE",
+      "attempts_remaining": 4,
+      "is_active": false
+    },
+    {
+      "map_name": "Grimwind Woods",
+      "hex_position": 3,
+      "rarity": "BLUE",
+      "attempts_remaining": 4,
+      "is_active": false
+    },
+    {
+      "map_name": "Blustery Canyon",
+      "hex_position": 4,
+      "rarity": "BLUE",
+      "attempts_remaining": 4,
+      "is_active": false
+    },
+    {
+      "map_name": "Swirling Mines",
+      "hex_position": 5,
+      "rarity": "BLUE",
+      "attempts_remaining": 4,
+      "is_active": false
+    },
+    {
+      "map_name": "Wall of the Last Breath",
+      "hex_position": 6,
+      "rarity": "BLUE",
+      "attempts_remaining": 4,
+      "is_active": false
+    },
+    {
+      "map_name": "Demiman Village",
+      "hex_position": 7,
+      "rarity": "BLUE",
+      "attempts_remaining": 4,
+      "is_active": false
+    },
+    {
+      "map_name": "Defiled Side Chamber",
+      "hex_position": 8,
+      "rarity": "BLUE",
+      "attempts_remaining": 4,
+      "is_active": false
+    },
+    {
+      "map_name": "Deserted District",
+      "hex_position": 9,
+      "rarity": "BLUE",
+      "attempts_remaining": 4,
+      "is_active": false
+    },
+    {
+      "map_name": "Singing Sand",
+      "hex_position": 10,
+      "rarity": "BLUE",
+      "attempts_remaining": 4,
+      "is_active": false
+    },
+    {
+      "map_name": "Abandoned Mines",
+      "hex_position": 11,
+      "rarity": "BLUE",
+      "attempts_remaining": 4,
+      "is_active": false
+    }
+  ]
+}

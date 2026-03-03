@@ -1,0 +1,38 @@
+Objective
+Find a reliable field to distinguish Carjack security guards from regular monsters, using the SDK dump (6 guards alive, nothing else) and runtime memory reading. ABP-based detection fails on maps where guard ABP overlaps with native monster ABP. Need a universal marker.
+
+SDK Dump Analysis Summary
+From the Objects/Names dump with 6 guards only:
+
+ECfgComponent (default subobject on EMonster, accessible via ueComponents TMap): has CfgInfo.ID (int32 at offset 0x120). Each monster config has a unique ID. Guards should share one or a few IDs.
+EMapIconComponent (default subobject on EMonster): Size=0x158 but NO reflected UPROPERTY fields — icon type likely stored as non-reflected C++ member. Raw byte dump needed.
+EBattleCryCamp enum: E_hostile(0), E_friendly(1), E_own(2), E_minion(3) — guards might use a different camp value.
+ESide enum: ESide_monster(1), ESide_player(2), ESide_monster_bomb(3), etc. — guards could have a unique Side.
+QAMonsterInfo.CreateSourceType (enum at +0x4 in QAMonsterInfo struct): tells how monster was spawned.
+The ueComponents TMap at EEntity+0x288 already traversed for EAnimeComponent; same path can read ECfgComponent and EMapIconComponent.
+Tasks
+T001: Extend CompScan to dump guard-identifying fields
+Blocked By: []
+Details:
+In _log_emonster_components(), after the existing ueComponents TMap traversal, add logging for additional component keys found in the TMap:
+When key contains "ECfg": read int32 at comp_ptr + 0x120 (CfgInfo.ID) and log it
+When key contains "EMapIcon": hex-dump bytes from comp_ptr + 0x120 through comp_ptr + 0x158 (0x38 bytes of potential icon data) and log them
+When key contains "ERole" (ERoleComponent): read a few candidate offsets for Side/Camp enum values and log them
+Also log all ueComponents TMap key names (already done) — we want to confirm ECfgComponent and EMapIconComponent appear in the TMap
+Keep changes diagnostic-only: no behavioral changes, just extra log output
+Files: src/core/scanner.py (_log_emonster_components)
+Acceptance: Running the bot during paused Carjack produces log output showing CfgInfo.ID, EMapIcon raw bytes, and ERoleComponent candidate fields for each guard
+T002: Analyze diagnostic output and implement guard detection
+Blocked By: [T001]
+Details:
+After T001 runs and produces log data, analyze the output:
+If all 6 guards share a unique CfgInfo.ID (or small set of IDs) → use CfgInfo.ID for detection
+If EMapIconComponent raw bytes contain a consistent icon type value different from regular monsters → use icon type
+If ERoleComponent has a unique Side/Camp value → use that
+Implement the chosen detection method in a new _read_guard_marker() function
+Update is_carjack_guard() to use the new marker instead of (or alongside) ABP prefixes
+Files: src/core/scanner.py
+Acceptance: Guard detection works on Abandoned Mines where ABP approach fails
+
+
+

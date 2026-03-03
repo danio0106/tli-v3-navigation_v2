@@ -1,0 +1,13 @@
+[project]
+name = "torchlight-infinite-bot"
+version = "2.0.0"
+description = "Torchlight Infinite Auto-Player Bot V2 - Memory Reading Edition"
+requires-python = ">=3.11"
+dependencies = [
+    "customtkinter>=5.2.0",
+    "pymem>=1.14.0",
+    "psutil>=5.9.0",
+    "opencv-python-headless>=4.13.0.92",
+    "numpy>=2.4.2",
+    "mss>=10.1.0",
+]

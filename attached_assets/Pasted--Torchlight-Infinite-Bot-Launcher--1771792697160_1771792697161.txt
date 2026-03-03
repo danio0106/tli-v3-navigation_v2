@@ -1,0 +1,337 @@
+======================================
+Torchlight Infinite Bot - Launcher
+======================================
+Running as Administrator
+Working directory: C:\Users\Daniel\Documents\GitHub\tli v2
+
+Attempting to launch the bot...
+
+21:37:21 [INFO   ] Config loaded from config.json
+21:37:21 [INFO   ] Loaded 8 addresses from addresses.json
+21:37:21 [INFO   ] [Input] Initialized with mode: hardware
+21:37:21 [WARNING] [HexCalibrator] Failed to load history: Expecting value: line 19 column 11 (char 409)
+21:37:21 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[1]
+21:37:22 [INFO   ] Torchlight Infinite Bot V2 v2.5.1 started
+21:37:22 [INFO   ] [Hotkeys] Global hotkeys registered: F9=Start, F10=Stop, F11=Pause
+21:37:24 [INFO   ] [Hotkeys] F9 pressed - Start
+21:37:24 [INFO   ] State: IDLE -> STARTING
+21:37:24 [INFO   ] Bot started
+21:37:24 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 18588)
+21:37:24 [INFO   ] Found game window by class 'UnrealWindow' + PID 18588 (HWND: 393828)
+21:37:24 [INFO   ] [Input] Target window set: HWND=393828, mode=hardware
+21:37:24 [INFO   ] [Input] Hardware mode: will focus window before each input
+21:37:24 [WARNING] Address validation: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary) | pos=(5650, 4500)
+21:37:24 [INFO   ] [Scanner] === UE4 Dump-Verified Chain ===
+21:37:24 [INFO   ] [Scanner] Chain: GWorld -> OwningGameInstance -> LocalPlayers[0] -> PlayerController -> Pawn -> RootComponent -> RelativeLocation
+21:37:24 [INFO   ] [Scanner] Offsets: 0x210 -> 0x38 -> 0x0 -> 0x30 -> 0x250 -> 0x130 -> 0x124
+21:37:24 [INFO   ] [Scanner] Main module: torchlight_infinite.exe at 0x7FF6B5760000
+21:37:24 [INFO   ] [Scanner] Trying saved GWorld offset 0x7E84588...
+21:37:24 [INFO   ] [Scanner] GWorld static at 0x7FF6BD5E4588, points to 0x1E40B8C09A0
+21:37:24 [INFO   ] [Scanner]   OwningGameInstance: 0x1E40B8C09A0+0x210 -> 0x1E2C0F73C40
+21:37:24 [INFO   ] [Scanner]   LocalPlayers (TArray data): 0x1E2C0F73C40+0x38 -> 0x1E2C25732C0
+21:37:24 [INFO   ] [Scanner]   LocalPlayer[0]: 0x1E2C25732C0+0x0 -> 0x1E2EF416280
+21:37:24 [INFO   ] [Scanner]   PlayerController: 0x1E2EF416280+0x30 -> 0x1E40E7520E0
+21:37:24 [INFO   ] [Scanner]   Pawn (ERolePlayer): 0x1E40E7520E0+0x250 -> 0x1E3E0ADE830
+21:37:24 [INFO   ] [Scanner]   RootComponent: 0x1E3E0ADE830+0x130 -> 0x1E40031DC00
+21:37:24 [INFO   ] [Scanner]   RelativeLocation: (5650.0, 4500.0, 3602.9)
+21:37:24 [INFO   ] [Scanner] Stability check (reading twice, 0.3s apart)...
+21:37:24 [INFO   ] [Scanner]   Drift: 0.00 (threshold: 2.0)
+21:37:24 [INFO   ] [Scanner] SUCCESS! Dump-verified chain resolved
+21:37:24 [INFO   ] [Scanner] Position: (5650.0, 4500.0, 3602.9)
+21:37:24 [INFO   ] [Scanner] Base: torchlight_infinite.exe+0x7E84588
+21:37:24 [INFO   ] [Scanner] Chain: 0x210 -> 0x38 -> 0x0 -> 0x30 -> 0x250 -> 0x130 -> 0x124
+21:37:24 [INFO   ] [Scanner] Saving discovered addresses...
+21:37:25 [INFO   ] [Scanner] Addresses saved to Address Setup
+21:37:25 [INFO   ] [Scanner] Scanning for FNamePool...
+21:37:25 [INFO   ] GWorld cached for zone transition detection
+21:37:25 [INFO   ] [Scanner]   Trying FNamePool pattern 1/3...
+21:37:25 [INFO   ] [Scanner]   Trying FNamePool pattern 2/3...
+21:37:25 [INFO   ] [Scanner]   Trying FNamePool pattern 3/3...
+21:37:25 [INFO   ] [Scanner] FNamePool not found via sig scan
+21:37:25 [INFO   ] [Scanner] Scanning for GObjects...
+21:37:25 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+21:37:25 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+21:37:25 [INFO   ] [Scanner]   GObjects found at 0x7FF6BD49ADE8 (pattern 2)
+21:37:25 [INFO   ] [Scanner]   NumElements=168285, NumChunks=3
+21:37:26 [INFO   ] State: STARTING -> IN_HIDEOUT
+21:37:26 [INFO   ] In hideout - starting map selection sequence
+21:37:26 [INFO   ] State: IN_HIDEOUT -> SELECTING_MAP
+21:37:26 [INFO   ] Calibrating hexagon positions...
+21:37:26 [INFO   ] [HexCalibrator] Starting calibration...
+21:37:26 [INFO   ] [HexCalibrator] Capturing from HWND=393828
+21:37:28 [INFO   ] [HexCalibrator] [template] Pos 0 (497,301): crop (94, 80), std=35.4
+21:37:28 [INFO   ] [HexCalibrator] [template] Using template from pos 0 (497,301): size=80x94, mean=146.7, std=35.4
+21:37:28 [INFO   ] [HexCalibrator] [template] Raw matches above 0.65: 12228
+21:37:28 [INFO   ] [HexCalibrator] [template] After NMS (dist=40): 28 unique matches
+21:37:29 [INFO   ] [HexCalibrator] [template] ACCEPT (497,301) score=1.000
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (710,117) score=0.915: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (786,79) score=0.840: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] ACCEPT (430,423) score=0.838
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (863,47) score=0.830: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (279,801) score=0.811: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] ACCEPT (394,602) score=0.809
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (1681,665) score=0.801: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (1836,375) score=0.775: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (619,941) score=0.767: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (128,529) score=0.763: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (1857,531) score=0.753: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] ACCEPT (504,341) score=0.749
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (452,623) score=0.723: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (1203,696) score=0.718: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (1827,414) score=0.716: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (149,664) score=0.684: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (1809,744) score=0.684: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (716,157) score=0.679: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (730,457) score=0.679: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (851,817) score=0.678: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (1872,321) score=0.676: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (297,572) score=0.676: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (728,279) score=0.666: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] ACCEPT (1296,615) score=0.661
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (426,685) score=0.658: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] [template] ACCEPT (468,497) score=0.657
+21:37:29 [INFO   ] [HexCalibrator] [template] SKIP (1837,630) score=0.654: not near any known position
+21:37:29 [INFO   ] [HexCalibrator] Template matching found 6 matches (>= 6), using template results
+21:37:29 [INFO   ] [HexCalibrator] Detected 6 valid hexagons, rejected 0 non-hexagons
+21:37:29 [INFO   ] [HexCalibrator] Matched 2 hexagons to reference positions
+21:37:29 [WARNING] [HexCalibrator] Only 2 matches (need 6), using hardcoded
+21:37:29 [INFO   ] [HexCalibrator] Hex 0: CV-detected center=(497,301) hw=40 hh=47 vertices=6 glow_box=(457,244,80,34)
+21:37:29 [INFO   ] [HexCalibrator] Hex 1: fallback center=(933,321) hw=35 hh=57 vertices=6 glow_box=(898,254,70,40)
+21:37:29 [INFO   ] [HexCalibrator] Hex 2: fallback center=(1127,259) hw=35 hh=57 vertices=6 glow_box=(1092,192,70,40)
+21:37:29 [INFO   ] [HexCalibrator] Hex 3: fallback center=(1351,321) hw=35 hh=57 vertices=6 glow_box=(1316,254,70,40)
+21:37:29 [INFO   ] [HexCalibrator] Hex 4: fallback center=(911,532) hw=35 hh=57 vertices=6 glow_box=(876,465,70,40)
+21:37:29 [INFO   ] [HexCalibrator] Hex 5: fallback center=(1151,489) hw=35 hh=57 vertices=6 glow_box=(1116,422,70,40)
+21:37:29 [INFO   ] [HexCalibrator] Hex 6: fallback center=(1519,491) hw=35 hh=57 vertices=6 glow_box=(1484,424,70,40)
+21:37:29 [INFO   ] [HexCalibrator] Hex 7: CV-detected center=(449,499) hw=40 hh=47 vertices=6 glow_box=(409,442,80,34)
+21:37:29 [INFO   ] [HexCalibrator] Hex 8: fallback center=(622,627) hw=35 hh=57 vertices=6 glow_box=(587,560,70,40)
+21:37:29 [INFO   ] [HexCalibrator] Hex 9: fallback center=(1385,613) hw=35 hh=57 vertices=6 glow_box=(1350,546,70,40)
+21:37:29 [INFO   ] [HexCalibrator] Hex 10: fallback center=(979,727) hw=35 hh=57 vertices=6 glow_box=(944,660,70,40)
+21:37:29 [INFO   ] [HexCalibrator] Hex 11: fallback center=(723,789) hw=35 hh=57 vertices=6 glow_box=(688,722,70,40)
+21:37:29 [INFO   ] [HexCalibrator] Debug image saved to debug/calibration_20260222_213729.png
+21:37:29 [INFO   ] [HexCalibrator] === Calibration Results (source: hardcoded) ===
+21:37:29 [INFO   ] [HexCalibrator] Detected: 0 active + 6 inactive = 6 hexagons
+21:37:29 [INFO   ] [HexCalibrator] Node 0 (High Court Maze): center=(497, 301) glow=(462, 266, 70, 70)
+21:37:29 [INFO   ] [HexCalibrator] Node 1 (Shadow Outpost): center=(933, 321) glow=(898, 286, 70, 70)
+21:37:29 [INFO   ] [HexCalibrator] Node 2 (Rainforest of Divine Legacy): center=(1127, 259) glow=(1092, 224, 70, 70)
+21:37:29 [INFO   ] [HexCalibrator] Node 3 (Grimwind Woods): center=(1351, 321) glow=(1316, 286, 70, 70)
+21:37:29 [INFO   ] [HexCalibrator] Node 4 (Demiman Village): center=(911, 532) glow=(876, 497, 70, 70)
+21:37:29 [INFO   ] [HexCalibrator] Node 5 (Swirling Mines): center=(1151, 489) glow=(1116, 454, 70, 70)
+21:37:29 [INFO   ] [HexCalibrator] Node 6 (Blustery Canyon): center=(1519, 491) glow=(1484, 456, 70, 70)
+21:37:29 [INFO   ] [HexCalibrator] Node 7 (Defiled Side Chamber): center=(449, 499) glow=(414, 464, 70, 70)
+21:37:29 [INFO   ] [HexCalibrator] Node 8 (Deserted District): center=(622, 627) glow=(587, 592, 70, 70)
+21:37:29 [INFO   ] [HexCalibrator] Node 9 (Wall of the Last Breath): center=(1385, 613) glow=(1350, 578, 70, 70)
+21:37:29 [INFO   ] [HexCalibrator] Node 10 (Abandoned Mines): center=(979, 727) glow=(944, 692, 70, 70)
+21:37:29 [INFO   ] [HexCalibrator] Node 11 (Singing Sand): center=(723, 789) glow=(688, 754, 70, 70)
+21:37:29 [INFO   ] [HexCalibrator] ================================================
+21:37:29 [INFO   ] [MapSelector] Step: OPEN_DEVICE
+21:37:29 [INFO   ] [MapSelector]   Pressing F to open map device (attempt 1/3)
+21:37:29 [INFO   ] [Input] Hardware key 'f' (VK=0x46)
+21:37:30 [INFO   ] [MapSelector]   Loaded Glacial Abyss template: (26, 123, 3)
+21:37:30 [INFO   ] [MapSelector]   Region selection check (template): score=0.992 threshold=0.7 loc=(475,585) -> OPEN
+21:37:30 [INFO   ] [MapSelector] Step: SELECT_ZONE
+21:37:30 [INFO   ] [MapSelector]   Clicking Glacial Abyss zone (attempt 1/3)
+21:37:30 [INFO   ] [Input] Hardware mouse move: client(537,598) -> screen(1166,757)
+21:37:30 [INFO   ] [Input] Hardware click left at (537,598)
+21:37:31 [INFO   ] [CardDetector] Loaded card UI template: (20, 135, 3)
+21:37:31 [INFO   ] [CardDetector] UI check (template): score=0.775 threshold=0.7 loc=(1086,589) -> OPEN
+21:37:31 [INFO   ] [MapSelector]   card selection UI confirmed open
+21:37:31 [INFO   ] [MapSelector] Step: SELECT_CARD
+21:37:31 [INFO   ] [MapSelector]   Card selection attempt 1/3
+21:37:31 [INFO   ] [CardDetector] UI check (template): score=0.775 threshold=0.7 loc=(1086,589) -> OPEN
+21:37:31 [INFO   ] [CardDetector] client_rect=(631, 159, 2551, 1239)
+21:37:32 [INFO   ] [CardDetector] frame=1920x1080
+21:37:32 [INFO   ] [CardDetector] === Detection Start === frame=1920x1080
+21:37:32 [INFO   ] [CardDetector] Card 0 (High Court Maze) -> INACTIVE
+  vertices(active): top=212 tr=198 br=80 bot=37 bl=89 tl=222
+  inactive_top=(497,299) gray=122.7
+  glow: sat=24 RGB=(196,210,217)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 24) AND inactive_top 122.7 >= 50 (not popped up)
+21:37:32 [INFO   ] [CardDetector] Card 1 (Shadow Outpost) -> INACTIVE
+  vertices(active): top=185 tr=211 br=73 bot=61 bl=102 tl=198
+  inactive_top=(933,300) gray=101.7
+  glow: sat=35 RGB=(177,197,205)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 35) AND inactive_top 101.7 >= 50 (not popped up)
+21:37:32 [INFO   ] [CardDetector] Card 2 (Rainforest of Divine Legacy) -> INACTIVE
+  vertices(active): top=165 tr=213 br=63 bot=57 bl=65 tl=184
+  inactive_top=(1128,238) gray=96.0
+  glow: sat=69 RGB=(134,171,183)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 69) AND inactive_top 96.0 >= 50 (not popped up)
+21:37:32 [INFO   ] [CardDetector] Card 3 (Grimwind Woods) -> INACTIVE
+  vertices(active): top=59 tr=44 br=59 bot=43 bl=68 tl=83
+  inactive_top=(1352,300) gray=64.3
+  glow: sat=133 RGB=(42,65,84)
+  ice=0/6 on_card=6/6
+  reason: no glow (sat 133) AND inactive_top 64.3 >= 50 (not popped up)
+21:37:32 [INFO   ] [CardDetector] Card 4 (Demiman Village) -> INACTIVE
+  vertices(active): top=207 tr=208 br=86 bot=33 bl=100 tl=222
+  inactive_top=(911,512) gray=102.0
+  glow: sat=30 RGB=(184,198,206)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 30) AND inactive_top 102.0 >= 50 (not popped up)
+21:37:32 [INFO   ] [CardDetector] Card 5 (Swirling Mines) -> INACTIVE
+  vertices(active): top=141 tr=196 br=78 bot=58 bl=94 tl=140
+  inactive_top=(1152,469) gray=100.6
+  glow: sat=54 RGB=(153,178,191)
+  ice=1/6 on_card=3/6
+  reason: no glow (sat 54) AND inactive_top 100.6 >= 50 (not popped up)
+21:37:32 [INFO   ] [CardDetector] Card 6 (Blustery Canyon) -> INACTIVE
+  vertices(active): top=66 tr=51 br=42 bot=28 bl=51 tl=54
+  inactive_top=(1520,471) gray=71.7
+  glow: sat=145 RGB=(43,76,98)
+  ice=0/6 on_card=6/6
+  reason: no glow (sat 145) AND inactive_top 71.7 >= 50 (not popped up)
+21:37:32 [INFO   ] [CardDetector] Card 7 (Defiled Side Chamber) -> INACTIVE
+  vertices(active): top=168 tr=181 br=79 bot=59 bl=100 tl=181
+  inactive_top=(449,498) gray=107.0
+  glow: sat=42 RGB=(172,194,204)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 42) AND inactive_top 107.0 >= 50 (not popped up)
+21:37:32 [INFO   ] [CardDetector] Card 8 (Deserted District) -> INACTIVE
+  vertices(active): top=201 tr=192 br=59 bot=58 bl=87 tl=167
+  inactive_top=(622,606) gray=96.2
+  glow: sat=44 RGB=(167,191,200)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 44) AND inactive_top 96.2 >= 50 (not popped up)
+21:37:32 [INFO   ] [CardDetector] Card 9 (Wall of the Last Breath) -> INACTIVE
+  vertices(active): top=185 tr=145 br=78 bot=53 bl=83 tl=179
+  inactive_top=(1386,592) gray=78.3
+  glow: sat=72 RGB=(106,128,141)
+  ice=2/6 on_card=3/6
+  reason: glow present (sat 72) but insufficient evidence: 3/6 on-card, not popped up (it=78.3)
+21:37:32 [INFO   ] [CardDetector] Card 10 (Abandoned Mines) -> ACTIVE
+  vertices(active): top=123 tr=112 br=76 bot=34 bl=87 tl=99
+  inactive_top=(980,726) gray=76.3
+  glow: sat=129 RGB=(100,177,214)
+  ice=0/6 on_card=6/6
+  reason: glow sat=129 val=214 (bright glow) AND 6/6 on card
+  RARITY: BLUE B-R=114.3
+21:37:32 [INFO   ] [CardDetector] Card 11 (Singing Sand) -> INACTIVE
+  vertices(active): top=167 tr=186 br=73 bot=53 bl=93 tl=183
+  inactive_top=(724,769) gray=83.6
+  glow: sat=58 RGB=(152,179,193)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 58) AND inactive_top 83.6 >= 50 (not popped up)
+21:37:32 [INFO   ] [CardDetector] === Detection Complete === active=[10] time=79ms
+21:37:32 [INFO   ] [CardDetector] Debug image saved to debug/detection_debug.png
+21:37:32 [INFO   ] [MapSelector] Active cards set: positions=[10]
+21:37:32 [INFO   ] [MapSelector] Selected position 10 (Blue, 4 attempts left)
+21:37:32 [INFO   ] [Input] Hardware mouse move: client(979,727) -> screen(1611,888)
+21:37:32 [INFO   ] [Input] Hardware click left at (979,727)
+21:37:32 [INFO   ] [MapSelector]   Smart select: clicked hex 10 (BLUE) [ACTIVE]
+21:37:32 [INFO   ] [CardDetector] Attempts verification: RGB=(47,93,107) B-R=60.4 -> CONFIRMED active
+21:37:32 [INFO   ] [MapSelector]   Attempts text CONFIRMED — card is active
+21:37:32 [INFO   ] [MapSelector] Step: OPEN_PORTAL
+21:37:32 [INFO   ] [MapSelector]   Clicking Next
+21:37:32 [INFO   ] [Input] Hardware mouse move: client(1765,995) -> screen(2394,1155)
+21:37:33 [INFO   ] [Input] Hardware click left at (1765,995)
+21:37:33 [INFO   ] [MapSelector]   Adding 5 affixes
+21:37:33 [INFO   ] [Input] Hardware mouse move: client(180,809) -> screen(813,967)
+21:37:33 [INFO   ] [Input] Hardware click left at (180,809)
+21:37:34 [INFO   ] [Input] Hardware mouse move: client(180,809) -> screen(811,966)
+21:37:34 [INFO   ] [Input] Hardware click left at (180,809)
+21:37:34 [INFO   ] [Input] Hardware mouse move: client(180,809) -> screen(810,967)
+21:37:34 [INFO   ] [Input] Hardware click left at (180,809)
+21:37:34 [INFO   ] [Input] Hardware mouse move: client(180,809) -> screen(809,970)
+21:37:34 [INFO   ] [Input] Hardware click left at (180,809)
+21:37:34 [INFO   ] [Input] Hardware mouse move: client(180,809) -> screen(809,968)
+21:37:34 [INFO   ] [Input] Hardware click left at (180,809)
+21:37:35 [INFO   ] [MapSelector]   Opening Portal (instant teleport)
+21:37:35 [INFO   ] [Input] Hardware mouse move: client(1765,995) -> screen(2394,1155)
+21:37:35 [INFO   ] [Input] Hardware click left at (1765,995)
+21:37:36 [INFO   ] [Input] Hardware mouse move: client(1765,995) -> screen(2395,1153)
+21:37:36 [INFO   ] [Input] Hardware click left at (1765,995)
+21:37:36 [INFO   ] [MapSelector] Map selection complete in 7.4s
+21:37:36 [INFO   ] Map selection + portal open complete
+21:37:36 [INFO   ] State: SELECTING_MAP -> ENTERING_MAP
+21:37:36 [INFO   ] Waiting for zone transition... (GWorld=0x1E3D50D52A0)
+21:37:37 [INFO   ] Pointer chain broken (loading screen) (0.1s)
+21:37:37 [INFO   ] Pointer chain recovered (0.5s)
+21:37:37 [INFO   ] Re-resolving dump chain after zone transition...
+21:37:37 [INFO   ] [Scanner] === UE4 Dump-Verified Chain ===
+21:37:37 [INFO   ] [Scanner] Chain: GWorld -> OwningGameInstance -> LocalPlayers[0] -> PlayerController -> Pawn -> RootComponent -> RelativeLocation
+21:37:37 [INFO   ] [Scanner] Offsets: 0x210 -> 0x38 -> 0x0 -> 0x30 -> 0x250 -> 0x130 -> 0x124
+21:37:37 [INFO   ] [Scanner] Main module: torchlight_infinite.exe at 0x7FF6B5760000
+21:37:37 [INFO   ] [Scanner] Using cached GWorld at 0x7FF6BD5E4588
+21:37:37 [INFO   ] [Scanner] GWorld static at 0x7FF6BD5E4588, points to 0x1E3D50D52A0
+21:37:37 [INFO   ] [Scanner]   OwningGameInstance: 0x1E3D50D52A0+0x210 -> 0x1E2C0F73C40
+21:37:37 [INFO   ] [Scanner]   LocalPlayers (TArray data): 0x1E2C0F73C40+0x38 -> 0x1E2C25732C0
+21:37:37 [INFO   ] [Scanner]   LocalPlayer[0]: 0x1E2C25732C0+0x0 -> 0x1E2EF416280
+21:37:37 [INFO   ] [Scanner]   PlayerController: 0x1E2EF416280+0x30 -> 0x1E3EEE38D40
+21:37:37 [INFO   ] [Scanner]   Pawn (ERolePlayer): 0x1E3EEE38D40+0x250 -> 0x1E3C23709F0
+21:37:37 [INFO   ] [Scanner]   RootComponent: 0x1E3C23709F0+0x130 -> 0x1E3DCF7BC80
+21:37:37 [INFO   ] [Scanner]   RelativeLocation: (-3487.0, -7772.0, 572.0)
+21:37:37 [INFO   ] [Scanner] Stability check (reading twice, 0.3s apart)...
+21:37:37 [INFO   ] [Scanner]   Drift: 0.00 (threshold: 2.0)
+21:37:37 [INFO   ] [Scanner] SUCCESS! Dump-verified chain resolved
+21:37:37 [INFO   ] [Scanner] Position: (-3487.0, -7772.0, 572.0)
+21:37:37 [INFO   ] [Scanner] Base: torchlight_infinite.exe+0x7E84588
+21:37:37 [INFO   ] [Scanner] Chain: 0x210 -> 0x38 -> 0x0 -> 0x30 -> 0x250 -> 0x130 -> 0x124
+21:37:37 [INFO   ] [Scanner] Saving discovered addresses...
+21:37:38 [INFO   ] [Scanner] Addresses saved to Address Setup
+21:37:38 [INFO   ] [Scanner] Scanning for FNamePool...
+21:37:38 [INFO   ] Re-scan SUCCESS: (-3487.0, -7772.0)
+21:37:38 [INFO   ] [Scanner]   Trying FNamePool pattern 1/3...
+21:37:38 [INFO   ] [Scanner]   Trying FNamePool pattern 2/3...
+21:37:38 [INFO   ] [Scanner]   Trying FNamePool pattern 3/3...
+21:37:38 [INFO   ] [Scanner] FNamePool not found via sig scan
+21:37:38 [INFO   ] [Scanner] Using cached GObjects at 0x7FF6BD49ADE8
+21:37:38 [INFO   ] Entered map successfully (0.6s)
+21:37:38 [INFO   ] State: ENTERING_MAP -> IN_MAP
+21:37:38 [INFO   ] [PathRecorder] No saved path for: Glacial Abyss
+21:37:38 [WARNING] No map path loaded - skipping to map complete
+21:37:38 [INFO   ] State: IN_MAP -> MAP_COMPLETE
+21:37:38 [INFO   ] Map #1 complete
+21:37:39 [INFO   ] State: MAP_COMPLETE -> RETURNING
+21:37:39 [WARNING] Navigation did not complete - skipping exit portal
+21:37:39 [INFO   ] State: RETURNING -> MAP_COMPLETE
+21:37:39 [INFO   ] Map #2 complete
+21:37:40 [INFO   ] State: MAP_COMPLETE -> RETURNING
+21:37:40 [WARNING] Navigation did not complete - skipping exit portal
+21:37:40 [INFO   ] State: RETURNING -> MAP_COMPLETE
+21:37:40 [INFO   ] Map #3 complete
+21:37:40 [INFO   ] State: MAP_COMPLETE -> RETURNING
+21:37:40 [WARNING] Navigation did not complete - skipping exit portal
+21:37:40 [INFO   ] State: RETURNING -> MAP_COMPLETE
+21:37:40 [INFO   ] Map #4 complete
+21:37:41 [INFO   ] State: MAP_COMPLETE -> RETURNING
+21:37:41 [WARNING] Navigation did not complete - skipping exit portal
+21:37:41 [INFO   ] State: RETURNING -> MAP_COMPLETE
+21:37:41 [INFO   ] Map #5 complete
+21:37:41 [INFO   ] State: MAP_COMPLETE -> RETURNING
+21:37:42 [WARNING] Navigation did not complete - skipping exit portal
+21:37:42 [INFO   ] State: RETURNING -> MAP_COMPLETE
+21:37:42 [INFO   ] Map #6 complete
+21:37:42 [INFO   ] State: MAP_COMPLETE -> RETURNING
+21:37:42 [WARNING] Navigation did not complete - skipping exit portal
+21:37:42 [INFO   ] State: RETURNING -> MAP_COMPLETE
+21:37:42 [INFO   ] Map #7 complete
+21:37:43 [INFO   ] State: MAP_COMPLETE -> RETURNING
+21:37:43 [WARNING] Navigation did not complete - skipping exit portal
+21:37:43 [INFO   ] State: RETURNING -> MAP_COMPLETE
+21:37:43 [INFO   ] Map #8 complete
+21:37:43 [INFO   ] State: MAP_COMPLETE -> RETURNING
+21:37:43 [WARNING] Navigation did not complete - skipping exit portal
+21:37:43 [INFO   ] State: RETURNING -> MAP_COMPLETE
+21:37:44 [INFO   ] Map #9 complete
+21:37:44 [INFO   ] State: MAP_COMPLETE -> RETURNING
+21:37:44 [WARNING] Navigation did not complete - skipping exit portal
+21:37:44 [INFO   ] State: RETURNING -> MAP_COMPLETE
+21:37:44 [INFO   ] Map #10 complete
+21:37:45 [INFO   ] State: MAP_COMPLETE -> RETURNING
+21:37:45 [WARNING] Navigation did not complete - skipping exit portal
+21:37:45 [INFO   ] State: RETURNING -> MAP_COMPLETE
+21:37:45 [INFO   ] Map #11 complete
+21:37:45 [INFO   ] State: MAP_COMPLETE -> RETURNING
+21:37:45 [WARNING] Navigation did not complete - skipping exit portal
+21:37:45 [INFO   ] State: RETURNING -> MAP_COMPLETE
+21:37:45 [INFO   ] Map #12 complete
+21:37:46 [INFO   ] State: MAP_COMPLETE -> RETURNING
+21:37:46 [WARNING] Navigation did not complete - skipping exit portal
+21:37:46 [INFO   ] State: RETURNING -> MAP_COMPLETE
+21:37:46 [INFO   ] Map #13 complete
+21:37:47 [INFO   ] [Hotkeys] F10 pressed - Stop
+21:37:47 [INFO   ] State: MAP_COMPLETE -> STOPPING
+21:37:47 [INFO   ] State: STOPPING -> RETURNING

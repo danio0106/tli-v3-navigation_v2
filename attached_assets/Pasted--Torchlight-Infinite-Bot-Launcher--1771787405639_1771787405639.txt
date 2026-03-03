@@ -1,0 +1,235 @@
+======================================
+Torchlight Infinite Bot - Launcher
+======================================
+Running as Administrator
+Working directory: C:\Users\Daniel\Documents\GitHub\tli v2
+
+Attempting to launch the bot...
+
+20:05:00 [INFO   ] Config loaded from config.json
+20:05:00 [INFO   ] Loaded 8 addresses from addresses.json
+20:05:00 [INFO   ] [Input] Initialized with mode: hardware
+20:05:00 [WARNING] [HexCalibrator] Failed to load history: Expecting value: line 19 column 11 (char 409)
+20:05:00 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[3, 5, 6, 10]
+20:05:01 [INFO   ] Torchlight Infinite Bot V2 v2.5.1 started
+20:05:01 [INFO   ] [Hotkeys] Global hotkeys registered: F9=Start, F10=Stop, F11=Pause
+20:05:04 [INFO   ] [Hotkeys] F9 pressed - Start
+20:05:04 [INFO   ] State: IDLE -> STARTING
+20:05:04 [INFO   ] Bot started
+20:05:04 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 18588)
+20:05:04 [INFO   ] Found game window by class 'UnrealWindow' + PID 18588 (HWND: 393828)
+20:05:04 [INFO   ] [Input] Target window set: HWND=393828, mode=hardware
+20:05:04 [INFO   ] [Input] Hardware mode: will focus window before each input
+20:05:04 [WARNING] Address validation: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary); player_x not movement-verified; player_y not movement-verified | pos=(5594, 4535)
+20:05:04 [INFO   ] State: STARTING -> IN_HIDEOUT
+20:05:04 [INFO   ] In hideout - starting map selection sequence
+20:05:04 [INFO   ] State: IN_HIDEOUT -> SELECTING_MAP
+20:05:04 [INFO   ] Calibrating hexagon positions...
+20:05:04 [INFO   ] [HexCalibrator] Starting calibration...
+20:05:04 [INFO   ] [HexCalibrator] Capturing from HWND=393828
+20:05:07 [INFO   ] [HexCalibrator] [template] Pos 0 (497,301): crop (94, 80), std=40.2
+20:05:07 [INFO   ] [HexCalibrator] [template] Using template from pos 0 (497,301): size=80x94, mean=127.1, std=40.2
+20:05:07 [INFO   ] [HexCalibrator] [template] Raw matches above 0.65: 17307
+20:05:07 [INFO   ] [HexCalibrator] [template] After NMS (dist=40): 39 unique matches
+20:05:07 [INFO   ] [HexCalibrator] [template] ACCEPT (497,301) score=1.000
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (708,118) score=0.890: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (630,942) score=0.816: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (149,641) score=0.804: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (781,68) score=0.781: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] ACCEPT (1041,365) score=0.772
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (132,526) score=0.771: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1810,492) score=0.770: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1872,697) score=0.760: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1813,390) score=0.753: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1677,654) score=0.747: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (712,186) score=0.746: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (275,788) score=0.745: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (720,436) score=0.731: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (859,47) score=0.723: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] ACCEPT (504,341) score=0.720
+20:05:07 [INFO   ] [HexCalibrator] [template] ACCEPT (428,407) score=0.715
+20:05:07 [INFO   ] [HexCalibrator] [template] ACCEPT (447,613) score=0.715
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1791,725) score=0.714: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] ACCEPT (1281,590) score=0.714
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (142,601) score=0.712: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1185,671) score=0.704: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] ACCEPT (1348,276) score=0.703
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1746,114) score=0.695: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] ACCEPT (1038,318) score=0.690
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1865,820) score=0.685: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1467,214) score=0.682: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] ACCEPT (395,599) score=0.681
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1737,75) score=0.681: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1863,658) score=0.680: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1587,842) score=0.675: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1736,479) score=0.672: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] ACCEPT (489,261) score=0.669
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (701,78) score=0.664: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (716,243) score=0.661: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] ACCEPT (936,217) score=0.661
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (156,681) score=0.656: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (1703,454) score=0.656: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] [template] SKIP (424,671) score=0.655: not near any known position
+20:05:07 [INFO   ] [HexCalibrator] Template matching found 11 matches (>= 6), using template results
+20:05:07 [INFO   ] [HexCalibrator] Detected 11 valid hexagons, rejected 0 non-hexagons
+20:05:07 [INFO   ] [HexCalibrator] Matched 2 hexagons to reference positions
+20:05:07 [WARNING] [HexCalibrator] Only 2 matches (need 6), using hardcoded
+20:05:07 [INFO   ] [HexCalibrator] Hex 0: CV-detected center=(497,301) hw=40 hh=47 vertices=6 glow_box=(457,244,80,34)
+20:05:07 [INFO   ] [HexCalibrator] Hex 1: fallback center=(933,321) hw=35 hh=57 vertices=6 glow_box=(898,254,70,40)
+20:05:07 [INFO   ] [HexCalibrator] Hex 2: fallback center=(1127,259) hw=35 hh=57 vertices=6 glow_box=(1092,192,70,40)
+20:05:07 [INFO   ] [HexCalibrator] Hex 3: CV-detected center=(1351,321) hw=40 hh=47 vertices=6 glow_box=(1311,264,80,34)
+20:05:07 [INFO   ] [HexCalibrator] Hex 4: fallback center=(911,532) hw=35 hh=57 vertices=6 glow_box=(876,465,70,40)
+20:05:07 [INFO   ] [HexCalibrator] Hex 5: fallback center=(1151,489) hw=35 hh=57 vertices=6 glow_box=(1116,422,70,40)
+20:05:07 [INFO   ] [HexCalibrator] Hex 6: fallback center=(1519,491) hw=35 hh=57 vertices=6 glow_box=(1484,424,70,40)
+20:05:07 [INFO   ] [HexCalibrator] Hex 7: fallback center=(449,499) hw=35 hh=57 vertices=6 glow_box=(414,432,70,40)
+20:05:07 [INFO   ] [HexCalibrator] Hex 8: fallback center=(622,627) hw=35 hh=57 vertices=6 glow_box=(587,560,70,40)
+20:05:07 [INFO   ] [HexCalibrator] Hex 9: fallback center=(1385,613) hw=35 hh=57 vertices=6 glow_box=(1350,546,70,40)
+20:05:07 [INFO   ] [HexCalibrator] Hex 10: fallback center=(979,727) hw=35 hh=57 vertices=6 glow_box=(944,660,70,40)
+20:05:07 [INFO   ] [HexCalibrator] Hex 11: fallback center=(723,789) hw=35 hh=57 vertices=6 glow_box=(688,722,70,40)
+20:05:08 [INFO   ] [HexCalibrator] Debug image saved to debug/calibration_20260222_200508.png
+20:05:08 [INFO   ] [HexCalibrator] === Calibration Results (source: hardcoded) ===
+20:05:08 [INFO   ] [HexCalibrator] Detected: 0 active + 11 inactive = 11 hexagons
+20:05:08 [INFO   ] [HexCalibrator] Node 0 (High Court Maze): center=(497, 301) glow=(462, 266, 70, 70)
+20:05:08 [INFO   ] [HexCalibrator] Node 1 (Shadow Outpost): center=(933, 321) glow=(898, 286, 70, 70)
+20:05:08 [INFO   ] [HexCalibrator] Node 2 (Rainforest of Divine Legacy): center=(1127, 259) glow=(1092, 224, 70, 70)
+20:05:08 [INFO   ] [HexCalibrator] Node 3 (Grimwind Woods): center=(1351, 321) glow=(1316, 286, 70, 70)
+20:05:08 [INFO   ] [HexCalibrator] Node 4 (Demiman Village): center=(911, 532) glow=(876, 497, 70, 70)
+20:05:08 [INFO   ] [HexCalibrator] Node 5 (Swirling Mines): center=(1151, 489) glow=(1116, 454, 70, 70)
+20:05:08 [INFO   ] [HexCalibrator] Node 6 (Blustery Canyon): center=(1519, 491) glow=(1484, 456, 70, 70)
+20:05:08 [INFO   ] [HexCalibrator] Node 7 (Defiled Side Chamber): center=(449, 499) glow=(414, 464, 70, 70)
+20:05:08 [INFO   ] [HexCalibrator] Node 8 (Deserted District): center=(622, 627) glow=(587, 592, 70, 70)
+20:05:08 [INFO   ] [HexCalibrator] Node 9 (Wall of the Last Breath): center=(1385, 613) glow=(1350, 578, 70, 70)
+20:05:08 [INFO   ] [HexCalibrator] Node 10 (Abandoned Mines): center=(979, 727) glow=(944, 692, 70, 70)
+20:05:08 [INFO   ] [HexCalibrator] Node 11 (Singing Sand): center=(723, 789) glow=(688, 754, 70, 70)
+20:05:08 [INFO   ] [HexCalibrator] ================================================
+20:05:08 [INFO   ] [MapSelector] Step: OPEN_DEVICE
+20:05:08 [INFO   ] [MapSelector]   Pressing F to open map device (attempt 1/3)
+20:05:08 [INFO   ] [Input] Hardware key 'f' (VK=0x46)
+20:05:09 [INFO   ] [MapSelector]   Loaded Glacial Abyss template: (26, 123, 3)
+20:05:09 [INFO   ] [MapSelector]   Region selection check (template): score=0.989 threshold=0.7 loc=(475,585) -> OPEN
+20:05:09 [INFO   ] [MapSelector] Step: SELECT_ZONE
+20:05:09 [INFO   ] [MapSelector]   Clicking Glacial Abyss zone (attempt 1/3)
+20:05:09 [INFO   ] [Input] Hardware mouse move: client(537,598) -> screen(1169,755)
+20:05:09 [INFO   ] [Input] Hardware click left at (537,598)
+20:05:10 [INFO   ] [CardDetector] Loaded card UI template: (20, 135, 3)
+20:05:10 [INFO   ] [CardDetector] UI check (template): score=0.775 threshold=0.7 loc=(1086,589) -> OPEN
+20:05:10 [INFO   ] [MapSelector]   card selection UI confirmed open
+20:05:10 [INFO   ] [MapSelector] Step: SELECT_CARD
+20:05:10 [INFO   ] [MapSelector]   Card selection attempt 1/3
+20:05:10 [INFO   ] [CardDetector] UI check (template): score=0.775 threshold=0.7 loc=(1086,589) -> OPEN
+20:05:10 [INFO   ] [CardDetector] client_rect=(631, 159, 2551, 1239)
+20:05:10 [INFO   ] [CardDetector] frame=1920x1080
+20:05:10 [INFO   ] [CardDetector] === Detection Start === frame=1920x1080
+20:05:10 [INFO   ] [CardDetector] Card 0 (High Court Maze) -> INACTIVE
+  vertices(active): top=205 tr=202 br=80 bot=34 bl=92 tl=183
+  inactive_top=(497,299) gray=119.9
+  glow: sat=26 RGB=(192,207,214)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 26) AND inactive_top 119.9 >= 50 (not popped up)
+20:05:10 [INFO   ] [CardDetector] Card 1 (Shadow Outpost) -> ACTIVE
+  vertices(active): top=120 tr=122 br=73 bot=42 bl=77 tl=118
+  inactive_top=(933,300) gray=76.3
+  glow: sat=127 RGB=(98,173,207)
+  ice=0/6 on_card=6/6
+  reason: glow sat=127 val=207 (bright glow) AND 6/6 on card
+  RARITY: BLUE B-R=108.8
+20:05:10 [INFO   ] [CardDetector] Card 2 (Rainforest of Divine Legacy) -> INACTIVE
+  vertices(active): top=157 tr=189 br=54 bot=49 bl=62 tl=156
+  inactive_top=(1128,238) gray=91.8
+  glow: sat=79 RGB=(115,154,166)
+  ice=3/6 on_card=3/6
+  reason: 3/6 vertices show ice
+20:05:10 [INFO   ] [CardDetector] Card 3 (Grimwind Woods) -> ACTIVE
+  vertices(active): top=88 tr=61 br=67 bot=39 bl=85 tl=87
+  inactive_top=(1352,300) gray=13.8
+  glow: sat=181 RGB=(41,118,159)
+  ice=0/6 on_card=6/6
+  reason: glow sat=181 val=159 (bright glow) AND 6/6 on card
+  RARITY: BLUE B-R=117.3
+20:05:10 [INFO   ] [CardDetector] Card 4 (Demiman Village) -> ACTIVE
+  vertices(active): top=106 tr=97 br=94 bot=48 bl=108 tl=122
+  inactive_top=(911,512) gray=73.6
+  glow: sat=123 RGB=(99,168,202)
+  ice=0/6 on_card=6/6
+  reason: glow sat=123 val=202 (bright glow) AND 6/6 on card
+  RARITY: BLUE B-R=102.8
+20:05:10 [INFO   ] [CardDetector] Card 5 (Swirling Mines) -> INACTIVE
+  vertices(active): top=124 tr=194 br=79 bot=58 bl=94 tl=126
+  inactive_top=(1152,469) gray=97.5
+  glow: sat=58 RGB=(144,168,181)
+  ice=1/6 on_card=5/6
+  reason: no glow (sat 58) AND inactive_top 97.5 >= 50 (not popped up)
+20:05:10 [INFO   ] [CardDetector] Card 6 (Blustery Canyon) -> INACTIVE
+  vertices(active): top=66 tr=48 br=42 bot=27 bl=50 tl=54
+  inactive_top=(1520,471) gray=71.5
+  glow: sat=145 RGB=(42,75,97)
+  ice=0/6 on_card=6/6
+  reason: no glow (sat 145) AND inactive_top 71.5 >= 50 (not popped up)
+20:05:10 [INFO   ] [CardDetector] Card 7 (Defiled Side Chamber) -> INACTIVE
+  vertices(active): top=168 tr=182 br=79 bot=59 bl=99 tl=185
+  inactive_top=(449,498) gray=106.5
+  glow: sat=43 RGB=(161,185,194)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 43) AND inactive_top 106.5 >= 50 (not popped up)
+20:05:10 [INFO   ] [CardDetector] Card 8 (Deserted District) -> INACTIVE
+  vertices(active): top=198 tr=209 br=61 bot=56 bl=87 tl=164
+  inactive_top=(622,606) gray=94.0
+  glow: sat=43 RGB=(166,189,198)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 43) AND inactive_top 94.0 >= 50 (not popped up)
+20:05:10 [INFO   ] [CardDetector] Card 9 (Wall of the Last Breath) -> UNKNOWN
+  vertices(active): top=187 tr=145 br=78 bot=53 bl=71 tl=180
+  inactive_top=(1386,592) gray=80.1
+  glow: sat=71 RGB=(113,136,150)
+  ice=2/6 on_card=3/6
+  reason: glow_sat=71 ice=2/6 card=3/6 it=80.1
+20:05:10 [INFO   ] [CardDetector] Card 10 (Abandoned Mines) -> INACTIVE
+  vertices(active): top=227 tr=215 br=75 bot=34 bl=90 tl=173
+  inactive_top=(980,726) gray=100.0
+  glow: sat=26 RGB=(213,230,237)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 26) AND inactive_top 100.0 >= 50 (not popped up)
+20:05:10 [INFO   ] [CardDetector] Card 11 (Singing Sand) -> INACTIVE
+  vertices(active): top=185 tr=96 br=75 bot=47 bl=79 tl=196
+  inactive_top=(724,769) gray=85.3
+  glow: sat=49 RGB=(165,191,203)
+  ice=2/6 on_card=4/6
+  reason: no glow (sat 49) AND inactive_top 85.3 >= 50 (not popped up)
+20:05:10 [INFO   ] [CardDetector] === Detection Complete === active=[1, 3, 4] time=81ms
+20:05:11 [INFO   ] [CardDetector] Debug image saved to debug/detection_debug.png
+20:05:11 [INFO   ] [MapSelector] Active cards set: positions=[1, 3, 4]
+20:05:11 [INFO   ] [MapSelector] Selected position 1 (Blue, 4 attempts left)
+20:05:11 [INFO   ] [Input] Hardware mouse move: client(933,321) -> screen(1562,479)
+20:05:11 [INFO   ] [Input] Hardware click left at (933,321)
+20:05:11 [INFO   ] [MapSelector]   Smart select: clicked hex 1 (BLUE)
+20:05:11 [INFO   ] [CardDetector] Attempts verification: RGB=(46,93,107) B-R=60.3 -> CONFIRMED active
+20:05:11 [INFO   ] [MapSelector]   Attempts text CONFIRMED — card is active
+20:05:11 [INFO   ] [MapSelector] Step: OPEN_PORTAL
+20:05:11 [INFO   ] [MapSelector]   Clicking Next
+20:05:11 [INFO   ] [Input] Hardware mouse move: client(1757,967) -> screen(2387,1124)
+20:05:11 [INFO   ] [Input] Hardware click left at (1757,967)
+20:05:12 [INFO   ] [MapSelector]   Adding 5 affixes
+20:05:12 [INFO   ] [Input] Hardware mouse move: client(119,788) -> screen(749,948)
+20:05:12 [INFO   ] [Input] Hardware click left at (119,788)
+20:05:12 [INFO   ] [Input] Hardware mouse move: client(119,788) -> screen(751,949)
+20:05:12 [INFO   ] [Input] Hardware click left at (119,788)
+20:05:13 [INFO   ] [Input] Hardware mouse move: client(119,788) -> screen(749,946)
+20:05:13 [INFO   ] [Input] Hardware click left at (119,788)
+20:05:13 [INFO   ] [Input] Hardware mouse move: client(119,788) -> screen(750,949)
+20:05:13 [INFO   ] [Input] Hardware click left at (119,788)
+20:05:13 [INFO   ] [Input] Hardware mouse move: client(119,788) -> screen(751,946)
+20:05:13 [INFO   ] [Input] Hardware click left at (119,788)
+20:05:14 [INFO   ] [MapSelector]   Opening Portal (instant teleport)
+20:05:14 [INFO   ] [Input] Hardware mouse move: client(1757,967) -> screen(2390,1127)
+20:05:14 [INFO   ] [Input] Hardware click left at (1757,967)
+20:05:15 [INFO   ] [Input] Hardware mouse move: client(1757,967) -> screen(2388,1124)
+20:05:15 [INFO   ] [Input] Hardware click left at (1757,967)
+20:05:15 [INFO   ] [MapSelector] Map selection complete in 7.3s
+20:05:15 [INFO   ] Map selection + portal open complete
+20:05:15 [INFO   ] State: SELECTING_MAP -> ENTERING_MAP
+20:05:15 [INFO   ] Waiting for zone change after Open Portal... (0s)
+20:05:18 [INFO   ] [Hotkeys] F10 pressed - Stop
+20:05:18 [INFO   ] State: ENTERING_MAP -> STOPPING
+20:05:19 [INFO   ] Main loop exited
+20:05:23 [INFO   ] State: STOPPING -> IDLE
+20:05:23 [INFO   ] Bot stopped

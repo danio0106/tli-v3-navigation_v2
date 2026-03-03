@@ -1,0 +1,169 @@
+=== NAMES ADDED (T1-T0) ===
+CONST_UITEXTBLOCK22908
+CONST_WRAPCANVAS22670
+CONST_WRAPCANVAS22682
+CONST_WRAPCANVAS22908
+CONST_WRAPCANVAS22910
+CONST_WRAPSIZEBOX22670
+CONST_WRAPSIZEBOX22682
+CONST_WRAPSIZEBOX22694
+
+=== NAMES REMOVED (T0-T1) ===
+
+=== CLASSES ADDED (T1-T0) ===
+
+=== CLASSES REMOVED (T0-T1) ===
+
+=== FIELDS ADDED (T1-T0) ===
+/Game/BluePrint/UI/Common/GoodsItem/EquipActionItem.EquipActionItem_C:EquipItem	~	WidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipItem.EquipItem_C | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Common/GoodsItem/EquipActionItem.EquipActionItem_C:PlayShake:CallFunc_PlayAnimation_ReturnValue	~	Class  /Script/UMG.UMGSequencePlayer | {'offset': 0, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Common/GoodsItem/EquipActionItem.EquipActionItem_C:Shake	~	Class  /Script/UMG.WidgetAnimation | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Common/GoodsItem/EquipActionView.EquipActionView_C:EquipActionItem	~	WidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipActionItem.EquipActionItem_C | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:CoverBtn	~	Class  /Script/UE_game.UIButton | {'offset': 680, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:ExecuteUbergraph_TouchRoleDragRectItem:EntryPoint | {'offset': 0, 'size': 4, 'ptype': 'IntProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:MouseDragMoved | {'offset': 752, 'size': 16, 'ptype': 'MulticastInlineDelegateProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:MouseDragMoved__DelegateSignature:InMouseEvent	~	ScriptStruct  /Script/SlateCore.PointerEvent | {'offset': 56, 'size': 112, 'ptype': 'StructProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:MouseDragMoved__DelegateSignature:MyGeometry	~	ScriptStruct  /Script/SlateCore.Geometry | {'offset': 0, 'size': 56, 'ptype': 'StructProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:MouseDragMoved__DelegateSignature:OutOperation	~	Class  /Script/UMG.DragDropOperation | {'offset': 168, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchEnded | {'offset': 704, 'size': 16, 'ptype': 'MulticastInlineDelegateProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchEnded__DelegateSignature:InTouchEvent	~	ScriptStruct  /Script/SlateCore.PointerEvent | {'offset': 56, 'size': 112, 'ptype': 'StructProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchEnded__DelegateSignature:MyGeometry	~	ScriptStruct  /Script/SlateCore.Geometry | {'offset': 0, 'size': 56, 'ptype': 'StructProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchGesture | {'offset': 736, 'size': 16, 'ptype': 'MulticastInlineDelegateProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchGesture__DelegateSignature:GestureEvent	~	ScriptStruct  /Script/SlateCore.PointerEvent | {'offset': 56, 'size': 112, 'ptype': 'StructProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchGesture__DelegateSignature:MyGeometry	~	ScriptStruct  /Script/SlateCore.Geometry | {'offset': 0, 'size': 56, 'ptype': 'StructProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchMoved | {'offset': 720, 'size': 16, 'ptype': 'MulticastInlineDelegateProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchMoved__DelegateSignature:InTouchEvent	~	ScriptStruct  /Script/SlateCore.PointerEvent | {'offset': 56, 'size': 112, 'ptype': 'StructProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchMoved__DelegateSignature:MyGeometry	~	ScriptStruct  /Script/SlateCore.Geometry | {'offset': 0, 'size': 56, 'ptype': 'StructProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchStarted | {'offset': 688, 'size': 16, 'ptype': 'MulticastInlineDelegateProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchStarted__DelegateSignature:InTouchEvent	~	ScriptStruct  /Script/SlateCore.PointerEvent | {'offset': 56, 'size': 112, 'ptype': 'StructProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchStarted__DelegateSignature:MyGeometry	~	ScriptStruct  /Script/SlateCore.Geometry | {'offset': 0, 'size': 56, 'ptype': 'StructProperty'}
+/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:UberGraphFrame	~	ScriptStruct  /Script/Engine.PointerToUberGraphFrame | {'offset': 672, 'size': 8, 'ptype': 'StructProperty'}
+/Game/BluePrint/UI/Tips/TipBaseAffixItem.TipBaseAffixItem_C:LineImage	~	Class  /Script/UE_game.UIImage | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipBaseAffixItem.TipBaseAffixItem_C:TipsBaseAttrItem	~	WidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Tips/TipsBaseAttrItem.TipsBaseAttrItem_C | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipCorrodeItem.TipCorrodeItem_C:TipCorrosionCartTagItem_Con	~	WidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Tips/TipCorrosionCartTagItem.TipCorrosionCartTagItem_C | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipCorrodeItem.TipCorrodeItem_C:UIImage	~	Class  /Script/UE_game.UIImage | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipCorrodeItem.TipCorrodeItem_C:UIImage_238	~	Class  /Script/UE_game.UIImage | {'offset': 648, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipCorrodeItem.TipCorrodeItem_C:UIImage_395	~	Class  /Script/UE_game.UIImage | {'offset': 656, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipCorrosionCartTagItem.TipCorrosionCartTagItem_C:UIRichTextBlock_Tag	~	Class  /Script/UE_game.UIRichTextBlock | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipEnhantAffixItem.TipEnhantAffixItem_C:UIImage_Icon	~	Class  /Script/UE_game.UIImage | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipEnhantAffixItem.TipEnhantAffixItem_C:UIRichTextBlock_AffixDesc	~	Class  /Script/UE_game.UIRichTextBlock | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipEnhantAffixItem.TipEnhantAffixItem_C:UIShrinkTextBlock_Tip	~	Class  /Script/UE_game.UIRichTextBlock | {'offset': 648, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:DamageDesBox	~	Class  /Script/UMG.VerticalBox | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:DamageDetailSwitcher	~	Class  /Script/UMG.WidgetSwitcher | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:DamageOrInfoSwitcher	~	Class  /Script/UMG.WidgetSwitcher | {'offset': 648, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:ForgeOverwriteContentSlot	~	Class  /Script/UMG.NamedSlot | {'offset': 656, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:FpsGuideBtn	~	Class  /Script/UE_game.UIButton | {'offset': 664, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:UIImage_975	~	Class  /Script/UE_game.UIImage | {'offset': 672, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:UIImage_Def	~	Class  /Script/UE_game.UIImage | {'offset': 680, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipsAttrChildItem.TipsAttrChildItem_C:UIRichTextBlock_AffixDesc	~	Class  /Script/UE_game.UIRichTextBlock | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipsBaseAttrItem.TipsBaseAttrItem_C:TipsBaseAttrItemAnim	~	Class  /Script/UMG.WidgetAnimation | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipsBaseAttrItem.TipsBaseAttrItem_C:UIImage_Select	~	Class  /Script/UE_game.UIImage | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipsEnergyItem.TipsEnergyItem_C:ProgressBar_Cost	~	Class  /Script/UMG.ProgressBar | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipsEnergyItem.TipsEnergyItem_C:UIImage_BG	~	Class  /Script/UE_game.UIImage | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/BluePrint/UI/Tips/TipsEnergyItem.TipsEnergyItem_C:UIImage_flag	~	Class  /Script/UE_game.UIImage | {'offset': 648, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:BezelBg	~	Class  /Script/UE_game.UIImage | {'offset': 864, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:EquipActionView	~	WidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipActionView.EquipActionView_C | {'offset': 872, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:PCBagMain	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C | {'offset': 880, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:UIButton_CloseTip	~	Class  /Script/UE_game.UIButton | {'offset': 888, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:UIButton_CloseTip1	~	Class  /Script/UE_game.UIButton | {'offset': 896, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:UIButton_Pro	~	Class  /Script/UE_game.UIButton | {'offset': 904, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:WidgetSwitcher_Left	~	Class  /Script/UMG.WidgetSwitcher | {'offset': 912, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagDreamForgeItem.PCBagDreamForgeItem_C:TipsBtn	~	Class  /Script/UE_game.UIButton | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagDreamForgeItem.PCBagDreamForgeItem_C:UIImage_0	~	Class  /Script/UE_game.UIImage | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:BindedGamepadKey	~	Enum  /Script/UE_game.EUIGamepadKey | {'offset': 672, 'size': 1, 'ptype': 'EnumProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:EquipItem	~	WidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipItem.EquipItem_C | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:EquipPosMarkItem	~	WidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipPosMarkItem.EquipPosMarkItem_C | {'offset': 648, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:EquipSelectItem	~	WidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipSelectItem.EquipSelectItem_C | {'offset': 656, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:EquipSlotItem	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlotBgItem.PCBagEquipSlotBgItem_C | {'offset': 664, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:ExecuteUbergraph_PCBagEquipSlot:EntryPoint | {'offset': 0, 'size': 4, 'ptype': 'IntProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:UberGraphFrame	~	ScriptStruct  /Script/Engine.PointerToUberGraphFrame | {'offset': 632, 'size': 8, 'ptype': 'StructProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlotBgItem.PCBagEquipSlotBgItem_C:Icon	~	Class  /Script/UE_game.UIImage | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:Frame1	~	Class  /Script/UE_game.UIImage | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:Frame2	~	Class  /Script/UE_game.UIImage | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:Frame3	~	Class  /Script/UE_game.UIImage | {'offset': 648, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:Frame4	~	Class  /Script/UE_game.UIImage | {'offset': 656, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:Frame5	~	Class  /Script/UE_game.UIImage | {'offset': 664, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:Frame6	~	Class  /Script/UE_game.UIImage | {'offset': 672, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBox0	~	Class  /Script/UMG.CheckBox | {'offset': 680, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBox1	~	Class  /Script/UMG.CheckBox | {'offset': 688, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBox100	~	Class  /Script/UMG.CheckBox | {'offset': 696, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBox2	~	Class  /Script/UMG.CheckBox | {'offset': 704, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBox3	~	Class  /Script/UMG.CheckBox | {'offset': 712, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBox4	~	Class  /Script/UMG.CheckBox | {'offset': 720, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBtn0	~	Class  /Script/UE_game.UIButton | {'offset': 728, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBtn1	~	Class  /Script/UE_game.UIButton | {'offset': 736, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBtn100	~	Class  /Script/UE_game.UIButton | {'offset': 744, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBtn2	~	Class  /Script/UE_game.UIButton | {'offset': 752, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBtn3	~	Class  /Script/UE_game.UIButton | {'offset': 760, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBtn4	~	Class  /Script/UE_game.UIButton | {'offset': 768, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:HeroImage	~	Class  /Script/UE_game.UIImage | {'offset': 864, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:KeyInd	~	Class  /Script/UE_game.UIGamepadIcon | {'offset': 872, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:KeyInd_1	~	Class  /Script/UE_game.UIGamepadIcon | {'offset': 880, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:PCBagDreamForgeItem	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagDreamForgeItem.PCBagDreamForgeItem_C | {'offset': 888, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:PCBagHeroShowItem	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagHeroShowItem.PCBagHeroShowItem_C | {'offset': 896, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:PCUIBagEquipItem	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C | {'offset': 904, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:PCUIGridListView	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C | {'offset': 912, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:TouchRectItem	~	WidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C | {'offset': 920, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIButton_AniPro	~	Class  /Script/UE_game.UIButton | {'offset': 928, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIButton_Close	~	Class  /Script/UE_game.UIButton | {'offset': 936, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIButton_CloseTip	~	Class  /Script/UE_game.UIButton | {'offset': 944, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIButton_Pro	~	Class  /Script/UE_game.UIButton | {'offset': 952, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIButton_RoleInfo	~	Class  /Script/UE_game.UIButton | {'offset': 968, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIButton_pro_Change	~	Class  /Script/UE_game.UIButton | {'offset': 960, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIImage_152	~	Class  /Script/UE_game.UIImage | {'offset': 984, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIImage_51	~	Class  /Script/UE_game.UIImage | {'offset': 976, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIImage_BG	~	Class  /Script/UE_game.UIImage | {'offset': 992, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIImage_BG2	~	Class  /Script/UE_game.UIImage | {'offset': 1008, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIImage_BG_1	~	Class  /Script/UE_game.UIImage | {'offset': 1000, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIImage_RoleInfo	~	Class  /Script/UE_game.UIImage | {'offset': 1016, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C:Button_Tab	~	Class  /Script/UE_game.UIButton | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C:KeyInd	~	Class  /Script/UE_game.UIGamepadIcon | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C:RedDot	~	WidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/RedDot/RedDot.RedDot_C | {'offset': 648, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C:TabIcon	~	Class  /Script/UE_game.UIImage | {'offset': 656, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C:UIImage_Arrow	~	Class  /Script/UE_game.UIImage | {'offset': 664, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C:UIImage_Grow	~	Class  /Script/UE_game.UIImage | {'offset': 672, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCEquipItem.PCEquipItem_C:EquipItem	~	WidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipItem.EquipItem_C | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCEquipItem.PCEquipItem_C:UIImage_Empty	~	Class  /Script/UE_game.UIImage | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot1	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot10	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot2	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C | {'offset': 648, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot3	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C | {'offset': 656, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot4	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C | {'offset': 664, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot5	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C | {'offset': 672, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot6	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C | {'offset': 680, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot7	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C | {'offset': 688, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot8	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C | {'offset': 696, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot9	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C | {'offset': 704, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:KeyInd	~	Class  /Script/UE_game.UIGamepadIcon | {'offset': 632, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:KeyInd_1	~	Class  /Script/UE_game.UIGamepadIcon | {'offset': 640, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:KeyInd_2	~	Class  /Script/UE_game.UIGamepadIcon | {'offset': 648, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:ListView100	~	Class  /Script/UE_game.UIListView | {'offset': 656, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:ListView101	~	Class  /Script/UE_game.UIListView | {'offset': 664, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:ListView102	~	Class  /Script/UE_game.UIListView | {'offset': 672, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:ListView103	~	Class  /Script/UE_game.UIListView | {'offset': 680, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:PCBagFilterRarityItem	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C | {'offset': 688, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:PCBagTabButtonItem100	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C | {'offset': 696, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:PCBagTabButtonItem101	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C | {'offset': 704, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:PCBagTabButtonItem102	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C | {'offset': 712, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:PCBagTabButtonItem103	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C | {'offset': 720, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:UIButton_Arrage	~	Class  /Script/UE_game.UIButton | {'offset': 728, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:UIButton_Cancel	~	Class  /Script/UE_game.UIButton | {'offset': 736, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:UIButton_Lock	~	Class  /Script/UE_game.UIButton | {'offset': 744, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:UIButton_OneKey	~	Class  /Script/UE_game.UIButton | {'offset': 752, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:UIButton_Recycle	~	Class  /Script/UE_game.UIButton | {'offset': 760, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:UIImage_41	~	Class  /Script/UE_game.UIImage | {'offset': 768, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:UIImage_Lock	~	Class  /Script/UE_game.UIImage | {'offset': 776, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:UIImage_Recycle	~	Class  /Script/UE_game.UIImage | {'offset': 784, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:WidgetSwitcher_Mid	~	Class  /Script/UMG.WidgetSwitcher | {'offset': 792, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListViewItem.PCUIGridListViewItem_C:PCEquipItem_1	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCEquipItem.PCEquipItem_C | {'offset': 656, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListViewItem.PCUIGridListViewItem_C:PCEquipItem_2	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCEquipItem.PCEquipItem_C | {'offset': 664, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListViewItem.PCUIGridListViewItem_C:PCEquipItem_3	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCEquipItem.PCEquipItem_C | {'offset': 672, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListViewItem.PCUIGridListViewItem_C:PCEquipItem_4	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCEquipItem.PCEquipItem_C | {'offset': 680, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListViewItem.PCUIGridListViewItem_C:PCEquipItem_5	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCEquipItem.PCEquipItem_C | {'offset': 688, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListViewItem.PCUIGridListViewItem_C:PCEquipItem_6	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCEquipItem.PCEquipItem_C | {'offset': 696, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListViewItem.PCUIGridListViewItem_C:PCEquipItem_7	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCEquipItem.PCEquipItem_C | {'offset': 704, 'size': 8, 'ptype': 'ObjectProperty'}
+/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListViewItem.PCUIGridListViewItem_C:PCEquipItem_8	~	WidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCEquipItem.PCEquipItem_C | {'offset': 712, 'size': 8, 'ptype': 'ObjectProperty'}
+
+=== FIELDS REMOVED (T0-T1) ===
+
+=== FIELDS CHANGED (same key, different offset/size/type) ===

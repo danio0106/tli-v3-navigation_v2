@@ -1,0 +1,60 @@
+Here's a detailed breakdown of the map selection process as I understand it from building V1:
+
+Map Selection Process — Detailed Walkthrough
+Step 1: Approaching the Map Device (from Hideout)
+The player is in the hideout area called "Ember's Rest"
+The location text "Hideout - Ember's Rest" appears in the top-left of the screen
+The bot needs to walk to the Glacial Abyss map device — a physical object in the hideout
+Once close enough, an interact prompt (F icon) appears on screen
+Press F to open the map device UI
+Step 2: Glacial Abyss Zone Selection
+After interacting with the map device, a zone selection screen opens
+There's a specific button/area to click to enter the Glacial Abyss zone (coordinates were stored as glacial_abyss_click at approximately [530, 599])
+This opens the main card selection hex grid
+Step 3: The Hex Card Grid
+The map selection screen shows a hexagonal grid of map cards
+There are 12 possible maps, each displayed as a hex-shaped card:
+High Court Maze, Shadow Outpost, Rainforest of Divine Legacy, Grimwind Woods, Blustery Canyon, Swirling Mines, Wall of the Last Breath, Demiman Village, Defiled Side Chamber, Deserted District, Singing Sand, Abandoned Mines
+Not all cards are active at once — only some cards are selectable at any given time
+Active cards have a visible glow effect around them (colored border/aura), inactive cards appear dim
+Cards have different rarities indicated by glow color:
+Rainbow = rarest (high hue variance)
+Orange/Golden = rare
+Purple = uncommon
+Blue = common
+The bot preference is to pick the rarest available card (configurable)
+Step 4: Clicking a Card
+Each card has a known position on screen (stored as top vertex coordinates of the hex)
+The bot clicks the card at its center (top vertex Y + 58 pixels offset)
+After clicking, a detail panel opens on the right side of the screen showing map info
+If the detail panel doesn't open, the click missed — retry
+Step 5: Configuring Affixes
+Once a card is selected and the detail panel is open, there's an affix system
+Affixes are modifiers that change the map's difficulty and rewards
+There's an "Add Affix" button (approximately [120, 819]) that can be clicked multiple times
+The configured limit was 5 affixes by default (stored as affix_count)
+There was an option to detect and avoid red (dangerous) affixes but it was unreliable in V1
+There's also a "Reset Affix" button (approximately [380, 819]) to clear and re-roll
+Step 6: Opening the Portal
+After affixes are set, click the "Open Portal" button (approximately [1758, 998])
+The same screen position is used for both "Next" and "Open Portal" buttons — they appear in the same place at different stages
+After clicking, the UI closes and a portal appears in the hideout
+Step 7: Entering the Portal
+The bot needs to walk toward the portal that spawned in the hideout
+When close enough, the interact prompt (F icon) appears
+Press F to enter the portal
+A loading screen follows, then the bot is in the map
+Key Coordinates Summary (for 1920x1080)
+Glacial Abyss click: (530, 599)
+Next / Open Portal button: (1758, 998)
+Add Affix button: (120, 819)
+Reset Affix button: (380, 819)
+Card positions: 12 hex cards spread across the screen, each stored as top vertex coordinates
+What V2 Needs to Handle Differently
+With memory reading, instead of detecting card glow colors via pixel analysis, you'd ideally:
+
+Read which cards are available/active directly from memory
+Read card rarity from game data
+Read affix details from memory instead of OCR
+Know the portal entity position instead of scanning for visual prompts
+But the clicking and UI interaction (pressing buttons, selecting cards) will still require mouse input at screen coordinates, so those positions are still relevant even with memory reading.

@@ -1,0 +1,449 @@
+{
+  "generated": "2026-03-01T00:10:36.585533",
+  "files": [
+    {
+      "path": "c:\\Users\\Daniel\\Documents\\GitHub\\tli-v3\\attached_assets\\[torchlight_infinite]_Names_Dump_1771868490080.txt",
+      "total_lines": 162600,
+      "counts": {
+        "EMapCustomTrap": 70,
+        "EMapCustomTrapS": 40,
+        "MapGamePlay": 25,
+        "MapCustomTrap": 76,
+        "MapRoleMonster": 2,
+        "MapServant": 2,
+        "FightMgr": 5,
+        "EGameplay": 227,
+        "EMonster": 31,
+        "EServant": 10,
+        "EEntity": 9,
+        "ueComponents": 2,
+        "EAnimeComponent": 5,
+        "SkeletalMesh": 224,
+        "AnimBlueprintGeneratedClass": 5,
+        "CfgInfo": 5,
+        "ECfgComponent": 5,
+        "SpawnIndex": 0,
+        "bValid": 2,
+        "MapUnit": 23,
+        "MapRole": 6,
+        "EBuffComponent": 5,
+        "E_s11_daizibao": 1,
+        "E_s11_reinforce": 1,
+        "JiaoDuJun": 732,
+        "ShaGu": 87,
+        "Outlaw": 6,
+        "Bounty": 65,
+        "Carjack": 0,
+        "Sandlord": 0,
+        "通缉": 0,
+        "大亨": 0,
+        "押运": 0,
+        "保镖": 0,
+        "沙海": 0,
+        "首领": 0
+      },
+      "samples": {
+        "EMapCustomTrap": [
+          "L3837: [00000EF3] [0001136D] EMapCustomTrap",
+          "L3838: [00000EF4] [00011375] EMapCustomTrapAttach",
+          "L3839: [00000EF5] [00011380] EMapCustomTrapS5",
+          "L3840: [00000EF6] [00011389] EMapCustomTrapS7",
+          "L3841: [00000EF7] [00011392] EMapCustomTrapS10"
+        ],
+        "EMapCustomTrapS": [
+          "L3839: [00000EF5] [00011380] EMapCustomTrapS5",
+          "L3840: [00000EF6] [00011389] EMapCustomTrapS7",
+          "L3841: [00000EF7] [00011392] EMapCustomTrapS10",
+          "L3842: [00000EF8] [0001139C] EMapCustomTrapS11",
+          "L5044: [000013AA] [00016811] AEMapCustomTrapS10"
+        ],
+        "MapGamePlay": [
+          "L3876: [00000F1A] [0001148D] ERoleMapGamePlay",
+          "L4588: [000011E2] [00014807] /Script/UE_game/EMapGamePlayState",
+          "L5647: [00001605] [0001937B] UERoleMapGamePlayComponent",
+          "L5648: [00001606] [00019389] /Script/UE_game/ERoleMapGamePlayComponent",
+          "L5649: [00001607] [0001939F] /Script/UE_game/Default__ERoleMapGamePlayComponent"
+        ],
+        "MapCustomTrap": [
+          "L3837: [00000EF3] [0001136D] EMapCustomTrap",
+          "L3838: [00000EF4] [00011375] EMapCustomTrapAttach",
+          "L3839: [00000EF5] [00011380] EMapCustomTrapS5",
+          "L3840: [00000EF6] [00011389] EMapCustomTrapS7",
+          "L3841: [00000EF7] [00011392] EMapCustomTrapS10"
+        ],
+        "MapRoleMonster": [
+          "L64923: [0000FD91] [000E6BCC] MapRoleMonster",
+          "L64924: [0000FD92] [000E6BD4] MapRoleMonster_Key"
+        ],
+        "MapServant": [
+          "L64877: [0000FD63] [000E6A52] MapServant",
+          "L64878: [0000FD64] [000E6A58] MapServant_Key"
+        ],
+        "FightMgr": [
+          "L5894: [000016FC] [0001A5BE] UFightMgr",
+          "L5895: [000016FD] [0001A5C4] /Script/UE_game/FightMgr",
+          "L5896: [000016FE] [0001A5D1] /Script/UE_game/Default__FightMgr",
+          "L25487: [00006385] [00066D62] FightMgr",
+          "L73456: [00011EE6] [00100695] Default__FightMgr"
+        ],
+        "EGameplay": [
+          "L3819: [00000EE1] [000112D1] EGameplayEternalYiJie",
+          "L3820: [00000EE2] [000112DD] EGameplayEternalMiniMap",
+          "L3821: [00000EE3] [000112EA] EGameplayEternalBigMap",
+          "L4589: [000011E3] [00014819] /Script/UE_game/EGameplayUpdateProgressUI",
+          "L4590: [000011E4] [0001482F] /Script/UE_game/EGameplaySimpleUITip"
+        ],
+        "EMonster": [
+          "L4555: [000011C1] [00014585] /Script/UE_game/EMonsterLocationShape",
+          "L4570: [000011D0] [0001469B] /Script/UE_game/EMonsterSourceExtraInfoFilterOption",
+          "L4619: [00001201] [00014A34] /Script/UE_game/EMonsterShareState",
+          "L5292: [000014A2] [00017E60] AEMonster",
+          "L5293: [000014A3] [00017E66] /Script/UE_game/EMonster"
+        ],
+        "EServant": [
+          "L3889: [00000F27] [000114FE] EServant",
+          "L5688: [0000162E] [0001968D] AEServant",
+          "L5689: [0000162F] [00019693] /Script/UE_game/EServant",
+          "L5690: [00001630] [000196A0] /Script/UE_game/Default__EServant",
+          "L5691: [00001631] [000196B2] UEServantComponent"
+        ],
+        "EEntity": [
+          "L4752: [00001286] [000152C3] AEEntity",
+          "L4753: [00001287] [000152C8] /Script/UE_game/EEntity",
+          "L4754: [00001288] [000152D5] /Script/UE_game/Default__EEntity",
+          "L24421: [00005F5B] [00063EE3] EEntity",
+          "L39312: [00009986] [0008FFED] UEEntityDelegate__DelegateSignature"
+        ],
+        "ueComponents": [
+          "L39320: [0000998E] [00090064] ueComponents",
+          "L39321: [0000998F] [0009006B] ueComponents_Key"
+        ],
+        "EAnimeComponent": [
+          "L4445: [00001153] [00013D1D] UEAnimeComponent",
+          "L4446: [00001154] [00013D26] /Script/UE_game/EAnimeComponent",
+          "L4447: [00001155] [00013D37] /Script/UE_game/Default__EAnimeComponent",
+          "L24428: [00005F62] [00063F12] EAnimeComponent",
+          "L72870: [00011C9C] [000FD98C] Default__EAnimeComponent"
+        ],
+        "SkeletalMesh": [
+          "L991: [000003D5] [000043AE] UHoudiniInputSkeletalMesh",
+          "L992: [000003D6] [000043BC] /Script/HoudiniEngineRuntime/HoudiniInputSkeletalMesh",
+          "L993: [000003D7] [000043D8] /Script/HoudiniEngineRuntime/Default__HoudiniInputSkeletalMesh",
+          "L4028: [00000FB2] [00011E8D] AArtSkeletalMeshActor",
+          "L4029: [00000FB3] [00011E99] /Script/UE_game/ArtSkeletalMeshActor"
+        ],
+        "AnimBlueprintGeneratedClass": [
+          "L13271: [000033CD] [00039F90] UAnimBlueprintGeneratedClass",
+          "L13272: [000033CE] [00039F9F] /Script/Engine/AnimBlueprintGeneratedClass",
+          "L13273: [000033CF] [00039FB5] /Script/Engine/Default__AnimBlueprintGeneratedClass",
+          "L28279: [00006E6D] [0006E633] AnimBlueprintGeneratedClass",
+          "L70407: [000112FD] [000F38A6] Default__AnimBlueprintGeneratedClass"
+        ],
+        "CfgInfo": [
+          "L6119: [000017DD] [0001B395] /Script/UE_game/AutoAimCfgInfo",
+          "L6120: [000017DE] [0001B3A5] AutoAimCfgInfo",
+          "L6179: [00001819] [0001B6BD] /Script/UE_game/CfgInfo",
+          "L6180: [0000181A] [0001B6CA] CfgInfo",
+          "L24526: [00005FC4] [00064426] CalcArtResFromCfgInfo"
+        ],
+        "ECfgComponent": [
+          "L4523: [000011A1] [00014354] UECfgComponent",
+          "L4524: [000011A2] [0001435C] /Script/UE_game/ECfgComponent",
+          "L4525: [000011A3] [0001436C] /Script/UE_game/Default__ECfgComponent",
+          "L24525: [00005FC3] [0006441E] ECfgComponent",
+          "L72859: [00011C91] [000FD8E3] Default__ECfgComponent"
+        ],
+        "SpawnIndex": [],
+        "bValid": [
+          "L20534: [0000502C] [000590D7] bValidateTextureFormats",
+          "L39319: [0000998D] [00090060] bValid"
+        ],
+        "MapUnit": [
+          "L4605: [000011F3] [0001494B] /Script/UE_game/EMapUnitType",
+          "L40357: [00009D9B] [00094512] EMapUnitType",
+          "L40358: [00009D9C] [00094519] EMapUnitType::E_none",
+          "L40359: [00009D9D] [00094524] EMapUnitType::E_static_portal",
+          "L40360: [00009D9E] [00094534] EMapUnitType::E_dynamic_portal"
+        ],
+        "MapRole": [
+          "L64923: [0000FD91] [000E6BCC] MapRoleMonster",
+          "L64924: [0000FD92] [000E6BD4] MapRoleMonster_Key",
+          "L64925: [0000FD93] [000E6BDE] MapRolePlayer",
+          "L64926: [0000FD94] [000E6BE6] MapRolePlayer_Key",
+          "L64927: [0000FD95] [000E6BF0] MapRole"
+        ],
+        "EBuffComponent": [
+          "L4501: [0000118B] [000141EB] UEBuffComponent",
+          "L4502: [0000118C] [000141F4] /Script/UE_game/EBuffComponent",
+          "L4503: [0000118D] [00014204] /Script/UE_game/Default__EBuffComponent",
+          "L24503: [00005FAD] [00064352] EBuffComponent",
+          "L72890: [00011CB0] [000FDB1E] Default__EBuffComponent"
+        ],
+        "E_s11_daizibao": [
+          "L42975: [0000A7D5] [0009F920] EConfigCharBuff::E_s11_daizibao"
+        ],
+        "E_s11_reinforce": [
+          "L42991: [0000A7E5] [0009FA28] EConfigCharBuff::E_s11_reinforce"
+        ],
+        "JiaoDuJun": [
+          "L80147: [00013904] [00115F58] /Game/Art/Characters/Monster/JiaoDuJunQingJia/Meshes/SM_JiaoDuJun_Weapon_Axe.SM_JiaoDuJun_Weapon_Axe",
+          "L80149: [00013906] [00115F8E] /Game/Art/Characters/Monster/JiaoDuJunQingJia/Meshes/SM_JiaoDuJun_Weapon_Spear.SM_JiaoDuJun_Weapon_Spear",
+          "L80151: [00013908] [00115FC6] /Game/Art/Characters/Monster/JiaoDuJunQingJia/Meshes/SM_JiaoDuJun_Weapon_Sword.SM_JiaoDuJun_Weapon_Sword",
+          "L80153: [0001390A] [00115FFE] /Game/Art/Characters/Monster/JiaoDuJunZhongJia/Meshes/SM_JiaoDuJun_Weapon_Hammer.SM_JiaoDuJun_Weapon_Hammer",
+          "L80155: [0001390C] [00116038] /Game/Art/Characters/Monster/JiaoDuJunQingJia/Meshes/SM_JiaoDuJun_Weapon_Axe_02.SM_JiaoDuJun_Weapon_Axe_02"
+        ],
+        "ShaGu": [
+          "L86955: [0001539C] [00143BC0] /Game/Art/Effect/Particle/Monster/GuChong/ShaGu/P_Fx_SKL_ShaGu_BoSha_Push.P_Fx_SKL_ShaGu_BoSha_Push",
+          "L86959: [000153A0] [00143C02] /Game/Art/Effect/Particle/Monster/GuChong/ShaGu/P_Fx_SKL_ShaGu_LandBreak.P_Fx_SKL_ShaGu_LandBreak",
+          "L96735: [000179D0] [0018B14A] /Game/SimplifiedMeshes/Art/Characters/Monster/GuChongShaGu/Meshes/SK_GuChongShaGu_Skin_xdsimplify.SK_GuChongShaGu_Skin_xdsimplify",
+          "L96736: [000179D1] [0018B18C] /Game/SimplifiedMeshes/Art/Characters/Monster/GuChongShaGu/Meshes/SK_GuChongShaGu_Skin_xdsimplify",
+          "L96737: [000179D2] [0018B1BE] /Game/Art/Characters/Monster/GuChongShaGu/Meshes/SK_GuChongShaGu_Skin_Physics.SK_GuChongShaGu_Skin_Physics"
+        ],
+        "Outlaw": [
+          "L125484: [0001EA1D] [00221E3E] /Game/Art/UI/Textures/Common/Icon/Compass/128/UI_Compass_GameplayOutlaw_1_1_Icon_128.UI_Compass_GameplayOutlaw_1_1_Icon",
+          "L125485: [0001EA1E] [00221E7B] /Game/Art/UI/Textures/Common/Icon/Compass/128/UI_Compass_GameplayOutlaw_1_1_Icon",
+          "L125486: [0001EA1F] [00221EA4] UI_Compass_GameplayOutlaw_1_1_Icon",
+          "L125487: [0001EA20] [00221EB6] /Game/Art/UI/Textures/Common/Icon/Compass/128/UI_Compass_GameplayOutlaw_2_2_Icon_128.UI_Compass_GameplayOutlaw_2_2_Icon",
+          "L125488: [0001EA21] [00221EF3] /Game/Art/UI/Textures/Common/Icon/Compass/128/UI_Compass_GameplayOutlaw_2_2_Icon"
+        ],
+        "Bounty": [
+          "L40188: [00009CF2] [000939B8] ELevelStatusType::E_S11BountyTaskEnable",
+          "L40189: [00009CF3] [000939CD] ELevelStatusType::E_S11BountyTaskUpdate",
+          "L40248: [00009D2E] [00093E6F] EGameplayViewType::E_S11_BountyTaskEnable",
+          "L40249: [00009D2F] [00093E85] EGameplayViewType::E_S11_BountyTaskUpdate",
+          "L41072: [0000A066] [00096A9D] EGameMasterGamePlayEvent::E_S11_FinishBountyTaskSuccess"
+        ],
+        "Carjack": [],
+        "Sandlord": [],
+        "通缉": [],
+        "大亨": [],
+        "押运": [],
+        "保镖": [],
+        "沙海": [],
+        "首领": []
+      }
+    },
+    {
+      "path": "c:\\Users\\Daniel\\Documents\\GitHub\\tli-v3\\attached_assets\\[torchlight_infinite]_Objects_Dump_1771868490079.txt",
+      "total_lines": 171600,
+      "counts": {
+        "EMapCustomTrap": 224,
+        "EMapCustomTrapS": 103,
+        "MapGamePlay": 27,
+        "MapCustomTrap": 233,
+        "MapRoleMonster": 3,
+        "MapServant": 3,
+        "FightMgr": 191,
+        "EGameplay": 230,
+        "EMonster": 45,
+        "EServant": 33,
+        "EEntity": 145,
+        "ueComponents": 3,
+        "EAnimeComponent": 214,
+        "SkeletalMesh": 9511,
+        "AnimBlueprintGeneratedClass": 33,
+        "CfgInfo": 24,
+        "ECfgComponent": 91,
+        "SpawnIndex": 0,
+        "bValid": 7,
+        "MapUnit": 24,
+        "MapRole": 9,
+        "EBuffComponent": 19,
+        "E_s11_daizibao": 1,
+        "E_s11_reinforce": 1,
+        "JiaoDuJun": 369,
+        "ShaGu": 30,
+        "Outlaw": 0,
+        "Bounty": 51,
+        "Carjack": 0,
+        "Sandlord": 0,
+        "通缉": 0,
+        "大亨": 0,
+        "押运": 0,
+        "保镖": 0,
+        "沙海": 0,
+        "首领": 0
+      },
+      "samples": {
+        "EMapCustomTrap": [
+          "L6284: [ Index:000000461] (Size:0x00230) [UObject:000001CD5A101F00] Class  /Script/UE_game.EMapCustomTrap",
+          "L6285: [ Index:000000462] (Size:0x00230) [UObject:000001CD5A101CC0] Class  /Script/UE_game.EMapCustomTrap2",
+          "L6286: [ Index:000000463] (Size:0x00230) [UObject:000001CD5A101A80] Class  /Script/UE_game.EMapCustomTrap3",
+          "L6287: [ Index:000000464] (Size:0x00230) [UObject:000001CD5A101840] Class  /Script/UE_game.EMapCustomTrapAttach",
+          "L6288: [ Index:000000465] (Size:0x00230) [UObject:000001CD5A101600] Class  /Script/UE_game.EMapCustomTrapAttachComponent"
+        ],
+        "EMapCustomTrapS": [
+          "L6300: [ Index:000000467] (Size:0x00230) [UObject:000001CD5A101180] Class  /Script/UE_game.EMapCustomTrapS10",
+          "L6301: [ Index:000000468] (Size:0x00230) [UObject:000001CD5A100F40] Class  /Script/UE_game.EMapCustomTrapS10Component",
+          "L6302: [ Index:000000469] (Size:0x00230) [UObject:000001CD5A100D00] Class  /Script/UE_game.EMapCustomTrapS11",
+          "L6303: [ Index:00000046A] (Size:0x00230) [UObject:000001CD5A100AC0] Class  /Script/UE_game.EMapCustomTrapS11Component",
+          "L6304: [ Index:00000046B] (Size:0x00230) [UObject:000001CD5A100880] Class  /Script/UE_game.EMapCustomTrapS5"
+        ],
+        "MapGamePlay": [
+          "L7258: [Offset:000000690] (Size:0x00050) [ FField:000001CD21AD37C0] MapProperty  /Script/UE_game.EQAInfoComponent:AffixesSourceTypeMapGamePlay",
+          "L7259: [Offset:000000000] (Size:0x00008) [ FField:000001CD21B9CA80] NameProperty  /Script/UE_game.EQAInfoComponent:AffixesSourceTypeMapGamePlay.AffixesSourceTypeMapGamePlay_Key",
+          "L7260: [Offset:000000008] (Size:0x00028) [ FField:000001CD21B9CA00] StructProperty  /Script/UE_game.EQAInfoComponent:AffixesSourceTypeMapGamePlay.AffixesSourceTypeMapGamePlay\t~\tScriptStruct  /Script/UE_game.QAffixData",
+          "L7384: [Offset:0000011B1] (Size:0x00001) [ FField:000001CD21B99980] BoolProperty  /Script/UE_game.EQAInfoComponent:bShowAffixMapGamePlay",
+          "L7432: [ Index:0000004DB] (Size:0x00230) [UObject:000001CD5A110AC0] Class  /Script/UE_game.ERoleMapGamePlayComponent"
+        ],
+        "MapCustomTrap": [
+          "L6284: [ Index:000000461] (Size:0x00230) [UObject:000001CD5A101F00] Class  /Script/UE_game.EMapCustomTrap",
+          "L6285: [ Index:000000462] (Size:0x00230) [UObject:000001CD5A101CC0] Class  /Script/UE_game.EMapCustomTrap2",
+          "L6286: [ Index:000000463] (Size:0x00230) [UObject:000001CD5A101A80] Class  /Script/UE_game.EMapCustomTrap3",
+          "L6287: [ Index:000000464] (Size:0x00230) [UObject:000001CD5A101840] Class  /Script/UE_game.EMapCustomTrapAttach",
+          "L6288: [ Index:000000465] (Size:0x00230) [UObject:000001CD5A101600] Class  /Script/UE_game.EMapCustomTrapAttachComponent"
+        ],
+        "MapRoleMonster": [
+          "L7841: [Offset:000000120] (Size:0x00050) [ FField:000001CD21AD6AC0] MapProperty  /Script/UE_game.FightMgr:MapRoleMonster",
+          "L7842: [Offset:000000000] (Size:0x00004) [ FField:000001CD21BCB900] IntProperty  /Script/UE_game.FightMgr:MapRoleMonster.MapRoleMonster_Key",
+          "L7843: [Offset:000000008] (Size:0x00008) [ FField:000001CD21BCB880] ObjectProperty  /Script/UE_game.FightMgr:MapRoleMonster.MapRoleMonster\t~\tClass  /Script/UE_game.EEntity"
+        ],
+        "MapServant": [
+          "L7910: [Offset:000000850] (Size:0x00050) [ FField:000001CD21AD4A80] MapProperty  /Script/UE_game.FightMgr:MapServant",
+          "L7911: [Offset:000000000] (Size:0x00004) [ FField:000001CD21BCAF00] IntProperty  /Script/UE_game.FightMgr:MapServant.MapServant_Key",
+          "L7912: [Offset:000000008] (Size:0x00008) [ FField:000001CD21BCAE80] ObjectProperty  /Script/UE_game.FightMgr:MapServant.MapServant\t~\tClass  /Script/UE_game.EEntity"
+        ],
+        "FightMgr": [
+          "L7833: [ Index:000000511] (Size:0x00230) [UObject:000001CD5A11BA40] Class  /Script/UE_game.FightMgr",
+          "L7834: [Offset:000000028] (Size:0x00050) [ FField:000001CD21BCB600] StructProperty  /Script/UE_game.FightMgr:FightPool\t~\tScriptStruct  /Script/UE_game.FightPool",
+          "L7835: [Offset:000000080] (Size:0x00050) [ FField:000001CD21AD6940] MapProperty  /Script/UE_game.FightMgr:MapRole",
+          "L7836: [Offset:000000000] (Size:0x00004) [ FField:000001CD21BCB700] IntProperty  /Script/UE_game.FightMgr:MapRole.MapRole_Key",
+          "L7837: [Offset:000000008] (Size:0x00008) [ FField:000001CD21BCB680] ObjectProperty  /Script/UE_game.FightMgr:MapRole.MapRole\t~\tClass  /Script/UE_game.EEntity"
+        ],
+        "EGameplay": [
+          "L5883: [ Index:00000041B] (Size:0x00230) [UObject:000001CD5A0F52C0] Class  /Script/UE_game.EGameplay",
+          "L5884: [ Index:00000041C] (Size:0x00230) [UObject:000001CD5A0F5080] Class  /Script/UE_game.EGameplayEternalBigMap",
+          "L5885: [ Index:00000041D] (Size:0x00230) [UObject:000001CD5A0F4E40] Class  /Script/UE_game.EGameplayEternalBigMapComponent",
+          "L5886: [ Index:00000041E] (Size:0x00230) [UObject:000001CD5A0F4C00] Class  /Script/UE_game.EGameplayEternalMiniMap",
+          "L5887: [ Index:00000041F] (Size:0x00230) [UObject:000001CD5A0FDE40] Class  /Script/UE_game.EGameplayEternalMiniMapComponent"
+        ],
+        "EMonster": [
+          "L6978: [ Index:0000004B4] (Size:0x00230) [UObject:000001CD5A10F700] Class  /Script/UE_game.EMonster",
+          "L24386: [ Index:00000132C] (Size:0x00060) [UObject:000001CD77FDC160] Enum  /Script/UE_game.EMonsterLocationShape",
+          "L24387: [    0000] [000001CD5518AC00] EMonsterLocationShape::E_none",
+          "L24388: [    0001] [000001CD5518AC10] EMonsterLocationShape::E_circle",
+          "L24389: [    0002] [000001CD5518AC20] EMonsterLocationShape::E_rectangle"
+        ],
+        "EServant": [
+          "L7490: [ Index:0000004E8] (Size:0x00230) [UObject:000001CD5A118200] Class  /Script/UE_game.EServant",
+          "L7491: [ Index:0000004E9] (Size:0x00230) [UObject:000001CD5A117FC0] Class  /Script/UE_game.EServantComponent",
+          "L78727: [ Index:000004DDF] (Size:0x00728) [UObject:000001CD238D21C0] EServant  /Script/UE_game.Default__EServant",
+          "L78728: [ Index:000004DE0] (Size:0x00210) [UObject:000001CD238CF280] SceneComponent  /Script/UE_game.Default__EServant:UserEntity",
+          "L78729: [ Index:000004DE1] (Size:0x00240) [UObject:000001CD238CF040] ECfgComponent  /Script/UE_game.Default__EServant:ECfg"
+        ],
+        "EEntity": [
+          "L5294: [Offset:0000000C0] (Size:0x00008) [ FField:000001CD55A62380] ObjectProperty  /Script/UE_game.EComponent:mEntity\t~\tClass  /Script/UE_game.EEntity",
+          "L5296: [ Index:0000003D4] (Size:0x00230) [UObject:000001CD5A0EF040] Class  /Script/UE_game.EEntity",
+          "L5297: [Offset:000000288] (Size:0x00050) [ FField:000001CD54866880] MapProperty  /Script/UE_game.EEntity:ueComponents",
+          "L5298: [Offset:000000000] (Size:0x00008) [ FField:000001CD5410AF60] ClassProperty  /Script/UE_game.EEntity:ueComponents.ueComponents_Key\t~\tClass  /Script/CoreUObject.Object",
+          "L5299: [Offset:000000008] (Size:0x00008) [ FField:000001CD55A61A80] ObjectProperty  /Script/UE_game.EEntity:ueComponents.ueComponents\t~\tClass  /Script/UE_game.EComponent"
+        ],
+        "ueComponents": [
+          "L5297: [Offset:000000288] (Size:0x00050) [ FField:000001CD54866880] MapProperty  /Script/UE_game.EEntity:ueComponents",
+          "L5298: [Offset:000000000] (Size:0x00008) [ FField:000001CD5410AF60] ClassProperty  /Script/UE_game.EEntity:ueComponents.ueComponents_Key\t~\tClass  /Script/CoreUObject.Object",
+          "L5299: [Offset:000000008] (Size:0x00008) [ FField:000001CD55A61A80] ObjectProperty  /Script/UE_game.EEntity:ueComponents.ueComponents\t~\tClass  /Script/UE_game.EComponent"
+        ],
+        "EAnimeComponent": [
+          "L5303: [ Index:0000003D7] (Size:0x00230) [UObject:000001CD5A0EEBC0] Class  /Script/UE_game.EAnimeComponent",
+          "L5304: [Offset:000000128] (Size:0x00008) [ FField:000001CD21A9DB80] ObjectProperty  /Script/UE_game.EAnimeComponent:SkeletalMesh\t~\tClass  /Script/UE_game.ESkeletalMeshComponent",
+          "L5305: [Offset:000000130] (Size:0x00004) [ FField:000001CD21A9DC00] FloatProperty  /Script/UE_game.EAnimeComponent:ResourceBaseScale",
+          "L5306: [Offset:000000134] (Size:0x0000C) [ FField:000001CD21A9DC80] StructProperty  /Script/UE_game.EAnimeComponent:ResourceBaseOffset\t~\tScriptStruct  /Script/CoreUObject.Vector",
+          "L5307: [Offset:000000140] (Size:0x0000C) [ FField:000001CD21A9DD00] StructProperty  /Script/UE_game.EAnimeComponent:AdditionalOffset\t~\tScriptStruct  /Script/CoreUObject.Vector"
+        ],
+        "SkeletalMesh": [
+          "L1233: [ Index:0000000BD] (Size:0x00230) [UObject:000001CD5A06DE40] Class  /Script/HoudiniEngineRuntime.HoudiniInputSkeletalMesh",
+          "L1720: [Offset:000000000] (Size:0x00008) [ FField:000001CD7FFCEE80] ObjectProperty  /Script/Engine.ParticleSystemComponent:SkelMeshComponents.SkelMeshComponents\t~\tClass  /Script/Engine.SkeletalMeshComponent",
+          "L2599: [Offset:000000280] (Size:0x00008) [ FField:000001CD2191C100] ObjectProperty  /Script/Engine.Character:mesh\t~\tClass  /Script/Engine.SkeletalMeshComponent",
+          "L3376: [Offset:0000004E0] (Size:0x00008) [ FField:000001CD21B97B80] ObjectProperty  /Script/Engine.SkinnedMeshComponent:SkeletalMesh\t~\tClass  /Script/Engine.SkeletalMesh",
+          "L3414: [ Index:00000024A] (Size:0x00230) [UObject:000001CD5A09B800] Class  /Script/Engine.SkeletalMeshComponent"
+        ],
+        "AnimBlueprintGeneratedClass": [
+          "L3415: [Offset:000000750] (Size:0x00008) [ FField:000001CD21AA8120] ClassProperty  /Script/Engine.SkeletalMeshComponent:AnimBlueprintGeneratedClass\t~\tClass  /Script/CoreUObject.Object",
+          "L11288: [ Index:000000842] (Size:0x00230) [UObject:000001CD5A1CCC40] Class  /Script/Engine.AnimBlueprintGeneratedClass",
+          "L11289: [Offset:000000330] (Size:0x00010) [ FField:000001CD21D05420] ArrayProperty  /Script/Engine.AnimBlueprintGeneratedClass:BakedStateMachines",
+          "L11290: [Offset:000000000] (Size:0x00030) [ FField:000001CD21D3E300] StructProperty  /Script/Engine.AnimBlueprintGeneratedClass:BakedStateMachines.BakedStateMachines\t~\tScriptStruct  /Script/Engine.BakedAnimationStateMachine",
+          "L11291: [Offset:000000340] (Size:0x00008) [ FField:000001CD21D3E380] ObjectProperty  /Script/Engine.AnimBlueprintGeneratedClass:TargetSkeleton\t~\tClass  /Script/Engine.Skeleton"
+        ],
+        "CfgInfo": [
+          "L5619: [Offset:000000120] (Size:0x0000C) [ FField:000001CD21AC8200] StructProperty  /Script/UE_game.ECfgComponent:CfgInfo\t~\tScriptStruct  /Script/UE_game.CfgInfo",
+          "L23822: [Offset:000000004] (Size:0x0000C) [ FField:000001CD55A62080] StructProperty  /Script/UE_game.EEntity:InitWithData:Info\t~\tScriptStruct  /Script/UE_game.CfgInfo",
+          "L23823: [ Index:0000012ED] (Size:0x000C0) [UObject:000001CD54866940] ScriptStruct  /Script/UE_game.CfgInfo",
+          "L23824: [Offset:000000000] (Size:0x00004) [ FField:000001CD55A61F00] IntProperty  /Script/UE_game.CfgInfo:ID",
+          "L23825: [Offset:000000004] (Size:0x00001) [ FField:000001CD5410AC40] EnumProperty  /Script/UE_game.CfgInfo:Type\t~\tEnum  /Script/UE_game.EInfoType"
+        ],
+        "ECfgComponent": [
+          "L5618: [ Index:0000003F4] (Size:0x00230) [UObject:000001CD5A0F1600] Class  /Script/UE_game.ECfgComponent",
+          "L5619: [Offset:000000120] (Size:0x0000C) [ FField:000001CD21AC8200] StructProperty  /Script/UE_game.ECfgComponent:CfgInfo\t~\tScriptStruct  /Script/UE_game.CfgInfo",
+          "L5620: [Offset:000000130] (Size:0x00110) [ FField:000001CD21AC8280] StructProperty  /Script/UE_game.ECfgComponent:ArtResInfo\t~\tScriptStruct  /Script/UE_game.ArtResInfo",
+          "L58893: [ Index:000002AC2] (Size:0x000E0) [UObject:000001CD21AB1D60] Function  /Script/UE_game.ECfgComponent:CalcArtResFromCfgInfo",
+          "L58894: [Offset:000000000] (Size:0x0000C) [ FField:000001CD21AC6B80] StructProperty  /Script/UE_game.ECfgComponent:CalcArtResFromCfgInfo:Info\t~\tScriptStruct  /Script/UE_game.CfgInfo"
+        ],
+        "SpawnIndex": [],
+        "bValid": [
+          "L5300: [Offset:000000720] (Size:0x00001) [ FField:000001CD55A61B00] BoolProperty  /Script/UE_game.EEntity:bValid",
+          "L41914: [Offset:000000000] (Size:0x00001) [ FField:000001CD57A8DB00] BoolProperty  /Script/UE_game.EAutoTestRequestKillWithSkillStatistics:bValid",
+          "L42075: [Offset:000000000] (Size:0x00001) [ FField:000001CD57A93100] BoolProperty  /Script/UE_game.EAutoTestRequestTestGoldItemStatistics:bValid",
+          "L43073: [Offset:000000010] (Size:0x00001) [ FField:000001CD57B67100] BoolProperty  /Script/UE_game.UIItemValidData:bValid",
+          "L43425: [Offset:000000000] (Size:0x00001) [ FField:000001CD57B6F280] BoolProperty  /Script/UE_game.AutoAimCfgInfo:bValid"
+        ],
+        "MapUnit": [
+          "L7901: [Offset:000000760] (Size:0x00050) [ FField:000001CD21AD79C0] MapProperty  /Script/UE_game.FightMgr:MapUnit",
+          "L7902: [Offset:000000000] (Size:0x00004) [ FField:000001CD21BCAC00] IntProperty  /Script/UE_game.FightMgr:MapUnit.MapUnit_Key",
+          "L7903: [Offset:000000008] (Size:0x00008) [ FField:000001CD21BCAB80] ObjectProperty  /Script/UE_game.FightMgr:MapUnit.MapUnit\t~\tClass  /Script/UE_game.EEntity",
+          "L24891: [ Index:00000135E] (Size:0x00060) [UObject:000001CD77FDD780] Enum  /Script/UE_game.EMapUnitType",
+          "L24892: [    0000] [000001CD5B0325C0] EMapUnitType::E_none"
+        ],
+        "MapRole": [
+          "L7835: [Offset:000000080] (Size:0x00050) [ FField:000001CD21AD6940] MapProperty  /Script/UE_game.FightMgr:MapRole",
+          "L7836: [Offset:000000000] (Size:0x00004) [ FField:000001CD21BCB700] IntProperty  /Script/UE_game.FightMgr:MapRole.MapRole_Key",
+          "L7837: [Offset:000000008] (Size:0x00008) [ FField:000001CD21BCB680] ObjectProperty  /Script/UE_game.FightMgr:MapRole.MapRole\t~\tClass  /Script/UE_game.EEntity",
+          "L7838: [Offset:0000000D0] (Size:0x00050) [ FField:000001CD21AD6A00] MapProperty  /Script/UE_game.FightMgr:MapRolePlayer",
+          "L7839: [Offset:000000000] (Size:0x00004) [ FField:000001CD21BCB800] IntProperty  /Script/UE_game.FightMgr:MapRolePlayer.MapRolePlayer_Key"
+        ],
+        "EBuffComponent": [
+          "L5546: [ Index:0000003EA] (Size:0x00230) [UObject:000001CD5A0F2C80] Class  /Script/UE_game.EBuffComponent",
+          "L58836: [ Index:000002AAD] (Size:0x000E0) [UObject:000001CD21AB2FC0] Function  /Script/UE_game.EBuffComponent:GetFxDynIdByBuffCfgId",
+          "L58837: [Offset:000000000] (Size:0x00004) [ FField:000001CD21AC3700] IntProperty  /Script/UE_game.EBuffComponent:GetFxDynIdByBuffCfgId:BuffCfgId",
+          "L58838: [Offset:000000008] (Size:0x00010) [ FField:000001CD21AA2540] ArrayProperty  /Script/UE_game.EBuffComponent:GetFxDynIdByBuffCfgId:outIds",
+          "L58839: [Offset:000000000] (Size:0x00004) [ FField:000001CD21AC3780] IntProperty  /Script/UE_game.EBuffComponent:GetFxDynIdByBuffCfgId:outIds.outIds"
+        ],
+        "E_s11_daizibao": [
+          "L27615: [    0082] [000001CD561CCED0] EConfigCharBuff::E_s11_daizibao"
+        ],
+        "E_s11_reinforce": [
+          "L27631: [    0092] [000001CD561CCFD0] EConfigCharBuff::E_s11_reinforce"
+        ],
+        "JiaoDuJun": [
+          "L81579: [ Index:0000058DD] (Size:0x000A0) [UObject:000001CD8B333300] Package  /Game/SimplifiedMeshes/Art/Characters/Monster/JiaoDuJunZhongJia_Shieldhammer/Meshes/SK_JiaoDuJunZhongJia_Shieldhammer_Skin_xdsimplify",
+          "L81586: [ Index:0000058E6] (Size:0x000A0) [UObject:000001CD8B334700] Package  /Game/Art/Characters/Monster/JiaoDuJunZhiHuiGuan/Meshes/SK_JiaoDuJunZhiHuiGuan_Skin_Physics",
+          "L81587: [ Index:0000058E7] (Size:0x000A0) [UObject:000001CD8B334520] Package  /Game/SimplifiedMeshes/Art/Characters/Monster/JiaoDuJunZhongJia/Meshes/SK_JiaoDuJunZhongJia_TowerShield_Skin_xdsimplify",
+          "L84200: [ Index:000006341] (Size:0x000A0) [UObject:000001CE24342E00] Package  /Game/Art/Characters/Monster/JiaoDuJunQingJia_Bow/Meshes/SK_JiaoDuJunQingJia_Bow_Skin_Physics",
+          "L84201: [ Index:000006342] (Size:0x000A0) [UObject:000001CE2434FEC0] Package  /Game/SimplifiedMeshes/Art/Characters/Monster/JiaoDuJunQingJia_Crossbow/Meshes/SK_JiaoDuJunQingJia_Crossbow_Skin_xdsimplify"
+        ],
+        "ShaGu": [
+          "L85133: [ Index:0000066CB] (Size:0x000A0) [UObject:000001CE2C1EEDE0] Package  /Game/Art/Characters/Monster/GuChongShaGu/Meshes/SK_GuChongShaGu_Skin_Physics",
+          "L85134: [ Index:0000066CC] (Size:0x000A0) [UObject:000001CE2C1EED40] Package  /Game/SimplifiedMeshes/Art/Characters/Monster/GuChongShaGu/Meshes/SK_GuChongShaGu_Skin_xdsimplify",
+          "L86905: [ Index:000006DB7] (Size:0x000A0) [UObject:000001CE34F73E40] Package  /Game/Art/Characters/Monster/GuChongShaGu/Meshes/SK_GuChongShaGu_Skin_Skeleton",
+          "L89887: [ Index:00000795D] (Size:0x00390) [UObject:000001CE3FB3DC90] Skeleton  /Game/Art/Characters/Monster/GuChongShaGu/Meshes/SK_GuChongShaGu_Skin_Skeleton.SK_GuChongShaGu_Skin_Skeleton",
+          "L89888: [ Index:00000795E] (Size:0x00060) [UObject:000001CE55B913C0] SkeletalMeshSocket  /Game/Art/Characters/Monster/GuChongShaGu/Meshes/SK_GuChongShaGu_Skin_Skeleton.SK_GuChongShaGu_Skin_Skeleton:SkeletalMeshSocket_0"
+        ],
+        "Outlaw": [],
+        "Bounty": [
+          "L24723: [    000f] [000001CD5518F370] ELevelStatusType::E_S11BountyTaskEnable",
+          "L24724: [    0010] [000001CD5518F380] ELevelStatusType::E_S11BountyTaskUpdate",
+          "L24783: [    0032] [000001CD540FF750] EGameplayViewType::E_S11_BountyTaskEnable",
+          "L24784: [    0033] [000001CD540FF760] EGameplayViewType::E_S11_BountyTaskUpdate",
+          "L25596: [    0008] [000001CD548AAA80] EGameMasterGamePlayEvent::E_S11_FinishBountyTaskSuccess"
+        ],
+        "Carjack": [],
+        "Sandlord": [],
+        "通缉": [],
+        "大亨": [],
+        "押运": [],
+        "保镖": [],
+        "沙海": [],
+        "首领": []
+      }
+    }
+  ]
+}

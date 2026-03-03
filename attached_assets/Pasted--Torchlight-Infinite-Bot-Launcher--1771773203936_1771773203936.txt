@@ -1,0 +1,92 @@
+======================================
+Torchlight Infinite Bot - Launcher
+======================================
+Running as Administrator
+Working directory: C:\Users\Daniel\Documents\GitHub\tli v2
+
+Attempting to launch the bot...
+
+16:12:27 [INFO   ] Config loaded from config.json
+16:12:27 [INFO   ] Loaded 8 addresses from addresses.json
+16:12:27 [WARNING] [HexCalibrator] Failed to load history: Expecting value: line 19 column 11 (char 409)
+16:12:27 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+16:12:28 [INFO   ] Torchlight Infinite Bot V2 v2.5.1 started
+16:12:30 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 18588)
+16:12:30 [INFO   ] Attached to torchlight_infinite.exe
+16:12:30 [INFO   ] Found game window by class 'UnrealWindow' + PID 18588 (HWND: 393828)
+16:12:30 [INFO   ] Target window set: HWND=393828
+16:12:30 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary); player_x not movement-verified; player_y not movement-verified | pos=(0, 0)
+16:12:30 [INFO   ] [Scanner] Scanning for FNamePool...
+16:12:30 [INFO   ] Target window set: HWND=393828
+16:12:30 [INFO   ] [Scanner]   Trying FNamePool pattern 1/3...
+16:12:30 [INFO   ] [Scanner]   Trying FNamePool pattern 2/3...
+16:12:31 [INFO   ] [Scanner]   Trying FNamePool pattern 3/3...
+16:12:31 [INFO   ] [Scanner] FNamePool not found via sig scan
+16:12:31 [INFO   ] [Scanner] Scanning for GObjects...
+16:12:31 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+16:12:31 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+16:12:31 [INFO   ] [Scanner]   GObjects found at 0x7FF6BD49ADE8 (pattern 2)
+16:12:31 [INFO   ] [Scanner]   NumElements=127381, NumChunks=2
+16:12:33 [INFO   ] [CardDetector] client_rect=(631, 159, 2551, 1239)
+16:12:33 [INFO   ] [CardDetector] frame=1920x1080
+16:12:33 [INFO   ] [CardDetector] === Detection Start === frame=1920x1080
+16:12:33 [INFO   ] [CardDetector] Card 0 (High Court Maze) -> INACTIVE
+  active_top=(497,277) gray: mean=197.1 med=197.0 min=196 max=198  RGB=(191,199,204) HSV=(102,17,204)
+  inactive_top=(497,299) gray: mean=111.8 med=120.0 min=29 max=149  RGB=(110,112,114) HSV=(85,15,115)
+  reason: active_top gray 197.1 >= 130 (background/ice)
+16:12:33 [INFO   ] [CardDetector] Card 1 (Shadow Outpost) -> INACTIVE
+  active_top=(933,278) gray: mean=185.5 med=185.0 min=182 max=190  RGB=(171,191,198) HSV=(98,35,198)
+  inactive_top=(933,300) gray: mean=97.8 med=117.0 min=28 max=136  RGB=(96,98,100) HSV=(81,21,102)
+  reason: active_top gray 185.5 >= 130 (background/ice)
+16:12:33 [INFO   ] [CardDetector] Card 2 (Rainforest of Divine Legacy) -> ACTIVE
+  active_top=(1128,216) gray: mean=105.4 med=129.0 min=5 max=139  RGB=(139,80,151) HSV=(103,103,153)
+  inactive_top=(1128,238) gray: mean=22.5 med=22.0 min=13 max=35  RGB=(33,20,9) HSV=(14,183,33)
+  reason: active_top gray 105.4 in [55-110] AND sat 103 > 80 (glow)
+16:12:33 [INFO   ] [CardDetector] Card 3 (Grimwind Woods) -> INACTIVE
+  active_top=(1352,278) gray: mean=54.5 med=55.0 min=46 max=60  RGB=(31,60,84) HSV=(104,159,84)
+  inactive_top=(1352,300) gray: mean=65.2 med=60.0 min=23 max=109  RGB=(63,65,69) HSV=(114,43,70)
+  reason: active_top gray 54.5 < 55 (too dark)
+16:12:33 [INFO   ] [CardDetector] Card 4 (Demiman Village) -> INACTIVE
+  active_top=(911,490) gray: mean=207.0 med=207.0 min=202 max=210  RGB=(202,209,212) HSV=(100,13,212)
+  inactive_top=(911,512) gray: mean=98.7 med=117.0 min=29 max=142  RGB=(99,98,99) HSV=(70,12,101)
+  reason: active_top gray 207.0 >= 130 (background/ice)
+16:12:33 [INFO   ] [CardDetector] Card 5 (Swirling Mines) -> UNKNOWN
+  active_top=(1152,447) gray: mean=123.1 med=121.0 min=101 max=153  RGB=(97,131,152) HSV=(102,93,152)
+  inactive_top=(1152,469) gray: mean=97.0 med=115.0 min=29 max=136  RGB=(96,97,99) HSV=(92,20,101)
+  reason: active_top gray 123.1 sat 93 unclassified
+16:12:33 [INFO   ] [CardDetector] Card 6 (Blustery Canyon) -> ACTIVE
+  active_top=(1520,449) gray: mean=66.0 med=66.0 min=56 max=75  RGB=(39,74,96) HSV=(102,152,96)
+  inactive_top=(1520,471) gray: mean=71.8 med=70.0 min=25 max=110  RGB=(69,72,77) HSV=(114,45,78)
+  reason: active_top gray 66.0 in [55-110] AND sat 152 > 80 (glow)
+16:12:33 [INFO   ] [CardDetector] Card 7 (Defiled Side Chamber) -> UNKNOWN
+  active_top=(449,476) gray: mean=127.3 med=151.0 min=5 max=171  RGB=(81,142,171) HSV=(85,120,172)
+  inactive_top=(449,498) gray: mean=20.3 med=20.0 min=12 max=29  RGB=(29,18,8) HSV=(14,182,29)
+  reason: active_top gray 127.3 sat 120 unclassified
+16:12:33 [INFO   ] [CardDetector] Card 8 (Deserted District) -> UNKNOWN
+  active_top=(623,584) gray: mean=126.2 med=165.0 min=4 max=178  RGB=(155,118,93) HSV=(52,90,157)
+  inactive_top=(622,606) gray: mean=28.0 med=28.0 min=21 max=36  RGB=(25,22,67) HSV=(122,171,67)
+  reason: active_top gray 126.2 sat 90 unclassified
+16:12:33 [INFO   ] [CardDetector] Card 9 (Wall of the Last Breath) -> INACTIVE
+  active_top=(1386,570) gray: mean=185.3 med=185.0 min=182 max=188  RGB=(178,188,192) HSV=(100,19,192)
+  inactive_top=(1386,592) gray: mean=77.0 med=87.0 min=25 max=113  RGB=(75,78,81) HSV=(103,35,82)
+  reason: active_top gray 185.3 >= 130 (background/ice)
+16:12:33 [INFO   ] [CardDetector] Card 10 (Abandoned Mines) -> INACTIVE
+  active_top=(980,704) gray: mean=144.4 med=143.0 min=140 max=151  RGB=(114,155,174) HSV=(100,89,174)
+  inactive_top=(980,726) gray: mean=94.0 med=114.0 min=28 max=127  RGB=(93,94,96) HSV=(110,18,97)
+  reason: active_top gray 144.4 >= 130 (background/ice)
+16:12:33 [INFO   ] [CardDetector] Card 11 (Singing Sand) -> INACTIVE
+  active_top=(724,747) gray: mean=211.8 med=211.0 min=204 max=220  RGB=(194,218,227) HSV=(98,37,227)
+  inactive_top=(724,769) gray: mean=94.6 med=117.0 min=29 max=128  RGB=(92,95,98) HSV=(99,25,100)
+  reason: active_top gray 211.8 >= 130 (background/ice)
+16:12:33 [INFO   ] [CardDetector] Card 2 RARITY: PURPLE
+  glow chevron at (1128,216) pixels=573
+  RGB=(147,103,179) B-R=31.4
+  HSV: H=136.0 S=108.7 V=178.7
+  classification: B-R=31.4 -> PURPLE
+16:12:33 [INFO   ] [CardDetector] Card 6 RARITY: UNKNOWN
+  glow chevron at (1520,449) pixels=573
+  RGB=(38,69,91) B-R=53.1
+  HSV: H=102.7 S=149.0 V=91.4
+  classification: B-R=53.1 -> UNKNOWN
+16:12:33 [INFO   ] [CardDetector] === Detection Complete === active=[2, 6] time=40ms
+16:12:34 [INFO   ] [CardDetector] Debug image saved to debug/detection_debug.png

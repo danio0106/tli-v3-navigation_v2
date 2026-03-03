@@ -1,0 +1,18 @@
+Names lines attached/T1: 162600/166085
+Names unique attached/T1: 2883/3069
+Names added in T1 vs attached: 816
+Names removed in T1 vs attached: 630
+Objects lines attached/T1: 171600/194983
+Class count attached/T1: 951/951
+Field count attached/T1: 44833/45080
+
+Critical field equality:
+/Script/UE_game.FightMgr:MapRoleMonster | equal=True | attached={'offset': 288, 'size': 80, 'ptype': 'MapProperty'} | T1={'offset': 288, 'size': 80, 'ptype': 'MapProperty'}
+/Script/UE_game.FightMgr:MapCustomTrap | equal=True | attached={'offset': 1968, 'size': 80, 'ptype': 'MapProperty'} | T1={'offset': 1968, 'size': 80, 'ptype': 'MapProperty'}
+/Script/UE_game.FightMgr:MapGamePlay | equal=True | attached={'offset': 2048, 'size': 80, 'ptype': 'MapProperty'} | T1={'offset': 2048, 'size': 80, 'ptype': 'MapProperty'}
+/Script/UE_game.FightMgr:MapServant | equal=True | attached={'offset': 2128, 'size': 80, 'ptype': 'MapProperty'} | T1={'offset': 2128, 'size': 80, 'ptype': 'MapProperty'}
+/Script/UE_game.FightMgr:MapUnit | equal=True | attached={'offset': 1888, 'size': 80, 'ptype': 'MapProperty'} | T1={'offset': 1888, 'size': 80, 'ptype': 'MapProperty'}
+/Script/UE_game.EEntity:ueComponents | equal=True | attached={'offset': 648, 'size': 80, 'ptype': 'MapProperty'} | T1={'offset': 648, 'size': 80, 'ptype': 'MapProperty'}
+/Script/UE_game.EEntity:bValid | equal=True | attached={'offset': 1824, 'size': 1, 'ptype': 'BoolProperty'} | T1={'offset': 1824, 'size': 1, 'ptype': 'BoolProperty'}
+/Script/UE_game.EAnimeComponent:SkeletalMesh | equal=True | attached=None | T1=None
+/Script/Engine.SkeletalMeshComponent:AnimBlueprintGeneratedClass | equal=True | attached=None | T1=None

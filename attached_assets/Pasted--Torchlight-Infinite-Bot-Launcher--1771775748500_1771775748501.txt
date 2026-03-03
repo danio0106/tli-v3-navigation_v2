@@ -1,0 +1,109 @@
+======================================
+Torchlight Infinite Bot - Launcher
+======================================
+Running as Administrator
+Working directory: C:\Users\Daniel\Documents\GitHub\tli v2
+
+Attempting to launch the bot...
+
+16:55:20 [INFO   ] Config loaded from config.json
+16:55:20 [INFO   ] Loaded 8 addresses from addresses.json
+16:55:20 [WARNING] [HexCalibrator] Failed to load history: Expecting value: line 19 column 11 (char 409)
+16:55:20 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+16:55:21 [INFO   ] Torchlight Infinite Bot V2 v2.5.1 started
+16:55:24 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 18588)
+16:55:24 [INFO   ] Attached to torchlight_infinite.exe
+16:55:24 [INFO   ] Found game window by class 'UnrealWindow' + PID 18588 (HWND: 393828)
+16:55:24 [INFO   ] Target window set: HWND=393828
+16:55:25 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary); player_x not movement-verified; player_y not movement-verified | pos=(0, 0)
+16:55:25 [INFO   ] [Scanner] Scanning for FNamePool...
+16:55:25 [INFO   ] Target window set: HWND=393828
+16:55:25 [INFO   ] [Scanner]   Trying FNamePool pattern 1/3...
+16:55:25 [INFO   ] [Scanner]   Trying FNamePool pattern 2/3...
+16:55:25 [INFO   ] [Scanner]   Trying FNamePool pattern 3/3...
+16:55:25 [INFO   ] [Scanner] FNamePool not found via sig scan
+16:55:25 [INFO   ] [Scanner] Scanning for GObjects...
+16:55:25 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+16:55:25 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+16:55:26 [INFO   ] [Scanner]   GObjects found at 0x7FF6BD49ADE8 (pattern 2)
+16:55:26 [INFO   ] [Scanner]   NumElements=127381, NumChunks=2
+16:55:27 [INFO   ] [CardDetector] client_rect=(631, 159, 2551, 1239)
+16:55:28 [INFO   ] [CardDetector] frame=1920x1080
+16:55:28 [INFO   ] [CardDetector] === Detection Start === frame=1920x1080
+16:55:28 [INFO   ] [CardDetector] Card 0 (High Court Maze) -> INACTIVE
+  vertices(active): top=195 tr=193 br=83 bot=44 bl=96 tl=178
+  inactive_top=(497,299) gray=111.8
+  glow: sat=34 RGB=(170,188,196)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 34) AND inactive_top 111.8 >= 50 (not popped up)
+16:55:28 [INFO   ] [CardDetector] Card 1 (Shadow Outpost) -> ACTIVE
+  vertices(active): top=120 tr=126 br=92 bot=42 bl=94 tl=111
+  inactive_top=(933,300) gray=76.3
+  glow: sat=118 RGB=(107,174,206)
+  ice=0/6 on_card=6/6
+  reason: glow sat=118 val=206 (bright glow) AND 6/6 on card
+  RARITY: BLUE B-R=99.5
+16:55:28 [INFO   ] [CardDetector] Card 2 (Rainforest of Divine Legacy) -> INACTIVE
+  vertices(active): top=153 tr=188 br=61 bot=50 bl=83 tl=171
+  inactive_top=(1128,238) gray=95.1
+  glow: sat=75 RGB=(121,159,171)
+  ice=3/6 on_card=3/6
+  reason: 3/6 vertices show ice
+16:55:28 [INFO   ] [CardDetector] Card 3 (Grimwind Woods) -> ACTIVE
+  vertices(active): top=80 tr=49 br=71 bot=39 bl=76 tl=83
+  inactive_top=(1352,300) gray=34.1
+  glow: sat=155 RGB=(122,54,146)
+  ice=0/6 on_card=6/6
+  reason: glow sat=155 val=146 (bright glow) AND 6/6 on card
+  RARITY: UNKNOWN B-R=24.7
+16:55:28 [INFO   ] [CardDetector] Card 4 (Demiman Village) -> INACTIVE
+  vertices(active): top=206 tr=88 br=79 bot=51 bl=102 tl=203
+  inactive_top=(911,512) gray=98.8
+  glow: sat=42 RGB=(169,187,196)
+  ice=2/6 on_card=4/6
+  reason: no glow (sat 42) AND inactive_top 98.8 >= 50 (not popped up)
+16:55:28 [INFO   ] [CardDetector] Card 5 (Swirling Mines) -> ACTIVE
+  vertices(active): top=112 tr=124 br=86 bot=39 bl=91 tl=98
+  inactive_top=(1152,469) gray=74.4
+  glow: sat=129 RGB=(100,170,205)
+  ice=0/6 on_card=6/6
+  reason: glow sat=129 val=205 (bright glow) AND 6/6 on card
+  RARITY: BLUE B-R=104.9
+16:55:28 [INFO   ] [CardDetector] Card 6 (Blustery Canyon) -> INACTIVE
+  vertices(active): top=66 tr=51 br=44 bot=28 bl=50 tl=61
+  inactive_top=(1520,471) gray=72.0
+  glow: sat=140 RGB=(44,76,97)
+  ice=0/6 on_card=6/6
+  reason: no glow (sat 140) AND inactive_top 72.0 >= 50 (not popped up)
+16:55:28 [INFO   ] [CardDetector] Card 7 (Defiled Side Chamber) -> INACTIVE
+  vertices(active): top=181 tr=181 br=80 bot=59 bl=100 tl=181
+  inactive_top=(449,498) gray=108.6
+  glow: sat=41 RGB=(177,201,210)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 41) AND inactive_top 108.6 >= 50 (not popped up)
+16:55:28 [INFO   ] [CardDetector] Card 8 (Deserted District) -> INACTIVE
+  vertices(active): top=203 tr=193 br=65 bot=57 bl=87 tl=175
+  inactive_top=(622,606) gray=96.0
+  glow: sat=43 RGB=(167,189,199)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 43) AND inactive_top 96.0 >= 50 (not popped up)
+16:55:28 [INFO   ] [CardDetector] Card 9 (Wall of the Last Breath) -> UNKNOWN
+  vertices(active): top=185 tr=142 br=77 bot=52 bl=64 tl=176
+  inactive_top=(1386,592) gray=77.3
+  glow: sat=76 RGB=(102,125,139)
+  ice=2/6 on_card=3/6
+  reason: glow_sat=76 ice=2/6 card=3/6 it=77.3
+16:55:28 [INFO   ] [CardDetector] Card 10 (Abandoned Mines) -> UNKNOWN
+  vertices(active): top=145 tr=180 br=75 bot=30 bl=87 tl=122
+  inactive_top=(980,726) gray=94.0
+  glow: sat=75 RGB=(125,157,175)
+  ice=1/6 on_card=4/6
+  reason: glow_sat=75 ice=1/6 card=4/6 it=94.0
+16:55:28 [INFO   ] [CardDetector] Card 11 (Singing Sand) -> INACTIVE
+  vertices(active): top=195 tr=225 br=83 bot=47 bl=75 tl=223
+  inactive_top=(724,769) gray=93.1
+  glow: sat=35 RGB=(195,215,224)
+  ice=3/6 on_card=3/6
+  reason: no glow (sat 35) AND inactive_top 93.1 >= 50 (not popped up)
+16:55:28 [INFO   ] [CardDetector] === Detection Complete === active=[1, 3, 5] time=37ms
+16:55:28 [INFO   ] [CardDetector] Debug image saved to debug/detection_debug.png

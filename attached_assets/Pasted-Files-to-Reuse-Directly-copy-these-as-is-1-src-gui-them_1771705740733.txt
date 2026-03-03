@@ -1,0 +1,107 @@
+Files to Reuse Directly (copy these as-is)
+1. src/gui/theme.py — Visual Theme
+Copy this exactly. Defines all colors and fonts for the dark GUI.
+
+2. src/modules/input_controller.py — Mouse & Keyboard
+Copy exactly. Handles all input automation:
+
+click(x, y) — clicks with ±2px jitter and mouseDown/mouseUp for human-like feel
+press_key(key) — presses a key
+move_mouse(x, y) — moves cursor
+smooth_move_to(x, y) — bezier-smoothed cursor movement
+Thread-safe with lock
+3. src/modules/window_manager.py — Game Window Detection
+Copy exactly. Finds the game window using Win32 API (ctypes):
+
+find_game_window() — scans all windows for "Torchlight: Infinite" title
+get_window_rect() — returns {left, top, width, height} of client area
+game_to_screen_coords(x, y) — converts game-relative coords to screen coords
+focus_window() — brings game to front
+Uses GetClientRect + ClientToScreen for accurate client area (excludes title bar)
+4. src/modules/config_manager.py — Settings
+Copy and adapt. JSON config at ~/.torchlight_bot/config.json:
+
+Deep merge with defaults (user settings survive updates)
+get(section, key) / set(section, key, value) interface
+Migration system for correcting outdated values
+Important for V2: The map_selection section has all the click coordinates
+Map Selection Code to Reuse (from src/modules/bot_engine.py)
+This is the core logic that needs to be adapted. Here's each state handler explained:
+
+_handle_selecting_map_zone (lines ~280-324)
+What it does: Clicks the Glacial Abyss button to open the card grid
+
+Gets glacial_abyss_click coordinates from config (default: [530, 599])
+Calls _game_click(x, y) which converts game coords → screen coords then clicks
+V1 verification used image recognition to check if the card grid opened (is_card_selection_screen). V2 needs to replace this — either read memory to know what UI is open, or use a simple timed delay
+_handle_selecting_card (lines ~326-398)
+What it does: Picks a map card from the hex grid
+
+Gets card_positions dict from config — 12 maps with their top vertex coordinates
+V1 used find_active_cards() which scanned for glow pixels above each card to detect which are active and their rarity. This is the IMAGE RECOGNITION part that V2 needs to replace.
+After detecting active cards, picks the rarest one (or first available)
+Clicks at (card_x, card_y + 58) — the stored position is the TOP VERTEX, offset +58px down to hit the card center
+After clicking, checks if a detail panel opened on the right side
+If panel didn't open, retries the same card (stores as _pending_card)
+V2 approach: If memory reading can tell you which cards are active and their rarity, great. If not, you may still need some visual detection here, OR just click all known positions and see which one opens a panel.
+
+_handle_card_detail (lines ~400-444)
+What it does: Handles the detail panel after clicking a card
+
+Looks for button text at bottom-right: either "Next" or "Open Portal"
+V1 used OCR (detect_button_text) to read the button. V2 could read UI state from memory instead.
+If "Next" → clicks it (transitions to affix screen)
+If "Open Portal" → skips to affix stage (already past "Next")
+Button position: next_button at [1758, 998]
+_handle_adding_affixes (lines ~446-491)
+What it does: Clicks "Add Affix" button repeatedly
+
+Clicks add_affix_button at [120, 819] up to affix_count times (default: 5)
+Optionally detects red (dangerous) affixes and resets if found
+reset_affix_button at [380, 819]
+V1 used OCR to read affix text and drop quantity. V2 could read from memory.
+After all affixes added, moves to OPENING_PORTAL state
+_handle_opening_portal (lines ~493+)
+What it does: Clicks "Open Portal" button
+
+open_portal_button at [1758, 998] (same position as Next button — they swap in place)
+After clicking, the map device UI closes and a portal spawns in hideout
+Bot then needs to walk to the portal and press F
+_game_click helper (line ~127)
+What it does: Converts game coordinates to screen coordinates and clicks
+
+def _game_click(self, game_x, game_y, delay=0.3):
+    screen_x, screen_y = self.window.game_to_screen_coords(game_x, game_y)
+    self.input.click(screen_x, screen_y)
+    time.sleep(delay)
+All Click Coordinates Summary (game-window coords for 1920x1080)
+Map Device / Zone Selection:
+  glacial_abyss_click:    (530, 599)
+Buttons:
+  next_button:            (1758, 998)    ← "Next" button in card detail
+  open_portal_button:     (1758, 998)    ← Same position, text changes to "Open Portal"
+  add_affix_button:       (120, 819)     ← Click to add random affix
+  reset_affix_button:     (380, 819)     ← Click to reset all affixes
+Card Top Vertices (click center = Y + 58):
+  High Court Maze:              (491, 274)
+  Shadow Outpost:               (934, 274)
+  Rainforest of Divine Legacy:  (1133, 210)
+  Grimwind Woods:               (1360, 274)
+  Blustery Canyon:              (1531, 448)
+  Swirling Mines:               (1157, 445)
+  Wall of the Last Breath:      (1395, 570)
+  Demiman Village:               (913, 488)
+  Defiled Side Chamber:          (442, 475)
+  Deserted District:             (618, 584)
+  Singing Sand:                  (722, 750)
+  Abandoned Mines:               (982, 706)
+Character center (stop moving):  (959, 489)
+What V2 Needs to Replace
+The only parts that used image recognition in the map selection flow were:
+
+Detecting which cards are active (find_active_cards) — glow pixel scanning
+Reading button text (detect_button_text) — OCR for "Next" vs "Open Portal"
+Detecting right panel opened (detect_right_panel_open) — visual check
+Reading affix text — OCR for red affix detection
+Detecting if in hideout — OCR on location text
+If memory reading can handle any of these, great. For the ones it can't, the fallback is to just use timed delays and assume clicks worked (less reliable but simpler).

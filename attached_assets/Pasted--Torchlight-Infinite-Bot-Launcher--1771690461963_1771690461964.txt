@@ -1,0 +1,85 @@
+======================================
+Torchlight Infinite Bot - Launcher
+======================================
+Running as Administrator
+Working directory: C:\Users\Daniel\Documents\GitHub\tli v2
+
+Attempting to launch the bot...
+
+17:07:55 [INFO   ] Config loaded from config.json
+17:07:55 [INFO   ] Loaded 8 addresses from addresses.json
+17:07:55 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+17:07:55 [INFO   ] Torchlight Infinite Bot V2 v2.3.0 started
+17:08:00 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 5620)
+17:08:00 [INFO   ] Attached to torchlight_infinite.exe
+17:08:00 [INFO   ] Found game window by class 'UnrealWindow' + PID 5620 (HWND: 1051784)
+17:08:00 [INFO   ] Target window set: HWND=1051784
+17:08:00 [INFO   ] Running dump chain scan...
+17:08:00 [INFO   ] [Scanner] === UE4 Dump-Verified Chain ===
+17:08:00 [INFO   ] [Scanner] Chain: GWorld -> OwningGameInstance -> LocalPlayers[0] -> PlayerController -> Pawn -> RootComponent -> RelativeLocation
+17:08:00 [INFO   ] [Scanner] Offsets: 0x210 -> 0x38 -> 0x0 -> 0x30 -> 0x250 -> 0x130 -> 0x124
+17:08:00 [INFO   ] [Scanner] Main module: torchlight_infinite.exe at 0x7FF641D80000
+17:08:00 [INFO   ] [Scanner] Trying GWorld pattern 1/8...
+17:08:20 [INFO   ] [Scanner] Trying GWorld pattern 2/8...
+17:08:40 [INFO   ] [Scanner] Pattern 2 match at 0x7FF642540BB3, GWorld at 0x7FF649C04588
+17:08:40 [INFO   ] [Scanner] GWorld static at 0x7FF649C04588, points to 0x1BC9CD22500
+17:08:40 [INFO   ] [Scanner]   OwningGameInstance: 0x1BC9CD22500+0x210 -> 0x1BBA3BBB140
+17:08:40 [INFO   ] [Scanner]   LocalPlayers (TArray data): 0x1BBA3BBB140+0x38 -> 0x1BBA9F42F20
+17:08:40 [INFO   ] [Scanner]   LocalPlayer[0]: 0x1BBA9F42F20+0x0 -> 0x1BBAEFEB280
+17:08:40 [INFO   ] [Scanner]   PlayerController: 0x1BBAEFEB280+0x30 -> 0x1BCD7B60100
+17:08:40 [INFO   ] [Scanner]   Pawn (ERolePlayer): 0x1BCD7B60100+0x250 -> 0x1BCA341D060
+17:08:40 [INFO   ] [Scanner]   RootComponent: 0x1BCA341D060+0x130 -> 0x1BCB6C86700
+17:08:40 [INFO   ] [Scanner]   RelativeLocation: (4041.0, 2472.0, 3100.3)
+17:08:40 [INFO   ] [Scanner] Stability check (reading twice, 0.3s apart)...
+17:08:41 [INFO   ] [Scanner]   Drift: 0.00 (threshold: 2.0)
+17:08:41 [INFO   ] [Scanner] SUCCESS! Dump-verified chain resolved
+17:08:41 [INFO   ] [Scanner] Position: (4041.0, 2472.0, 3100.3)
+17:08:41 [INFO   ] [Scanner] Base: torchlight_infinite.exe+0x7E84588
+17:08:41 [INFO   ] [Scanner] Chain: 0x210 -> 0x38 -> 0x0 -> 0x30 -> 0x250 -> 0x130 -> 0x124
+17:08:41 [INFO   ] [Scanner] Saving discovered addresses...
+17:08:41 [INFO   ] [Scanner] Addresses saved to Address Setup
+17:08:41 [INFO   ] [Scanner] Scanning for FNamePool...
+17:08:41 [INFO   ] [Scanner]   Trying FNamePool pattern 1/3...
+17:09:01 [INFO   ] [Scanner]   FNamePool found at 0x7FF649AA1D40 (pattern 1)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\logging\__init__.py", line 1086, in emit
+    stream.write(msg + self.terminator)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\encodings\cp1250.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\ufffd' in position 71: character maps to <undefined>
+Call stack:
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\threading.py", line 937, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Daniel\Documents\GitHub\tli v2\src\gui\tabs\address_manager_tab.py", line 253, in _do_attach
+    success, message = self._engine.attach_to_game()
+  File "C:\Users\Daniel\Documents\GitHub\tli v2\src\core\bot_engine.py", line 152, in attach_to_game
+    result = scanner.scan_dump_chain(use_cache=False)
+  File "C:\Users\Daniel\Documents\GitHub\tli v2\src\core\scanner.py", line 112, in scan_dump_chain
+    chain_result = self._walk_dump_chain(
+  File "C:\Users\Daniel\Documents\GitHub\tli v2\src\core\scanner.py", line 232, in _walk_dump_chain
+    self.scan_fnamepool(module_base, module_size)
+  File "C:\Users\Daniel\Documents\GitHub\tli v2\src\core\scanner.py", line 367, in scan_fnamepool
+    self._log(f"  Validation: FName[1] = '{test_name}'")
+  File "C:\Users\Daniel\Documents\GitHub\tli v2\src\core\scanner.py", line 72, in _log
+    self._progress(msg)
+  File "C:\Users\Daniel\Documents\GitHub\tli v2\src\core\bot_engine.py", line 151, in <lambda>
+    scanner = UE4Scanner(self.memory, self.addresses, lambda msg: log.info(f"[Scanner] {msg}"))
+  File "C:\Users\Daniel\Documents\GitHub\tli v2\src\utils\logger.py", line 61, in info
+    self.logger.info(msg)
+Message: "[Scanner]   Validation: FName[1] = 'ne\x08\x03ByteProperty�\x02IntProperty\x00\n\x03BoolPropertyb\x03FloatProperty\x00�\x03ObjectProperty\x10\x03NameProperty\x00\x04DelegateProperty�\x03DoublePropertyf\x03ArrayProperty\x00�\x03StructProperty�\x03VectorProperty�\x03RotatorProperty\x00�\x02StrProperty\x00\x1a\x03TextProperty`\x04InterfaceProperty\x00Z\x06MulticastDelegateProperty\x00�\x04LazyObjectProperty�\x04SoftObjectPropertyB\x03Int64Property\x00v\x03Int32Property\x00P\x03Int16Property\x008\x03Int8Property�\x03UInt64Property�\x03UInt32Property�\x03UInt16Property�\x02MapProperty\x00�\x02SetProperty\x00&'"
+Arguments: ()
+17:09:01 [INFO   ] [Scanner]   Validation: FName[1] = 'n♥ByteProperty�☻IntProperty
+♥BoolPropertyb♥FloatProperty �♥ObjectProperty►♥NameProperty ♦DelegateProperty�♥DoublePropertyf♥ArrayProperty �♥StructProperty�♥VectorProperty�♥RotatorProperty �☻StrProperty →♥TextProperty`♦InterfaceProperty Z♠MulticastDelegateProperty �♦LazyObjectProperty�♦SoftObjectPropertyB♥Int64Property v♥Int32Property P♥Int16Property 8♥Int8Property�♥UInt64Property�♥UInt32Property�♥UInt16Property�☻MapProperty �☻SetProperty &'
+17:09:01 [INFO   ] [Scanner] Scanning for GObjects...
+17:09:01 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+17:09:21 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+17:09:40 [INFO   ] [Scanner]   GObjects found at 0x7FF649ABADE8 (pattern 2)
+17:09:40 [INFO   ] [Scanner]   NumElements=119589, NumChunks=2
+17:09:40 [INFO   ] Dump chain resolved: (4041.0, 2472.0, 3100.3)
+17:09:40 [INFO   ] Portal detector initialized
+17:09:40 [INFO   ] Target window set: HWND=1051784

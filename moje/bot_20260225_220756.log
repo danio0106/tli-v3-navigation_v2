@@ -1,0 +1,291 @@
+22:07:56 [INFO   ] === Torchlight Infinite Bot V2 v4.6.0 starting ===
+22:07:58 [INFO   ] Config loaded from config.json
+22:07:58 [INFO   ] Loaded 8 addresses from addresses.json
+22:07:58 [INFO   ] [Input] Initialized with mode: hardware
+22:07:58 [INFO   ] [ScaleCalibrator] Loaded calibrations for 12 maps: ['Swirling Mines', 'High Court Maze', 'Defiled Side Chamber', 'Deserted District', 'Singing Sand', 'Shadow Outpost', 'Abandoned Mines', 'Rainforest of Divine Legacy', 'Grimwind Woods', 'Wall of the Last Breath', 'Blustery Canyon', 'Demiman Village']
+22:07:58 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+22:07:59 [INFO   ] Torchlight Infinite Bot V2 v4.6.0 started
+22:07:59 [INFO   ] [Hotkeys] Global hotkeys registered: F9=Start, F10=Stop, F11=Pause, F5=Record, F6=PauseRec
+22:08:02 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 22352)
+22:08:02 [INFO   ] Attached to torchlight_infinite.exe
+22:08:02 [INFO   ] Found game window by class 'UnrealWindow' + PID 22352 (HWND: 459624)
+22:08:02 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+22:08:02 [INFO   ] [Input] Hardware mode: will focus window before each input
+22:08:02 [DEBUG  ] Module torchlight_infinite.exe base: 0x7FF7D77E0000
+22:08:02 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary) | pos=(1506, -2421)
+22:08:02 [INFO   ] [Scanner] Scanning for FNamePool...
+22:08:02 [INFO   ] [Scanner] Cannot read zone name - FNamePool not resolved yet
+22:08:02 [INFO   ] [Scanner]   Trying FNamePool pattern 1/6...
+22:08:02 [INFO   ] [ZoneWatcher] Started — will auto-scan walkable area on map entry
+22:08:02 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+22:08:02 [INFO   ] [Input] Hardware mode: will focus window before each input
+22:08:02 [INFO   ] [AddrMgr] Attached - using scan results from attach
+22:08:02 [INFO   ] [Scanner]   FNamePool found at 0x7FF7DF501D40 (pattern 1)
+22:08:02 [INFO   ] [Scanner]   Validation: 3/5 indices readable, FName[3] = 'ByteProperty'
+22:08:02 [INFO   ] [Scanner] Scanning for GObjects...
+22:08:02 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+22:08:02 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+22:08:03 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F100571BE0)
+22:08:03 [INFO   ] [Scanner]   GObjects found at 0x7FF7DF51ADE8 (pattern 2)
+22:08:03 [INFO   ] [Scanner]   NumElements=171242, NumChunks=3
+22:08:03 [INFO   ] Portal detector initialized (deferred)
+22:08:03 [INFO   ] [AddrMgr] FNamePool auto-populated: 0x7FF7DF501D40
+22:08:08 [INFO   ] [Overlay] No calibration for map: Embers Rest — use 'Calibrate Scale' button
+22:08:08 [INFO   ] [Overlay] Debug overlay started
+22:08:08 [DEBUG  ] [GObjects] NumElements=171242, NumChunks=3
+22:08:08 [DEBUG  ] [GObjects] Found 2 objects named 'FightMgr'
+22:08:08 [INFO   ] [Scanner] [Scanner] FightMgr live instance at 0x2F1A48540C0 (outer: /Engine/Transient)
+22:08:12 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E5D0EDC0)
+22:08:12 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F100571BE0)
+22:08:12 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E5D0EDC0)
+22:08:13 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F100571BE0)
+22:08:14 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E5D0EDC0)
+22:08:14 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F100571BE0)
+22:08:14 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E5D0EDC0)
+22:08:14 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F100571BE0)
+22:08:14 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E5D0EDC0)
+22:08:14 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F100571BE0)
+22:08:15 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:08:15 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:15 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:16 [DEBUG  ] [GObjects] Found 1 instances of class 'EGameplay'
+22:08:16 [DEBUG  ] [GObjects] NumElements=171242, NumChunks=3
+22:08:16 [INFO   ] [ZoneWatcher] Entered 'Defiled Side Chamber' — auto-scanning walkable area + starting position sampler
+22:08:16 [DEBUG  ] [GObjects] Found 2 objects named 'FightMgr'
+22:08:16 [INFO   ] [Scanner] [Scanner] FightMgr live instance at 0x2F207D550B0 (outer: /Engine/Transient)
+22:08:17 [INFO   ] [WallScan] Cache hit: 434 visited-position points for 'Defiled Side Chamber'
+22:08:17 [INFO   ] [WallScan] Walkable grid built from 434 visited points in 0.016s: GridData(94×83 cells, cell=150u, walkable=1090/7802, mode=inverted(visited→walkable))
+22:08:17 [INFO   ] [Pathfinder] Grid installed: GridData(94×83 cells, cell=150u, walkable=1090/7802, mode=inverted(visited→walkable))
+22:08:17 [INFO   ] [WallScan] A* grid ready from cache: GridData(94×83 cells, cell=150u, walkable=1090/7802, mode=inverted(visited→walkable))
+22:08:19 [INFO   ] [ZoneWatcher] Cache for 'Defiled Side Chamber' has 434 pts — skipping MinimapSaveObject retries, direct sampler is active
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] MapCustomTrap Sandlord arena class='EMapCustomTrap' pos=(-3200,4050)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x9 → Unknown (ignored) pos=(-8850,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xa → Sandlord (platform pos assigned) platform=(-3200,4050)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xb → Unknown (ignored) pos=(0,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] MapCustomTrap Sandlord arena class='EMapCustomTrap' pos=(-3200,4050)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x9 → Carjack (pos match) vehicle_pos=(-8850,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xa → Sandlord (platform pos assigned) platform=(-3200,4050)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xb → Unknown (ignored) pos=(0,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x1fba → Unknown (ignored) pos=(0,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] MapCustomTrap Sandlord arena class='EMapCustomTrap' pos=(-3200,4050)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x9 → Carjack (pos match) vehicle_pos=(-8850,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xa → Sandlord (platform pos assigned) platform=(-3200,4050)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xb → Unknown (ignored) pos=(0,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x1fba → Unknown (ignored) pos=(0,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x185c → Carjack (pos match) vehicle_pos=(-8850,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x1872 → Unknown (ignored) pos=(0,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] MapCustomTrap Sandlord arena class='EMapCustomTrap' pos=(-3200,4050)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x9 → Carjack (pos match) vehicle_pos=(-8850,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xa → Sandlord (platform pos assigned) platform=(-3200,4050)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xb → Unknown (ignored) pos=(0,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x1fba → Unknown (ignored) pos=(0,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x185c → Carjack (pos match) vehicle_pos=(-8850,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x1872 → Unknown (ignored) pos=(0,0)
+22:08:22 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x1bd7 → Unknown (ignored) pos=(0,0)
+22:08:26 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:26 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:26 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:28 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:28 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:28 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:28 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:28 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:28 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:29 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:29 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:29 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:29 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:29 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:29 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:29 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:29 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:29 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:29 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:31 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:31 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:31 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:31 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:31 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:31 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:32 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:32 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:32 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:32 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:32 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:32 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:32 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:32 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:32 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:32 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:32 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:32 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:32 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:32 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:32 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:33 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:33 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:33 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:33 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:33 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:33 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:34 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:34 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:34 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:34 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:34 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:34 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:34 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:34 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:34 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:35 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:35 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:35 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:35 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:35 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:35 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:35 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:35 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:35 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:35 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:35 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:35 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:36 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:36 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:36 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:36 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:36 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:36 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:37 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:37 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:37 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:37 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:37 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:37 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:37 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:37 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:38 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:38 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:38 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:38 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:38 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:38 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:38 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:38 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:38 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:38 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:38 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:38 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:38 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:38 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:38 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:38 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:38 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:38 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:39 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:39 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:39 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:40 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:40 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:40 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:40 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:40 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:40 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:41 [INFO   ] [Explorer] +1 positions for 'Defiled Side Chamber' (total: 435)
+22:08:43 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1B7EBDB80)
+22:08:43 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ABE409A0)
+22:08:43 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+22:08:44 [INFO   ] [Explorer] +19 positions for 'Defiled Side Chamber' (total: 454)
+22:08:47 [INFO   ] [Explorer] +10 positions for 'Defiled Side Chamber' (total: 464)
+22:08:50 [INFO   ] [Explorer] +30 positions for 'Defiled Side Chamber' (total: 494)
+22:08:53 [INFO   ] [Explorer] +52 positions for 'Defiled Side Chamber' (total: 546)
+22:09:15 [INFO   ] [Explorer] +1 positions for 'Defiled Side Chamber' (total: 547)
+22:09:18 [DEBUG  ] [UE4 Scanner] [typed_event] MapCustomTrap Sandlord arena class='EMapCustomTrap' pos=(-3200,4050)
+22:09:18 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x9 → Unknown (ignored) pos=(-8850,0)
+22:09:18 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xa → Sandlord (platform pos assigned) platform=(-3200,4050)
+22:09:18 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xb → Unknown (ignored) pos=(0,0)
+22:09:18 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x1fba → Unknown (ignored) pos=(0,0)
+22:09:18 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x185c → Unknown (ignored) pos=(-8850,0)
+22:09:18 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x1872 → Unknown (ignored) pos=(0,0)
+22:09:18 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x1bd7 → Unknown (ignored) pos=(0,0)
+22:09:18 [INFO   ] [Explorer] +19 positions for 'Defiled Side Chamber' (total: 566)
+22:09:21 [INFO   ] [Explorer] +6 positions for 'Defiled Side Chamber' (total: 572)
+22:09:27 [INFO   ] [Explorer] +1 positions for 'Defiled Side Chamber' (total: 573)
+22:09:30 [INFO   ] [Explorer] +8 positions for 'Defiled Side Chamber' (total: 581)
+22:09:34 [INFO   ] [Explorer] +1 positions for 'Defiled Side Chamber' (total: 582)
+22:09:38 [INFO   ] [Explorer] +79 positions for 'Defiled Side Chamber' (total: 661)
+22:09:41 [INFO   ] [Explorer] +87 positions for 'Defiled Side Chamber' (total: 748)
+22:09:44 [INFO   ] [Explorer] +87 positions for 'Defiled Side Chamber' (total: 835)
+22:09:47 [INFO   ] [Explorer] +83 positions for 'Defiled Side Chamber' (total: 918)
+22:09:50 [INFO   ] [Explorer] +87 positions for 'Defiled Side Chamber' (total: 1005)
+22:09:53 [INFO   ] [Explorer] +80 positions for 'Defiled Side Chamber' (total: 1085)
+22:09:56 [INFO   ] [Explorer] +71 positions for 'Defiled Side Chamber' (total: 1156)
+22:09:59 [INFO   ] [Explorer] +70 positions for 'Defiled Side Chamber' (total: 1226)
+22:10:02 [INFO   ] [Explorer] +88 positions for 'Defiled Side Chamber' (total: 1314)
+22:10:05 [INFO   ] [Explorer] +86 positions for 'Defiled Side Chamber' (total: 1400)
+22:10:08 [INFO   ] [Explorer] +76 positions for 'Defiled Side Chamber' (total: 1476)
+22:10:11 [INFO   ] [Explorer] +85 positions for 'Defiled Side Chamber' (total: 1561)
+22:10:14 [INFO   ] [Explorer] +62 positions for 'Defiled Side Chamber' (total: 1623)
+22:10:17 [INFO   ] [Explorer] +68 positions for 'Defiled Side Chamber' (total: 1691)
+22:10:20 [INFO   ] [Explorer] +73 positions for 'Defiled Side Chamber' (total: 1764)
+22:10:23 [INFO   ] [Explorer] +88 positions for 'Defiled Side Chamber' (total: 1852)
+22:10:26 [INFO   ] [Explorer] +76 positions for 'Defiled Side Chamber' (total: 1928)
+22:10:29 [INFO   ] [Explorer] +85 positions for 'Defiled Side Chamber' (total: 2013)
+22:10:32 [INFO   ] [Explorer] +82 positions for 'Defiled Side Chamber' (total: 2095)
+22:10:35 [INFO   ] [Explorer] +82 positions for 'Defiled Side Chamber' (total: 2177)
+22:10:38 [INFO   ] [Explorer] +85 positions for 'Defiled Side Chamber' (total: 2262)
+22:10:41 [INFO   ] [Explorer] +81 positions for 'Defiled Side Chamber' (total: 2343)
+22:10:44 [INFO   ] [Explorer] +70 positions for 'Defiled Side Chamber' (total: 2413)
+22:10:47 [INFO   ] [Explorer] +84 positions for 'Defiled Side Chamber' (total: 2497)
+22:10:50 [INFO   ] [Explorer] +77 positions for 'Defiled Side Chamber' (total: 2574)
+22:10:53 [INFO   ] [Explorer] +88 positions for 'Defiled Side Chamber' (total: 2662)
+22:10:56 [INFO   ] [Explorer] +82 positions for 'Defiled Side Chamber' (total: 2744)
+22:10:59 [INFO   ] [Explorer] +68 positions for 'Defiled Side Chamber' (total: 2812)
+22:11:02 [INFO   ] [Explorer] +83 positions for 'Defiled Side Chamber' (total: 2895)
+22:11:05 [INFO   ] [Explorer] +78 positions for 'Defiled Side Chamber' (total: 2973)
+22:11:08 [INFO   ] [Explorer] +82 positions for 'Defiled Side Chamber' (total: 3055)
+22:11:11 [INFO   ] [Explorer] +85 positions for 'Defiled Side Chamber' (total: 3140)
+22:11:14 [INFO   ] [Explorer] +76 positions for 'Defiled Side Chamber' (total: 3216)
+22:11:17 [INFO   ] [Explorer] +85 positions for 'Defiled Side Chamber' (total: 3301)
+22:11:20 [INFO   ] [Explorer] +86 positions for 'Defiled Side Chamber' (total: 3387)
+22:11:23 [INFO   ] [Explorer] +78 positions for 'Defiled Side Chamber' (total: 3465)
+22:11:26 [INFO   ] [Explorer] +77 positions for 'Defiled Side Chamber' (total: 3542)
+22:11:29 [INFO   ] [Explorer] +68 positions for 'Defiled Side Chamber' (total: 3610)
+22:11:32 [INFO   ] [Explorer] +61 positions for 'Defiled Side Chamber' (total: 3671)
+22:11:35 [INFO   ] [Explorer] +74 positions for 'Defiled Side Chamber' (total: 3745)
+22:11:38 [INFO   ] [Explorer] +85 positions for 'Defiled Side Chamber' (total: 3830)
+22:11:41 [INFO   ] [Explorer] +86 positions for 'Defiled Side Chamber' (total: 3916)
+22:11:44 [INFO   ] [Explorer] +87 positions for 'Defiled Side Chamber' (total: 4003)
+22:11:47 [INFO   ] [Explorer] +74 positions for 'Defiled Side Chamber' (total: 4077)
+22:11:50 [INFO   ] [Explorer] +85 positions for 'Defiled Side Chamber' (total: 4162)
+22:11:53 [INFO   ] [Explorer] +40 positions for 'Defiled Side Chamber' (total: 4202)
+22:11:54 [DEBUG  ] [UE4 Scanner] [typed_event] MapCustomTrap Sandlord arena class='EMapCustomTrap' pos=(-3200,4050)
+22:11:54 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x1 → Unknown (ignored) pos=(-8850,0)
+22:11:54 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x2 → Sandlord (platform pos assigned) platform=(-3200,4050)
+22:11:54 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x3 → Unknown (ignored) pos=(0,0)
+22:11:54 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x4 → Unknown (ignored) pos=(0,0)
+22:11:54 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x5 → Unknown (ignored) pos=(-8850,0)
+22:11:54 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x6 → Unknown (ignored) pos=(0,0)
+22:11:54 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=-0x1 → Unknown (ignored) pos=(0,0)
+22:11:54 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:11:54 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F200583740)
+22:11:56 [INFO   ] [Explorer] +1 positions for 'Defiled Side Chamber' (total: 4203)
+22:11:57 [INFO   ] [ZoneWatcher] Zone exited → final scan attempt for 'Defiled Side Chamber'
+22:11:57 [INFO   ] [WallScan] Exit scan started for 'Defiled Side Chamber' (zone='YJ_XieDuYuZuo200') — capturing positions accumulated this run
+22:11:57 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Defiled Side Chamber' (zone='YJ_XieDuYuZuo200')
+22:11:58 [DEBUG  ] [GObjects] Found 1 instances of class 'MapBossRoom'
+22:11:58 [DEBUG  ] [UE4 Scanner] [BossRoom] MapBossRoom position is (0,0) — not yet placed
+22:11:58 [DEBUG  ] [GObjects] Found 2 instances of class 'MinimapSaveObject'
+22:11:58 [INFO   ] [Boss] No boss area found (neither MapBossRoom nor predefined) — skipping
+22:11:58 [DEBUG  ] [MinimapScan] Found 2 MinimapSaveObject candidate(s)
+22:11:58 [DEBUG  ] [MinimapScan]   Skipping CDO: 'Default__MinimapSaveObject' @ 0x2F0BD740480
+22:11:58 [DEBUG  ] [MinimapScan]   Candidate 'MinimapSaveObject' @ 0x2F1D9DF3C80, outer='/Engine/Transient'
+22:11:58 [INFO   ] [MinimapScan] MinimapSaveObject live instance at 0x2F1D9DF3C80 (outer: /Engine/Transient)
+22:11:58 [DEBUG  ] [MinimapScan] Records TMap @ 0x2F1D9DF3CA8: data_ptr=0x2F1FD756100, array_num=1 (stride=0xD8 bytes/entry)
+22:11:58 [DEBUG  ] [MinimapScan] Looking for zone 'YJ_XieDuYuZuo200' in 1 TMap entries (key_map has 3 cached entries: [('5302_0', 'GeBuLinCunLuo01'), ('5307_0', 'DD_TingYuanMiGong200'), ('5301_0', 'SQ_MingShaJuLuo100')])
+22:11:58 [DEBUG  ] [MinimapScan]   entry[0]: raw bytes [0x00..0x2F] = 60 ce 75 de f1 02 00 00 06 00 00 00 08 00 00 00 ac 73 9f 69 00 00 00 00 a0 7e 46 ed f1 02 00 00 01 00 00 00 04 00 00 00 c0 13 d0 07 f2 02 00 00
+22:11:58 [DEBUG  ] [MinimapScan]   entry[0]: key='110_0' | pos_count=1 | pos_ptr=0x2F1ED467EA0 | cached_zone='<unknown>'
+22:11:58 [INFO   ] [MinimapScan] Auto-learned key mapping: '110_0' → 'YJ_XieDuYuZuo200' (saved to data/minimap_key_map.json)
+22:11:58 [DEBUG  ] [MinimapScan] Matched entry[0] key='110_0' via auto-detect (single entry '110_0', no cached mapping) — learning '110_0' → 'YJ_XieDuYuZuo200' — Pos TArray @ 0x2F1ED467EA0, declared count=1
+22:11:58 [INFO   ] [MinimapScan] ✓ 1 valid visited positions (0 zero-origin filtered) for 'YJ_XieDuYuZuo200' | X:[5650..5650]  Y:[4500..4500]  span=(0×0) world units
+22:11:58 [INFO   ] [WallScan] MinimapSaveObject: 1 visited positions for 'Defiled Side Chamber' in 1.48s — building walkable-area cache
+22:11:58 [INFO   ] [WallScan] Exit scan: 1 positions (cache already has 4203) — no update needed for 'Defiled Side Chamber'

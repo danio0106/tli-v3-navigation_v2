@@ -1,0 +1,78 @@
+18:33:47 [INFO   ] === Torchlight Infinite Bot V2 v3.9.6 starting ===
+18:33:47 [INFO   ] Config loaded from config.json
+18:33:47 [INFO   ] Loaded 8 addresses from addresses.json
+18:33:47 [INFO   ] [Input] Initialized with mode: hardware
+18:33:47 [INFO   ] [ScaleCalibrator] Loaded calibrations for 12 maps: ['Swirling Mines', 'High Court Maze', 'Defiled Side Chamber', 'Deserted District', 'Singing Sand', 'Shadow Outpost', 'Abandoned Mines', 'Rainforest of Divine Legacy', 'Grimwind Woods', 'Wall of the Last Breath', 'Blustery Canyon', 'Demiman Village']
+18:33:47 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+18:33:48 [INFO   ] Torchlight Infinite Bot V2 v3.9.6 started
+18:33:48 [INFO   ] [Hotkeys] Global hotkeys registered: F9=Start, F10=Stop, F11=Pause, F5=Record, F6=PauseRec
+18:33:51 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 22352)
+18:33:51 [INFO   ] Attached to torchlight_infinite.exe
+18:33:51 [INFO   ] Found game window by class 'UnrealWindow' + PID 22352 (HWND: 459624)
+18:33:51 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+18:33:51 [INFO   ] [Input] Hardware mode: will focus window before each input
+18:33:51 [DEBUG  ] Module torchlight_infinite.exe base: 0x7FF7D77E0000
+18:33:52 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary) | pos=(5671, 4470)
+18:33:52 [INFO   ] [Scanner] Scanning for FNamePool...
+18:33:52 [INFO   ] [Scanner] Cannot read zone name - FNamePool not resolved yet
+18:33:52 [INFO   ] [Scanner]   Trying FNamePool pattern 1/6...
+18:33:52 [INFO   ] [ZoneWatcher] Started — will auto-scan walkable area on map entry
+18:33:52 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+18:33:52 [INFO   ] [Input] Hardware mode: will focus window before each input
+18:33:52 [INFO   ] [AddrMgr] Attached - using scan results from attach
+18:33:52 [INFO   ] [Scanner]   FNamePool found at 0x7FF7DF501D40 (pattern 1)
+18:33:52 [INFO   ] [Scanner]   Validation: 3/5 indices readable, FName[3] = 'ByteProperty'
+18:33:52 [INFO   ] [Scanner] Scanning for GObjects...
+18:33:52 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+18:33:52 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+18:33:52 [INFO   ] [Scanner]   GObjects found at 0x7FF7DF51ADE8 (pattern 2)
+18:33:52 [INFO   ] [Scanner]   NumElements=170349, NumChunks=3
+18:33:52 [INFO   ] Portal detector initialized (deferred)
+18:33:52 [INFO   ] [AddrMgr] FNamePool auto-populated: 0x7FF7DF501D40
+18:33:52 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1E00C5BC0)
+18:33:58 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E17F0080)
+18:33:58 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1E00C5BC0)
+18:34:00 [INFO   ] [Scanner] Zone FName[1437879] = 'GeBuLinCunLuo01' (GWorld 0x2F1B5D1C020)
+18:34:02 [INFO   ] [ZoneWatcher] Entered 'Demiman Village' — auto-scanning walkable area
+18:34:02 [INFO   ] [WallScan] No cache for 'Demiman Village' — reading MinimapSaveObject (zone='GeBuLinCunLuo01')
+18:34:02 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Demiman Village' (zone='GeBuLinCunLuo01')
+18:34:02 [DEBUG  ] read_bytes failed at 0x2B00000042 (size=4): Could not read memory at: 184683593794, length: 4 - GetLastError: 299
+18:34:02 [DEBUG  ] [GObjects] Found 2 instances of class 'MinimapSaveObject'
+18:34:02 [DEBUG  ] [MinimapScan] Found 2 MinimapSaveObject candidate(s)
+18:34:02 [DEBUG  ] [MinimapScan]   Skipping CDO: 'Default__MinimapSaveObject' @ 0x2F0BD740480
+18:34:02 [DEBUG  ] [MinimapScan]   Candidate 'MinimapSaveObject' @ 0x2F1D2203D80, outer='/Engine/Transient'
+18:34:02 [INFO   ] [MinimapScan] MinimapSaveObject live instance at 0x2F1D2203D80 (outer: /Engine/Transient)
+18:34:02 [INFO   ] [MinimapScan] Records TMap @ 0x2F1D2203DA8: data_ptr=0x0, array_num=0 (stride=0xD8 bytes/entry)
+18:34:02 [WARNING] [MinimapScan] Records TMap data_ptr invalid (0x0)
+18:34:02 [INFO   ] [WallScan] MinimapSaveObject returned 0 positions for 'GeBuLinCunLuo01' in 0.56s — map not yet visited or GObjects/FNamePool not resolved
+18:34:02 [INFO   ] [WallScan] MinimapSaveObject returned 0 positions in 0.56s — map 'Demiman Village' not yet visited or GObjects not ready; AutoNavigator will use direct navigation (no wall avoidance)
+18:34:08 [INFO   ] [ZoneWatcher] Retry #1 for 'Demiman Village' (6s in map, no cached data yet)
+18:34:08 [INFO   ] [WallScan] No cache for 'Demiman Village' — reading MinimapSaveObject (zone='GeBuLinCunLuo01')
+18:34:08 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Demiman Village' (zone='GeBuLinCunLuo01')
+18:34:08 [DEBUG  ] [GObjects] Found 2 instances of class 'MinimapSaveObject'
+18:34:08 [DEBUG  ] [MinimapScan] Found 2 MinimapSaveObject candidate(s)
+18:34:08 [DEBUG  ] [MinimapScan]   Skipping CDO: 'Default__MinimapSaveObject' @ 0x2F0BD740480
+18:34:08 [DEBUG  ] [MinimapScan]   Candidate 'MinimapSaveObject' @ 0x2F1D2203D80, outer='/Engine/Transient'
+18:34:08 [INFO   ] [MinimapScan] MinimapSaveObject live instance at 0x2F1D2203D80 (outer: /Engine/Transient)
+18:34:08 [INFO   ] [MinimapScan] Records TMap @ 0x2F1D2203DA8: data_ptr=0x2F1A458BD00, array_num=1 (stride=0xD8 bytes/entry)
+18:34:08 [INFO   ] [MinimapScan] Looking for zone 'GeBuLinCunLuo01' in 1 TMap entries (key_map has 0 cached entries: [])
+18:34:08 [DEBUG  ] [MinimapScan]   entry[0]: raw bytes [0x00..0x2F] = 60 dc 46 14 f2 02 00 00 07 00 00 00 08 00 00 00 9f 40 9f 69 00 00 00 00 40 60 d3 a6 f1 02 00 00 05 00 00 00 18 00 00 00 40 93 b4 b9 f1 02 00 00
+18:34:08 [INFO   ] [MinimapScan]   entry[0]: key='5302_0' | pos_count=5 | pos_ptr=0x2F1A6D36040 | cached_zone='<unknown>'
+18:34:08 [INFO   ] [MinimapScan] Auto-learned key mapping: '5302_0' → 'GeBuLinCunLuo01' (saved to data/minimap_key_map.json)
+18:34:08 [INFO   ] [MinimapScan] Matched entry[0] key='5302_0' via auto-detect (single entry '5302_0', no cached mapping) — learning '5302_0' → 'GeBuLinCunLuo01' — Pos TArray @ 0x2F1A6D36040, declared count=5
+18:34:08 [INFO   ] [MinimapScan] ✓ 5 valid visited positions (0 zero-origin filtered) for 'GeBuLinCunLuo01' | X:[-5584..-4948]  Y:[-9158..-8266]  span=(636×893) world units
+18:34:08 [INFO   ] [WallScan] MinimapSaveObject: 5 visited positions for 'Demiman Village' in 0.58s — building walkable-area cache
+18:34:08 [INFO   ] [WallScan] Saved 5 visited-position points for 'Demiman Village'
+18:34:08 [INFO   ] [WallScan] Walkable grid built from 5 visited points in 0.000s: GridData(200×200 cells, cell=150u, walkable=39/40000, mode=inverted(visited→walkable))
+18:34:08 [INFO   ] [Pathfinder] Grid installed: GridData(200×200 cells, cell=150u, walkable=39/40000, mode=inverted(visited→walkable))
+18:34:08 [INFO   ] [WallScan] A* grid ready: GridData(200×200 cells, cell=150u, walkable=39/40000, mode=inverted(visited→walkable))
+18:35:12 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1EB9A4060)
+18:35:12 [INFO   ] [ZoneWatcher] Zone exited → final scan attempt for 'Demiman Village'
+18:35:12 [INFO   ] [WallScan] Exit scan started for 'Demiman Village' (zone='GeBuLinCunLuo01') — capturing positions accumulated this run
+18:35:12 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Demiman Village' (zone='GeBuLinCunLuo01')
+18:35:12 [DEBUG  ] [GObjects] Found 1 instances of class 'MinimapSaveObject'
+18:35:12 [DEBUG  ] [MinimapScan] Found 1 MinimapSaveObject candidate(s)
+18:35:12 [DEBUG  ] [MinimapScan]   Skipping CDO: 'Default__MinimapSaveObject' @ 0x2F0BD740480
+18:35:12 [WARNING] [MinimapScan] Only CDO found — MinimapSaveObject live instance not in GObjects yet
+18:35:12 [INFO   ] [WallScan] MinimapSaveObject returned 0 positions for 'GeBuLinCunLuo01' in 0.48s — map not yet visited or GObjects/FNamePool not resolved
+18:35:12 [INFO   ] [WallScan] Exit scan: no positions returned for 'Demiman Village' — MinimapSaveObject may be empty for this zone

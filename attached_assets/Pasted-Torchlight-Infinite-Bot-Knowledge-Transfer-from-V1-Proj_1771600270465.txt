@@ -1,0 +1,52 @@
+Torchlight Infinite Bot - Knowledge Transfer from V1
+Project Context
+University project - code must be fully AI-generated, clean, and usable by end users
+This is V2, replacing V1 which used unreliable image recognition (OCR, template matching, HSV color detection). All of that failed too often. V2 uses memory reading instead.
+Game & Player Setup
+Game: Torchlight Infinite (PC client)
+Resolution: 1920x1080 windowed on a 2560x1440 desktop
+Character build: auto-bomber — skills auto-cast around the character, no manual skill activation needed
+Movement: Character follows the mouse cursor after one initial right-click. NEVER right-click again after starting — just move the cursor to steer. To stop the character, move cursor to character center (959, 489 client area).
+"F" key = interact with everything (portals, map device, NPCs)
+"E" key = pick up loot (spam during map runs)
+Minimap is in the top-LEFT corner of the screen
+Window title bar offset: (1, 31) — subtract from Paint/screenshot coordinates to get game-window coordinates
+Bot Workflow (State Machine)
+The bot runs a continuous loop through these states:
+
+IN_HIDEOUT — Detect we're in hideout, walk to map device, press F to interact
+SELECTING_MAP_ZONE — Navigate the Glacial Abyss map selection UI
+SELECTING_CARD — Choose a map card from the hex grid (12 possible maps), prefer rarest available
+CONFIGURING_MAP — Handle affixes, click "Open Portal" button
+ENTERING_MAP — Walk to portal, press F to enter
+RUNNING_MAP — Navigate map using waypoints, spam E for loot, handle events (carjack trucks, sandlord platforms)
+MAP_COMPLETE — Find and enter exit portal
+RETURNING_HIDEOUT — Wait for loading, confirm back in hideout, loop back to step 1
+The 12 Maps
+High Court Maze, Shadow Outpost, Rainforest of Divine Legacy, Grimwind Woods, Blustery Canyon, Swirling Mines, Wall of the Last Breath, Demiman Village, Defiled Side Chamber, Deserted District, Singing Sand, Abandoned Mines
+
+What to Carry Over (Architecture)
+State machine pattern in bot_engine.py — works well, keep this
+customtkinter dark GUI — modern look with defined color palette
+Config manager — JSON-based settings persistence at ~/.torchlight_bot/config.json
+Input controller — mouse/keyboard automation using pyautogui with human-like delays
+Window manager — finds game window by title using Win32 API (ctypes), tracks window rect
+Global hotkeys — Windows RegisterHotKey API via ctypes (F5 start/stop, F6 pause, F8 emergency stop)
+Thread safety — bot engine runs in daemon thread, GUI updates via tkinter after()
+What V1 Learned the Hard Way (Lessons for V2)
+Image recognition is unreliable for this game — OCR fails on stylized fonts, template matching breaks with visual effects, color detection varies by map/lighting
+Player position on minimap is always center — the minimap scrolls around the player, not vice versa. With memory reading, we should get actual world coordinates instead.
+Portal detection was the biggest pain point — visual scanning for portal icons was fragile. Memory reading should give us entity positions directly.
+Coordinate calibration was needed constantly — HUD scale changes broke everything. Memory reading bypasses this entirely.
+The game has in-map events (carjack trucks, sandlord platforms) that interrupt normal navigation — need to detect and handle these
+GUI Preferences
+Dark theme with accent colors (blue/teal primary, orange/yellow secondary)
+Segoe UI font family
+Log panel showing bot activity with color-coded levels (info/warning/error/success)
+Settings panel for configurable options
+Status bar showing current state, run count, runtime
+Dependencies to Use
+customtkinter for GUI
+pyautogui for mouse/keyboard input
+pymem for reading game process memory
+mss for screen capture (may still be useful for visual verification)

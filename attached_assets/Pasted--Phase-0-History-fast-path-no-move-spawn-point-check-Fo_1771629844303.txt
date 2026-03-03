@@ -1,0 +1,2110 @@
+=== Phase 0 - History fast-path (no-move, spawn point check) ===
+Found 5 verified chain(s) in history
+Trying history entry 1/5 from 2026-02-20T23:58:15
+Trying history (no-move): pattern #1, offset 0x7E84588
+  Chain: 0x98 -> 0x80 -> 0x2A0 -> 0x130 -> 0x124
+Chain broken at step 1 (offset 0x80)
+Entry 1 failed, trying next...
+Trying history entry 2/5 from 2026-02-20T22:25:42
+Trying history (no-move): pattern #1, offset 0x7E84588
+  Chain: 0x78 -> 0x48 -> 0x328 -> 0x158 -> 0x1E0
+Chain broken at step 3 (offset 0x158)
+Entry 2 failed, trying next...
+Trying history entry 3/5 from 2026-02-20T21:47:26
+Trying history (no-move): pattern #1, offset 0x7E84588
+  Chain: 0x1D8 -> 0x28 -> 0x0 -> 0x308 -> 0x190 -> 0x134
+Chain broken at step 3 (offset 0x308)
+Entry 3 failed, trying next...
+Trying history entry 4/5 from 2026-02-20T21:42:39
+Trying history (no-move): pattern #1, offset 0x7E84588
+  Chain: 0x188 -> 0x38 -> 0x0 -> 0x240 -> 0x188 -> 0x108
+Chain broken at step 2 (offset 0x0)
+Entry 4 failed, trying next...
+Trying history entry 5/5 from 2026-02-20T21:30:04
+Trying history (no-move): pattern #1, offset 0x7E84588
+  Chain: 0x240 -> 0xD8 -> 0x0 -> 0x318 -> 0x128 -> 0x108
+Chain broken at step 1 (offset 0xD8)
+Entry 5 failed, trying next...
+All history entries failed, falling through to full no-move scan...
+=== Phase 1 - Full no-move scan (GWorld chain) ===
+Starting no-move scan (spawn point matching)...
+Process: torchlight_infinite.exe
+Main module: torchlight_infinite.exe at 0x7FF693540000 (size: 0x8B2E000)
+Trying GWorld pattern 1/8...
+Trying GWorld pattern 2/8...
+Pattern 2 match at 0x7FF693D00BB3, GWorld at 0x7FF69B3C4588
+GWorld static at 0x7FF69B3C4588, points to 0x1B3018D1BE0
+Looking for GameInstance (no-move mode)...
+GameInstance path produced no candidates
+Also trying PersistentLevel path...
+PersistentLevel path found 75 candidate(s)
+Found 75 FVector candidate(s), matching against spawn points...
+Running stability pre-check on candidates...
+Stability pre-check: 0 candidates eliminated, 75 remain (from 75)
+Unknown zone - candidates at: (-23.0, 1.9), (23.0, 1.9), (0.6, 0.1), (0.1, 2.1), (2.1, 2.3), (46.7, 2.6), (2.6, 14.8), (442458.2, -12.5), (-12.5, 0.0), (196753.7, 168402.2), (188561.1, -0.9), (-0.9, -7.3), (-7.3, 524269.8), (524269.8, -168.8), (-4.2, -1856.5), (-4.2, 1856.5), (1856.5, 131283.2), (233939.0, 139614.2), (-4479.6, 9.1), (-4.2, 17.4), (-11.2, -25.1), (402522.2, 147810.1), (147810.1, 156098.1), (402522.2, 147810.1), (147810.1, 156098.1), (8.1, 13.5), (-419.0, 1.2), (1.0, 1.0), (261584.0, 2.6), (-4.4, 2.0), (-4479.6, 9.1), (-4.2, 17.4), (-11.2, -25.1), (402522.2, 147810.1), (147810.1, 156098.1), (402522.2, 147810.1), (147810.1, 156098.1), (8.1, 13.5), (1.0, 1.0), (1.0, 1.0), (-2048.0, -32768.4), (-131073.5, 32.0), (-128.0, -524294.1), (1.0, 0.5), (0.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1168.0), (1168.0, 1045.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 0.6), (0.6, 0.6), (0.6, 0.6), (368.5, 48.0), (1.0, 352.5), (1.0, 1.0), (1.0, 1.0), (147758.2, 180994.0), (180482.2, 0.0), (-18.3, -142328.6), (542.2, 8.5), (8.5, 0.0), (402522.2, 147810.1), (147810.1, 156098.1), (833.3, 437.4), (-69.9, -24.3), (-2.8, 2180.2), (379143.4, 131072.0), (-22.8, 8.9), (0.5, 0.9), (-0.9, 0.5)
+You can add new spawn points to src/utils/constants.py SPAWN_POINTS dict
+No candidates matched any known spawn point
+FAILED: Could not find pointer chain matching any spawn point
+=== Phase 2 - Spawn-point memory scan (brute-force) ===
+Scanning ALL process memory for float pairs matching spawn points...
+Step 1: Brute-force scan for coordinate candidates
+Step 2: One movement test to identify the real player position
+Target zones: Hideout
+Enumerated 25652 memory regions (4962 MB)
+  Scan progress: 9% (1403 candidates so far)
+  Scan progress: 19% (3619 candidates so far)
+  Scan progress: 29% (3832 candidates so far)
+  Scan progress: 39% (3937 candidates so far)
+  Scan progress: 49% (3983 candidates so far)
+  Scan progress: 59% (4096 candidates so far)
+  Scan progress: 69% (9328 candidates so far)
+  Scan progress: 79% (19246 candidates so far)
+  Scan progress: 89% (22019 candidates so far)
+  Scan progress: 99% (22576 candidates so far)
+Scan complete: 22641 candidate(s) found
+Reading pre-movement values for 22641 candidates...
+Pre-movement snapshot: 22459 readable candidates
+Focused game window for movement test
+Pressing W for 0.4s to move character...
+Reading post-movement values...
+Movement filter: 1307 candidate(s) changed with movement
+  0x83E056D0D0: (6110.2, 4451.8) delta=381.9 -> Hideout
+  0x83E056DE1C: (5431.5, 4437.3) delta=290.6 -> Hideout
+  0x83E056DE5C: (6138.9, 4432.5) delta=1204.1 -> Hideout
+  0x83E391F560: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x83E391F564: (4451.8, 3574.7) delta=234.4 -> Hideout
+  0x83E391F5A0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x83E391F5A4: (4451.8, 3574.7) delta=234.4 -> Hideout
+  0x83E391FA60: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x83E397F530: (6110.2, 4451.8) delta=618.5 -> Hideout
+  0x83E397FA30: (6110.2, 4451.8) delta=618.4 -> Hideout
+  0x83E39DF3B0: (6154.1, 4625.7) delta=1043.6 -> Hideout
+  0x83E39DF3B4: (4625.7, 3601.3) delta=1474.8 -> Hideout
+  0x83E3AFF2B0: (6327.6, 5343.9) delta=363.2 -> Hideout
+  0x1B2A1639210: (6120.6, 4441.8) delta=528.8 -> Hideout
+  0x1B2A1639230: (6109.6, 4448.1) delta=511.5 -> Hideout
+  0x1B2A1B6DE00: (4816.8, 1282.5) delta=4403.7 -> Hideout
+  0x1B2A1B6DE50: (4771.6, 1246.2) delta=4433.0 -> Hideout
+  0x1B2A7231E08: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B2A7232318: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B2A7233F68: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B2A723BD08: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B2A723BD0C: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B2AF9859C0: (4816.8, 1282.5) delta=2208.2 -> Hideout
+  0x1B2AF985A10: (4771.6, 1246.2) delta=2126.8 -> Hideout
+  0x1B2B00C0A88: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B2B00E1608: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B2B00E2638: (6047.8, 4490.3) delta=407.5 -> Hideout
+  0x1B2B00E2B08: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B2B00E3DD8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B2B00E5888: (6110.2, 4451.8) delta=761.8 -> Hideout
+  0x1B2B00EA048: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B2B00EFD78: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B2D0666BB8: (6109.8, 4451.4) delta=508.4 -> Hideout
+  0x1B2D0666BC4: (6110.6, 4452.2) delta=508.4 -> Hideout
+  0x1B2D0666BF4: (6132.8, 4483.8) delta=508.4 -> Hideout
+  0x1B2D0666CA8: (6034.6, 4318.7) delta=629.5 -> Hideout
+  0x1B2D0666CB4: (6186.1, 4491.3) delta=588.6 -> Hideout
+  0x1B2D0666CC0: (6083.0, 4422.3) delta=525.6 -> Hideout
+  0x1B2D0666CCC: (6128.1, 4475.0) delta=524.2 -> Hideout
+  0x1B2D0666CD8: (6101.4, 4426.8) delta=537.9 -> Hideout
+  0x1B2D0666CE4: (6138.3, 4460.2) delta=538.2 -> Hideout
+  0x1B2D0666CF0: (6117.8, 4423.5) delta=579.1 -> Hideout
+  0x1B2D0666CFC: (6154.0, 4456.9) delta=579.5 -> Hideout
+  0x1B2D0666D08: (6093.5, 4392.8) delta=559.4 -> Hideout
+  0x1B2D0666D14: (6145.3, 4426.4) delta=592.6 -> Hideout
+  0x1B2D0666D20: (6126.5, 4458.7) delta=568.1 -> Hideout
+  0x1B2D0666D2C: (6184.0, 4489.0) delta=591.3 -> Hideout
+  0x1B2D0666D38: (6070.2, 4411.2) delta=525.7 -> Hideout
+  0x1B2D0666D44: (6132.3, 4460.8) delta=535.3 -> Hideout
+  0x1B2D0666D50: (6090.9, 4443.2) delta=514.2 -> Hideout
+  0x1B2D0666D5C: (6150.5, 4472.6) delta=540.0 -> Hideout
+  0x1B2D0666D68: (6070.0, 4447.4) delta=530.6 -> Hideout
+  0x1B2D0666D74: (6093.5, 4461.2) delta=533.5 -> Hideout
+  0x1B2D0666D80: (6044.8, 4445.5) delta=545.0 -> Hideout
+  0x1B2D0666D8C: (6065.0, 4460.4) delta=544.3 -> Hideout
+  0x1B2D0666D98: (6036.3, 4419.9) delta=595.0 -> Hideout
+  0x1B2D0666DA4: (6046.1, 4443.5) delta=576.6 -> Hideout
+  0x1B2D0666DB0: (6038.2, 4389.0) delta=646.6 -> Hideout
+  0x1B2D0666DBC: (6051.4, 4412.5) delta=634.6 -> Hideout
+  0x1B2D0666DC8: (6045.4, 4357.5) delta=693.9 -> Hideout
+  0x1B2D0666DD4: (6062.3, 4383.1) delta=684.3 -> Hideout
+  0x1B2D0666DE0: (6056.8, 4322.2) delta=746.8 -> Hideout
+  0x1B2D0666DEC: (6076.7, 4350.0) delta=738.1 -> Hideout
+  0x1B2D8C016A0: (6150.6, -692.5) delta=3982.5 -> Hideout
+  0x1B2D8C016F0: (6150.6, -692.5) delta=4015.4 -> Hideout
+  0x1B2D8C0EA00: (6174.5, 4474.1) delta=4482.6 -> Hideout
+  0x1B2D8C0EA04: (4474.1, 3733.5) delta=3475.1 -> Hideout
+  0x1B2D8C0EA50: (6110.2, 4451.8) delta=4396.0 -> Hideout
+  0x1B2D8C0EA54: (4451.8, 3598.9) delta=3289.6 -> Hideout
+  0x1B2E0F444E0: (5680.1, 4915.8) delta=446.0 -> Hideout
+  0x1B2EA38F700: (1632.7, -603.2) delta=3461.2 -> Hideout
+  0x1B2EA38F750: (1614.4, -649.6) delta=3526.0 -> Hideout
+  0x1B2EA47CE70: (5126.9, 929.2) delta=1900.2 -> Hideout
+  0x1B2EA47CEC0: (5126.9, 929.2) delta=1900.2 -> Hideout
+  0x1B2EA4A7E50: (0.0, 0.0) delta=1622.7 -> Hideout
+  0x1B2EA4A7E54: (0.0, 0.0) delta=3427.3 -> Hideout
+  0x1B2EA4A7EA0: (1991.2, 2008.0) delta=2414.4 -> Hideout
+  0x1B2EA4A7EA4: (2008.0, 3097.4) delta=1795.2 -> Hideout
+  0x1B2EA4ADE00: (4496.9, 1669.1) delta=2898.4 -> Hideout
+  0x1B2EA4ADE50: (4496.9, 1669.1) delta=2844.6 -> Hideout
+  0x1B2EA680AA0: (1398.4, -139.0) delta=4906.5 -> Hideout
+  0x1B2EA680AF0: (1380.1, -185.4) delta=4971.3 -> Hideout
+  0x1B2EA9152C0: (1412.2, 210.4) delta=3305.1 -> Hideout
+  0x1B2EA915310: (1366.6, 218.2) delta=3358.5 -> Hideout
+  0x1B2EA91A5E0: (6118.0, -138.8) delta=2872.4 -> Hideout
+  0x1B2EA91A5E4: (-138.8, 3489.4) delta=171.4 -> Hideout
+  0x1B2EA91A630: (6142.6, -147.1) delta=2888.7 -> Hideout
+  0x1B2EA91A634: (-147.1, 3111.5) delta=480.6 -> Hideout
+  0x1B2EAA7A5E4: (-4005.4, 3558.8) delta=3921.2 -> Hideout
+  0x1B2EAA7A634: (-4005.4, 3552.3) delta=4299.1 -> Hideout
+  0x1B2EAAF55C0: (4473.6, 1718.9) delta=770.6 -> Hideout
+  0x1B2EAAF5610: (4496.9, 1669.1) delta=697.6 -> Hideout
+  0x1B2EAAF7E50: (2049.9, 2008.8) delta=2436.0 -> Hideout
+  0x1B2EAAF7EA0: (1991.2, 2008.0) delta=2414.4 -> Hideout
+  0x1B2EAAF8A50: (6142.6, -147.1) delta=2667.2 -> Hideout
+  0x1B2EAAF8A54: (-147.1, 3123.3) delta=1463.6 -> Hideout
+  0x1B2EAAF8AA0: (6142.6, -147.1) delta=2764.4 -> Hideout
+  0x1B2EAAF8AA4: (-147.1, 3111.5) delta=1412.9 -> Hideout
+  0x1B2EAAF8C54: (-1861.8, 3124.7) delta=2578.0 -> Hideout
+  0x1B2EAAF8CA4: (-1861.8, 3111.5) delta=2581.5 -> Hideout
+  0x1B2EABE64C0: (1412.2, 210.4) delta=4410.1 -> Hideout
+  0x1B2EABE6510: (1366.6, 218.2) delta=4433.0 -> Hideout
+  0x1B2EABEE800: (2099.8, -2425.1) delta=1345.0 -> Hideout
+  0x1B2EABEE804: (-2425.1, 3617.5) delta=1217.0 -> Hideout
+  0x1B2EABEE850: (2099.8, -2425.1) delta=1345.0 -> Hideout
+  0x1B2EABEE854: (-2425.1, 3615.8) delta=1207.7 -> Hideout
+  0x1B2F4853030: (4331.4, -175.5) delta=4481.1 -> Hideout
+  0x1B2F4853080: (4331.4, -175.5) delta=4481.1 -> Hideout
+  0x1B2F4C4AD70: (6110.3, 4443.2) delta=517.1 -> Hideout
+  0x1B2F4C4AD90: (6104.7, 4449.2) delta=505.5 -> Hideout
+  0x1B2F4D35708: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B2F4D357E0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B2F5153C30: (2461.6, 1998.1) delta=3684.1 -> Hideout
+  0x1B2F5153C34: (1998.1, 3257.3) delta=1077.8 -> Hideout
+  0x1B2F5153C80: (2416.0, 2074.8) delta=3856.4 -> Hideout
+  0x1B2F5153C84: (2074.8, 3116.2) delta=1169.7 -> Hideout
+  0x1B2F5153F30: (1306.7, 205.1) delta=3638.8 -> Hideout
+  0x1B2F5153F80: (1366.6, 218.2) delta=3565.8 -> Hideout
+  0x1B2F554CD70: (6053.3, 4453.4) delta=542.6 -> Hideout
+  0x1B2F554CE20: (6053.3, 4453.4) delta=542.6 -> Hideout
+  0x1B2F554CEF0: (6040.7, 4431.9) delta=585.2 -> Hideout
+  0x1B2F554CFA0: (6040.7, 4431.9) delta=585.2 -> Hideout
+  0x1B2F554D070: (6044.9, 4400.9) delta=640.7 -> Hideout
+  0x1B2F554D120: (6044.9, 4400.9) delta=640.7 -> Hideout
+  0x1B2F554D1F0: (6054.1, 4370.7) delta=689.3 -> Hideout
+  0x1B2F554D2A0: (6054.1, 4370.7) delta=689.3 -> Hideout
+  0x1B2F554D370: (6105.1, 4448.9) delta=524.3 -> Hideout
+  0x1B2F554D420: (6105.1, 4448.9) delta=524.3 -> Hideout
+  0x1B2F6038FB0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B2F6038FD0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B2F6039110: (6105.1, 4448.9) delta=524.3 -> Hideout
+  0x1B2F6039130: (6118.9, 4443.7) delta=537.0 -> Hideout
+  0x1B2F6039150: (6134.6, 4440.3) delta=577.9 -> Hideout
+  0x1B2F6039170: (6116.9, 4409.4) delta=573.6 -> Hideout
+  0x1B2F6039190: (6154.2, 4473.9) delta=578.5 -> Hideout
+  0x1B2F60391B0: (6100.9, 4436.0) delta=530.1 -> Hideout
+  0x1B2F60391D0: (6120.5, 4458.1) delta=526.8 -> Hideout
+  0x1B2F60391F0: (6081.2, 4454.9) delta=531.0 -> Hideout
+  0x1B2F6039210: (6054.4, 4453.9) delta=543.2 -> Hideout
+  0x1B2F6039230: (6040.7, 4433.1) delta=584.0 -> Hideout
+  0x1B2F6039250: (6044.5, 4402.2) delta=639.1 -> Hideout
+  0x1B2F6039270: (6053.7, 4371.8) delta=687.8 -> Hideout
+  0x1B2F6039290: (6066.6, 4337.7) delta=741.3 -> Hideout
+  0x1B300379178: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B300379250: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B300569A00: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3007DACA4: (0.0, 0.0) delta=4915.8 -> Hideout
+  0x1B300AA8140: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B300AA8150: (6108.6, 4406.5) delta=606.3 -> Hideout
+  0x1B300AA8188: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B300C5EFF8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B300C5F0D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3012221E8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3012222C0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B301228188: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B301228260: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B301EE76C8: (6195.2, 4469.6) delta=613.6 -> Hideout
+  0x1B301EE76E4: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B301EE7700: (6132.4, 4386.8) delta=607.9 -> Hideout
+  0x1B301EE78DC: (5808.6, 4956.9) delta=419.2 -> Hideout
+  0x1B301EE78E0: (4956.9, 3721.8) delta=193.8 -> Hideout
+  0x1B301EE7CCC: (6108.6, 4406.5) delta=606.3 -> Hideout
+  0x1B301EE87BC: (6110.3, 4443.2) delta=517.1 -> Hideout
+  0x1B301EE89B8: (1551.8, 2935.4) delta=4381.9 -> Hideout
+  0x1B301EE89EC: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B301EE8A08: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B301EE8A40: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B301EE8A5C: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B301EE8A78: (6104.7, 4449.2) delta=505.5 -> Hideout
+  0x1B301EE8A94: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B301EE8AB0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B301EE8ACC: (5993.3, 4439.1) delta=404.1 -> Hideout
+  0x1B3020E3D48: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3020E3D64: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3020E3E20: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3028B8C28: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3028B8D00: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3028B9C18: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3028B9CF0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B302A23A40: (3937.2, 3317.4) delta=3525.2 -> Hideout
+  0x1B302A23E18: (6099.0, 1270.1) delta=4454.2 -> Hideout
+  0x1B302A243BC: (0.0, 0.0) delta=45.0 -> Hideout
+  0x1B302A24BC0: (5935.7, 4627.2) delta=402.4 -> Hideout
+  0x1B302A25B60: (5680.1, 4915.8) delta=141.9 -> Hideout
+  0x1B302A25B64: (4915.8, 3601.3) delta=3707.8 -> Hideout
+  0x1B302A27798: (6099.0, 1270.1) delta=3922.7 -> Hideout
+  0x1B302A2779C: (1270.1, 3184.4) delta=3956.2 -> Hideout
+  0x1B302A28558: (5649.6, 4508.1) delta=1665.7 -> Hideout
+  0x1B302A2855C: (4508.1, 3570.0) delta=1623.7 -> Hideout
+  0x1B302A29A98: (5649.6, 4508.1) delta=1665.7 -> Hideout
+  0x1B302A2A664: (4625.7, 0.0) delta=4625.7 -> Hideout
+  0x1B302A2B240: (6042.1, 4607.5) delta=3394.3 -> Hideout
+  0x1B302A2C79C: (1270.1, 3184.4) delta=3623.6 -> Hideout
+  0x1B302A2D918: (6047.7, 4986.3) delta=3779.4 -> Hideout
+  0x1B302A2D91C: (4986.3, 3516.8) delta=2095.9 -> Hideout
+  0x1B302A2E084: (0.0, 0.0) delta=4986.3 -> Hideout
+  0x1B302A2E4F8: (5649.6, 4508.1) delta=1665.7 -> Hideout
+  0x1B302A2E4FC: (4508.1, 3570.0) delta=1623.7 -> Hideout
+  0x1B302A2FCA0: (6154.1, 4625.7) delta=130.2 -> Hideout
+  0x1B302A2FDF8: (6047.7, 4986.3) delta=509.0 -> Hideout
+  0x1B303090550: (5680.1, 4915.8) delta=356.2 -> Hideout
+  0x1B303090554: (4915.8, 3601.3) delta=52.0 -> Hideout
+  0x1B303090CD0: (6121.2, 4446.9) delta=524.3 -> Hideout
+  0x1B303090CD4: (4446.9, 3766.0) delta=102.7 -> Hideout
+  0x1B303091750: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B303093850: (5680.1, 4915.8) delta=446.0 -> Hideout
+  0x1B303093854: (4915.8, 3601.3) delta=440.7 -> Hideout
+  0x1B3030939D0: (6110.2, 4451.8) delta=752.2 -> Hideout
+  0x1B303094150: (5996.0, 4956.1) delta=794.4 -> Hideout
+  0x1B303094154: (4956.1, 3613.0) delta=491.0 -> Hideout
+  0x1B303094450: (6111.9, 4442.6) delta=360.7 -> Hideout
+  0x1B303094454: (4442.6, 3746.5) delta=329.7 -> Hideout
+  0x1B303094E50: (6496.2, 5060.1) delta=604.2 -> Hideout
+  0x1B303094E54: (5060.1, 3859.1) delta=350.1 -> Hideout
+  0x1B303094ED0: (6157.7, 5665.7) delta=1227.4 -> Hideout
+  0x1B303094ED4: (5665.7, 4036.1) delta=1184.7 -> Hideout
+  0x1B303094FD0: (6327.6, 5343.9) delta=452.4 -> Hideout
+  0x1B3030955D0: (5649.6, 4508.1) delta=8.5 -> Hideout
+  0x1B3030955D4: (4508.1, 3570.0) delta=14.6 -> Hideout
+  0x1B3030975D4: (4986.3, 3516.8) delta=4003.0 -> Hideout
+  0x1B303098450: (6157.7, 5665.7) delta=1673.4 -> Hideout
+  0x1B303098454: (5665.7, 4036.1) delta=1601.8 -> Hideout
+  0x1B303098BD0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B303099AD0: (6110.2, 4451.8) delta=223.8 -> Hideout
+  0x1B30309B9D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B30309B9D4: (4451.8, 3574.7) delta=50.0 -> Hideout
+  0x1B30309BBD0: (5996.0, 4956.1) delta=794.4 -> Hideout
+  0x1B30309D450: (6042.1, 4607.5) delta=491.9 -> Hideout
+  0x1B30309D454: (4607.5, 3601.3) delta=130.7 -> Hideout
+  0x1B30309D4D0: (6072.6, 5452.2) delta=298.6 -> Hideout
+  0x1B30309D4D4: (5452.2, 3696.6) delta=553.0 -> Hideout
+  0x1B30309E250: (6496.2, 5060.1) delta=604.2 -> Hideout
+  0x1B30309E254: (5060.1, 3859.1) delta=350.1 -> Hideout
+  0x1B30309EA50: (5935.7, 4627.2) delta=389.2 -> Hideout
+  0x1B30309EAD0: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B30309F8D0: (6116.3, 4441.0) delta=366.7 -> Hideout
+  0x1B30309FDD0: (5935.7, 4627.2) delta=1108.7 -> Hideout
+  0x1B30309FDD4: (4627.2, 3601.3) delta=909.8 -> Hideout
+  0x1B307322B50: (5650.0, 4500.0) delta=802.1 -> Hideout
+  0x1B30732A9D0: (5935.7, 4627.2) delta=1108.7 -> Hideout
+  0x1B3073B2490: (6121.5, 4446.1) delta=525.4 -> Hideout
+  0x1B3073B24B0: (6110.3, 4449.2) delta=511.1 -> Hideout
+  0x1B307503550: (6154.1, 4625.7) delta=629.8 -> Hideout
+  0x1B307503554: (4625.7, 3601.3) delta=150.5 -> Hideout
+  0x1B3075080D0: (5715.6, 4809.4) delta=1298.4 -> Hideout
+  0x1B30750C7D0: (6110.2, 4451.8) delta=597.0 -> Hideout
+  0x1B30C7F03A0: (5099.3, 951.7) delta=4464.6 -> Hideout
+  0x1B30C7F03F0: (5126.9, 929.2) delta=4538.3 -> Hideout
+  0x1B30E79E788: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B30E79E860: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B32AED13A0: (4771.6, 1246.2) delta=4322.2 -> Hideout
+  0x1B32AED13F0: (4771.6, 1246.2) delta=4433.0 -> Hideout
+  0x1B32DF19CE0: (4827.7, 1205.1) delta=4923.3 -> Hideout
+  0x1B32DF19D30: (4771.6, 1246.2) delta=4826.1 -> Hideout
+  0x1B3331949C0: (3654.9, 236.1) delta=3424.3 -> Hideout
+  0x1B3331949C4: (236.1, 3584.2) delta=982.5 -> Hideout
+  0x1B333194A10: (3654.9, 236.1) delta=3424.3 -> Hideout
+  0x1B333194A14: (236.1, 3582.8) delta=946.0 -> Hideout
+  0x1B33F7BE400: (1932.0, -44.4) delta=2003.4 -> Hideout
+  0x1B33F7BE450: (1932.0, -44.4) delta=2003.4 -> Hideout
+  0x1B365ACA2C4: (6033.2, 4323.4) delta=624.6 -> Hideout
+  0x1B365ACA2D0: (6183.4, 4491.2) delta=586.1 -> Hideout
+  0x1B394A0C250: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B394A0C254: (4451.8, 3574.7) delta=50.0 -> Hideout
+  0x1B394B73E58: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B394B73E5C: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B394B76BD8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B394B778D8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B394B7F458: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B394C18190: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B394C18194: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B394C1AB00: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B394C1AD20: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B396EC36C0: (0.0, 0.0) delta=3.2 -> Hideout
+  0x1B39A54D9E8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B39AB6CD00: (-0.0, 0.0) delta=122.0 -> Hideout
+  0x1B39ACD2AD0: (6157.7, 5665.7) delta=298.6 -> Hideout
+  0x1B39ACD2AD4: (5665.7, 4036.1) delta=553.0 -> Hideout
+  0x1B39ACD2B50: (6154.1, 4625.7) delta=488.5 -> Hideout
+  0x1B39ACD3750: (6110.2, 4451.8) delta=597.0 -> Hideout
+  0x1B39ACD3B50: (6327.6, 5343.9) delta=1513.9 -> Hideout
+  0x1B39ACD58D0: (5649.6, 4508.1) delta=438.3 -> Hideout
+  0x1B39ACD5AD0: (6072.6, 5452.2) delta=572.7 -> Hideout
+  0x1B39ACD7F50: (6047.7, 4986.3) delta=884.0 -> Hideout
+  0x1B39ACD7F54: (4986.3, 3516.8) delta=546.0 -> Hideout
+  0x1B39ACD8250: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B39ACDA050: (6047.7, 4986.3) delta=884.0 -> Hideout
+  0x1B39ACDA054: (4986.3, 3516.8) delta=546.0 -> Hideout
+  0x1B39AD36388: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B39AD36460: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B39AD365B4: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B39AD4F314: (-45.3, -0.0) delta=45.3 -> Hideout
+  0x1B39AD4F390: (-0.8, -0.4) delta=1.3 -> Hideout
+  0x1B39AD4F3D0: (-0.4, -23.9) delta=24.3 -> Hideout
+  0x1B39AE89D00: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B39AE89DD0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B39AE8A520: (6104.7, 4449.2) delta=523.6 -> Hideout
+  0x1B39AE8A5F0: (6118.5, 4443.6) delta=536.6 -> Hideout
+  0x1B39AE8A6C0: (6133.8, 4440.3) delta=577.0 -> Hideout
+  0x1B39AE8A790: (6115.5, 4408.9) delta=572.7 -> Hideout
+  0x1B39AE8A860: (6154.6, 4473.8) delta=578.9 -> Hideout
+  0x1B39AE8A930: (6099.3, 4436.9) delta=527.5 -> Hideout
+  0x1B39AE8AA00: (6119.0, 4458.2) delta=525.1 -> Hideout
+  0x1B39AE8AAD0: (6079.4, 4455.9) delta=528.2 -> Hideout
+  0x1B39AE8ABA0: (6052.7, 4454.5) delta=541.1 -> Hideout
+  0x1B39AE8AC70: (6040.0, 4433.3) delta=583.3 -> Hideout
+  0x1B39AE8AD40: (6044.5, 4402.4) delta=639.0 -> Hideout
+  0x1B39AE8AE10: (6053.9, 4372.3) delta=687.9 -> Hideout
+  0x1B39AE8AEE0: (6066.9, 4338.2) delta=741.8 -> Hideout
+  0x1B39D390ED0: (6110.2, 4451.8) delta=618.5 -> Hideout
+  0x1B39D390ED4: (4451.8, 3574.7) delta=542.6 -> Hideout
+  0x1B39D395AD0: (6042.1, 4607.5) delta=528.4 -> Hideout
+  0x1B39D39A9D0: (6154.1, 4625.7) delta=622.1 -> Hideout
+  0x1B39D3BB0E0: (2336.4, 2166.8) delta=2918.4 -> Hideout
+  0x1B39D3BB130: (2416.0, 2074.8) delta=2906.0 -> Hideout
+  0x1B39EB509D0: (6327.6, 5343.9) delta=891.8 -> Hideout
+  0x1B39EB53254: (4956.1, 3613.0) delta=492.6 -> Hideout
+  0x1B39EB53950: (6327.6, 5343.9) delta=719.4 -> Hideout
+  0x1B39EB53954: (5343.9, 3794.3) delta=569.1 -> Hideout
+  0x1B39EB539D0: (6110.2, 4451.8) delta=618.5 -> Hideout
+  0x1B39EB539D4: (4451.8, 3712.4) delta=603.8 -> Hideout
+  0x1B39EB53A50: (6157.7, 5665.7) delta=789.4 -> Hideout
+  0x1B39EB53D50: (6154.1, 4625.7) delta=629.8 -> Hideout
+  0x1B39EB53D54: (4625.7, 3601.3) delta=127.0 -> Hideout
+  0x1B39EB540D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B39EB540D4: (4451.8, 3574.7) delta=50.0 -> Hideout
+  0x1B39EB544D0: (6000.5, 4500.0) delta=1171.0 -> Hideout
+  0x1B39EB549D0: (6110.2, 4451.8) delta=994.3 -> Hideout
+  0x1B39EB54CD0: (5996.0, 4956.1) delta=427.1 -> Hideout
+  0x1B39EB551D0: (6047.7, 4986.3) delta=789.4 -> Hideout
+  0x1B39EB55254: (4508.1, 3570.0) delta=332.6 -> Hideout
+  0x1B39EB56950: (6496.2, 5060.1) delta=1398.6 -> Hideout
+  0x1B39EB57550: (5996.0, 4956.1) delta=604.2 -> Hideout
+  0x1B39EB57ED0: (6072.6, 5452.2) delta=298.6 -> Hideout
+  0x1B39EB57ED4: (5452.2, 3696.6) delta=553.0 -> Hideout
+  0x1B39EB580D0: (6042.1, 4607.5) delta=499.6 -> Hideout
+  0x1B39EB59BD0: (6327.6, 5343.9) delta=1513.9 -> Hideout
+  0x1B39EB5A950: (5680.1, 4915.8) delta=438.0 -> Hideout
+  0x1B39EB5A954: (4915.8, 3601.3) delta=154.9 -> Hideout
+  0x1B39EB5BBD0: (6157.7, 5665.7) delta=1665.7 -> Hideout
+  0x1B39EB5BED0: (6327.6, 5343.9) delta=1146.6 -> Hideout
+  0x1B39EB5BED4: (5343.9, 3794.3) delta=727.6 -> Hideout
+  0x1B39EB5FED0: (5996.0, 4956.1) delta=572.7 -> Hideout
+  0x1B39EB5FED4: (4956.1, 3613.0) delta=579.7 -> Hideout
+  0x1B39EFD3D34: (1638.7, 3268.7) delta=4907.3 -> Hideout
+  0x1B39EFD3D80: (4496.9, 1669.1) delta=2486.5 -> Hideout
+  0x1B39EFD3D84: (1669.1, 3092.0) delta=429.8 -> Hideout
+  0x1B39F7CBEB0: (5826.0, 5043.0) delta=1211.3 -> Hideout
+  0x1B39F7CBEB4: (5043.0, 3612.0) delta=886.0 -> Hideout
+  0x1B3A06503B0: (6117.5, 4443.8) delta=535.5 -> Hideout
+  0x1B3A0650460: (6117.5, 4443.8) delta=535.5 -> Hideout
+  0x1B3A0650530: (6132.4, 4440.3) delta=575.4 -> Hideout
+  0x1B3A06505E0: (6132.4, 4440.3) delta=575.4 -> Hideout
+  0x1B3A06506B0: (6112.9, 4408.8) delta=570.0 -> Hideout
+  0x1B3A0650760: (6112.9, 4408.8) delta=570.0 -> Hideout
+  0x1B3A0650830: (6153.4, 4473.9) delta=577.6 -> Hideout
+  0x1B3A06508E0: (6153.4, 4473.9) delta=577.6 -> Hideout
+  0x1B3A06509B0: (6098.6, 4437.0) delta=526.7 -> Hideout
+  0x1B3A0650A60: (6098.9, 4437.0) delta=527.0 -> Hideout
+  0x1B3A0650B30: (6118.5, 4458.4) delta=524.5 -> Hideout
+  0x1B3A0650BE0: (6118.7, 4458.3) delta=524.8 -> Hideout
+  0x1B3A0650CB0: (6078.5, 4457.2) delta=526.1 -> Hideout
+  0x1B3A0650D60: (6079.0, 4456.6) delta=527.2 -> Hideout
+  0x1B3A0E354C0: (5386.5, -1853.5) delta=3714.7 -> Hideout
+  0x1B3A0E35510: (5411.2, -1861.8) delta=3747.6 -> Hideout
+  0x1B3A0E3ADE0: (6168.4, 4418.6) delta=4569.3 -> Hideout
+  0x1B3A0E3AE30: (6110.2, 4451.8) delta=4544.2 -> Hideout
+  0x1B3A0E3DD00: (4473.6, 1718.9) delta=1974.2 -> Hideout
+  0x1B3A0E3DD04: (1718.9, 3206.9) delta=1936.2 -> Hideout
+  0x1B3A0E3DD50: (4496.9, 1669.1) delta=1947.6 -> Hideout
+  0x1B3A0E3DD54: (1669.1, 3092.0) delta=1990.2 -> Hideout
+  0x1B3A0E42F30: (4925.0, 2352.0) delta=2873.0 -> Hideout
+  0x1B3A0E42F80: (4925.0, 2352.0) delta=2873.0 -> Hideout
+  0x1B3A0E49DE4: (5551.4, 3235.7) delta=3415.3 -> Hideout
+  0x1B3A0E49E34: (5551.4, 3235.7) delta=3596.2 -> Hideout
+  0x1B3A20FC970: (2490.7, 2054.6) delta=546.0 -> Hideout
+  0x1B3A20FC9C0: (2416.0, 2074.8) delta=491.6 -> Hideout
+  0x1B3A2191250: (6121.9, 4445.3) delta=526.6 -> Hideout
+  0x1B3A2191270: (6110.4, 4449.2) delta=511.3 -> Hideout
+  0x1B3A2192490: (6116.9, 4440.9) delta=526.1 -> Hideout
+  0x1B3A21924B0: (6108.0, 4446.8) delta=511.2 -> Hideout
+  0x1B3A25BFAB0: (6032.1, 4483.8) delta=384.6 -> Hideout
+  0x1B3A25BFAB4: (4483.8, 3580.3) delta=397.1 -> Hideout
+  0x1B3A27D50C0: (2049.9, 2008.8) delta=2851.1 -> Hideout
+  0x1B3A27D5110: (1991.2, 2008.0) delta=2844.6 -> Hideout
+  0x1B3A27D57C4: (2352.0, 3560.8) delta=2602.6 -> Hideout
+  0x1B3A27D5814: (2352.0, 3559.1) delta=2600.9 -> Hideout
+  0x1B3A461D320: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3A461D330: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3A461D368: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3A4632E50: (5649.6, 4508.1) delta=8.5 -> Hideout
+  0x1B3A4632E54: (4508.1, 3570.0) delta=14.6 -> Hideout
+  0x1B3A46B15A0: (1638.8, -698.0) delta=3701.8 -> Hideout
+  0x1B3A46B15F0: (1638.8, -698.0) delta=3701.8 -> Hideout
+  0x1B3A46B2B30: (843.7, 2144.4) delta=4719.6 -> Hideout
+  0x1B3A46B2B80: (843.7, 2144.4) delta=4719.6 -> Hideout
+  0x1B3A46B7E50: (2806.3, 2344.3) delta=1091.9 -> Hideout
+  0x1B3A46B7EA0: (2806.3, 2344.3) delta=1151.4 -> Hideout
+  0x1B3A46BA2E0: (5177.0, 913.0) delta=3951.2 -> Hideout
+  0x1B3A46BA2E4: (913.0, 3218.3) delta=4045.3 -> Hideout
+  0x1B3A46BA330: (5126.9, 929.2) delta=4093.9 -> Hideout
+  0x1B3A46BA334: (929.2, 3092.0) delta=4081.7 -> Hideout
+  0x1B3A46D3C30: (5099.3, 951.7) delta=4099.0 -> Hideout
+  0x1B3A46D3C34: (951.7, 3225.9) delta=3898.9 -> Hideout
+  0x1B3A46D3C80: (5126.9, 929.2) delta=4093.9 -> Hideout
+  0x1B3A46D3C84: (929.2, 3092.0) delta=4081.7 -> Hideout
+  0x1B3A4CE48A0: (6042.1, 4607.5) delta=670.4 -> Hideout
+  0x1B3A4CE48B8: (5715.6, 4809.4) delta=1031.3 -> Hideout
+  0x1B3A4DF3F30: (4496.9, 1669.1) delta=3099.7 -> Hideout
+  0x1B3A4DF3F80: (4496.9, 1669.1) delta=3099.7 -> Hideout
+  0x1B3A4DFB030: (3391.4, -284.6) delta=3334.8 -> Hideout
+  0x1B3A4DFDD00: (553.1, -2500.7) delta=3570.2 -> Hideout
+  0x1B3A4DFDD50: (553.1, -2500.7) delta=3532.4 -> Hideout
+  0x1B3A9B71CA0: (4498.9, 1638.3) delta=2819.5 -> Hideout
+  0x1B3A9B71CF0: (4496.9, 1669.1) delta=2844.6 -> Hideout
+  0x1B3A9B78254: (951.7, 3225.9) delta=4985.1 -> Hideout
+  0x1B3A9B90FA0: (518.9, 3166.2) delta=2630.4 -> Hideout
+  0x1B3A9B90FA4: (3166.2, 3202.1) delta=1262.9 -> Hideout
+  0x1B3A9B90FF0: (518.9, 3166.2) delta=2630.4 -> Hideout
+  0x1B3A9B90FF4: (3166.2, 3196.3) delta=1257.1 -> Hideout
+  0x1B3A9B97550: (4816.8, 1282.5) delta=1177.8 -> Hideout
+  0x1B3A9B975A0: (4771.6, 1246.2) delta=1259.2 -> Hideout
+  0x1B3A9B9AB74: (0.0, 0.0) delta=1.5 -> Hideout
+  0x1B3A9B9ABE0: (3895.7, 322.7) delta=3851.1 -> Hideout
+  0x1B3A9B9ABE4: (322.7, 3741.4) delta=2636.9 -> Hideout
+  0x1B3A9B9AC30: (3895.7, 322.7) delta=3788.4 -> Hideout
+  0x1B3A9B9AC34: (322.7, 3735.8) delta=2695.8 -> Hideout
+  0x1B3A9BB1FA0: (4816.8, 1282.5) delta=3072.3 -> Hideout
+  0x1B3A9BB1FF0: (4771.6, 1246.2) delta=3063.4 -> Hideout
+  0x1B3A9BBA5E0: (0.0, 0.0) delta=4490.8 -> Hideout
+  0x1B3A9BBA630: (1991.2, 2008.0) delta=491.6 -> Hideout
+  0x1B3A9BC2730: (5177.0, 913.0) delta=1058.3 -> Hideout
+  0x1B3A9BC2734: (913.0, 3218.3) delta=601.2 -> Hideout
+  0x1B3A9BC2780: (5126.9, 929.2) delta=1063.9 -> Hideout
+  0x1B3A9BC2784: (929.2, 3092.0) delta=595.1 -> Hideout
+  0x1B3A9BC2934: (3166.2, 3196.5) delta=2275.0 -> Hideout
+  0x1B3A9BC2984: (3166.2, 3196.3) delta=2341.3 -> Hideout
+  0x1B3A9BC3B30: (1637.6, -612.9) delta=3520.5 -> Hideout
+  0x1B3A9BC3B80: (1619.3, -659.3) delta=3530.8 -> Hideout
+  0x1B3A9BC8A50: (1409.7, -4170.7) delta=2435.7 -> Hideout
+  0x1B3A9BC8AA0: (1409.7, -4170.7) delta=2435.7 -> Hideout
+  0x1B3A9BCCE70: (2416.0, 2074.8) delta=1642.0 -> Hideout
+  0x1B3A9BCCE74: (2074.8, 3124.2) delta=149.8 -> Hideout
+  0x1B3A9BCCEC0: (2416.0, 2074.8) delta=1642.0 -> Hideout
+  0x1B3A9BCCEC4: (2074.8, 3116.2) delta=149.8 -> Hideout
+  0x1B3A9BD3BC4: (0.0, 0.0) delta=63.3 -> Hideout
+  0x1B3A9BD3C30: (4498.9, 1638.3) delta=1403.4 -> Hideout
+  0x1B3A9BD3C34: (1638.3, 3219.6) delta=726.6 -> Hideout
+  0x1B3A9BD3C80: (4496.9, 1669.1) delta=1369.9 -> Hideout
+  0x1B3A9BD3C84: (1669.1, 3092.0) delta=739.9 -> Hideout
+  0x1B3A9D69970: (0.0, 0.0) delta=3.2 -> Hideout
+  0x1B3A9D6C470: (1614.4, -649.6) delta=1062.2 -> Hideout
+  0x1B3A9D6C4C0: (1614.4, -649.6) delta=1115.6 -> Hideout
+  0x1B3A9D6F990: (3391.4, -284.6) delta=3676.0 -> Hideout
+  0x1B3AA252EE0: (6166.1, 4471.0) delta=582.6 -> Hideout
+  0x1B3AA252EF0: (6183.3, 4471.1) delta=601.4 -> Hideout
+  0x1B3AA252F28: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3AEE87C88: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3AEE89988: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3AF3E0868: (76.6, 38.5) delta=115.1 -> Hideout
+  0x1B3AF3E0884: (100.0, 0.5) delta=100.5 -> Hideout
+  0x1B3AF3E0940: (206.3, 1.0) delta=207.3 -> Hideout
+  0x1B3AF3E0A38: (0.5, 55.0) delta=55.5 -> Hideout
+  0x1B3AF3E0C70: (604.8, 38.4) delta=643.2 -> Hideout
+  0x1B3AF3E0CC0: (0.5, 55.0) delta=921.0 -> Hideout
+  0x1B3AF3E0CE0: (0.4, 38.5) delta=904.7 -> Hideout
+  0x1B3AF3E1098: (0.0, 0.0) delta=948.5 -> Hideout
+  0x1B3B18F3134: (4477.3, 3576.9) delta=2688.3 -> Hideout
+  0x1B3B18F3180: (0.0, 0.0) delta=4490.8 -> Hideout
+  0x1B3B18F3230: (6109.5, 4443.5) delta=516.0 -> Hideout
+  0x1B3B18F3234: (4443.5, 3747.8) delta=227.8 -> Hideout
+  0x1B3B18F3280: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B18F3284: (4451.8, 3598.9) delta=52.2 -> Hideout
+  0x1B3B18FEE00: (1642.5, -622.5) delta=3135.9 -> Hideout
+  0x1B3B18FEE50: (1624.1, -669.0) delta=3200.7 -> Hideout
+  0x1B3B196B658: (0.0, 0.0) delta=948.5 -> Hideout
+  0x1B3B196B8E0: (0.0, 0.0) delta=866.5 -> Hideout
+  0x1B3B1AF1FA0: (1619.3, -659.3) delta=2931.0 -> Hideout
+  0x1B3B1AF1FA4: (-659.3, 3122.0) delta=1366.9 -> Hideout
+  0x1B3B1AF1FF0: (1619.3, -659.3) delta=2931.0 -> Hideout
+  0x1B3B1AF1FF4: (-659.3, 3092.0) delta=1386.1 -> Hideout
+  0x1B3B1AFED00: (5386.5, -1853.5) delta=3339.6 -> Hideout
+  0x1B3B1AFED50: (5411.2, -1861.8) delta=3372.5 -> Hideout
+  0x1B3B1CA0AA0: (1941.0, 2011.6) delta=534.1 -> Hideout
+  0x1B3B1CA0AA4: (2011.6, 3208.1) delta=62.7 -> Hideout
+  0x1B3B1CA0AF0: (1991.2, 2008.0) delta=491.6 -> Hideout
+  0x1B3B1CA0AF4: (2008.0, 3097.4) delta=85.5 -> Hideout
+  0x1B3B1CA3C80: (2806.3, 2344.3) delta=3565.8 -> Hideout
+  0x1B3B1CA4AC0: (5177.0, 913.0) delta=4658.2 -> Hideout
+  0x1B3B1CA4AC4: (913.0, 3218.3) delta=890.4 -> Hideout
+  0x1B3B1CA4B10: (5126.9, 929.2) delta=4689.6 -> Hideout
+  0x1B3B1CA4B14: (929.2, 3092.0) delta=925.6 -> Hideout
+  0x1B3B1CA9970: (0.0, 0.0) delta=4766.5 -> Hideout
+  0x1B3B1CA9974: (0.0, 0.0) delta=2317.5 -> Hideout
+  0x1B3B1CAEA04: (2166.8, 3205.0) delta=2844.6 -> Hideout
+  0x1B3B1CAEA54: (2074.8, 3116.2) delta=2911.9 -> Hideout
+  0x1B3B1F8CA50: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B1F8CA90: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B1F8CC90: (6103.6, 4450.0) delta=521.8 -> Hideout
+  0x1B3B1F8CCD0: (6115.7, 4444.1) delta=533.3 -> Hideout
+  0x1B3B1F8CD10: (6129.4, 4440.7) delta=572.0 -> Hideout
+  0x1B3B1F8CD50: (6108.0, 4408.9) delta=565.0 -> Hideout
+  0x1B3B1F8CD90: (6150.3, 4474.3) delta=574.0 -> Hideout
+  0x1B3B1F8CDD0: (6098.4, 4437.1) delta=526.3 -> Hideout
+  0x1B3B1F8CE10: (6118.2, 4458.6) delta=524.0 -> Hideout
+  0x1B3B1F8CE50: (6077.9, 4457.5) delta=525.3 -> Hideout
+  0x1B3B222EDF0: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3B222EDF4: (4956.1, 3613.0) delta=469.1 -> Hideout
+  0x1B3B2E3CF00: (5680.1, 4915.8) delta=544.3 -> Hideout
+  0x1B3B2E3CF18: (5680.1, 4915.8) delta=3341.3 -> Hideout
+  0x1B3B2E3CF1C: (4915.8, 3601.3) delta=2110.1 -> Hideout
+  0x1B3B2E69B30: (6120.7, 4449.3) delta=521.4 -> Hideout
+  0x1B3B2E69B50: (6110.8, 4449.0) delta=511.8 -> Hideout
+  0x1B3B3076EC0: (6122.9, 4394.0) delta=578.2 -> Hideout
+  0x1B3B3076ED0: (6113.8, 4383.3) delta=592.7 -> Hideout
+  0x1B3B3076F08: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B307ED50: (6120.9, 4443.3) delta=527.6 -> Hideout
+  0x1B3B307ED70: (6109.8, 4449.1) delta=510.7 -> Hideout
+  0x1B3B307F670: (6120.6, 4450.1) delta=520.5 -> Hideout
+  0x1B3B307F690: (6111.1, 4448.8) delta=512.2 -> Hideout
+  0x1B3B32EA5C8: (6610.2, 4151.8) delta=508.4 -> Hideout
+  0x1B3B32EA6A0: (6610.2, 4151.8) delta=508.4 -> Hideout
+  0x1B3B32EC9D0: (0.0, 0.0) delta=4490.8 -> Hideout
+  0x1B3B3331F50: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3331FD0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3332034: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B33374D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3337550: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B33375B4: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B333C390: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B333C410: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B333C474: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B333D590: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B333D610: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B333D674: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3EF6C50: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3EF6CD0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3EF6D34: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3FD0F88: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3FD1060: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3FD10D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3FD10DC: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3FD1A08: (6105.2, 4447.8) delta=508.4 -> Hideout
+  0x1B3B3FD1AE0: (6105.2, 4447.8) delta=508.4 -> Hideout
+  0x1B3B3FD6008: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3FD60E0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3FD7888: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3FD7960: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3FD9108: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B3FD91E0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B41E62C0: (5126.9, 929.2) delta=4569.2 -> Hideout
+  0x1B3B41E6310: (5126.9, 929.2) delta=4634.6 -> Hideout
+  0x1B3B43102B8: (3937.2, 3317.4) delta=4209.1 -> Hideout
+  0x1B3B43102BC: (3317.4, 3089.7) delta=2142.0 -> Hideout
+  0x1B3B43107BC: (0.0, 45.0) delta=45.0 -> Hideout
+  0x1B3B4310A24: (4915.8, 0.0) delta=4915.8 -> Hideout
+  0x1B3B4311EC0: (6099.0, 1270.1) delta=3767.4 -> Hideout
+  0x1B3B4314A80: (-0.0, 0.0) delta=1.0 -> Hideout
+  0x1B3B4315E80: (6099.0, 1270.1) delta=3678.9 -> Hideout
+  0x1B3B43162E0: (5680.1, 4915.8) delta=446.0 -> Hideout
+  0x1B3B43162E4: (4915.8, 0.0) delta=4015.8 -> Hideout
+  0x1B3B4317820: (6120.7, 4442.0) delta=3308.0 -> Hideout
+  0x1B3B431783C: (0.0, 0.0) delta=45.0 -> Hideout
+  0x1B3B4317B40: (6099.0, 1270.1) delta=3922.7 -> Hideout
+  0x1B3B4318220: (6042.1, 4607.5) delta=670.4 -> Hideout
+  0x1B3B4318224: (4607.5, 0.0) delta=308.3 -> Hideout
+  0x1B3B43199E0: (3937.2, 3317.4) delta=3779.4 -> Hideout
+  0x1B3B4319BD8: (5649.6, 4508.1) delta=876.3 -> Hideout
+  0x1B3B4319BDC: (4508.1, 3570.0) delta=531.4 -> Hideout
+  0x1B3B431B258: (3937.2, 3317.4) delta=3779.4 -> Hideout
+  0x1B3B431B25C: (3317.4, 3089.7) delta=2095.9 -> Hideout
+  0x1B3B431D198: (5649.6, 4508.1) delta=3687.4 -> Hideout
+  0x1B3B431D19C: (4508.1, 3570.0) delta=3623.6 -> Hideout
+  0x1B3B434BFB0: (6120.9, 4448.5) delta=522.4 -> Hideout
+  0x1B3B434BFD0: (6110.7, 4449.1) delta=511.6 -> Hideout
+  0x1B3B482BE20: (6154.1, 4625.7) delta=130.2 -> Hideout
+  0x1B3B4FC3220: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B4FC32B0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B52D4A10: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B52D4AE0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B52D4C50: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B52D4D20: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B52D5310: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B52D53E0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B52DA410: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B52DA4E0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B5C42C50: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B6327E50: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B6327ED0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B6327F34: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63BA9B0: (6176.3, 4472.2) delta=593.8 -> Hideout
+  0x1B3B63BA9D8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63BAA00: (6110.1, 4383.1) delta=589.3 -> Hideout
+  0x1B3B63BACA8: (5808.6, 4956.9) delta=419.2 -> Hideout
+  0x1B3B63BACAC: (4956.9, 3721.8) delta=193.8 -> Hideout
+  0x1B3B63BB248: (6100.5, 4412.2) delta=593.9 -> Hideout
+  0x1B3B63BC1E8: (6105.5, 4444.8) delta=510.7 -> Hideout
+  0x1B3B63BC4BC: (1551.8, 2935.4) delta=4381.9 -> Hideout
+  0x1B3B63BC508: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63BC530: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63BC580: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63BC5A8: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3B63BC5D0: (6102.4, 4450.5) delta=501.9 -> Hideout
+  0x1B3B63BC5F8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63BC620: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63BC648: (5993.3, 4439.1) delta=404.1 -> Hideout
+  0x1B3B63C2A90: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3B63C2A94: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3B63C2AD0: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3B63C2AD4: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3B63C6850: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63C6854: (4451.8, 3574.7) delta=50.0 -> Hideout
+  0x1B3B63C6890: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63C6894: (4451.8, 3572.5) delta=52.2 -> Hideout
+  0x1B3B63C6C60: (6105.5, 4444.8) delta=510.7 -> Hideout
+  0x1B3B63C6CA0: (6106.3, 4444.5) delta=511.7 -> Hideout
+  0x1B3B63C7070: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63C70B0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63C7140: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63C7180: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63C7210: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63C7250: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63C73B0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63C73F0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63C7480: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63C74C0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B63C7620: (6119.6, 4393.3) delta=575.6 -> Hideout
+  0x1B3B63C7660: (6122.9, 4394.0) delta=578.2 -> Hideout
+  0x1B3B63C76F0: (6161.7, 4471.9) delta=577.5 -> Hideout
+  0x1B3B63C7730: (6163.9, 4471.5) delta=580.1 -> Hideout
+  0x1B3B640F388: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B640F460: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B64AE578: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3B64AE57C: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3B64AE650: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3B64AE654: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3B64AE7A4: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3B64AE7A8: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3B6613448: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B6613520: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3B73C0AF0: (6127.8, 4441.0) delta=569.9 -> Hideout
+  0x1B3B73C0B60: (6098.2, 4437.1) delta=526.0 -> Hideout
+  0x1B3B73C0BD0: (6148.5, 4474.6) delta=571.8 -> Hideout
+  0x1B3B73C0C40: (6105.7, 4409.0) delta=562.6 -> Hideout
+  0x1B3B73C1110: (6077.4, 4457.9) delta=524.5 -> Hideout
+  0x1B3B73C1180: (6117.8, 4458.7) delta=523.5 -> Hideout
+  0x1B3B73C11F0: (6114.7, 4444.3) delta=532.1 -> Hideout
+  0x1B3B73C1260: (6103.2, 4450.1) delta=521.3 -> Hideout
+  0x1B3B73C2060: (1316.0, -107.0) delta=144.7 -> Hideout
+  0x1B3B80C36D8: (0.5, 977.0) delta=29.0 -> Hideout
+  0x1B3B80C3960: (0.5, -1077.0) delta=211.0 -> Hideout
+  0x1B3B80C3980: (0.5, -1077.0) delta=211.0 -> Hideout
+  0x1B3B88F94D4: (4451.8, 3574.7) delta=892.7 -> Hideout
+  0x1B3C06CF850: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C06CF8D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C06CF934: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1872ED0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1872ED4: (4451.8, 3574.7) delta=50.0 -> Hideout
+  0x1B3C1878CD0: (6047.7, 4986.3) delta=384.3 -> Hideout
+  0x1B3C1878CD4: (4986.3, 3516.8) delta=463.3 -> Hideout
+  0x1B3C187D550: (5649.6, 4508.1) delta=876.3 -> Hideout
+  0x1B3C1941AD0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1941AE0: (6019.8, 4451.8) delta=418.0 -> Hideout
+  0x1B3C1941E30: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1941E40: (6027.3, 4451.8) delta=425.5 -> Hideout
+  0x1B3C1947DD0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1947DE0: (6027.3, 4451.8) delta=425.5 -> Hideout
+  0x1B3C1948B50: (6067.8, 4505.7) delta=423.4 -> Hideout
+  0x1B3C1948B60: (6067.8, 4505.7) delta=423.4 -> Hideout
+  0x1B3C1948B7C: (6062.4, 4500.0) delta=412.4 -> Hideout
+  0x1B3C1948D90: (6075.2, 4477.3) delta=447.9 -> Hideout
+  0x1B3C1948DA0: (5993.3, 4439.1) delta=404.1 -> Hideout
+  0x1B3C194AE30: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C194AE40: (6019.8, 4451.8) delta=418.0 -> Hideout
+  0x1B3C1955888: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1955894: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1955D30: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1955D38: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1CB9100: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1CB9160: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1CB9760: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1CB9790: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1E507F0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1E51CF0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1E55B10: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1E5A5E0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C1E5BCA0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C219F5D4: (4956.1, 3613.0) delta=1132.7 -> Hideout
+  0x1B3C2ACED54: (4500.0, 3760.9) delta=184.4 -> Hideout
+  0x1B3C2ACED74: (4500.0, 3760.9) delta=20.1 -> Hideout
+  0x1B3C5D177C4: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3C5D177C8: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3C5D177D0: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3C5D177D4: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3C5D177EC: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3C5D177F8: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3C5D178A4: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3C5D178A8: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3C60BA048: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C60BA120: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C6540FB0: (6159.7, 4472.6) delta=574.8 -> Hideout
+  0x1B3C6540FF0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C6541030: (6116.3, 4392.5) delta=573.0 -> Hideout
+  0x1B3C6541470: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3C6541474: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3C6541D70: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C6543670: (6104.6, 4445.0) delta=509.6 -> Hideout
+  0x1B3C6543AF4: (1831.2, 2935.4) delta=3802.5 -> Hideout
+  0x1B3C6543B70: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C6543BB0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C6543C30: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C6543C70: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3C6543CB0: (6104.6, 4445.0) delta=509.6 -> Hideout
+  0x1B3C6543CF0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C6543D30: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C6543D70: (6075.2, 4477.3) delta=447.9 -> Hideout
+  0x1B3C7D8EEFC: (0.0, 0.0) delta=45.0 -> Hideout
+  0x1B3C7DD8750: (6072.6, 5452.2) delta=572.7 -> Hideout
+  0x1B3C7DD8754: (5452.2, 3696.6) delta=579.7 -> Hideout
+  0x1B3C7DDA3D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C7DDE350: (5715.6, 4809.4) delta=1031.3 -> Hideout
+  0x1B3C8670B30: (6065.4, 4349.9) delta=732.7 -> Hideout
+  0x1B3C8670BE0: (6065.4, 4349.9) delta=732.7 -> Hideout
+  0x1B3C8AE08E0: (5680.1, 4915.8) delta=446.0 -> Hideout
+  0x1B3C8AE08F8: (6154.1, 4625.7) delta=622.1 -> Hideout
+  0x1B3C8AE08FC: (4625.7, 3601.3) delta=148.9 -> Hideout
+  0x1B3C8AEED1C: (0.0, 45.0) delta=45.0 -> Hideout
+  0x1B3C8CF5FD0: (5680.1, 4915.8) delta=446.0 -> Hideout
+  0x1B3C8CF5FD4: (4915.8, 3601.3) delta=440.7 -> Hideout
+  0x1B3C8CF6F50: (5680.1, 4915.8) delta=446.0 -> Hideout
+  0x1B3C8CF6F54: (4915.8, 3601.3) delta=440.7 -> Hideout
+  0x1B3C8CF6FD0: (6072.6, 5452.2) delta=907.9 -> Hideout
+  0x1B3C8CF6FD4: (5452.2, 3696.6) delta=921.8 -> Hideout
+  0x1B3C8CF78D0: (6110.2, 4451.8) delta=1109.6 -> Hideout
+  0x1B3C8CF88D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C8CF88D4: (4451.8, 3574.7) delta=50.0 -> Hideout
+  0x1B3C8CF8AD0: (6110.2, 4451.8) delta=1261.5 -> Hideout
+  0x1B3C8CF9850: (6072.6, 5452.2) delta=572.7 -> Hideout
+  0x1B3C8CFB050: (5996.0, 4956.1) delta=871.3 -> Hideout
+  0x1B3C8CFB054: (4956.1, 3613.0) delta=1132.7 -> Hideout
+  0x1B3C8D80150: (6032.1, 4483.8) delta=784.1 -> Hideout
+  0x1B3C8D801D0: (6496.2, 5060.1) delta=906.6 -> Hideout
+  0x1B3C8D801D4: (5060.1, 3859.1) delta=710.4 -> Hideout
+  0x1B3C8D80254: (4451.8, 3574.7) delta=50.0 -> Hideout
+  0x1B3C8D803D4: (4508.1, 3570.0) delta=38.1 -> Hideout
+  0x1B3C8D80750: (6047.7, 4986.3) delta=81.9 -> Hideout
+  0x1B3C8D80BD0: (6072.6, 5452.2) delta=907.9 -> Hideout
+  0x1B3C8D81750: (6496.2, 5060.1) delta=604.2 -> Hideout
+  0x1B3C8D81AD0: (6072.6, 5452.2) delta=1374.8 -> Hideout
+  0x1B3C8D81FD0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C8D82054: (4986.3, 3516.8) delta=261.4 -> Hideout
+  0x1B3C8D82450: (6042.1, 4607.5) delta=499.6 -> Hideout
+  0x1B3C8D82454: (4607.5, 3601.3) delta=132.3 -> Hideout
+  0x1B3C8D82A50: (6110.2, 4451.8) delta=516.9 -> Hideout
+  0x1B3C8D82A54: (4451.8, 3574.7) delta=61.0 -> Hideout
+  0x1B3C8D82C50: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3C8D82C54: (4956.1, 3613.0) delta=492.6 -> Hideout
+  0x1B3C8D82D50: (6042.1, 4607.5) delta=528.4 -> Hideout
+  0x1B3C8D82DD0: (6110.2, 4451.8) delta=516.9 -> Hideout
+  0x1B3C8D82ED0: (5715.6, 4809.4) delta=375.0 -> Hideout
+  0x1B3C8D83150: (6110.2, 4451.8) delta=597.0 -> Hideout
+  0x1B3C8D84850: (5996.0, 4956.1) delta=81.9 -> Hideout
+  0x1B3C8D849D0: (6157.7, 5665.7) delta=1260.5 -> Hideout
+  0x1B3C8D86550: (6110.2, 4451.8) delta=516.9 -> Hideout
+  0x1B3C8D86F50: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3C8D86F54: (4956.1, 3613.0) delta=492.6 -> Hideout
+  0x1B3C8D871D0: (6110.2, 4451.8) delta=894.2 -> Hideout
+  0x1B3C8D871D4: (4451.8, 3574.7) delta=490.7 -> Hideout
+  0x1B3C8D872D0: (5996.0, 4956.1) delta=394.7 -> Hideout
+  0x1B3C8D882D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C8D882D4: (4451.8, 3574.7) delta=50.0 -> Hideout
+  0x1B3C8D889D0: (6110.2, 4451.8) delta=1261.5 -> Hideout
+  0x1B3C8D889D4: (4451.8, 3574.7) delta=1675.4 -> Hideout
+  0x1B3C8D88AD0: (6103.7, 4445.3) delta=508.4 -> Hideout
+  0x1B3C8D88D50: (0.0, -0.0) delta=4500.0 -> Hideout
+  0x1B3C8D892D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C8D892D4: (4451.8, 3572.5) delta=192.1 -> Hideout
+  0x1B3C8D8B150: (6154.1, 4625.7) delta=622.1 -> Hideout
+  0x1B3C8D8B4D0: (6110.2, 4451.8) delta=516.9 -> Hideout
+  0x1B3C8D8C250: (5996.0, 4956.1) delta=488.5 -> Hideout
+  0x1B3C8D8C254: (4956.1, 3613.0) delta=342.1 -> Hideout
+  0x1B3C8D8CDD0: (6072.6, 5452.2) delta=1374.8 -> Hideout
+  0x1B3C8D8D954: (4986.3, 3516.8) delta=546.0 -> Hideout
+  0x1B3C8D8DA50: (6496.2, 5060.1) delta=960.3 -> Hideout
+  0x1B3C8D8DA54: (5060.1, 3859.1) delta=402.0 -> Hideout
+  0x1B3C8D8EAD0: (6081.7, 4492.0) delta=448.1 -> Hideout
+  0x1B3C8D8EAD4: (4492.0, 3717.4) delta=163.4 -> Hideout
+  0x1B3C8D8F5D0: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3C8D8F5D4: (4956.1, 3613.0) delta=559.5 -> Hideout
+  0x1B3C8ED8D90: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C8ED8E10: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C8ED8E74: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C95BE578: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C95BE650: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C95BE7A4: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C980EBC8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C980ECA0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3C9869070: (6109.8, 4451.4) delta=508.4 -> Hideout
+  0x1B3C986907C: (6110.6, 4452.2) delta=508.4 -> Hideout
+  0x1B3C98690AC: (6147.2, 4484.1) delta=508.4 -> Hideout
+  0x1B3C99C0520: (5935.7, 4627.2) delta=3520.3 -> Hideout
+  0x1B3C99C16A0: (6047.7, 4986.3) delta=884.0 -> Hideout
+  0x1B3C99C3B84: (4986.3, 0.0) delta=4986.3 -> Hideout
+  0x1B3C99C67E0: (6099.0, 1270.1) delta=4064.6 -> Hideout
+  0x1B3C9B7756C: (6138.9, 4432.5) delta=508.2 -> Hideout
+  0x1B3C9B77574: (5982.5, 4433.6) delta=508.2 -> Hideout
+  0x1B3CD2C11D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3CD2C1250: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3CD2C12B4: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3CD8C5220: (5808.6, 4956.9) delta=1263.1 -> Hideout
+  0x1B3CD8C5224: (4956.9, 3721.8) delta=715.5 -> Hideout
+  0x1B3CD8C52D0: (6574.2, 5454.4) delta=1878.6 -> Hideout
+  0x1B3CD8C5340: (6526.5, 5551.4) delta=1927.9 -> Hideout
+  0x1B3CD8C5350: (6526.5, 5551.4) delta=1927.9 -> Hideout
+  0x1B3CD8C5430: (6513.7, 5366.4) delta=1854.1 -> Hideout
+  0x1B3CD8C54A0: (6527.6, 5552.7) delta=2037.4 -> Hideout
+  0x1B3CD8C54B0: (6527.6, 5552.7) delta=1930.3 -> Hideout
+  0x1B3CD8C54E0: (6103.7, 4445.3) delta=564.6 -> Hideout
+  0x1B3CD8C5550: (6103.7, 4445.3) delta=508.4 -> Hideout
+  0x1B3CD8C5560: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3CD8C5590: (6110.2, 4451.8) delta=548.5 -> Hideout
+  0x1B3CD8C5600: (6110.2, 4451.8) delta=546.1 -> Hideout
+  0x1B3CD8C5610: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3CDE32550: (6119.5, 4441.1) delta=638.4 -> Hideout
+  0x1B3CDE32BD0: (5935.7, 4627.2) delta=405.2 -> Hideout
+  0x1B3CDE33AD0: (6047.7, 4986.3) delta=884.0 -> Hideout
+  0x1B3CDE35A50: (5649.6, 4508.1) delta=8.5 -> Hideout
+  0x1B3CDE363D0: (5996.0, 4956.1) delta=427.1 -> Hideout
+  0x1B3CDE36750: (6327.6, 5343.9) delta=1521.6 -> Hideout
+  0x1B3CDE377D0: (6496.2, 5060.1) delta=1406.3 -> Hideout
+  0x1B3CDE377D4: (5060.1, 3859.1) delta=842.7 -> Hideout
+  0x1B3CDE3F550: (6110.2, 4451.8) delta=1038.0 -> Hideout
+  0x1B3CDE3FF50: (6157.7, 5665.7) delta=1673.4 -> Hideout
+  0x1B3CE386470: (6121.9, 4443.5) delta=528.4 -> Hideout
+  0x1B3CE386490: (6110.0, 4449.0) delta=511.0 -> Hideout
+  0x1B3CE3C92B0: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3CE4546D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3CE4546E0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3CE454718: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3CE8EEDE8: (6099.3, 4382.9) delta=578.6 -> Hideout
+  0x1B3CE8EEEC0: (6109.6, 4391.7) delta=567.0 -> Hideout
+  0x1B3D540B690: (6121.0, 4442.5) delta=528.5 -> Hideout
+  0x1B3D540B6B0: (6109.7, 4448.9) delta=510.8 -> Hideout
+  0x1B3D5B43F90: (5996.0, 4956.1) delta=1729.5 -> Hideout
+  0x1B3D5B43FB0: (5996.0, 4956.1) delta=1729.5 -> Hideout
+  0x1B3D5C49680: (0.0, 0.0) delta=1116.7 -> Hideout
+  0x1B3D5C497C0: (-2.3, 0.0) delta=650.8 -> Hideout
+  0x1B3D6022DB0: (6121.9, 4444.4) delta=527.5 -> Hideout
+  0x1B3D6022DD0: (6110.2, 4449.1) delta=511.1 -> Hideout
+  0x1B3D614EB00: (2336.4, 2166.8) delta=1515.0 -> Hideout
+  0x1B3D614EB50: (2416.0, 2074.8) delta=1642.0 -> Hideout
+  0x1B3D6CBA3D0: (5996.0, 4956.1) delta=356.2 -> Hideout
+  0x1B3D7463A98: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3D7463B70: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3D7EFEB30: (0.9, 0.3) delta=1.1 -> Hideout
+  0x1B3D7EFEB50: (885.9, 373.4) delta=1259.3 -> Hideout
+  0x1B3D7EFEBB0: (1072.1, 256.5) delta=1328.6 -> Hideout
+  0x1B3D7EFEC10: (1033.8, 256.5) delta=1290.3 -> Hideout
+  0x1B3D7EFEC50: (0.9, 0.2) delta=1.0 -> Hideout
+  0x1B3D7EFECB0: (0.9, 0.3) delta=1.1 -> Hideout
+  0x1B3D80C1E94: (-45.3, -0.0) delta=45.3 -> Hideout
+  0x1B3D80C1F50: (1.2, -24.6) delta=25.7 -> Hideout
+  0x1B3D80CB610: (9.1, -1.5) delta=10.6 -> Hideout
+  0x1B3D80CB730: (17.7, -6.0) delta=23.7 -> Hideout
+  0x1B3D80CB790: (19.4, -26.4) delta=45.8 -> Hideout
+  0x1B3D80CBDF4: (8.0, 56.6) delta=64.5 -> Hideout
+  0x1B3D80CBE14: (0.6, 0.7) delta=1.3 -> Hideout
+  0x1B3D80CBEB0: (-12.5, 24.9) delta=37.4 -> Hideout
+  0x1B3D80DA8D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3D80DBC50: (5935.7, 4627.2) delta=126.1 -> Hideout
+  0x1B3D92D66B0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3D92D66C0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3D92D66F8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DA895E50: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DA895F20: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DAE385E0: (0.5, -1064.0) delta=198.0 -> Hideout
+  0x1B3DAE38600: (0.5, -1064.0) delta=198.0 -> Hideout
+  0x1B3DB073D48: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DB073E20: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DB07ADC8: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3DB07ADCC: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3DB07ADE4: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3DB07ADE8: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3DB07AEA0: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3DB07AEA4: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3DB3D0C60: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DB3D0C70: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DB3D0CA8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DB3D76A0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DB3D76B0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DB3D76E8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DB3DC100: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3DB3DC104: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3DB3DC110: (5808.6, 4956.9) delta=419.2 -> Hideout
+  0x1B3DB3DC114: (4956.9, 3721.8) delta=193.8 -> Hideout
+  0x1B3DB3DC148: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3DB3DC14C: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3DBA23058: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DBA23130: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DBA23284: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DC4321E8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DC4322C0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DC62D1F0: (6120.8, 4442.2) delta=528.7 -> Hideout
+  0x1B3DC62D210: (6109.6, 4448.7) delta=510.9 -> Hideout
+  0x1B3DCC80208: (6164.8, 4475.2) delta=580.0 -> Hideout
+  0x1B3DCC802E0: (6153.4, 4474.6) delta=566.5 -> Hideout
+  0x1B3DCC83508: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DCC835E0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DCC836D8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DCC83910: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DCC83960: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DCC83980: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DCC84E88: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DCC84F60: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DCC85058: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DCC85290: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DCC852E0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DCC85300: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DCF706D8: (6127.4, 4415.0) delta=508.4 -> Hideout
+  0x1B3DCF70818: (6069.0, 4397.5) delta=508.4 -> Hideout
+  0x1B3DCF715D8: (6144.9, 4415.7) delta=508.4 -> Hideout
+  0x1B3DDFC8B88: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DDFC8C60: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DDFCA488: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DDFCA560: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DDFCE088: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DDFCE160: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DDFCED08: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DDFCEDE0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DE1955C0: (1423.1, 272.4) delta=3374.1 -> Hideout
+  0x1B3DE195610: (1366.6, 218.2) delta=3376.5 -> Hideout
+  0x1B3DE19C470: (2416.0, 2074.8) delta=2551.0 -> Hideout
+  0x1B3DE19C474: (2074.8, 3124.2) delta=580.6 -> Hideout
+  0x1B3DE19C4C0: (2416.0, 2074.8) delta=2486.5 -> Hideout
+  0x1B3DE19C4C4: (2074.8, 3116.2) delta=429.8 -> Hideout
+  0x1B3DE3FDA54: (4627.2, 3601.3) delta=288.7 -> Hideout
+  0x1B3DE6C79D0: (6072.6, 5452.2) delta=572.7 -> Hideout
+  0x1B3DE6C79D4: (5452.2, 3696.6) delta=579.7 -> Hideout
+  0x1B3DE6CF0D0: (5650.0, 4500.0) delta=802.1 -> Hideout
+  0x1B3DE6CF0D4: (4500.0, 3576.5) delta=492.6 -> Hideout
+  0x1B3DE7D17D0: (5680.1, 4915.8) delta=544.3 -> Hideout
+  0x1B3DE7D33D0: (6110.2, 4451.8) delta=597.0 -> Hideout
+  0x1B3DE7D33D4: (4451.8, 3574.7) delta=592.4 -> Hideout
+  0x1B3DE7D5850: (6021.1, 4500.0) delta=371.1 -> Hideout
+  0x1B3DE7D86D0: (5996.0, 4956.1) delta=488.5 -> Hideout
+  0x1B3DE7D86D4: (4956.1, 3613.0) delta=342.1 -> Hideout
+  0x1B3DE7DF9D0: (6157.7, 5665.7) delta=1043.6 -> Hideout
+  0x1B3DE7E0650: (5996.0, 4956.1) delta=794.4 -> Hideout
+  0x1B3DE7E0BD0: (6072.6, 5452.2) delta=999.8 -> Hideout
+  0x1B3DE7E0D50: (6157.7, 5665.7) delta=1298.4 -> Hideout
+  0x1B3DE7E1BD0: (6110.2, 4451.8) delta=1261.5 -> Hideout
+  0x1B3DE7E1BD4: (4451.8, 3574.7) delta=1675.4 -> Hideout
+  0x1B3DE7E1CD0: (5649.6, 4508.1) delta=8.5 -> Hideout
+  0x1B3DE7E2CD0: (6072.6, 5452.2) delta=875.1 -> Hideout
+  0x1B3DE7E2CD4: (5452.2, 3696.6) delta=940.0 -> Hideout
+  0x1B3DE7E3354: (4500.0, 3716.4) delta=559.5 -> Hideout
+  0x1B3DE7E33D0: (6047.7, 4986.3) delta=884.0 -> Hideout
+  0x1B3DE7E33D4: (4986.3, 3516.8) delta=730.4 -> Hideout
+  0x1B3DE7E3450: (5649.6, 4508.1) delta=1398.6 -> Hideout
+  0x1B3DE7E3A50: (6067.1, 4498.4) delta=959.3 -> Hideout
+  0x1B3DE7E4650: (6110.2, 4451.8) delta=1109.6 -> Hideout
+  0x1B3DE7E4654: (4451.8, 3703.0) delta=983.5 -> Hideout
+  0x1B3DE7E4A50: (6154.1, 4625.7) delta=466.9 -> Hideout
+  0x1B3DE7E4A54: (4625.7, 3601.3) delta=445.1 -> Hideout
+  0x1B3DE7E4ED0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DE7E55D4: (4443.5, 3763.7) delta=1494.7 -> Hideout
+  0x1B3DE7E5750: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3DE7E57D0: (6047.7, 4986.3) delta=884.0 -> Hideout
+  0x1B3DE7E5B50: (5935.7, 4627.2) delta=544.3 -> Hideout
+  0x1B3DE7E6050: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3DE7E6054: (4956.1, 3613.0) delta=492.6 -> Hideout
+  0x1B3DE7E60D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DE7E60D4: (4451.8, 3703.0) delta=61.7 -> Hideout
+  0x1B3DE7E6650: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DE7E6654: (4451.8, 3572.5) delta=236.6 -> Hideout
+  0x1B3DE7E69D0: (5680.1, 4915.8) delta=438.0 -> Hideout
+  0x1B3DE7E7050: (6062.4, 4500.0) delta=127.7 -> Hideout
+  0x1B3DE7E7054: (4500.0, 3579.8) delta=129.0 -> Hideout
+  0x1B3DE7E71D0: (6110.2, 4451.8) delta=618.5 -> Hideout
+  0x1B3DE7E74D0: (5935.7, 4627.2) delta=405.2 -> Hideout
+  0x1B3DE7E7750: (5680.1, 4915.8) delta=446.0 -> Hideout
+  0x1B3DE7E7F50: (6157.7, 5665.7) delta=1673.4 -> Hideout
+  0x1B3DE7E7F54: (5665.7, 4036.1) delta=1625.4 -> Hideout
+  0x1B3DE7E8750: (5996.0, 4956.1) delta=394.7 -> Hideout
+  0x1B3DE7E8754: (4956.1, 3613.0) delta=360.3 -> Hideout
+  0x1B3DE7E88D0: (6157.7, 5665.7) delta=1673.4 -> Hideout
+  0x1B3DE7E88D4: (5665.7, 4036.1) delta=1625.4 -> Hideout
+  0x1B3DE7E9B50: (6496.2, 5060.1) delta=1398.6 -> Hideout
+  0x1B3DE7E9C50: (6110.2, 4451.8) delta=618.5 -> Hideout
+  0x1B3DE7E9C54: (4451.8, 3574.7) delta=542.6 -> Hideout
+  0x1B3DE7E9D50: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3DE7EBBD0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DE7EBBD4: (4451.8, 3574.7) delta=50.0 -> Hideout
+  0x1B3DE7EDAD0: (5996.0, 4956.1) delta=394.7 -> Hideout
+  0x1B3DE7EDAD4: (4956.1, 3613.0) delta=360.3 -> Hideout
+  0x1B3DE7EDBD4: (4440.8, 3745.5) delta=647.8 -> Hideout
+  0x1B3DE7EDE50: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3DE7EDE54: (4956.1, 3613.0) delta=492.6 -> Hideout
+  0x1B3DE7EEF50: (6157.7, 5665.7) delta=298.6 -> Hideout
+  0x1B3DE7EEF54: (5665.7, 4036.1) delta=553.0 -> Hideout
+  0x1B3DE7EF150: (6496.2, 5060.1) delta=1406.3 -> Hideout
+  0x1B3DE7EF154: (5060.1, 3859.1) delta=842.7 -> Hideout
+  0x1B3DE7EFDD0: (6042.1, 4607.5) delta=499.6 -> Hideout
+  0x1B3DE7EFDD4: (4607.5, 3601.3) delta=267.1 -> Hideout
+  0x1B3DE9F7888: (5808.6, 4956.9) delta=419.2 -> Hideout
+  0x1B3DE9F788C: (4956.9, 3721.8) delta=193.8 -> Hideout
+  0x1B3DE9F7960: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3DE9F7964: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3DE9F7E50: (5808.6, 4956.9) delta=419.2 -> Hideout
+  0x1B3DE9F7E54: (4956.9, 3721.8) delta=193.8 -> Hideout
+  0x1B3DEC61B50: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3DEC61C50: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DEC61FD4: (4442.0, 3746.0) delta=227.5 -> Hideout
+  0x1B3DEC63550: (5996.0, 4956.1) delta=394.7 -> Hideout
+  0x1B3DEC641D0: (6110.2, 4451.8) delta=994.3 -> Hideout
+  0x1B3DEC64350: (6327.6, 5343.9) delta=1521.6 -> Hideout
+  0x1B3DEC65750: (5649.6, 4508.1) delta=794.4 -> Hideout
+  0x1B3DEC65A50: (5649.6, 4508.1) delta=8.5 -> Hideout
+  0x1B3DEC65A54: (4508.1, 3570.0) delta=154.5 -> Hideout
+  0x1B3DEC66350: (6117.5, 4440.8) delta=1056.3 -> Hideout
+  0x1B3DEC66354: (4440.8, 3745.4) delta=1060.1 -> Hideout
+  0x1B3DEC68450: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3DEC687D0: (5996.0, 4956.1) delta=427.1 -> Hideout
+  0x1B3DEC68CD0: (6117.0, 4477.3) delta=1229.1 -> Hideout
+  0x1B3DEC69654: (4451.8, 3574.7) delta=50.0 -> Hideout
+  0x1B3DEC699D0: (6496.2, 5060.1) delta=1406.3 -> Hideout
+  0x1B3DEC6B350: (5753.1, 4500.0) delta=699.0 -> Hideout
+  0x1B3DEC6B354: (4500.0, 3579.5) delta=489.6 -> Hideout
+  0x1B3DEC6B3D0: (5680.1, 4915.8) delta=446.0 -> Hideout
+  0x1B3DEC6B3D4: (4915.8, 3601.3) delta=417.1 -> Hideout
+  0x1B3DEC6BA50: (6110.2, 4451.8) delta=752.2 -> Hideout
+  0x1B3DEC6BCD0: (5680.1, 4915.8) delta=928.8 -> Hideout
+  0x1B3DEC6BCD4: (4915.8, 3601.3) delta=631.6 -> Hideout
+  0x1B3DEC6DAD0: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3DEC6DAD4: (4956.1, 3613.0) delta=492.6 -> Hideout
+  0x1B3DEC6DCD0: (6110.2, 4451.8) delta=223.8 -> Hideout
+  0x1B3DEC6EBD0: (5897.4, 4500.0) delta=1127.4 -> Hideout
+  0x1B3DEC6EBD4: (4500.0, 3583.6) delta=1065.1 -> Hideout
+  0x1B3DEC6FDD0: (6086.3, 4506.4) delta=271.3 -> Hideout
+  0x1B3DF1208D0: (6117.9, 4440.8) delta=527.1 -> Hideout
+  0x1B3DF120B50: (5650.0, 4500.0) delta=1406.3 -> Hideout
+  0x1B3DF120B54: (4500.0, 3576.5) delta=842.7 -> Hideout
+  0x1B3DF1210D0: (6110.2, 4451.8) delta=1038.0 -> Hideout
+  0x1B3DF1210D4: (4451.8, 3574.7) delta=1122.3 -> Hideout
+  0x1B3DF1226D0: (6496.2, 5060.1) delta=1406.3 -> Hideout
+  0x1B3DF1226D4: (5060.1, 3859.1) delta=842.7 -> Hideout
+  0x1B3DF122ED4: (4451.8, 3574.7) delta=200.6 -> Hideout
+  0x1B3DF1237D4: (4508.1, 3570.0) delta=1623.7 -> Hideout
+  0x1B3DF1267D0: (6110.2, 4451.8) delta=752.2 -> Hideout
+  0x1B3DF127254: (4956.1, 3613.0) delta=559.5 -> Hideout
+  0x1B3DF1275D0: (6496.2, 5060.1) delta=604.2 -> Hideout
+  0x1B3DF1275D4: (5060.1, 3859.1) delta=350.1 -> Hideout
+  0x1B3DF127A50: (5650.0, 4500.0) delta=1374.8 -> Hideout
+  0x1B3DF127A54: (4500.0, 3576.5) delta=1072.3 -> Hideout
+  0x1B3DF127F50: (6110.2, 4451.8) delta=597.0 -> Hideout
+  0x1B3DF1291D0: (5935.7, 4627.2) delta=412.9 -> Hideout
+  0x1B3DF129250: (6154.1, 4625.7) delta=488.5 -> Hideout
+  0x1B3DF129254: (4625.7, 3601.3) delta=342.1 -> Hideout
+  0x1B3DF129454: (4627.2, -0.0) delta=3621.0 -> Hideout
+  0x1B3DF129CD0: (6327.6, 5343.9) delta=1521.6 -> Hideout
+  0x1B3DF129E50: (5680.1, 4915.8) delta=446.0 -> Hideout
+  0x1B3DF12AB50: (5996.0, 4956.1) delta=604.2 -> Hideout
+  0x1B3DF12AB54: (4956.1, 3613.0) delta=350.1 -> Hideout
+  0x1B3DF12AE50: (5996.0, 4956.1) delta=427.1 -> Hideout
+  0x1B3DF12AE54: (4956.1, 3613.0) delta=158.4 -> Hideout
+  0x1B3DF12D8D0: (6101.9, 4445.8) delta=506.2 -> Hideout
+  0x1B3DF12DE50: (6110.2, 4451.8) delta=1038.0 -> Hideout
+  0x1B3DF12E950: (5996.0, 4956.1) delta=427.1 -> Hideout
+  0x1B3DF12E954: (4956.1, 3613.0) delta=158.4 -> Hideout
+  0x1B3DF12EE50: (6072.6, 5452.2) delta=961.9 -> Hideout
+  0x1B3DF12F350: (5649.6, 4508.1) delta=405.2 -> Hideout
+  0x1B3DF12F754: (4956.1, 3613.0) delta=126.4 -> Hideout
+  0x1B3DF12FED0: (6072.6, 5452.2) delta=907.9 -> Hideout
+  0x1B3DF12FED4: (5452.2, 3696.6) delta=921.8 -> Hideout
+  0x1B3DF7E0150: (5996.0, 4956.1) delta=389.2 -> Hideout
+  0x1B3DF7E25D0: (5732.5, 4500.0) delta=1590.9 -> Hideout
+  0x1B3DF7E2650: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B3DF7E2654: (4956.1, 3613.0) delta=492.6 -> Hideout
+  0x1B3DF7E7E50: (6042.1, 4607.5) delta=499.6 -> Hideout
+  0x1B3DF7E9350: (6047.7, 4986.3) delta=884.0 -> Hideout
+  0x1B3DF7E9354: (4986.3, 3516.8) delta=546.0 -> Hideout
+  0x1B3DF840150: (6110.2, 4451.8) delta=618.5 -> Hideout
+  0x1B3DF840AD0: (6086.3, 4506.4) delta=271.3 -> Hideout
+  0x1B3DF8411D4: (4451.8, 3574.7) delta=542.6 -> Hideout
+  0x1B3DF841CD4: (4508.1, 3570.0) delta=14.6 -> Hideout
+  0x1B3DF841FD0: (0.0, 4956.1) delta=4956.1 -> Hideout
+  0x1B3DF8425D0: (5649.6, 4508.1) delta=794.4 -> Hideout
+  0x1B3DF842B50: (6047.7, 4986.3) delta=81.9 -> Hideout
+  0x1B3DF842B54: (4986.3, 3516.8) delta=126.4 -> Hideout
+  0x1B3DF8437D0: (6154.1, 4625.7) delta=764.1 -> Hideout
+  0x1B3DF8437D4: (4625.7, 3601.3) delta=290.1 -> Hideout
+  0x1B3DF8462D0: (6110.2, 4451.8) delta=618.5 -> Hideout
+  0x1B3DF8462D4: (4451.8, 3574.7) delta=542.6 -> Hideout
+  0x1B3DF8478D0: (6110.2, 4451.8) delta=597.0 -> Hideout
+  0x1B3DF848350: (6496.2, 5060.1) delta=960.3 -> Hideout
+  0x1B3DF848354: (5060.1, 3859.1) delta=402.0 -> Hideout
+  0x1B3DF848650: (5650.0, 4500.0) delta=375.0 -> Hideout
+  0x1B3DF848750: (5996.0, 4956.1) delta=871.3 -> Hideout
+  0x1B3DF848754: (4956.1, 3613.0) delta=1132.7 -> Hideout
+  0x1B3DF848F50: (6110.2, 4451.8) delta=597.0 -> Hideout
+  0x1B3DF848F54: (4451.8, 3574.7) delta=592.4 -> Hideout
+  0x1B3DF849B50: (6121.9, 4444.4) delta=368.9 -> Hideout
+  0x1B3DF849B54: (4444.4, 3764.3) delta=345.7 -> Hideout
+  0x1B3DF849E50: (6110.2, 4451.8) delta=618.5 -> Hideout
+  0x1B3DF84AA50: (6042.1, 4607.5) delta=499.6 -> Hideout
+  0x1B3DF84AA54: (4607.5, 3601.3) delta=222.6 -> Hideout
+  0x1B3DF84AF50: (6110.2, 4451.8) delta=994.3 -> Hideout
+  0x1B3DF84B150: (6327.6, 5343.9) delta=1021.9 -> Hideout
+  0x1B3DF84B950: (6110.2, 4451.8) delta=223.8 -> Hideout
+  0x1B3DF84B954: (4451.8, 3572.5) delta=184.5 -> Hideout
+  0x1B3DF84C050: (6042.1, 4607.5) delta=126.1 -> Hideout
+  0x1B3DF84C054: (4607.5, 3601.3) delta=19.7 -> Hideout
+  0x1B3DF84C0D0: (6327.6, 5343.9) delta=1146.6 -> Hideout
+  0x1B3DF84C0D4: (5343.9, 3794.3) delta=727.6 -> Hideout
+  0x1B3DF84C450: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DF84C550: (5935.7, 4627.2) delta=1108.7 -> Hideout
+  0x1B3DF84C650: (6033.5, 4477.3) delta=516.2 -> Hideout
+  0x1B3DF84C654: (4477.3, 3719.8) delta=585.5 -> Hideout
+  0x1B3DF84C750: (6110.2, 4451.8) delta=994.3 -> Hideout
+  0x1B3DF84C7D0: (6101.1, 4446.0) delta=505.0 -> Hideout
+  0x1B3DF84C7D4: (4446.0, 3754.9) delta=92.5 -> Hideout
+  0x1B3DF84C8D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DF84C954: (4508.1, 3570.0) delta=14.6 -> Hideout
+  0x1B3DF84D8D0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DF84DE50: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DF84DE54: (4451.8, 3574.7) delta=50.0 -> Hideout
+  0x1B3DF84DF50: (6110.2, 4451.8) delta=618.5 -> Hideout
+  0x1B3DF84E150: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DF84E250: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DF84E2D0: (6110.2, 4451.8) delta=349.9 -> Hideout
+  0x1B3DF84E450: (6072.6, 5452.2) delta=1367.1 -> Hideout
+  0x1B3DF84E454: (5452.2, 3696.6) delta=1070.7 -> Hideout
+  0x1B3DF84EBD0: (6327.6, 5343.9) delta=1521.6 -> Hideout
+  0x1B3DF8EA650: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3DF8EA654: (4451.8, 3574.7) delta=234.4 -> Hideout
+  0x1B3DF8EF550: (6042.1, 4607.5) delta=1173.8 -> Hideout
+  0x1B3DF8EF554: (4607.5, 3601.3) delta=1493.0 -> Hideout
+  0x1B3DFB12644: (0.0, 0.0) delta=4454.5 -> Hideout
+  0x1B3E06576B0: (6120.7, 4442.0) delta=528.7 -> Hideout
+  0x1B3E06576D0: (6109.6, 4448.4) delta=511.2 -> Hideout
+  0x1B3E065AE10: (5649.6, 4508.1) delta=8.5 -> Hideout
+  0x1B3E065AE14: (4508.1, 3570.0) delta=154.5 -> Hideout
+  0x1B3E085F040: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3E085F044: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3E085F0A0: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3E085F0A4: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3E085F6A0: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3E085F6A4: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3E085F6D0: (5826.0, 5043.0) delta=419.2 -> Hideout
+  0x1B3E085F6D4: (5043.0, 3612.0) delta=193.8 -> Hideout
+  0x1B3E08926D0: (5715.6, 4809.4) delta=999.8 -> Hideout
+  0x1B3E0A022D0: (5650.0, 4500.0) delta=8.5 -> Hideout
+  0x1B3E0A022D4: (4500.0, 3716.4) delta=154.5 -> Hideout
+  0x1B3E0A028D4: (4956.1, 3613.0) delta=126.4 -> Hideout
+  0x1B3E0A0F950: (6047.7, 4986.3) delta=884.0 -> Hideout
+  0x1B3E0A0F954: (4986.3, 3516.8) delta=546.0 -> Hideout
+  0x1B3E3F07650: (0.9, 0.3) delta=1.1 -> Hideout
+  0x1B3E3F07670: (866.2, 424.7) delta=1290.9 -> Hideout
+  0x1B3E3F076D0: (881.3, 220.7) delta=1101.9 -> Hideout
+  0x1B3E3F07730: (842.9, 220.7) delta=1063.6 -> Hideout
+  0x1B3E584EF08: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3E584EFE0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3EB3CDB10: (6121.2, 4446.9) delta=524.3 -> Hideout
+  0x1B3EB3CDB30: (6110.3, 4449.2) delta=511.2 -> Hideout
+  0x1B3F150E680: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3F2B180F0: (0.9, 0.3) delta=1.1 -> Hideout
+  0x1B3F2B18110: (885.9, 373.4) delta=1259.3 -> Hideout
+  0x1B3F2B18170: (1072.1, 256.5) delta=1328.6 -> Hideout
+  0x1B3F2B181D0: (1033.8, 256.5) delta=1290.3 -> Hideout
+  0x1B3F2B18210: (0.9, 0.2) delta=1.0 -> Hideout
+  0x1B3F2B18270: (0.9, 0.3) delta=1.1 -> Hideout
+  0x1B3F2B1F430: (-0.0, -25.9) delta=25.9 -> Hideout
+  0x1B3F326BBB0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3F326BBC0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3F326BBF8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3F9655A80: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3F9655B30: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3F9655C00: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3F9655CB0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3FB2049F8: (0.5, 977.0) delta=29.0 -> Hideout
+  0x1B3FB204C80: (0.5, -1077.0) delta=211.0 -> Hideout
+  0x1B3FB204CA0: (0.5, -1077.0) delta=211.0 -> Hideout
+  0x1B3FDF4E760: (0.0, 4625.7) delta=4625.7 -> Hideout
+  0x1B3FDF4E77C: (4986.3, 0.0) delta=4758.5 -> Hideout
+  0x1B3FF0712E4: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B3FF0A31D0: (6047.7, 4986.3) delta=522.3 -> Hideout
+  0x1B3FF0A31D4: (4986.3, 3516.8) delta=416.2 -> Hideout
+  0x1B401FC19D0: (5680.1, 4915.8) delta=446.0 -> Hideout
+  0x1B401FC19D4: (4915.8, 3601.3) delta=440.7 -> Hideout
+  0x1B402082D84: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B402082D90: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B402082DAC: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B402082DB8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B402082E64: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B40510DAC8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B40510DBA0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B40537D698: (6047.7, 4986.3) delta=438.0 -> Hideout
+  0x1B40537D69C: (4986.3, 3516.8) delta=154.9 -> Hideout
+  0x1B406060980: (6119.8, 4441.3) delta=218.7 -> Hideout
+  0x1B406060CA0: (3937.2, 3317.4) delta=3395.0 -> Hideout
+  0x1B406061078: (6047.7, 4986.3) delta=637.6 -> Hideout
+  0x1B40606107C: (4986.3, 3516.8) delta=635.2 -> Hideout
+  0x1B406061EC0: (6115.7, 4441.2) delta=768.4 -> Hideout
+  0x1B406061ED8: (6108.7, 4443.8) delta=3297.9 -> Hideout
+  0x1B406061EDC: (4443.8, 3748.2) delta=1785.0 -> Hideout
+  0x1B406063058: (3937.2, 3317.4) delta=2903.1 -> Hideout
+  0x1B4060649E0: (6042.1, 4607.5) delta=126.1 -> Hideout
+  0x1B406064E58: (6327.6, 5343.9) delta=637.6 -> Hideout
+  0x1B406064E5C: (5343.9, 3794.3) delta=635.2 -> Hideout
+  0x1B4060652A0: (6154.1, 4625.7) delta=3525.2 -> Hideout
+  0x1B406065980: (6047.7, 4986.3) delta=509.0 -> Hideout
+  0x1B406065FD8: (6496.2, 5060.1) delta=815.6 -> Hideout
+  0x1B40606625C: (0.0, 0.0) delta=45.0 -> Hideout
+  0x1B4060670B8: (5649.6, 4508.1) delta=876.3 -> Hideout
+  0x1B4060670BC: (4508.1, 3570.0) delta=531.4 -> Hideout
+  0x1B40606A340: (5680.1, 4915.8) delta=764.1 -> Hideout
+  0x1B40606A8E0: (6108.7, 4443.8) delta=900.6 -> Hideout
+  0x1B40606BBA4: (4986.3, 0.0) delta=4986.3 -> Hideout
+  0x1B40606C798: (0.0, 0.0) delta=1264.0 -> Hideout
+  0x1B40606C79C: (0.0, 0.0) delta=1264.0 -> Hideout
+  0x1B40606CA18: (5680.1, 4915.8) delta=141.9 -> Hideout
+  0x1B40606CA1C: (4915.8, 3601.3) delta=106.4 -> Hideout
+  0x1B40606E4FC: (0.0, 0.0) delta=45.0 -> Hideout
+  0x1B40606FDE0: (6099.0, 1270.1) delta=4064.6 -> Hideout
+  0x1B4075538D0: (5715.6, 4809.4) delta=1031.3 -> Hideout
+  0x1B4075538D4: (4809.4, 3601.3) delta=508.5 -> Hideout
+  0x1B407553FD4: (4956.1, 3613.0) delta=4069.1 -> Hideout
+  0x1B407663860: (6099.0, 1270.1) delta=3394.3 -> Hideout
+  0x1B407663864: (1270.1, 3184.4) delta=3754.3 -> Hideout
+  0x1B407667FA0: (6042.1, 4607.5) delta=3394.3 -> Hideout
+  0x1B407668040: (6154.1, 4625.7) delta=466.9 -> Hideout
+  0x1B407668058: (3937.2, 3317.4) delta=2903.1 -> Hideout
+  0x1B40766805C: (3317.4, 3089.7) delta=1671.0 -> Hideout
+  0x1B40766B240: (-0.0, 0.0) delta=1.0 -> Hideout
+  0x1B40766B578: (6047.7, 4986.3) delta=438.0 -> Hideout
+  0x1B40766B57C: (4986.3, 3516.8) delta=154.9 -> Hideout
+  0x1B40766F3E0: (6154.1, 4625.7) delta=466.9 -> Hideout
+  0x1B407D76FD0: (6072.6, 5452.2) delta=928.8 -> Hideout
+  0x1B407D7ECD0: (6154.1, 4625.7) delta=488.5 -> Hideout
+  0x1B407F58E48: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F58F20: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F59018: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F59250: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F592A0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F592C0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F5CE08: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F5CEE0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F5CFD8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F5D210: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F5D260: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F5D280: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F5FAA8: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F5FB80: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F5FC78: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F5FEB0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F5FF00: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B407F5FF20: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B408448C08: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B408448CE0: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B412EF2AD0: (4771.6, 1246.2) delta=4132.2 -> Hideout
+  0x1B412EF2E90: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B412EF3350: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B412EF3394: (4451.8, 3613.6) delta=2983.0 -> Hideout
+  0x1B412EF33D0: (6110.2, 4451.8) delta=4544.2 -> Hideout
+  0x1B412EF33D4: (4451.8, 3616.5) delta=3700.0 -> Hideout
+  0x1B412EF3450: (6027.3, 4451.8) delta=425.5 -> Hideout
+  0x1B412EF3490: (6027.3, 4451.8) delta=520.5 -> Hideout
+  0x1B412EF3910: (1469.7, 312.6) delta=4392.0 -> Hideout
+  0x1B412EF3950: (4558.7, 1615.6) delta=1102.7 -> Hideout
+  0x1B419D02DB0: (6120.4, 4441.6) delta=528.8 -> Hideout
+  0x1B419D02DD0: (6109.6, 4447.9) delta=511.7 -> Hideout
+  0x1B419DED528: (4396.7, 385.2) delta=3830.2 -> Hideout
+  0x1B41A7D0AD0: (6110.2, 4451.8) delta=1261.5 -> Hideout
+  0x1B41A7D0AD4: (4451.8, 3574.7) delta=1675.4 -> Hideout
+  0x1B41A7D0E50: (6110.2, 4451.8) delta=349.9 -> Hideout
+  0x1B41A7D1754: (4607.5, 0.0) delta=3823.9 -> Hideout
+  0x1B41A7D2354: (4986.3, 3516.8) delta=546.0 -> Hideout
+  0x1B41A7D3650: (6327.6, 5343.9) delta=1521.6 -> Hideout
+  0x1B41A7D4150: (6072.6, 5452.2) delta=1374.8 -> Hideout
+  0x1B41A7D41D0: (6110.2, 4451.8) delta=752.2 -> Hideout
+  0x1B41A7D41D4: (4451.8, 3574.7) delta=384.2 -> Hideout
+  0x1B41A7D52D0: (5996.0, 4956.1) delta=389.2 -> Hideout
+  0x1B41A7D70D0: (6110.2, 4451.8) delta=618.5 -> Hideout
+  0x1B41A7D84D4: (5343.9, 3794.3) delta=1061.8 -> Hideout
+  0x1B41A7D8650: (6047.7, 4986.3) delta=884.0 -> Hideout
+  0x1B41A7D8C50: (6110.2, 4451.8) delta=618.5 -> Hideout
+  0x1B41A7D8CD0: (6327.6, 5343.9) delta=637.6 -> Hideout
+  0x1B41A7DBBD0: (6111.1, 4442.9) delta=518.2 -> Hideout
+  0x1B41A7DBBD4: (4442.9, 3746.9) delta=227.5 -> Hideout
+  0x1B41A7DC550: (6110.2, 4451.8) delta=1261.5 -> Hideout
+  0x1B41A7DCE50: (6110.2, 4451.8) delta=1261.5 -> Hideout
+  0x1B41A7DCE54: (4451.8, 3574.7) delta=1675.4 -> Hideout
+  0x1B41A7DD150: (6110.2, 4451.8) delta=618.5 -> Hideout
+  0x1B41A7DD954: (4625.7, 3601.3) delta=692.2 -> Hideout
+  0x1B41A7DDBD0: (6110.2, 4451.8) delta=1109.6 -> Hideout
+  0x1B41A7DDBD4: (4451.8, 3574.7) delta=1111.8 -> Hideout
+  0x1B41A7DE950: (6042.1, 4607.5) delta=499.6 -> Hideout
+  0x1B41A7DFED0: (6157.7, 5665.7) delta=1665.7 -> Hideout
+  0x1B41A7DFED4: (5665.7, 4036.1) delta=1623.7 -> Hideout
+  0x1B41AE54250: (6117.0, 4477.3) delta=489.6 -> Hideout
+  0x1B41E41C15C: (0.0, 0.0) delta=45.0 -> Hideout
+  0x1B41FEE4450: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B41FEE4454: (4451.8, 3703.0) delta=61.7 -> Hideout
+  0x1B41FEEE650: (5996.0, 4956.1) delta=802.1 -> Hideout
+  0x1B421AEABB8: (6086.1, 4423.4) delta=571.7 -> Hideout
+  0x1B421AEAC90: (6110.2, 4451.8) delta=508.4 -> Hideout
+  0x1B421AEB180: (6086.1, 4423.4) delta=571.7 -> Hideout
+Pressing S for 0.4s to verify reverse movement...
+Reverse movement verified: 755 candidate(s)
+Final stability check...
+Final candidates: 724
+  0x83E056D0D0: (5342.5, 4483.7) -> Hideout
+  0x83E056DE1C: (4972.4, 4467.2) -> Hideout
+  0x83E056DE5C: (5371.0, 4464.5) -> Hideout
+  0x83E391F560: (5996.0, 4956.1) -> Hideout
+  0x83E391F564: (4956.1, 3613.0) -> Hideout
+  0x83E391FA60: (5995.4, 4955.4) -> Hideout
+  0x83E3AFF2B0: (5935.7, 4627.2) -> Hideout
+  0x1B2A1B6DE00: (2506.9, 2067.5) -> Hideout
+  0x1B2A1B6DE50: (2506.9, 2067.5) -> Hideout
+  0x1B2A7231E08: (5342.5, 4483.7) -> Hideout
+  0x1B2A7232318: (5342.5, 4483.7) -> Hideout
+  0x1B2A7233F68: (5342.5, 4483.7) -> Hideout
+  0x1B2A723BD08: (5823.7, 5049.4) -> Hideout
+  0x1B2A723BD0C: (5049.4, 3612.0) -> Hideout
+  0x1B2AF9859C0: (2118.0, -1665.2) -> Hideout
+  0x1B2AF985A10: (2161.1, -1732.8) -> Hideout
+  0x1B2B00C0A88: (5342.5, 4483.7) -> Hideout
+  0x1B2B00E2638: (5391.7, 4451.8) -> Hideout
+  0x1B2D0666BB8: (5342.1, 4483.3) -> Hideout
+  0x1B2D0666BC4: (5342.9, 4484.1) -> Hideout
+  0x1B2D0666BF4: (5365.1, 4515.7) -> Hideout
+  0x1B2D0666CA8: (5320.3, 4434.6) -> Hideout
+  0x1B2D0666CB4: (5531.8, 4532.6) -> Hideout
+  0x1B2D0666CC0: (5335.5, 4456.3) -> Hideout
+  0x1B2D0666CCC: (5382.5, 4508.1) -> Hideout
+  0x1B2D0666CD8: (5339.6, 4470.4) -> Hideout
+  0x1B2D0666CE4: (5373.3, 4502.1) -> Hideout
+  0x1B2D0666CF0: (5354.7, 4467.4) -> Hideout
+  0x1B2D0666CFC: (5390.0, 4500.5) -> Hideout
+  0x1B2D0666D08: (5372.3, 4486.3) -> Hideout
+  0x1B2D0666D14: (5403.3, 4530.5) -> Hideout
+  0x1B2D0666D20: (5322.2, 4436.7) -> Hideout
+  0x1B2D0666D2C: (5365.9, 4472.4) -> Hideout
+  0x1B2D0666D38: (5344.6, 4473.3) -> Hideout
+  0x1B2D0666D44: (5386.6, 4514.4) -> Hideout
+  0x1B2D0666D50: (5329.5, 4459.9) -> Hideout
+  0x1B2D0666D5C: (5366.1, 4490.6) -> Hideout
+  0x1B2D0666D68: (5371.6, 4462.8) -> Hideout
+  0x1B2D0666D74: (5394.1, 4479.2) -> Hideout
+  0x1B2D0666D80: (5399.0, 4453.5) -> Hideout
+  0x1B2D0666D8C: (5420.0, 4466.5) -> Hideout
+  0x1B2D0666D98: (5425.1, 4450.9) -> Hideout
+  0x1B2D0666DA4: (5447.0, 4460.6) -> Hideout
+  0x1B2D0666DB0: (5451.7, 4451.9) -> Hideout
+  0x1B2D0666DBC: (5472.5, 4463.3) -> Hideout
+  0x1B2D0666DC8: (5475.3, 4454.7) -> Hideout
+  0x1B2D0666DD4: (5498.6, 4468.7) -> Hideout
+  0x1B2D0666DE0: (5502.9, 4458.5) -> Hideout
+  0x1B2D0666DEC: (5528.9, 4475.2) -> Hideout
+  0x1B2D8C016A0: (2461.6, 1998.1) -> Hideout
+  0x1B2D8C016F0: (2416.0, 2074.8) -> Hideout
+  0x1B2D8C0EA00: (6527.6, 5552.7) -> Hideout
+  0x1B2D8C0EA04: (5552.7, 3235.7) -> Hideout
+  0x1B2EA38F700: (1754.7, -4005.4) -> Hideout
+  0x1B2EA38F750: (1754.7, -4005.4) -> Hideout
+  0x1B2EA4ADE00: (2500.9, 2032.4) -> Hideout
+  0x1B2EA4ADE50: (2506.9, 2067.5) -> Hideout
+  0x1B2EA680AA0: (5386.5, -1853.5) -> Hideout
+  0x1B2EA680AF0: (5411.2, -1861.8) -> Hideout
+  0x1B2EAA7A5E4: (244.7, 3199.7) -> Hideout
+  0x1B2EAA7A634: (253.2, 3092.0) -> Hideout
+  0x1B2EAAF8A50: (5342.5, 4483.7) -> Hideout
+  0x1B2EAAF8A54: (4483.7, 3568.8) -> Hideout
+  0x1B2EAAF8AA0: (5342.5, 4483.7) -> Hideout
+  0x1B2EAAF8AA4: (4483.7, 3593.0) -> Hideout
+  0x1B2EABEE804: (-147.1, 3148.8) -> Hideout
+  0x1B2EABEE854: (-147.1, 3111.5) -> Hideout
+  0x1B2F4D35708: (5342.5, 4483.7) -> Hideout
+  0x1B2F4D357E0: (5342.5, 4483.7) -> Hideout
+  0x1B2F5153C30: (4827.7, 1205.1) -> Hideout
+  0x1B2F5153C34: (1205.1, 3234.6) -> Hideout
+  0x1B2F5153C80: (4771.6, 1246.2) -> Hideout
+  0x1B2F5153C84: (1246.2, 3092.0) -> Hideout
+  0x1B2F5153F30: (4530.9, 1638.7) -> Hideout
+  0x1B2F5153F80: (4496.9, 1669.1) -> Hideout
+  0x1B2F554CD70: (5410.6, 4459.6) -> Hideout
+  0x1B2F554CE20: (5410.6, 4459.6) -> Hideout
+  0x1B2F554CEF0: (5437.1, 4455.8) -> Hideout
+  0x1B2F554CFA0: (5437.1, 4455.8) -> Hideout
+  0x1B2F554D070: (5463.1, 4457.8) -> Hideout
+  0x1B2F554D120: (5463.1, 4457.8) -> Hideout
+  0x1B2F554D1F0: (5487.9, 4461.8) -> Hideout
+  0x1B2F554D2A0: (5487.9, 4461.8) -> Hideout
+  0x1B2F554D370: (5359.0, 4482.2) -> Hideout
+  0x1B2F554D420: (5359.0, 4482.2) -> Hideout
+  0x1B2F6038FB0: (5342.5, 4483.7) -> Hideout
+  0x1B2F6038FD0: (5342.5, 4483.7) -> Hideout
+  0x1B2F6039110: (5359.0, 4482.2) -> Hideout
+  0x1B2F6039130: (5356.4, 4486.2) -> Hideout
+  0x1B2F6039150: (5372.4, 4483.9) -> Hideout
+  0x1B2F6039170: (5387.8, 4508.4) -> Hideout
+  0x1B2F6039190: (5344.1, 4454.5) -> Hideout
+  0x1B2F60391B0: (5365.6, 4493.8) -> Hideout
+  0x1B2F60391D0: (5347.8, 4475.3) -> Hideout
+  0x1B2F60391F0: (5382.9, 4471.0) -> Hideout
+  0x1B2F6039210: (5409.5, 4460.0) -> Hideout
+  0x1B2F6039230: (5436.1, 4455.7) -> Hideout
+  0x1B2F6039250: (5462.1, 4457.6) -> Hideout
+  0x1B2F6039270: (5487.0, 4461.7) -> Hideout
+  0x1B2F6039290: (5515.9, 4466.8) -> Hideout
+  0x1B300379178: (5342.5, 4483.7) -> Hideout
+  0x1B300379250: (5342.5, 4483.7) -> Hideout
+  0x1B300569A00: (5342.5, 4483.7) -> Hideout
+  0x1B300AA8140: (5342.5, 4483.7) -> Hideout
+  0x1B300AA8150: (5425.6, 4483.7) -> Hideout
+  0x1B300AA8188: (5342.5, 4483.7) -> Hideout
+  0x1B300C5EFF8: (5342.5, 4483.7) -> Hideout
+  0x1B300C5F0D0: (5342.5, 4483.7) -> Hideout
+  0x1B3012221E8: (5342.5, 4483.7) -> Hideout
+  0x1B3012222C0: (5342.5, 4483.7) -> Hideout
+  0x1B301228188: (5342.5, 4483.7) -> Hideout
+  0x1B301228260: (5342.5, 4483.7) -> Hideout
+  0x1B301EE76C8: (5327.2, 4451.0) -> Hideout
+  0x1B301EE76E4: (5342.5, 4483.7) -> Hideout
+  0x1B301EE7700: (5404.7, 4531.1) -> Hideout
+  0x1B301EE78DC: (5841.1, 5135.5) -> Hideout
+  0x1B301EE78E0: (5135.5, 3721.8) -> Hideout
+  0x1B301EE7CCC: (5425.6, 4483.7) -> Hideout
+  0x1B301EE87BC: (5357.5, 4487.6) -> Hideout
+  0x1B301EE89EC: (5342.5, 4483.7) -> Hideout
+  0x1B301EE8A08: (5342.5, 4483.7) -> Hideout
+  0x1B301EE8A40: (5342.5, 4483.7) -> Hideout
+  0x1B301EE8A94: (5342.5, 4483.7) -> Hideout
+  0x1B301EE8AB0: (5650.0, 4500.0) -> Hideout
+  0x1B3020E3D48: (5342.5, 4483.7) -> Hideout
+  0x1B3020E3D64: (5342.5, 4483.7) -> Hideout
+  0x1B3020E3E20: (5342.5, 4483.7) -> Hideout
+  0x1B3028B8C28: (5342.5, 4483.7) -> Hideout
+  0x1B3028B8D00: (5342.5, 4483.7) -> Hideout
+  0x1B3028B9C18: (5342.5, 4483.7) -> Hideout
+  0x1B3028B9CF0: (5342.5, 4483.7) -> Hideout
+  0x1B302A2E4F8: (3937.2, 3317.4) -> Hideout
+  0x1B302A2E4FC: (3317.4, 3089.7) -> Hideout
+  0x1B303090CD0: (6496.2, 5060.1) -> Hideout
+  0x1B303090CD4: (5060.1, 3859.1) -> Hideout
+  0x1B303091750: (5649.6, 4508.1) -> Hideout
+  0x1B303094ED0: (5649.6, 4508.1) -> Hideout
+  0x1B303094ED4: (4508.1, 3570.0) -> Hideout
+  0x1B303094FD0: (6072.6, 5452.2) -> Hideout
+  0x1B303098BD0: (5342.5, 4483.7) -> Hideout
+  0x1B303099AD0: (6047.7, 4986.3) -> Hideout
+  0x1B30309D4D0: (6157.7, 5665.7) -> Hideout
+  0x1B30309D4D4: (5665.7, 4036.1) -> Hideout
+  0x1B30309EA50: (6327.6, 5343.9) -> Hideout
+  0x1B30309FDD0: (5349.4, 4451.8) -> Hideout
+  0x1B30309FDD4: (4451.8, 3704.6) -> Hideout
+  0x1B30C7F03F0: (2161.1, -1732.8) -> Hideout
+  0x1B30E79E788: (5342.5, 4483.7) -> Hideout
+  0x1B30E79E860: (5342.5, 4483.7) -> Hideout
+  0x1B32DF19CE0: (5331.8, 4451.2) -> Hideout
+  0x1B32DF19D30: (5342.5, 4483.7) -> Hideout
+  0x1B3331949C4: (4483.7, 3568.8) -> Hideout
+  0x1B33F7BE400: (3483.4, -417.1) -> Hideout
+  0x1B365ACA2C4: (5320.3, 4434.6) -> Hideout
+  0x1B365ACA2D0: (5531.8, 4532.6) -> Hideout
+  0x1B394B73E58: (5823.7, 5049.4) -> Hideout
+  0x1B394B73E5C: (5049.4, 3612.0) -> Hideout
+  0x1B394B76BD8: (5342.5, 4483.7) -> Hideout
+  0x1B394B778D8: (5342.5, 4483.7) -> Hideout
+  0x1B394B7F458: (5342.5, 4483.7) -> Hideout
+  0x1B394C18190: (5823.7, 5049.4) -> Hideout
+  0x1B394C18194: (5049.4, 3612.0) -> Hideout
+  0x1B394C1AB00: (5342.5, 4483.7) -> Hideout
+  0x1B394C1AD20: (5342.5, 4483.7) -> Hideout
+  0x1B39A54D9E8: (5342.5, 4483.7) -> Hideout
+  0x1B39ACD2B50: (5996.0, 4956.1) -> Hideout
+  0x1B39ACD3750: (5349.4, 4451.8) -> Hideout
+  0x1B39ACD58D0: (5342.5, 4483.7) -> Hideout
+  0x1B39AD36388: (5342.5, 4483.7) -> Hideout
+  0x1B39AD36460: (5342.5, 4483.7) -> Hideout
+  0x1B39AD365B4: (5342.5, 4483.7) -> Hideout
+  0x1B39AE89D00: (5342.5, 4483.7) -> Hideout
+  0x1B39AE89DD0: (5342.5, 4483.7) -> Hideout
+  0x1B39AE8A520: (5359.0, 4482.2) -> Hideout
+  0x1B39AE8A5F0: (5356.7, 4486.3) -> Hideout
+  0x1B39AE8A6C0: (5373.0, 4483.9) -> Hideout
+  0x1B39AE8A790: (5387.8, 4509.3) -> Hideout
+  0x1B39AE8A860: (5343.3, 4454.1) -> Hideout
+  0x1B39AE8A930: (5366.1, 4493.3) -> Hideout
+  0x1B39AE8AA00: (5348.1, 4475.3) -> Hideout
+  0x1B39AE8AAD0: (5384.1, 4470.4) -> Hideout
+  0x1B39AE8ABA0: (5410.7, 4459.7) -> Hideout
+  0x1B39AE8AC70: (5437.3, 4456.1) -> Hideout
+  0x1B39AE8AD40: (5463.4, 4458.5) -> Hideout
+  0x1B39AE8AE10: (5488.4, 4462.9) -> Hideout
+  0x1B39AE8AEE0: (5517.7, 4468.6) -> Hideout
+  0x1B39D390ED0: (5342.5, 4483.7) -> Hideout
+  0x1B39D390ED4: (4483.7, 3568.8) -> Hideout
+  0x1B39D3BB0E0: (2099.8, -2425.1) -> Hideout
+  0x1B39D3BB130: (2099.8, -2425.1) -> Hideout
+  0x1B39EB53254: (4490.8, 3760.5) -> Hideout
+  0x1B39EB539D0: (6157.7, 5665.7) -> Hideout
+  0x1B39EB539D4: (5665.7, 4036.1) -> Hideout
+  0x1B39EB53A50: (6047.7, 4986.3) -> Hideout
+  0x1B39EB544D0: (6496.2, 5060.1) -> Hideout
+  0x1B39EB580D0: (5996.0, 4956.1) -> Hideout
+  0x1B39EB59BD0: (5342.5, 4483.7) -> Hideout
+  0x1B39EB5FED0: (6157.7, 5665.7) -> Hideout
+  0x1B39EB5FED4: (5665.7, 4036.1) -> Hideout
+  0x1B39EFD3D34: (-1796.7, 3473.8) -> Hideout
+  0x1B39EFD3D80: (5615.7, -1796.7) -> Hideout
+  0x1B39EFD3D84: (-1796.7, 3438.9) -> Hideout
+  0x1B39F7CBEB0: (5342.5, 4483.7) -> Hideout
+  0x1B39F7CBEB4: (4483.7, 3568.8) -> Hideout
+  0x1B3A06503B0: (5356.7, 4486.3) -> Hideout
+  0x1B3A0650460: (5356.7, 4486.3) -> Hideout
+  0x1B3A0650530: (5373.0, 4483.9) -> Hideout
+  0x1B3A06505E0: (5373.0, 4483.9) -> Hideout
+  0x1B3A06506B0: (5387.9, 4509.3) -> Hideout
+  0x1B3A0650760: (5387.9, 4509.3) -> Hideout
+  0x1B3A0650830: (5343.3, 4454.2) -> Hideout
+  0x1B3A06508E0: (5343.3, 4454.2) -> Hideout
+  0x1B3A06509B0: (5366.1, 4493.3) -> Hideout
+  0x1B3A0650A60: (5366.1, 4493.3) -> Hideout
+  0x1B3A0650B30: (5348.1, 4475.3) -> Hideout
+  0x1B3A0650BE0: (5348.1, 4475.3) -> Hideout
+  0x1B3A0650CB0: (5384.1, 4470.4) -> Hideout
+  0x1B3A0650D60: (5384.1, 4470.4) -> Hideout
+  0x1B3A0E3ADE0: (2806.3, 2344.3) -> Hideout
+  0x1B3A0E3AE30: (2806.3, 2344.3) -> Hideout
+  0x1B3A0E49DE4: (-1665.2, 3280.6) -> Hideout
+  0x1B3A0E49E34: (-1732.8, 3092.0) -> Hideout
+  0x1B3A20FC970: (4827.7, 1205.1) -> Hideout
+  0x1B3A461D320: (5342.5, 4483.7) -> Hideout
+  0x1B3A461D330: (5342.5, 4483.7) -> Hideout
+  0x1B3A461D368: (5342.5, 4483.7) -> Hideout
+  0x1B3A4632E50: (5357.5, 4487.6) -> Hideout
+  0x1B3A4632E54: (4487.6, 3759.2) -> Hideout
+  0x1B3A46B2B30: (1430.4, 494.9) -> Hideout
+  0x1B3A46B2B80: (1430.4, 494.9) -> Hideout
+  0x1B3A46BA2E0: (6527.6, 5552.7) -> Hideout
+  0x1B3A46BA2E4: (5552.7, 3235.7) -> Hideout
+  0x1B3A46BA330: (6527.6, 5552.7) -> Hideout
+  0x1B3A46BA334: (5552.7, 3235.7) -> Hideout
+  0x1B3A46D3C34: (210.4, 3216.9) -> Hideout
+  0x1B3A46D3C84: (218.2, 3092.0) -> Hideout
+  0x1B3A4DF3F30: (5615.7, -1796.7) -> Hideout
+  0x1B3A4DF3F80: (5615.7, -1796.7) -> Hideout
+  0x1B3A4DFB030: (1754.7, -4005.4) -> Hideout
+  0x1B3A9B78254: (-1686.4, 3218.6) -> Hideout
+  0x1B3A9B90FA0: (2336.4, 2166.8) -> Hideout
+  0x1B3A9B90FA4: (2166.8, 3205.0) -> Hideout
+  0x1B3A9B90FF0: (2416.0, 2074.8) -> Hideout
+  0x1B3A9B90FF4: (2074.8, 3116.2) -> Hideout
+  0x1B3A9B9ABE0: (1423.1, 272.4) -> Hideout
+  0x1B3A9B9ABE4: (272.4, 3274.2) -> Hideout
+  0x1B3A9B9AC30: (1366.6, 218.2) -> Hideout
+  0x1B3A9B9AC34: (218.2, 3092.0) -> Hideout
+  0x1B3A9BBA5E0: (5411.2, -1861.8) -> Hideout
+  0x1B3A9BBA630: (5411.2, -1861.8) -> Hideout
+  0x1B3A9BC2734: (4483.7, 3566.6) -> Hideout
+  0x1B3A9BC2934: (2344.3, 3474.3) -> Hideout
+  0x1B3A9BC2984: (2344.3, 3445.4) -> Hideout
+  0x1B3A9BC8AA0: (2161.1, -1732.8) -> Hideout
+  0x1B3A9BCCE74: (1998.1, 3257.3) -> Hideout
+  0x1B3A9BCCEC4: (2074.8, 3116.2) -> Hideout
+  0x1B3A9BD3C34: (433.1, 3122.0) -> Hideout
+  0x1B3A9BD3C84: (433.1, 3092.0) -> Hideout
+  0x1B3AA252EE0: (5331.3, 4455.0) -> Hideout
+  0x1B3AA252EF0: (5327.2, 4451.0) -> Hideout
+  0x1B3AA252F28: (5342.5, 4483.7) -> Hideout
+  0x1B3AEE87C88: (5342.5, 4483.7) -> Hideout
+  0x1B3AEE89988: (5342.5, 4483.7) -> Hideout
+  0x1B3B18F3134: (272.4, 3274.2) -> Hideout
+  0x1B3B18F3180: (1366.6, 218.2) -> Hideout
+  0x1B3B18F3230: (5342.5, 4483.7) -> Hideout
+  0x1B3B18F3234: (4483.7, 3566.6) -> Hideout
+  0x1B3B18FEE00: (1423.1, 272.4) -> Hideout
+  0x1B3B18FEE50: (1366.6, 218.2) -> Hideout
+  0x1B3B1AF1FA0: (5391.0, 4526.3) -> Hideout
+  0x1B3B1AF1FA4: (4526.3, 3704.2) -> Hideout
+  0x1B3B1AF1FF0: (5342.5, 4483.7) -> Hideout
+  0x1B3B1AF1FF4: (4483.7, 3593.0) -> Hideout
+  0x1B3B1CA4AC4: (2108.9, 3245.0) -> Hideout
+  0x1B3B1CA4B14: (2067.5, 3118.7) -> Hideout
+  0x1B3B1F8CA50: (5342.5, 4483.7) -> Hideout
+  0x1B3B1F8CA90: (5342.5, 4483.7) -> Hideout
+  0x1B3B1F8CC90: (5359.0, 4482.2) -> Hideout
+  0x1B3B1F8CCD0: (5356.7, 4486.3) -> Hideout
+  0x1B3B1F8CD10: (5373.0, 4483.9) -> Hideout
+  0x1B3B1F8CD50: (5387.9, 4509.3) -> Hideout
+  0x1B3B1F8CD90: (5343.3, 4454.2) -> Hideout
+  0x1B3B1F8CDD0: (5366.1, 4493.3) -> Hideout
+  0x1B3B1F8CE10: (5348.1, 4475.3) -> Hideout
+  0x1B3B1F8CE50: (5384.1, 4470.4) -> Hideout
+  0x1B3B222EDF0: (5680.1, 4915.8) -> Hideout
+  0x1B3B222EDF4: (4915.8, 3601.3) -> Hideout
+  0x1B3B3076EC0: (5391.2, 4526.2) -> Hideout
+  0x1B3B3076ED0: (5404.7, 4531.1) -> Hideout
+  0x1B3B3076F08: (5342.5, 4483.7) -> Hideout
+  0x1B3B32EA5C8: (4842.5, 4783.7) -> Hideout
+  0x1B3B32EA6A0: (4842.5, 4783.7) -> Hideout
+  0x1B3B3331F50: (5342.5, 4483.7) -> Hideout
+  0x1B3B3331FD0: (5342.5, 4483.7) -> Hideout
+  0x1B3B3332034: (5342.5, 4483.7) -> Hideout
+  0x1B3B33374D0: (5342.5, 4483.7) -> Hideout
+  0x1B3B3337550: (5342.5, 4483.7) -> Hideout
+  0x1B3B33375B4: (5342.5, 4483.7) -> Hideout
+  0x1B3B333C390: (5342.5, 4483.7) -> Hideout
+  0x1B3B333C410: (5342.5, 4483.7) -> Hideout
+  0x1B3B333C474: (5342.5, 4483.7) -> Hideout
+  0x1B3B333D590: (5342.5, 4483.7) -> Hideout
+  0x1B3B333D610: (5342.5, 4483.7) -> Hideout
+  0x1B3B333D674: (5342.5, 4483.7) -> Hideout
+  0x1B3B3EF6C50: (5342.5, 4483.7) -> Hideout
+  0x1B3B3EF6CD0: (5342.5, 4483.7) -> Hideout
+  0x1B3B3EF6D34: (5342.5, 4483.7) -> Hideout
+  0x1B3B3FD0F88: (5342.5, 4483.7) -> Hideout
+  0x1B3B3FD1060: (5342.5, 4483.7) -> Hideout
+  0x1B3B3FD10D0: (5342.5, 4483.7) -> Hideout
+  0x1B3B3FD10DC: (5342.5, 4483.7) -> Hideout
+  0x1B3B3FD1A08: (5347.5, 4487.7) -> Hideout
+  0x1B3B3FD1AE0: (5347.5, 4487.7) -> Hideout
+  0x1B3B3FD6008: (5342.5, 4483.7) -> Hideout
+  0x1B3B3FD60E0: (5342.5, 4483.7) -> Hideout
+  0x1B3B3FD7888: (5342.5, 4483.7) -> Hideout
+  0x1B3B3FD7960: (5342.5, 4483.7) -> Hideout
+  0x1B3B3FD9108: (5342.5, 4483.7) -> Hideout
+  0x1B3B3FD91E0: (5342.5, 4483.7) -> Hideout
+  0x1B3B43107BC: (4487.6, 3759.0) -> Hideout
+  0x1B3B4FC3220: (5342.5, 4483.7) -> Hideout
+  0x1B3B4FC32B0: (5342.5, 4483.7) -> Hideout
+  0x1B3B52D4A10: (5342.5, 4483.7) -> Hideout
+  0x1B3B52D4AE0: (5342.5, 4483.7) -> Hideout
+  0x1B3B52D4C50: (5342.5, 4483.7) -> Hideout
+  0x1B3B52D4D20: (5342.5, 4483.7) -> Hideout
+  0x1B3B52D5310: (5342.5, 4483.7) -> Hideout
+  0x1B3B52D53E0: (5342.5, 4483.7) -> Hideout
+  0x1B3B52DA410: (5342.5, 4483.7) -> Hideout
+  0x1B3B52DA4E0: (5342.5, 4483.7) -> Hideout
+  0x1B3B5C42C50: (5342.5, 4483.7) -> Hideout
+  0x1B3B6327E50: (5342.5, 4483.7) -> Hideout
+  0x1B3B6327ED0: (5342.5, 4483.7) -> Hideout
+  0x1B3B6327F34: (5342.5, 4483.7) -> Hideout
+  0x1B3B63BA9B0: (5327.2, 4451.0) -> Hideout
+  0x1B3B63BA9D8: (5342.5, 4483.7) -> Hideout
+  0x1B3B63BAA00: (5404.7, 4531.1) -> Hideout
+  0x1B3B63BACA8: (5841.1, 5135.5) -> Hideout
+  0x1B3B63BACAC: (5135.5, 3721.8) -> Hideout
+  0x1B3B63BB248: (5425.6, 4483.7) -> Hideout
+  0x1B3B63BC1E8: (5357.5, 4487.6) -> Hideout
+  0x1B3B63BC508: (5342.5, 4483.7) -> Hideout
+  0x1B3B63BC530: (5342.5, 4483.7) -> Hideout
+  0x1B3B63BC580: (5342.5, 4483.7) -> Hideout
+  0x1B3B63BC5F8: (5342.5, 4483.7) -> Hideout
+  0x1B3B63BC620: (5650.0, 4500.0) -> Hideout
+  0x1B3B63C2A90: (5823.7, 5049.4) -> Hideout
+  0x1B3B63C2A94: (5049.4, 3612.0) -> Hideout
+  0x1B3B63C2AD0: (5823.7, 5049.4) -> Hideout
+  0x1B3B63C2AD4: (5049.4, 3612.0) -> Hideout
+  0x1B3B63C6850: (5342.5, 4483.7) -> Hideout
+  0x1B3B63C6854: (4483.7, 3568.8) -> Hideout
+  0x1B3B63C6890: (5342.5, 4483.7) -> Hideout
+  0x1B3B63C6894: (4483.7, 3568.8) -> Hideout
+  0x1B3B63C6C60: (2997.4, 1876.2) -> Hideout
+  0x1B3B63C6CA0: (2997.4, 1876.2) -> Hideout
+  0x1B3B63C7070: (5342.5, 4483.7) -> Hideout
+  0x1B3B63C70B0: (5342.5, 4483.7) -> Hideout
+  0x1B3B63C7140: (5342.5, 4483.7) -> Hideout
+  0x1B3B63C7180: (5342.5, 4483.7) -> Hideout
+  0x1B3B63C7210: (5342.5, 4483.7) -> Hideout
+  0x1B3B63C7250: (5342.5, 4483.7) -> Hideout
+  0x1B3B63C73B0: (5342.5, 4483.7) -> Hideout
+  0x1B3B63C73F0: (5342.5, 4483.7) -> Hideout
+  0x1B3B63C7480: (5342.5, 4483.7) -> Hideout
+  0x1B3B63C74C0: (5342.5, 4483.7) -> Hideout
+  0x1B3B63C7620: (5391.2, 4526.2) -> Hideout
+  0x1B3B63C7660: (5391.2, 4526.2) -> Hideout
+  0x1B3B63C76F0: (5331.3, 4455.0) -> Hideout
+  0x1B3B63C7730: (5331.3, 4455.0) -> Hideout
+  0x1B3B640F388: (5342.5, 4483.7) -> Hideout
+  0x1B3B640F460: (5342.5, 4483.7) -> Hideout
+  0x1B3B64AE578: (5823.7, 5049.4) -> Hideout
+  0x1B3B64AE57C: (5049.4, 3612.0) -> Hideout
+  0x1B3B64AE650: (5823.7, 5049.4) -> Hideout
+  0x1B3B64AE654: (5049.4, 3612.0) -> Hideout
+  0x1B3B64AE7A4: (5823.7, 5049.4) -> Hideout
+  0x1B3B64AE7A8: (5049.4, 3612.0) -> Hideout
+  0x1B3B6613448: (5342.5, 4483.7) -> Hideout
+  0x1B3B6613520: (5342.5, 4483.7) -> Hideout
+  0x1B3B73C0AF0: (5373.0, 4483.9) -> Hideout
+  0x1B3B73C0B60: (5366.1, 4493.3) -> Hideout
+  0x1B3B73C0BD0: (5343.3, 4454.1) -> Hideout
+  0x1B3B73C0C40: (5387.8, 4509.3) -> Hideout
+  0x1B3B73C1110: (5384.1, 4470.4) -> Hideout
+  0x1B3B73C1180: (5348.1, 4475.3) -> Hideout
+  0x1B3B73C11F0: (5356.7, 4486.3) -> Hideout
+  0x1B3B73C1260: (5359.0, 4482.2) -> Hideout
+  0x1B3B73C2060: (5437.1, 4455.8) -> Hideout
+  0x1B3C06CF850: (5342.5, 4483.7) -> Hideout
+  0x1B3C06CF8D0: (5342.5, 4483.7) -> Hideout
+  0x1B3C06CF934: (5342.5, 4483.7) -> Hideout
+  0x1B3C1872ED0: (6042.1, 4607.5) -> Hideout
+  0x1B3C1872ED4: (4607.5, 3601.3) -> Hideout
+  0x1B3C1878CD0: (5649.6, 4508.1) -> Hideout
+  0x1B3C1878CD4: (4508.1, 3570.0) -> Hideout
+  0x1B3C1955888: (5342.5, 4483.7) -> Hideout
+  0x1B3C1955894: (5342.5, 4483.7) -> Hideout
+  0x1B3C1955D30: (5342.5, 4483.7) -> Hideout
+  0x1B3C1955D38: (5342.5, 4483.7) -> Hideout
+  0x1B3C1CB9100: (5342.5, 4483.7) -> Hideout
+  0x1B3C1CB9160: (5342.5, 4483.7) -> Hideout
+  0x1B3C1CB9760: (5342.5, 4483.7) -> Hideout
+  0x1B3C1CB9790: (5342.5, 4483.7) -> Hideout
+  0x1B3C1E507F0: (5342.5, 4483.7) -> Hideout
+  0x1B3C1E51CF0: (5342.5, 4483.7) -> Hideout
+  0x1B3C1E55B10: (5342.5, 4483.7) -> Hideout
+  0x1B3C1E5A5E0: (5342.5, 4483.7) -> Hideout
+  0x1B3C1E5BCA0: (5342.5, 4483.7) -> Hideout
+  0x1B3C5D177C4: (5823.7, 5049.4) -> Hideout
+  0x1B3C5D177C8: (5049.4, 3612.0) -> Hideout
+  0x1B3C5D177D0: (5823.7, 5049.4) -> Hideout
+  0x1B3C5D177D4: (5049.4, 3612.0) -> Hideout
+  0x1B3C5D177EC: (5823.7, 5049.4) -> Hideout
+  0x1B3C5D177F8: (5823.7, 5049.4) -> Hideout
+  0x1B3C5D178A4: (5823.7, 5049.4) -> Hideout
+  0x1B3C5D178A8: (5049.4, 3612.0) -> Hideout
+  0x1B3C60BA048: (5342.5, 4483.7) -> Hideout
+  0x1B3C60BA120: (5342.5, 4483.7) -> Hideout
+  0x1B3C6540FB0: (5331.3, 4455.0) -> Hideout
+  0x1B3C6540FF0: (5342.5, 4483.7) -> Hideout
+  0x1B3C6541030: (5391.2, 4526.2) -> Hideout
+  0x1B3C6541470: (5823.7, 5049.4) -> Hideout
+  0x1B3C6541474: (5049.4, 3612.0) -> Hideout
+  0x1B3C6541D70: (5342.5, 4483.7) -> Hideout
+  0x1B3C6543670: (5357.5, 4487.6) -> Hideout
+  0x1B3C6543B70: (5342.5, 4483.7) -> Hideout
+  0x1B3C6543BB0: (5342.5, 4483.7) -> Hideout
+  0x1B3C6543C30: (5342.5, 4483.7) -> Hideout
+  0x1B3C6543CF0: (5342.5, 4483.7) -> Hideout
+  0x1B3C6543D30: (5650.0, 4500.0) -> Hideout
+  0x1B3C8670B30: (5516.1, 4465.4) -> Hideout
+  0x1B3C8670BE0: (5516.9, 4467.0) -> Hideout
+  0x1B3C8CF88D0: (6047.7, 4986.3) -> Hideout
+  0x1B3C8CF88D4: (4986.3, 3516.8) -> Hideout
+  0x1B3C8D80254: (4986.3, 3516.8) -> Hideout
+  0x1B3C8D81750: (6496.2, 5060.1) -> Hideout
+  0x1B3C8D82450: (5342.5, 4483.7) -> Hideout
+  0x1B3C8D82454: (4483.7, 3568.8) -> Hideout
+  0x1B3C8D82C50: (5342.5, 4483.7) -> Hideout
+  0x1B3C8D82C54: (4483.7, 3568.8) -> Hideout
+  0x1B3C8D82DD0: (6072.6, 5452.2) -> Hideout
+  0x1B3C8D83150: (5680.1, 4915.8) -> Hideout
+  0x1B3C8D84850: (6327.6, 5343.9) -> Hideout
+  0x1B3C8D86F50: (5342.5, 4483.7) -> Hideout
+  0x1B3C8D86F54: (4483.7, 3566.6) -> Hideout
+  0x1B3C8D872D0: (6072.6, 5452.2) -> Hideout
+  0x1B3C8D889D0: (5935.7, 4627.2) -> Hideout
+  0x1B3C8D889D4: (4627.2, 3601.3) -> Hideout
+  0x1B3C8D88D50: (5996.0, 4956.1) -> Hideout
+  0x1B3C8D8CDD0: (6157.7, 5665.7) -> Hideout
+  0x1B3C8D8D954: (4625.7, 3601.3) -> Hideout
+  0x1B3C8ED8D90: (5342.5, 4483.7) -> Hideout
+  0x1B3C8ED8E10: (5342.5, 4483.7) -> Hideout
+  0x1B3C8ED8E74: (5342.5, 4483.7) -> Hideout
+  0x1B3C95BE578: (5342.5, 4483.7) -> Hideout
+  0x1B3C95BE650: (5342.5, 4483.7) -> Hideout
+  0x1B3C95BE7A4: (5342.5, 4483.7) -> Hideout
+  0x1B3C980EBC8: (5342.5, 4483.7) -> Hideout
+  0x1B3C980ECA0: (5342.5, 4483.7) -> Hideout
+  0x1B3C9869070: (5342.1, 4483.3) -> Hideout
+  0x1B3C986907C: (5342.9, 4484.1) -> Hideout
+  0x1B3C98690AC: (5379.5, 4516.1) -> Hideout
+  0x1B3C99C16A0: (3937.2, 3317.4) -> Hideout
+  0x1B3C9B7756C: (5371.0, 4464.5) -> Hideout
+  0x1B3C9B77574: (5214.6, 4465.6) -> Hideout
+  0x1B3CD2C11D0: (5342.5, 4483.7) -> Hideout
+  0x1B3CD2C1250: (5342.5, 4483.7) -> Hideout
+  0x1B3CD2C12B4: (5342.5, 4483.7) -> Hideout
+  0x1B3CD8C5430: (5357.5, 4487.6) -> Hideout
+  0x1B3CD8C54A0: (5357.5, 4487.6) -> Hideout
+  0x1B3CD8C54B0: (5342.5, 4483.7) -> Hideout
+  0x1B3CD8C54E0: (544.9, -2501.4) -> Hideout
+  0x1B3CD8C5550: (553.1, -2500.7) -> Hideout
+  0x1B3CD8C5560: (553.1, -2500.7) -> Hideout
+  0x1B3CD8C5590: (5342.5, 4483.7) -> Hideout
+  0x1B3CD8C5600: (5342.5, 4483.7) -> Hideout
+  0x1B3CD8C5610: (5342.5, 4483.7) -> Hideout
+  0x1B3CDE33AD0: (6047.7, 4986.3) -> Hideout
+  0x1B3CDE363D0: (5649.6, 4508.1) -> Hideout
+  0x1B3CDE36750: (5996.0, 4956.1) -> Hideout
+  0x1B3CDE3F550: (6154.1, 4625.7) -> Hideout
+  0x1B3CDE3FF50: (6154.1, 4625.7) -> Hideout
+  0x1B3CE4546D0: (5342.5, 4483.7) -> Hideout
+  0x1B3CE4546E0: (5342.5, 4483.7) -> Hideout
+  0x1B3CE454718: (5342.5, 4483.7) -> Hideout
+  0x1B3CE8EEDE8: (5404.7, 4531.1) -> Hideout
+  0x1B3CE8EEEC0: (5391.3, 4526.1) -> Hideout
+  0x1B3D6CBA3D0: (5342.5, 4483.7) -> Hideout
+  0x1B3D7463A98: (5342.5, 4483.7) -> Hideout
+  0x1B3D7463B70: (5342.5, 4483.7) -> Hideout
+  0x1B3D7EFEB50: (885.9, 373.4) -> Hideout
+  0x1B3D7EFEBB0: (1072.1, 256.5) -> Hideout
+  0x1B3D7EFEC10: (1033.8, 256.5) -> Hideout
+  0x1B3D80DA8D0: (5342.5, 4483.7) -> Hideout
+  0x1B3D92D66B0: (5342.5, 4483.7) -> Hideout
+  0x1B3D92D66C0: (5342.5, 4483.7) -> Hideout
+  0x1B3D92D66F8: (5342.5, 4483.7) -> Hideout
+  0x1B3DA895E50: (5342.5, 4483.7) -> Hideout
+  0x1B3DA895F20: (5342.5, 4483.7) -> Hideout
+  0x1B3DB073D48: (5342.5, 4483.7) -> Hideout
+  0x1B3DB073E20: (5342.5, 4483.7) -> Hideout
+  0x1B3DB07ADC8: (5823.7, 5049.4) -> Hideout
+  0x1B3DB07ADCC: (5049.4, 3612.0) -> Hideout
+  0x1B3DB07ADE4: (5823.7, 5049.4) -> Hideout
+  0x1B3DB07ADE8: (5049.4, 3612.0) -> Hideout
+  0x1B3DB07AEA0: (5823.7, 5049.4) -> Hideout
+  0x1B3DB07AEA4: (5049.4, 3612.0) -> Hideout
+  0x1B3DB3D0C60: (5342.5, 4483.7) -> Hideout
+  0x1B3DB3D0C70: (5342.5, 4483.7) -> Hideout
+  0x1B3DB3D0CA8: (5342.5, 4483.7) -> Hideout
+  0x1B3DB3D76A0: (5342.5, 4483.7) -> Hideout
+  0x1B3DB3D76B0: (5342.5, 4483.7) -> Hideout
+  0x1B3DB3D76E8: (5342.5, 4483.7) -> Hideout
+  0x1B3DB3DC100: (5823.7, 5049.4) -> Hideout
+  0x1B3DB3DC104: (5049.4, 3612.0) -> Hideout
+  0x1B3DB3DC110: (5841.1, 5135.5) -> Hideout
+  0x1B3DB3DC114: (5135.5, 3721.8) -> Hideout
+  0x1B3DB3DC148: (5823.7, 5049.4) -> Hideout
+  0x1B3DB3DC14C: (5049.4, 3612.0) -> Hideout
+  0x1B3DBA23058: (5342.5, 4483.7) -> Hideout
+  0x1B3DBA23130: (5342.5, 4483.7) -> Hideout
+  0x1B3DBA23284: (5342.5, 4483.7) -> Hideout
+  0x1B3DC4321E8: (5342.5, 4483.7) -> Hideout
+  0x1B3DC4322C0: (5342.5, 4483.7) -> Hideout
+  0x1B3DCC80208: (5327.1, 4451.2) -> Hideout
+  0x1B3DCC802E0: (5331.3, 4455.1) -> Hideout
+  0x1B3DCC83508: (5342.5, 4483.7) -> Hideout
+  0x1B3DCC835E0: (5342.5, 4483.7) -> Hideout
+  0x1B3DCC836D8: (5342.5, 4483.7) -> Hideout
+  0x1B3DCC83910: (5342.5, 4483.7) -> Hideout
+  0x1B3DCC83960: (5342.5, 4483.7) -> Hideout
+  0x1B3DCC83980: (5342.5, 4483.7) -> Hideout
+  0x1B3DCC84E88: (5342.5, 4483.7) -> Hideout
+  0x1B3DCC84F60: (5342.5, 4483.7) -> Hideout
+  0x1B3DCC85058: (5342.5, 4483.7) -> Hideout
+  0x1B3DCC85290: (5342.5, 4483.7) -> Hideout
+  0x1B3DCC852E0: (5342.5, 4483.7) -> Hideout
+  0x1B3DCC85300: (5342.5, 4483.7) -> Hideout
+  0x1B3DCF706D8: (5359.7, 4447.0) -> Hideout
+  0x1B3DCF70818: (5301.3, 4429.4) -> Hideout
+  0x1B3DCF715D8: (5377.2, 4447.7) -> Hideout
+  0x1B3DDFC8B88: (5342.5, 4483.7) -> Hideout
+  0x1B3DDFC8C60: (5342.5, 4483.7) -> Hideout
+  0x1B3DDFCA488: (5342.5, 4483.7) -> Hideout
+  0x1B3DDFCA560: (5342.5, 4483.7) -> Hideout
+  0x1B3DDFCE088: (5342.5, 4483.7) -> Hideout
+  0x1B3DDFCE160: (5342.5, 4483.7) -> Hideout
+  0x1B3DDFCED08: (5342.5, 4483.7) -> Hideout
+  0x1B3DDFCEDE0: (5342.5, 4483.7) -> Hideout
+  0x1B3DE1955C0: (2336.4, 2166.8) -> Hideout
+  0x1B3DE195610: (2416.0, 2074.8) -> Hideout
+  0x1B3DE6CF0D0: (5996.0, 4956.1) -> Hideout
+  0x1B3DE6CF0D4: (4956.1, 3613.0) -> Hideout
+  0x1B3DE7D17D0: (5649.6, 4508.1) -> Hideout
+  0x1B3DE7D86D0: (6327.6, 5343.9) -> Hideout
+  0x1B3DE7D86D4: (5343.9, 3794.3) -> Hideout
+  0x1B3DE7E0650: (6496.2, 5060.1) -> Hideout
+  0x1B3DE7E3450: (5342.5, 4483.7) -> Hideout
+  0x1B3DE7E4650: (5342.5, 4483.7) -> Hideout
+  0x1B3DE7E4654: (4483.7, 3697.0) -> Hideout
+  0x1B3DE7E4A50: (6327.6, 5343.9) -> Hideout
+  0x1B3DE7E4A54: (5343.9, 3794.3) -> Hideout
+  0x1B3DE7E4ED0: (6327.6, 5343.9) -> Hideout
+  0x1B3DE7E55D4: (4483.7, 3568.8) -> Hideout
+  0x1B3DE7E5750: (5996.0, 4956.1) -> Hideout
+  0x1B3DE7E5B50: (5935.7, 4627.2) -> Hideout
+  0x1B3DE7E6050: (5996.0, 4956.1) -> Hideout
+  0x1B3DE7E6054: (4956.1, 3613.0) -> Hideout
+  0x1B3DE7E60D4: (5343.9, -28558848163840.0) -> Hideout
+  0x1B3DE7E6650: (5996.0, 4956.1) -> Hideout
+  0x1B3DE7E6654: (4956.1, 3613.0) -> Hideout
+  0x1B3DE7E7050: (5680.1, 4915.8) -> Hideout
+  0x1B3DE7E7054: (4915.8, 3601.3) -> Hideout
+  0x1B3DE7E74D0: (6154.1, 4625.7) -> Hideout
+  0x1B3DE7E9B50: (5935.7, 4627.2) -> Hideout
+  0x1B3DE7E9C50: (6157.7, 5665.7) -> Hideout
+  0x1B3DE7E9C54: (5665.7, 4036.1) -> Hideout
+  0x1B3DE7EDBD4: (4956.1, 3613.0) -> Hideout
+  0x1B3DE7EFDD0: (5996.0, 4956.1) -> Hideout
+  0x1B3DE7EFDD4: (4956.1, 3613.0) -> Hideout
+  0x1B3DE9F7888: (5841.1, 5135.5) -> Hideout
+  0x1B3DE9F788C: (5135.5, 3721.8) -> Hideout
+  0x1B3DE9F7960: (5823.7, 5049.4) -> Hideout
+  0x1B3DE9F7964: (5049.4, 3612.0) -> Hideout
+  0x1B3DE9F7E50: (5841.1, 5135.5) -> Hideout
+  0x1B3DE9F7E54: (5135.5, 3721.8) -> Hideout
+  0x1B3DEC61C50: (5342.5, 4483.7) -> Hideout
+  0x1B3DEC641D0: (5996.0, 4956.1) -> Hideout
+  0x1B3DEC66350: (5342.5, 4483.7) -> Hideout
+  0x1B3DEC66354: (4483.7, 3697.0) -> Hideout
+  0x1B3DEC68CD0: (5996.0, 4956.1) -> Hideout
+  0x1B3DEC6DCD0: (5856.6, 4451.8) -> Hideout
+  0x1B3DF1226D0: (5996.0, 4956.1) -> Hideout
+  0x1B3DF1226D4: (4956.1, 3613.0) -> Hideout
+  0x1B3DF1237D4: (5060.1, 3859.1) -> Hideout
+  0x1B3DF1267D0: (5342.5, 4483.7) -> Hideout
+  0x1B3DF127254: (4986.3, 3516.8) -> Hideout
+  0x1B3DF1275D0: (5342.5, 4483.7) -> Hideout
+  0x1B3DF1275D4: (4483.7, 3568.8) -> Hideout
+  0x1B3DF129250: (5996.0, 4956.1) -> Hideout
+  0x1B3DF129254: (4956.1, 3613.0) -> Hideout
+  0x1B3DF129454: (4483.7, 3697.0) -> Hideout
+  0x1B3DF129E50: (5996.0, 4956.1) -> Hideout
+  0x1B3DF12E950: (5342.5, 4483.7) -> Hideout
+  0x1B3DF12E954: (4483.7, 3568.8) -> Hideout
+  0x1B3DF12F350: (6154.1, 4625.7) -> Hideout
+  0x1B3DF12F754: (4483.7, 3566.6) -> Hideout
+  0x1B3DF12FED0: (5342.5, 4483.7) -> Hideout
+  0x1B3DF12FED4: (4483.7, 3568.8) -> Hideout
+  0x1B3DF7E25D0: (5342.5, 4483.7) -> Hideout
+  0x1B3DF840AD0: (5342.5, 4483.7) -> Hideout
+  0x1B3DF841CD4: (4809.4, 3601.3) -> Hideout
+  0x1B3DF8425D0: (6047.7, 4986.3) -> Hideout
+  0x1B3DF842B50: (5342.5, 4483.7) -> Hideout
+  0x1B3DF842B54: (4483.7, 3697.0) -> Hideout
+  0x1B3DF8437D0: (5347.6, 4491.4) -> Hideout
+  0x1B3DF8437D4: (4491.4, 3758.7) -> Hideout
+  0x1B3DF8478D0: (6157.7, 5665.7) -> Hideout
+  0x1B3DF848350: (5996.0, 4956.1) -> Hideout
+  0x1B3DF848354: (4956.1, 3613.0) -> Hideout
+  0x1B3DF848750: (5342.5, 4483.7) -> Hideout
+  0x1B3DF848754: (4483.7, 3568.8) -> Hideout
+  0x1B3DF848F50: (6154.1, 4625.7) -> Hideout
+  0x1B3DF848F54: (4625.7, 3601.3) -> Hideout
+  0x1B3DF84AA50: (5342.5, 4483.7) -> Hideout
+  0x1B3DF84AA54: (4483.7, 3568.8) -> Hideout
+  0x1B3DF84AF50: (5772.1, 4451.8) -> Hideout
+  0x1B3DF84C050: (5342.5, 4483.7) -> Hideout
+  0x1B3DF84C054: (4483.7, 3568.8) -> Hideout
+  0x1B3DF84C550: (6496.2, 5060.1) -> Hideout
+  0x1B3DF84C750: (5996.0, 4956.1) -> Hideout
+  0x1B3DF84C7D0: (6047.7, 4986.3) -> Hideout
+  0x1B3DF84C7D4: (4986.3, 3516.8) -> Hideout
+  0x1B3DF84D8D0: (5996.0, 4956.1) -> Hideout
+  0x1B3DF84DE50: (5342.5, 4483.7) -> Hideout
+  0x1B3DF84DE54: (4483.7, 3568.8) -> Hideout
+  0x1B3DF84DF50: (5603.0, 4451.8) -> Hideout
+  0x1B3DF84E150: (5935.7, 4627.2) -> Hideout
+  0x1B3DF84E250: (5935.7, 4627.2) -> Hideout
+  0x1B3DF84E2D0: (5996.0, 4956.1) -> Hideout
+  0x1B3DF84EBD0: (5715.6, 4809.4) -> Hideout
+  0x1B3DF8EA650: (5342.5, 4483.7) -> Hideout
+  0x1B3DF8EA654: (4483.7, 3568.8) -> Hideout
+  0x1B3DF8EF550: (5996.0, 4956.1) -> Hideout
+  0x1B3DF8EF554: (4956.1, 3613.0) -> Hideout
+  0x1B3E085F040: (5823.7, 5049.4) -> Hideout
+  0x1B3E085F044: (5049.4, 3612.0) -> Hideout
+  0x1B3E085F0A0: (5823.7, 5049.4) -> Hideout
+  0x1B3E085F0A4: (5049.4, 3612.0) -> Hideout
+  0x1B3E085F6A0: (5823.7, 5049.4) -> Hideout
+  0x1B3E085F6A4: (5049.4, 3612.0) -> Hideout
+  0x1B3E085F6D0: (5823.7, 5049.4) -> Hideout
+  0x1B3E085F6D4: (5049.4, 3612.0) -> Hideout
+  0x1B3E0A022D0: (5996.0, 4956.1) -> Hideout
+  0x1B3E0A022D4: (4956.1, 3613.0) -> Hideout
+  0x1B3E584EF08: (5342.5, 4483.7) -> Hideout
+  0x1B3E584EFE0: (5342.5, 4483.7) -> Hideout
+  0x1B3F150E680: (5342.5, 4483.7) -> Hideout
+  0x1B3F326BBB0: (5342.5, 4483.7) -> Hideout
+  0x1B3F326BBC0: (5342.5, 4483.7) -> Hideout
+  0x1B3F326BBF8: (5342.5, 4483.7) -> Hideout
+  0x1B3F9655A80: (5342.5, 4483.7) -> Hideout
+  0x1B3F9655B30: (5342.5, 4483.7) -> Hideout
+  0x1B3F9655C00: (5342.5, 4483.7) -> Hideout
+  0x1B3F9655CB0: (5342.5, 4483.7) -> Hideout
+  0x1B3FF0712E4: (5342.5, 4483.7) -> Hideout
+  0x1B402082D84: (5342.5, 4483.7) -> Hideout
+  0x1B402082D90: (5342.5, 4483.7) -> Hideout
+  0x1B402082DAC: (5342.5, 4483.7) -> Hideout
+  0x1B402082DB8: (5342.5, 4483.7) -> Hideout
+  0x1B402082E64: (5342.5, 4483.7) -> Hideout
+  0x1B40510DAC8: (5342.5, 4483.7) -> Hideout
+  0x1B40510DBA0: (5342.5, 4483.7) -> Hideout
+  0x1B40606107C: (4625.7, 3601.3) -> Hideout
+  0x1B406061ED8: (5715.6, 4809.4) -> Hideout
+  0x1B406061EDC: (4809.4, 3601.3) -> Hideout
+  0x1B406063058: (6154.1, 4625.7) -> Hideout
+  0x1B406065980: (3937.2, 3317.4) -> Hideout
+  0x1B406065FD8: (5680.1, 4915.8) -> Hideout
+  0x1B40606A8E0: (6042.1, 4607.5) -> Hideout
+  0x1B4075538D0: (5342.5, 4483.7) -> Hideout
+  0x1B4075538D4: (4483.7, 3568.8) -> Hideout
+  0x1B407553FD4: (4483.7, 3697.0) -> Hideout
+  0x1B407D7ECD0: (6110.2, 4451.8) -> Hideout
+  0x1B407F58E48: (5342.5, 4483.7) -> Hideout
+  0x1B407F58F20: (5342.5, 4483.7) -> Hideout
+  0x1B407F59018: (5342.5, 4483.7) -> Hideout
+  0x1B407F59250: (5342.5, 4483.7) -> Hideout
+  0x1B407F592A0: (5342.5, 4483.7) -> Hideout
+  0x1B407F592C0: (5342.5, 4483.7) -> Hideout
+  0x1B407F5CE08: (5342.5, 4483.7) -> Hideout
+  0x1B407F5CEE0: (5342.5, 4483.7) -> Hideout
+  0x1B407F5CFD8: (5342.5, 4483.7) -> Hideout
+  0x1B407F5D210: (5342.5, 4483.7) -> Hideout
+  0x1B407F5D260: (5342.5, 4483.7) -> Hideout
+  0x1B407F5D280: (5342.5, 4483.7) -> Hideout
+  0x1B407F5FAA8: (5342.5, 4483.7) -> Hideout
+  0x1B407F5FB80: (5342.5, 4483.7) -> Hideout
+  0x1B407F5FC78: (5342.5, 4483.7) -> Hideout
+  0x1B407F5FEB0: (5342.5, 4483.7) -> Hideout
+  0x1B407F5FF00: (5342.5, 4483.7) -> Hideout
+  0x1B407F5FF20: (5342.5, 4483.7) -> Hideout
+  0x1B408448C08: (5342.5, 4483.7) -> Hideout
+  0x1B408448CE0: (5342.5, 4483.7) -> Hideout
+  0x1B412EF3394: (2067.5, 3148.7) -> Hideout
+  0x1B412EF33D0: (5425.4, 4483.7) -> Hideout
+  0x1B412EF33D4: (4483.7, 3678.9) -> Hideout
+  0x1B412EF3450: (5425.4, 4483.7) -> Hideout
+  0x1B412EF3950: (2806.3, 2344.3) -> Hideout
+  0x1B41A7D0AD0: (6042.1, 4607.5) -> Hideout
+  0x1B41A7D0AD4: (4607.5, 3601.3) -> Hideout
+  0x1B41A7D41D0: (5996.0, 4956.1) -> Hideout
+  0x1B41A7D41D4: (4956.1, 3613.0) -> Hideout
+  0x1B41A7D8C50: (6327.6, 5343.9) -> Hideout
+  0x1B41A7DBBD0: (6072.6, 5452.2) -> Hideout
+  0x1B41A7DBBD4: (5452.2, 3696.6) -> Hideout
+  0x1B41A7DD150: (5342.5, 4483.7) -> Hideout
+  0x1B41A7DD954: (4508.1, 3570.0) -> Hideout
+  0x1B41A7DFED0: (6042.1, 4607.5) -> Hideout
+  0x1B41FEEE650: (5342.5, 4483.7) -> Hideout
+  0x1B421AEABB8: (5425.1, 4483.7) -> Hideout
+  0x1B421AEAC90: (5342.5, 4483.7) -> Hideout
+  0x1B421AEB180: (5425.1, 4483.7) -> Hideout
+WINNER: 0x1B303091750 -> Hideout
+Position: (5649.6, 4508.1, -0.0)
+SUCCESS! Hybrid scan found Hideout
+Addresses saved to Address Setup
+

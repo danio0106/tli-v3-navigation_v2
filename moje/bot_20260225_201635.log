@@ -1,0 +1,798 @@
+20:16:35 [INFO   ] === Torchlight Infinite Bot V2 v4.1.0 starting ===
+20:16:35 [INFO   ] Config loaded from config.json
+20:16:35 [INFO   ] Loaded 8 addresses from addresses.json
+20:16:35 [INFO   ] [Input] Initialized with mode: hardware
+20:16:35 [INFO   ] [ScaleCalibrator] Loaded calibrations for 12 maps: ['Swirling Mines', 'High Court Maze', 'Defiled Side Chamber', 'Deserted District', 'Singing Sand', 'Shadow Outpost', 'Abandoned Mines', 'Rainforest of Divine Legacy', 'Grimwind Woods', 'Wall of the Last Breath', 'Blustery Canyon', 'Demiman Village']
+20:16:35 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+20:16:37 [INFO   ] Torchlight Infinite Bot V2 v4.1.0 started
+20:16:37 [INFO   ] [Hotkeys] Global hotkeys registered: F9=Start, F10=Stop, F11=Pause, F5=Record, F6=PauseRec
+20:16:39 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 22352)
+20:16:39 [INFO   ] Attached to torchlight_infinite.exe
+20:16:39 [INFO   ] Found game window by class 'UnrealWindow' + PID 22352 (HWND: 459624)
+20:16:39 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+20:16:39 [INFO   ] [Input] Hardware mode: will focus window before each input
+20:16:39 [DEBUG  ] Module torchlight_infinite.exe base: 0x7FF7D77E0000
+20:16:39 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary) | pos=(5650, 4500)
+20:16:39 [INFO   ] [Scanner] Scanning for FNamePool...
+20:16:39 [INFO   ] [Scanner] Cannot read zone name - FNamePool not resolved yet
+20:16:39 [INFO   ] [Scanner]   Trying FNamePool pattern 1/6...
+20:16:39 [INFO   ] [ZoneWatcher] Started — will auto-scan walkable area on map entry
+20:16:39 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+20:16:39 [INFO   ] [Input] Hardware mode: will focus window before each input
+20:16:39 [INFO   ] [AddrMgr] Attached - using scan results from attach
+20:16:39 [INFO   ] [Scanner]   FNamePool found at 0x7FF7DF501D40 (pattern 1)
+20:16:39 [INFO   ] [Scanner]   Validation: 3/5 indices readable, FName[3] = 'ByteProperty'
+20:16:39 [INFO   ] [Scanner] Scanning for GObjects...
+20:16:39 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+20:16:39 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+20:16:40 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CEBAC020)
+20:16:40 [INFO   ] [Scanner]   GObjects found at 0x7FF7DF51ADE8 (pattern 2)
+20:16:40 [INFO   ] [Scanner]   NumElements=170349, NumChunks=3
+20:16:40 [INFO   ] Portal detector initialized (deferred)
+20:16:40 [INFO   ] [AddrMgr] FNamePool auto-populated: 0x7FF7DF501D40
+20:16:43 [INFO   ] [Overlay] No calibration for map: Embers Rest — use 'Calibrate Scale' button
+20:16:43 [INFO   ] [Overlay] Debug overlay started
+20:16:43 [DEBUG  ] [GObjects] NumElements=170349, NumChunks=3
+20:16:44 [DEBUG  ] [GObjects] Found 2 objects named 'FightMgr'
+20:16:44 [INFO   ] [Scanner] [Scanner] FightMgr live instance at 0x2F1E1CF0100 (outer: /Engine/Transient)
+20:16:45 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F19C4EB700)
+20:16:46 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CEBAC020)
+20:16:46 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F19C4EB700)
+20:16:46 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CEBAC020)
+20:16:46 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F19C4EB700)
+20:16:46 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CEBAC020)
+20:16:46 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F19C4EB700)
+20:16:46 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CEBAC020)
+20:16:47 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F19C4EB700)
+20:16:47 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CEBAC020)
+20:16:47 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F19C4EB700)
+20:16:47 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CEBAC020)
+20:16:48 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F19C4EB700)
+20:16:48 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CEBAC020)
+20:16:48 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+20:16:49 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1D648C020)
+20:16:49 [INFO   ] [ZoneWatcher] Entered 'Singing Sand' — auto-scanning walkable area + starting position sampler
+20:16:49 [INFO   ] [WallScan] No cache for 'Singing Sand' — reading MinimapSaveObject (zone='SQ_MingShaJuLuo100')
+20:16:49 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Singing Sand' (zone='SQ_MingShaJuLuo100')
+20:16:50 [DEBUG  ] [GObjects] Found 1 instances of class 'MinimapSaveObject'
+20:16:50 [DEBUG  ] [MinimapScan] Found 1 MinimapSaveObject candidate(s)
+20:16:50 [DEBUG  ] [MinimapScan]   Skipping CDO: 'Default__MinimapSaveObject' @ 0x2F0BD740480
+20:16:50 [WARNING] [MinimapScan] Only CDO found — MinimapSaveObject live instance not in GObjects yet
+20:16:50 [INFO   ] [WallScan] MinimapSaveObject returned 0 positions for 'SQ_MingShaJuLuo100' in 0.44s — map not yet visited or GObjects/FNamePool not resolved
+20:16:50 [INFO   ] [WallScan] MinimapSaveObject returned 0 positions in 0.45s — map 'Singing Sand' not yet visited or GObjects not ready; AutoNavigator will use direct navigation (no wall avoidance)
+20:16:51 [INFO   ] [ZoneWatcher] Scan #1 for 'Singing Sand' (2s in map, cache=0 pts)
+20:16:51 [INFO   ] [WallScan] No cache for 'Singing Sand' — reading MinimapSaveObject (zone='SQ_MingShaJuLuo100')
+20:16:51 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Singing Sand' (zone='SQ_MingShaJuLuo100')
+20:16:52 [DEBUG  ] [GObjects] Found 2 instances of class 'MinimapSaveObject'
+20:16:52 [DEBUG  ] [MinimapScan] Found 2 MinimapSaveObject candidate(s)
+20:16:52 [DEBUG  ] [MinimapScan]   Skipping CDO: 'Default__MinimapSaveObject' @ 0x2F0BD740480
+20:16:52 [DEBUG  ] [MinimapScan]   Candidate 'MinimapSaveObject' @ 0x2F1EBAAF100, outer='/Engine/Transient'
+20:16:52 [INFO   ] [MinimapScan] MinimapSaveObject live instance at 0x2F1EBAAF100 (outer: /Engine/Transient)
+20:16:52 [DEBUG  ] [MinimapScan] Records TMap @ 0x2F1EBAAF128: data_ptr=0x2F1D6C8FE00, array_num=1 (stride=0xD8 bytes/entry)
+20:16:52 [DEBUG  ] [MinimapScan] Looking for zone 'SQ_MingShaJuLuo100' in 1 TMap entries (key_map has 2 cached entries: [('5302_0', 'GeBuLinCunLuo01'), ('5307_0', 'DD_TingYuanMiGong200')])
+20:16:52 [DEBUG  ] [MinimapScan]   entry[0]: raw bytes [0x00..0x2F] = 40 ef d6 bb f0 02 00 00 07 00 00 00 08 00 00 00 b2 58 9f 69 00 00 00 00 60 52 86 ec f1 02 00 00 03 00 00 00 04 00 00 00 90 25 58 de f1 02 00 00
+20:16:52 [DEBUG  ] [MinimapScan]   entry[0]: key='5301_0' | pos_count=3 | pos_ptr=0x2F1EC865260 | cached_zone='<unknown>'
+20:16:52 [INFO   ] [MinimapScan] Auto-learned key mapping: '5301_0' → 'SQ_MingShaJuLuo100' (saved to data/minimap_key_map.json)
+20:16:52 [DEBUG  ] [MinimapScan] Matched entry[0] key='5301_0' via auto-detect (single entry '5301_0', no cached mapping) — learning '5301_0' → 'SQ_MingShaJuLuo100' — Pos TArray @ 0x2F1EC865260, declared count=3
+20:16:52 [INFO   ] [MinimapScan] ✓ 2 valid visited positions (1 zero-origin filtered) for 'SQ_MingShaJuLuo100' | X:[266..392]  Y:[-392..650]  span=(126×1042) world units
+20:16:52 [INFO   ] [WallScan] MinimapSaveObject: 2 visited positions for 'Singing Sand' in 0.62s — building walkable-area cache
+20:16:52 [INFO   ] [WallScan] Saved 2 visited-position points for 'Singing Sand'
+20:16:52 [INFO   ] [WallScan] Walkable grid built from 2 visited points in 0.000s: GridData(200×200 cells, cell=150u, walkable=55/40000, mode=inverted(visited→walkable))
+20:16:52 [INFO   ] [Pathfinder] Grid installed: GridData(200×200 cells, cell=150u, walkable=55/40000, mode=inverted(visited→walkable))
+20:16:52 [INFO   ] [WallScan] A* grid ready: GridData(200×200 cells, cell=150u, walkable=55/40000, mode=inverted(visited→walkable))
+20:16:52 [INFO   ] [Explorer] +38 positions for 'Singing Sand' (total: 40)
+20:16:53 [INFO   ] [ZoneWatcher] Scan #2 for 'Singing Sand' (4s in map, cache=40 pts)
+20:16:53 [INFO   ] [WallScan] Re-scanning MinimapSaveObject for 'Singing Sand' (cache has 40 pts, checking for new positions)
+20:16:53 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Singing Sand' (zone='SQ_MingShaJuLuo100')
+20:16:55 [INFO   ] [ZoneWatcher] Scan #3 for 'Singing Sand' (6s in map, cache=40 pts)
+20:16:55 [INFO   ] [Explorer] +82 positions for 'Singing Sand' (total: 122)
+20:16:55 [INFO   ] [WallScan] Re-scanning MinimapSaveObject for 'Singing Sand' (cache has 122 pts, checking for new positions)
+20:16:55 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Singing Sand' (zone='SQ_MingShaJuLuo100')
+20:16:57 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x0 → Unknown (ignored) pos=(0,0)
+20:16:57 [INFO   ] [ZoneWatcher] Scan #4 for 'Singing Sand' (8s in map, cache=122 pts)
+20:16:57 [INFO   ] [WallScan] Re-scanning MinimapSaveObject for 'Singing Sand' (cache has 122 pts, checking for new positions)
+20:16:57 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Singing Sand' (zone='SQ_MingShaJuLuo100')
+20:16:58 [INFO   ] [Explorer] +88 positions for 'Singing Sand' (total: 210)
+20:16:59 [DEBUG  ] read_bytes failed at 0x178DCCD1F40 (size=12): Could not read memory at: 1618612133696, length: 12 - GetLastError: 299
+20:16:59 [DEBUG  ] read_bytes failed at 0x178DCCD1F40 (size=12): Could not read memory at: 1618612133696, length: 12 - GetLastError: 299
+20:16:59 [DEBUG  ] read_bytes failed at 0x178DCCD1F40 (size=12): Could not read memory at: 1618612133696, length: 12 - GetLastError: 299
+20:16:59 [DEBUG  ] read_bytes failed at 0x178DCCD1F40 (size=12): Could not read memory at: 1618612133696, length: 12 - GetLastError: 299
+20:16:59 [DEBUG  ] read_bytes failed at 0x178DCCD1F40 (size=12): Could not read memory at: 1618612133696, length: 12 - GetLastError: 299
+20:16:59 [DEBUG  ] read_bytes failed at 0x178DCCD1F40 (size=12): Could not read memory at: 1618612133696, length: 12 - GetLastError: 299
+20:16:59 [DEBUG  ] read_bytes failed at 0x178DCCD1F40 (size=12): Could not read memory at: 1618612133696, length: 12 - GetLastError: 299
+20:16:59 [DEBUG  ] read_bytes failed at 0x178DCCD1F40 (size=12): Could not read memory at: 1618612133696, length: 12 - GetLastError: 299
+20:16:59 [INFO   ] [ZoneWatcher] Scan #5 for 'Singing Sand' (10s in map, cache=210 pts)
+20:16:59 [INFO   ] [WallScan] Re-scanning MinimapSaveObject for 'Singing Sand' (cache has 210 pts, checking for new positions)
+20:16:59 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Singing Sand' (zone='SQ_MingShaJuLuo100')
+20:17:01 [DEBUG  ] read_bytes failed at 0x746F687483 (size=12): Could not read memory at: 500085322883, length: 12 - GetLastError: 299
+20:17:01 [DEBUG  ] read_bytes failed at 0x746F687483 (size=12): Could not read memory at: 500085322883, length: 12 - GetLastError: 299
+20:17:01 [DEBUG  ] read_bytes failed at 0x746F687483 (size=12): Could not read memory at: 500085322883, length: 12 - GetLastError: 299
+20:17:01 [INFO   ] [Explorer] +88 positions for 'Singing Sand' (total: 298)
+20:17:01 [INFO   ] [ZoneWatcher] MinimapSaveObject scans done for 'Singing Sand' — direct sampler is active
+20:17:01 [DEBUG  ] read_bytes failed at 0x746F687483 (size=12): Could not read memory at: 500085322883, length: 12 - GetLastError: 299
+20:17:02 [DEBUG  ] read_bytes failed at 0x200000124 (size=12): Could not read memory at: 8589934884, length: 12 - GetLastError: 299
+20:17:03 [DEBUG  ] read_bytes failed at 0x46B53 (size=12): Could not read memory at: 289619, length: 12 - GetLastError: 299
+20:17:03 [DEBUG  ] read_bytes failed at 0x46B53 (size=12): Could not read memory at: 289619, length: 12 - GetLastError: 299
+20:17:03 [DEBUG  ] read_bytes failed at 0x46B53 (size=12): Could not read memory at: 289619, length: 12 - GetLastError: 299
+20:17:03 [DEBUG  ] read_bytes failed at 0x46B53 (size=12): Could not read memory at: 289619, length: 12 - GetLastError: 299
+20:17:03 [DEBUG  ] read_bytes failed at 0x46B53 (size=12): Could not read memory at: 289619, length: 12 - GetLastError: 299
+20:17:03 [DEBUG  ] read_bytes failed at 0x46B53 (size=12): Could not read memory at: 289619, length: 12 - GetLastError: 299
+20:17:03 [DEBUG  ] read_bytes failed at 0x46B53 (size=12): Could not read memory at: 289619, length: 12 - GetLastError: 299
+20:17:03 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x0 → Unknown (ignored) pos=(0,0)
+20:17:04 [INFO   ] [Explorer] +89 positions for 'Singing Sand' (total: 387)
+20:17:05 [DEBUG  ] read_bytes failed at 0x178CC8C8354 (size=12): Could not read memory at: 1618339464020, length: 12 - GetLastError: 299
+20:17:06 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x0 → Unknown (ignored) pos=(0,0)
+20:17:07 [INFO   ] [Explorer] +79 positions for 'Singing Sand' (total: 466)
+20:17:08 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x0 → Unknown (ignored) pos=(0,0)
+20:17:10 [INFO   ] [Explorer] +88 positions for 'Singing Sand' (total: 554)
+20:17:13 [INFO   ] [Explorer] +88 positions for 'Singing Sand' (total: 642)
+20:17:16 [INFO   ] [Explorer] +84 positions for 'Singing Sand' (total: 726)
+20:17:19 [INFO   ] [Explorer] +48 positions for 'Singing Sand' (total: 774)
+20:17:21 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=-0x1cfeffe0 → Unknown (ignored) pos=(0,0)
+20:17:22 [INFO   ] [Explorer] +86 positions for 'Singing Sand' (total: 860)
+20:17:25 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=-0x23921ff8 → Unknown (ignored) pos=(0,0)
+20:17:25 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x0 → Unknown (ignored) pos=(0,0)
+20:17:25 [INFO   ] [Explorer] +89 positions for 'Singing Sand' (total: 949)
+20:17:28 [INFO   ] [Explorer] +80 positions for 'Singing Sand' (total: 1029)
+20:17:31 [INFO   ] [Explorer] +88 positions for 'Singing Sand' (total: 1117)
+20:17:34 [INFO   ] [Explorer] +76 positions for 'Singing Sand' (total: 1193)
+20:17:37 [INFO   ] [Explorer] +72 positions for 'Singing Sand' (total: 1265)
+20:17:40 [INFO   ] [Explorer] +86 positions for 'Singing Sand' (total: 1351)
+20:17:43 [INFO   ] [Explorer] +87 positions for 'Singing Sand' (total: 1438)
+20:17:47 [INFO   ] [Explorer] +88 positions for 'Singing Sand' (total: 1526)
+20:17:50 [INFO   ] [Explorer] +77 positions for 'Singing Sand' (total: 1603)
+20:17:53 [INFO   ] [Explorer] +76 positions for 'Singing Sand' (total: 1679)
+20:17:56 [INFO   ] [Explorer] +82 positions for 'Singing Sand' (total: 1761)
+20:17:58 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=-0x4ecf7be0 → Unknown (ignored) pos=(0,0)
+20:17:59 [INFO   ] [Explorer] +85 positions for 'Singing Sand' (total: 1846)
+20:17:59 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x0 → Unknown (ignored) pos=(0,0)
+20:18:02 [INFO   ] [Explorer] +80 positions for 'Singing Sand' (total: 1926)
+20:18:05 [INFO   ] [Explorer] +74 positions for 'Singing Sand' (total: 2000)
+20:18:08 [INFO   ] [Explorer] +81 positions for 'Singing Sand' (total: 2081)
+20:18:11 [INFO   ] [Explorer] +85 positions for 'Singing Sand' (total: 2166)
+20:18:14 [INFO   ] [Explorer] +86 positions for 'Singing Sand' (total: 2252)
+20:18:17 [INFO   ] [Explorer] +72 positions for 'Singing Sand' (total: 2324)
+20:18:20 [INFO   ] [Explorer] +85 positions for 'Singing Sand' (total: 2409)
+20:18:23 [INFO   ] [Explorer] +82 positions for 'Singing Sand' (total: 2491)
+20:18:25 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:25 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:25 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:25 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:25 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [INFO   ] [Explorer] +87 positions for 'Singing Sand' (total: 2578)
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:26 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2E8C72 (type=ulong): Could not read memory at: 3050610, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:27 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:28 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:28 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:28 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:28 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:28 [DEBUG  ] read_value failed at 0x2DCC65 (type=ulong): Could not read memory at: 3001445, length: 8 - GetLastError: 299
+20:18:29 [INFO   ] [Explorer] +80 positions for 'Singing Sand' (total: 2658)
+20:18:29 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xe032a → Unknown (ignored) pos=(0,37842855024595104841809763762176)
+20:18:29 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x0 → Unknown (ignored) pos=(0,0)
+20:18:29 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x0 → Unknown (ignored) pos=(0,0)
+20:18:30 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=-0x2a9295a0 → Unknown (ignored) pos=(0,0)
+20:18:30 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=-0x1da64a70 → Unknown (ignored) pos=(0,0)
+20:18:31 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x0 → Unknown (ignored) pos=(0,0)
+20:18:31 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+20:18:32 [INFO   ] [Explorer] +84 positions for 'Singing Sand' (total: 2742)
+20:18:35 [INFO   ] [Explorer] +85 positions for 'Singing Sand' (total: 2827)
+20:18:38 [INFO   ] [Explorer] +81 positions for 'Singing Sand' (total: 2908)
+20:18:41 [INFO   ] [Explorer] +85 positions for 'Singing Sand' (total: 2993)
+20:18:44 [INFO   ] [Explorer] +88 positions for 'Singing Sand' (total: 3081)
+20:18:47 [INFO   ] [Explorer] +87 positions for 'Singing Sand' (total: 3168)
+20:18:50 [INFO   ] [Explorer] +87 positions for 'Singing Sand' (total: 3255)
+20:18:53 [INFO   ] [Explorer] +82 positions for 'Singing Sand' (total: 3337)
+20:18:56 [INFO   ] [Explorer] +85 positions for 'Singing Sand' (total: 3422)
+20:18:59 [INFO   ] [Explorer] +88 positions for 'Singing Sand' (total: 3510)
+20:19:02 [INFO   ] [Explorer] +88 positions for 'Singing Sand' (total: 3598)
+20:19:05 [INFO   ] [Explorer] +85 positions for 'Singing Sand' (total: 3683)
+20:19:08 [INFO   ] [Explorer] +85 positions for 'Singing Sand' (total: 3768)
+20:19:11 [INFO   ] [Explorer] +85 positions for 'Singing Sand' (total: 3853)
+20:19:14 [INFO   ] [Explorer] +85 positions for 'Singing Sand' (total: 3938)
+20:19:17 [INFO   ] [Explorer] +59 positions for 'Singing Sand' (total: 3997)
+20:19:20 [INFO   ] [Explorer] +2 positions for 'Singing Sand' (total: 3999)
+21:26:56 [INFO   ] [Scanner] Failed to read FName index at GWorld+0x18 (0x2F1D648C038)
+21:26:56 [DEBUG  ] read_value failed at 0x2F100041C68 (type=ulong): Could not read memory at: 3234110643304, length: 8 - GetLastError: 299
+21:26:56 [INFO   ] [Scanner] Zone FName[1445467] = 'LoginScene' (GWorld 0x2F1E1B612C0)
+21:26:56 [DEBUG  ] read_bytes failed at 0x2B00000124 (size=12): Could not read memory at: 184683594020, length: 12 - GetLastError: 299
+21:26:58 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:26:58 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,-256917796821139456)
+21:26:58 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:26:58 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,-9532405035565056)
+21:26:58 [DEBUG  ] read_bytes failed at 0x5500000179 (size=12): Could not read memory at: 365072220537, length: 12 - GetLastError: 299
+21:26:58 [DEBUG  ] read_bytes failed at 0xB3000001D7 (size=12): Could not read memory at: 768799146455, length: 12 - GetLastError: 299
+21:26:58 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,-26227926127329530539219020152832)
+21:26:58 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:26:58 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:26:58 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:26:59 [DEBUG  ] read_bytes failed at 0x7F800123 (size=12): Could not read memory at: 2139095331, length: 12 - GetLastError: 299
+21:26:59 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,-256917796821139456)
+21:26:59 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:26:59 [DEBUG  ] read_bytes failed at 0xB3000001D7 (size=12): Could not read memory at: 768799146455, length: 12 - GetLastError: 299
+21:26:59 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:26:59 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:26:59 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:26:59 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(153473184,0)
+21:26:59 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:26:59 [DEBUG  ] read_bytes failed at 0xAF000001D3 (size=12): Could not read memory at: 751619277267, length: 12 - GetLastError: 299
+21:26:59 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,-26227926127329530539219020152832)
+21:26:59 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:26:59 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,659589955584)
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(153473184,0)
+21:27:00 [DEBUG  ] read_bytes failed at 0xB2000001D6 (size=12): Could not read memory at: 764504179158, length: 12 - GetLastError: 299
+21:27:00 [DEBUG  ] read_bytes failed at 0x1400000138 (size=12): Could not read memory at: 85899346232, length: 12 - GetLastError: 299
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,nan)
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,340282346638528859811704183484516925440)
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,nan)
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,-0)
+21:27:00 [DEBUG  ] read_bytes failed at 0xC4000001E8 (size=12): Could not read memory at: 841813590504, length: 12 - GetLastError: 299
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,-403801142858874880)
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,-9532405035565056)
+21:27:00 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:01 [DEBUG  ] read_bytes failed at 0x100000123 (size=12): Could not read memory at: 4294967587, length: 12 - GetLastError: 299
+21:27:01 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:01 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:01 [DEBUG  ] read_bytes failed at 0xE300000207 (size=12): Could not read memory at: 974957576711, length: 12 - GetLastError: 299
+21:27:01 [DEBUG  ] read_bytes failed at 0x200000125 (size=12): Could not read memory at: 8589934885, length: 12 - GetLastError: 299
+21:27:01 [DEBUG  ] read_bytes failed at 0x7F800123 (size=12): Could not read memory at: 2139095331, length: 12 - GetLastError: 299
+21:27:01 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,-9532405035565056)
+21:27:01 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:01 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:01 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(153473184,0)
+21:27:01 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,-681653043200)
+21:27:01 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(71014947169393724723560448,0)
+21:27:02 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:02 [DEBUG  ] read_bytes failed at 0x7FF70000012A (size=12): Could not read memory at: 140698833649962, length: 12 - GetLastError: 299
+21:27:02 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,-118529196032)
+21:27:02 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,-23374938564291461023179625988096)
+21:27:02 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:02 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:02 [DEBUG  ] read_bytes failed at 0x7F800123 (size=12): Could not read memory at: 2139095331, length: 12 - GetLastError: 299
+21:27:02 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:02 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:03 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:03 [DEBUG  ] read_bytes failed at 0xF100000215 (size=12): Could not read memory at: 1035087118869, length: 12 - GetLastError: 299
+21:27:03 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:03 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:03 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:03 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:03 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:03 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:03 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:03 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:03 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(nan,nan)
+21:27:03 [DEBUG  ] read_bytes failed at 0xC6000001EA (size=12): Could not read memory at: 850403525098, length: 12 - GetLastError: 299
+21:27:03 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:04 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:04 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:04 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:04 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:04 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:04 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:04 [DEBUG  ] read_bytes failed at 0x100000124 (size=12): Could not read memory at: 4294967588, length: 12 - GetLastError: 299
+21:27:04 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:04 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:04 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(nan,nan)
+21:27:04 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x740069 → Unknown (ignored) pos=(0,0)
+21:27:05 [INFO   ] [Scanner] Failed to read FName index at GWorld+0x18 (0x2F1E1B612D8)
+21:27:05 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+21:27:05 [DEBUG  ] read_bytes failed at 0x2F000000124 (size=12): Could not read memory at: 3229815406884, length: 12 - GetLastError: 299
+21:27:05 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D59B52A0)
+21:27:08 [INFO   ] [ZoneWatcher] Zone exited → final scan attempt for 'Singing Sand'
+21:27:08 [INFO   ] [WallScan] Exit scan started for 'Singing Sand' (zone='LoginScene') — capturing positions accumulated this run
+21:27:08 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Singing Sand' (zone='LoginScene')
+21:27:08 [DEBUG  ] [GObjects] Found 1 instances of class 'MapBossRoom'
+21:27:08 [DEBUG  ] [UE4 Scanner] [BossRoom] MapBossRoom position is (0,0) — not yet placed
+21:27:08 [INFO   ] [Boss] No boss area found (neither MapBossRoom nor predefined) — skipping
+21:27:28 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E1B6B700)
+21:27:28 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D59B52A0)
+21:27:28 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E1B6B700)
+21:27:28 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D59B52A0)
+21:27:29 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E1B6B700)
+21:27:29 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D59B52A0)
+21:27:29 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E1B6B700)
+21:27:29 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D59B52A0)
+21:27:29 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E1B6B700)
+21:27:29 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D59B52A0)
+21:27:30 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E1B6B700)
+21:27:30 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D59B52A0)
+21:27:30 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E1B6B700)
+21:27:30 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D59B52A0)
+21:27:30 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E1B6B700)
+21:27:30 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D59B52A0)
+21:27:31 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E1B6B700)
+21:27:31 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D59B52A0)
+21:27:32 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E1B6B700)
+21:27:32 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D59B52A0)
+21:27:33 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1E1B6B700)
+21:27:33 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D59B52A0)
+21:27:33 [INFO   ] [Scanner] Failed to read FName index at GWorld+0x18 (0x2F1D59B52B8)
+21:27:33 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+21:27:33 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:27:33 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:27:34 [INFO   ] [ZoneWatcher] Entered 'Defiled Side Chamber' — auto-scanning walkable area + starting position sampler
+21:27:34 [INFO   ] [WallScan] No cache for 'Defiled Side Chamber' — reading MinimapSaveObject (zone='YJ_XieDuYuZuo200')
+21:27:34 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Defiled Side Chamber' (zone='YJ_XieDuYuZuo200')
+21:27:36 [INFO   ] [ZoneWatcher] Scan #1 for 'Defiled Side Chamber' (2s in map, cache=0 pts)
+21:27:36 [INFO   ] [WallScan] No cache for 'Defiled Side Chamber' — reading MinimapSaveObject (zone='YJ_XieDuYuZuo200')
+21:27:36 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Defiled Side Chamber' (zone='YJ_XieDuYuZuo200')
+21:27:37 [INFO   ] [Explorer] +50 positions for 'Defiled Side Chamber' (total: 50)
+21:27:38 [INFO   ] [ZoneWatcher] Scan #2 for 'Defiled Side Chamber' (4s in map, cache=50 pts)
+21:27:38 [INFO   ] [WallScan] Re-scanning MinimapSaveObject for 'Defiled Side Chamber' (cache has 50 pts, checking for new positions)
+21:27:38 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Defiled Side Chamber' (zone='YJ_XieDuYuZuo200')
+21:27:40 [INFO   ] [ZoneWatcher] Scan #3 for 'Defiled Side Chamber' (6s in map, cache=50 pts)
+21:27:40 [INFO   ] [WallScan] Re-scanning MinimapSaveObject for 'Defiled Side Chamber' (cache has 50 pts, checking for new positions)
+21:27:40 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Defiled Side Chamber' (zone='YJ_XieDuYuZuo200')
+21:27:40 [INFO   ] [Explorer] +89 positions for 'Defiled Side Chamber' (total: 139)
+21:27:42 [INFO   ] [ZoneWatcher] Scan #4 for 'Defiled Side Chamber' (8s in map, cache=139 pts)
+21:27:42 [INFO   ] [WallScan] Re-scanning MinimapSaveObject for 'Defiled Side Chamber' (cache has 139 pts, checking for new positions)
+21:27:42 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Defiled Side Chamber' (zone='YJ_XieDuYuZuo200')
+21:27:43 [INFO   ] [Explorer] +88 positions for 'Defiled Side Chamber' (total: 227)
+21:27:44 [INFO   ] [ZoneWatcher] Scan #5 for 'Defiled Side Chamber' (10s in map, cache=227 pts)
+21:27:44 [INFO   ] [WallScan] Re-scanning MinimapSaveObject for 'Defiled Side Chamber' (cache has 227 pts, checking for new positions)
+21:27:44 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Defiled Side Chamber' (zone='YJ_XieDuYuZuo200')
+21:27:46 [INFO   ] [ZoneWatcher] MinimapSaveObject scans done for 'Defiled Side Chamber' — direct sampler is active
+21:27:46 [INFO   ] [Explorer] +70 positions for 'Defiled Side Chamber' (total: 297)
+21:27:49 [INFO   ] [Explorer] +1 positions for 'Defiled Side Chamber' (total: 298)
+21:27:52 [INFO   ] [Explorer] +8 positions for 'Defiled Side Chamber' (total: 306)
+21:27:55 [INFO   ] [Explorer] +17 positions for 'Defiled Side Chamber' (total: 323)
+21:28:02 [INFO   ] [Explorer] +1 positions for 'Defiled Side Chamber' (total: 324)
+21:28:05 [INFO   ] [Explorer] +52 positions for 'Defiled Side Chamber' (total: 376)
+21:28:08 [INFO   ] [Explorer] +55 positions for 'Defiled Side Chamber' (total: 431)
+21:28:10 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:10 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:10 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:10 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:10 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:10 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:10 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:10 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:10 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:10 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:10 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:11 [INFO   ] [Explorer] +3 positions for 'Defiled Side Chamber' (total: 434)
+21:28:13 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:13 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:13 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:14 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:14 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:14 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:14 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:14 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:14 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:16 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:16 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:16 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:17 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:18 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:18 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:19 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:19 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:19 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:21 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:21 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:21 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:23 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:24 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:24 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:25 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:25 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:25 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:26 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:27 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:27 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:28 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:28 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:28 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:30 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:30 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:30 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:34 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:34 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:34 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:36 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:36 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:36 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:36 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:36 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:37 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:37 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:37 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:38 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:38 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:38 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:39 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:39 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:39 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:43 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:43 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:43 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:43 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:43 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:44 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:44 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:44 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:46 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:46 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:46 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:47 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:48 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:48 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:49 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:49 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:49 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:51 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:51 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:51 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:28:53 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:28:53 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:28:53 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:02 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:02 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:02 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:03 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:03 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:03 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:05 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:05 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:05 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:07 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:07 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:07 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:09 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:09 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:09 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:11 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:11 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:11 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:13 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:13 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:13 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:13 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:13 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:14 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:15 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:15 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:18 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:18 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:18 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:19 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:19 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:19 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:21 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:21 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:21 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:22 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:22 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:22 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:23 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:23 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:23 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:23 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:23 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:24 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:24 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:24 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:24 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:24 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:24 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:24 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:24 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:26 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:26 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:26 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:27 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:27 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:27 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:28 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:28 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:28 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:30 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:30 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:30 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:32 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:32 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:32 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:33 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:33 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:33 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:35 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:35 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:35 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:35 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:35 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:37 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:37 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:37 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:39 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:39 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:39 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:41 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:41 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:41 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:44 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:44 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:44 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:45 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:45 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:45 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:46 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:46 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:47 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:47 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:47 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:49 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:49 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:49 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:50 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:50 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:50 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:52 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:52 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:52 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:54 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:54 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:54 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:55 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:55 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:55 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:29:56 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:29:56 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:29:56 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:00 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:00 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:00 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:00 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:01 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:01 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:01 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:02 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:02 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:02 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:06 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:06 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:06 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:07 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:07 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:07 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:09 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:09 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:09 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:11 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:11 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:11 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:13 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:13 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:13 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:14 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:14 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:14 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:15 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:15 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:15 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:16 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:16 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:16 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:18 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:18 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:18 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:18 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:18 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:19 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:19 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:19 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:21 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:21 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:21 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:23 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:23 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:23 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:24 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:24 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:24 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:25 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:25 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:25 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:26 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:26 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:26 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:27 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:27 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:27 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:29 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:29 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:29 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:30 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:30 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:30 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:31 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:31 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:31 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:33 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:33 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:33 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:34 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:34 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:34 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:37 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:37 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:37 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:39 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:39 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:39 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:40 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:40 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:40 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:42 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:42 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:42 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:44 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:44 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:44 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:45 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:45 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:45 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:45 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:45 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:45 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:45 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:45 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:45 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:45 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:45 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:46 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:46 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:46 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:47 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:47 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:47 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:49 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:49 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:49 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:51 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:51 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:51 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:55 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:55 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:55 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:55 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:55 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:30:56 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:30:57 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:30:57 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:00 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:00 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:00 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:02 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:02 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:02 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:03 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:03 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:03 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:03 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:03 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:07 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:07 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:07 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:08 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:08 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:08 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:11 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:11 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:11 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:12 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:12 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:13 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:13 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:13 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:14 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:14 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:14 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:17 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:17 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:17 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:19 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:19 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:19 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:20 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:20 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:20 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:22 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:22 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:22 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:24 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:24 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:24 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:25 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:25 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:25 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:27 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:27 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:27 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:31 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:31 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:31 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:32 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:32 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:32 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:34 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:34 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:34 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:35 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:35 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:35 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:36 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:37 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:37 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:38 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:38 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:38 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:38 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:38 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:41 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:41 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:41 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:43 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:43 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:43 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:44 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:45 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:45 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:45 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:45 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:45 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:46 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:46 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:47 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:47 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:47 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:48 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:48 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:48 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+21:31:50 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F205F81BE0)
+21:31:50 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1A163B700)
+21:31:50 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber

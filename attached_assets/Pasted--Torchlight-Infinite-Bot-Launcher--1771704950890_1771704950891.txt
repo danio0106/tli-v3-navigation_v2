@@ -1,0 +1,50 @@
+======================================
+Torchlight Infinite Bot - Launcher
+======================================
+Running as Administrator
+Working directory: C:\Users\Daniel\Documents\GitHub\tli v2
+
+Attempting to launch the bot...
+
+21:14:25 [INFO   ] Config loaded from config.json
+21:14:25 [INFO   ] Loaded 8 addresses from addresses.json
+21:14:25 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+21:14:26 [INFO   ] Torchlight Infinite Bot V2 v2.5.1 started
+21:14:29 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 5620)
+21:14:29 [INFO   ] Attached to torchlight_infinite.exe
+21:14:29 [INFO   ] Found game window by class 'UnrealWindow' + PID 5620 (HWND: 1051784)
+21:14:29 [INFO   ] Target window set: HWND=1051784
+21:14:29 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary); player_x not movement-verified; player_y not movement-verified | pos=(0, 0)
+21:14:29 [INFO   ] [Scanner] Scanning for FNamePool...
+21:14:29 [INFO   ] Target window set: HWND=1051784
+21:14:29 [INFO   ] [Scanner]   Trying FNamePool pattern 1/3...
+21:14:29 [INFO   ] [Scanner]   Trying FNamePool pattern 2/3...
+21:14:29 [INFO   ] [Scanner]   Trying FNamePool pattern 3/3...
+21:14:30 [INFO   ] [Scanner] FNamePool not found via sig scan
+21:14:30 [INFO   ] [Scanner] Scanning for GObjects...
+21:14:30 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+21:14:30 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+21:14:30 [INFO   ] [Scanner]   GObjects found at 0x7FF649ABADE8 (pattern 2)
+21:14:30 [INFO   ] [Scanner]   NumElements=161657, NumChunks=3
+21:14:33 [INFO   ] [HexCalibrator] Starting calibration...
+21:14:33 [INFO   ] [HexCalibrator] Capturing from HWND=1051784
+21:14:33 [ERROR  ] Error capturing window: '_thread._local' object has no attribute 'srcdc'
+21:14:33 [ERROR  ] Failed to capture frame 1/25
+21:14:33 [WARNING] [HexCalibrator] Screen capture failed - make sure game window is visible and attached
+21:14:33 [INFO   ] [HexCalibrator] Using hardcoded hex positions
+21:14:33 [INFO   ] [HexCalibrator] No frame captured - using blank image for debug overlay
+21:14:33 [INFO   ] [HexCalibrator] Debug image saved to debug/calibration_debug.png
+21:14:33 [INFO   ] [HexCalibrator] === Calibration Results (source: hardcoded) ===
+21:14:33 [INFO   ] [HexCalibrator] Hex 0: center=(728, 343) glow_region=(708, 323, 40, 40)
+21:14:33 [INFO   ] [HexCalibrator] Hex 1: center=(838, 343) glow_region=(818, 323, 40, 40)
+21:14:33 [INFO   ] [HexCalibrator] Hex 2: center=(948, 343) glow_region=(928, 323, 40, 40)
+21:14:33 [INFO   ] [HexCalibrator] Hex 3: center=(1058, 343) glow_region=(1038, 323, 40, 40)
+21:14:33 [INFO   ] [HexCalibrator] Hex 4: center=(1168, 343) glow_region=(1148, 323, 40, 40)
+21:14:33 [INFO   ] [HexCalibrator] Hex 5: center=(673, 438) glow_region=(653, 418, 40, 40)
+21:14:33 [INFO   ] [HexCalibrator] Hex 6: center=(783, 438) glow_region=(763, 418, 40, 40)
+21:14:33 [INFO   ] [HexCalibrator] Hex 7: center=(893, 438) glow_region=(873, 418, 40, 40)
+21:14:33 [INFO   ] [HexCalibrator] Hex 8: center=(1003, 438) glow_region=(983, 418, 40, 40)
+21:14:33 [INFO   ] [HexCalibrator] Hex 9: center=(1113, 438) glow_region=(1093, 418, 40, 40)
+21:14:33 [INFO   ] [HexCalibrator] Hex 10: center=(1223, 438) glow_region=(1203, 418, 40, 40)
+21:14:33 [INFO   ] [HexCalibrator] Hex 11: center=(948, 533) glow_region=(928, 513, 40, 40)
+21:14:33 [INFO   ] [HexCalibrator] ================================================

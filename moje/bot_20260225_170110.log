@@ -1,0 +1,51 @@
+17:01:10 [INFO   ] === Torchlight Infinite Bot V2 v3.9.3 starting ===
+17:01:11 [INFO   ] Config loaded from config.json
+17:01:11 [INFO   ] Loaded 8 addresses from addresses.json
+17:01:11 [INFO   ] [Input] Initialized with mode: hardware
+17:01:11 [INFO   ] [ScaleCalibrator] Loaded calibrations for 12 maps: ['Swirling Mines', 'High Court Maze', 'Defiled Side Chamber', 'Deserted District', 'Singing Sand', 'Shadow Outpost', 'Abandoned Mines', 'Rainforest of Divine Legacy', 'Grimwind Woods', 'Wall of the Last Breath', 'Blustery Canyon', 'Demiman Village']
+17:01:11 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+17:01:12 [INFO   ] Torchlight Infinite Bot V2 v3.9.3 started
+17:01:12 [INFO   ] [Hotkeys] Global hotkeys registered: F9=Start, F10=Stop, F11=Pause, F5=Record, F6=PauseRec
+17:01:15 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 22352)
+17:01:15 [INFO   ] Attached to torchlight_infinite.exe
+17:01:15 [INFO   ] Found game window by class 'UnrealWindow' + PID 22352 (HWND: 459624)
+17:01:15 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+17:01:15 [INFO   ] [Input] Hardware mode: will focus window before each input
+17:01:15 [DEBUG  ] Module torchlight_infinite.exe base: 0x7FF7D77E0000
+17:01:15 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary) | pos=(5650, 4500)
+17:01:15 [INFO   ] [Scanner] Scanning for FNamePool...
+17:01:15 [INFO   ] [Scanner] Cannot read zone name - FNamePool not resolved yet
+17:01:15 [INFO   ] [Scanner]   Trying FNamePool pattern 1/6...
+17:01:15 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+17:01:15 [INFO   ] [Input] Hardware mode: will focus window before each input
+17:01:15 [INFO   ] [AddrMgr] Attached - using scan results from attach
+17:01:16 [INFO   ] [Scanner]   FNamePool found at 0x7FF7DF501D40 (pattern 1)
+17:01:16 [INFO   ] [Scanner]   Validation: 3/5 indices readable, FName[3] = 'ByteProperty'
+17:01:16 [INFO   ] [Scanner] Scanning for GObjects...
+17:01:16 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+17:01:16 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D1DA9280)
+17:01:16 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+17:01:16 [INFO   ] [Scanner]   GObjects found at 0x7FF7DF51ADE8 (pattern 2)
+17:01:16 [INFO   ] [Scanner]   NumElements=158212, NumChunks=3
+17:01:16 [INFO   ] Portal detector initialized (deferred)
+17:01:16 [INFO   ] [AddrMgr] FNamePool auto-populated: 0x7FF7DF501D40
+17:01:17 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1CA2552A0)
+17:01:18 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1D1DA9280)
+17:01:20 [INFO   ] [Scanner] Zone FName[1443066] = 'SD_GeBuLinYingDi' (GWorld 0x2F1B7F24980)
+17:01:28 [INFO   ] [PathRecorder] No saved path for: Blustery Canyon
+17:02:20 [INFO   ] [Boss] Saved boss area for 'Blustery Canyon': (14539, 9094)
+17:02:23 [INFO   ] [WallScan] Manual scan requested for 'Blustery Canyon' (zone='SD_GeBuLinYingDi')
+17:02:23 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Blustery Canyon' (zone='SD_GeBuLinYingDi')
+17:02:24 [DEBUG  ] [GObjects] Found 2 instances of class 'MinimapSaveObject'
+17:02:24 [DEBUG  ] [MinimapScan] Found 2 MinimapSaveObject candidate(s)
+17:02:24 [DEBUG  ] [MinimapScan]   Skipping CDO: 'Default__MinimapSaveObject' @ 0x2F0BD740480
+17:02:24 [DEBUG  ] [MinimapScan]   Candidate 'MinimapSaveObject' @ 0x2F210665E00, outer='/Engine/Transient'
+17:02:24 [INFO   ] [MinimapScan] MinimapSaveObject live instance at 0x2F210665E00 (outer: /Engine/Transient)
+17:02:24 [DEBUG  ] [MinimapScan] Records TMap @ 0x2F210665E28: data_ptr=0x2F1A181EF00, array_num=1
+17:02:24 [INFO   ] [MinimapScan] Scanning 1 TMap entries for map 'SD_GeBuLinYingDi'
+17:02:24 [DEBUG  ] [MinimapScan]   entry[0]: key='5311_0'
+17:02:24 [INFO   ] [MinimapScan] No Records entry matched 'SD_GeBuLinYingDi' in 1 TMap entries — map not yet visited or name mismatch
+17:02:24 [DEBUG  ] [MinimapScan]   available key[0]: '5311_0'
+17:02:24 [INFO   ] [WallScan] MinimapSaveObject returned 0 positions for 'SD_GeBuLinYingDi' in 0.58s — map not yet visited or GObjects/FNamePool not resolved
+17:02:24 [INFO   ] [WallScan] Manual scan returned 0 positions for 'Blustery Canyon' in 0.59s — ensure you are inside the map AND MinimapSaveObject has data (zone='SD_GeBuLinYingDi', GObjects resolved=True)
+17:02:32 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CA2EF6E0)

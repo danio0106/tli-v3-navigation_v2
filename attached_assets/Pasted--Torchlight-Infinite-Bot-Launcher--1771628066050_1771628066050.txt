@@ -1,0 +1,204 @@
+======================================
+Torchlight Infinite Bot - Launcher
+======================================
+Running as Administrator
+Working directory: C:\Users\Daniel\Documents\GitHub\tli v2
+
+Attempting to launch the bot...
+
+22:31:41 [INFO   ] Config loaded from config.json
+22:31:41 [INFO   ] Loaded 8 addresses from addresses.json
+22:31:41 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+22:31:41 [INFO   ] Torchlight Infinite Bot V2 v2.1.0 started
+22:31:48 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 17504)
+22:31:48 [INFO   ] Attached to torchlight_infinite.exe
+22:31:48 [INFO   ] Found game window by class 'UnrealWindow' + PID 17504 (HWND: 198466)
+22:31:48 [INFO   ] Target window set: HWND=198466
+22:31:48 [INFO   ] Target window set: HWND=198466
+22:31:50 [INFO   ] [UE4 Scanner] === Phase 0 - History fast-path (no-move, spawn point check) ===
+22:31:50 [INFO   ] [UE4 Scanner] Found 5 verified chain(s) in history
+22:31:50 [INFO   ] [UE4 Scanner] Trying history entry 1/5 from 2026-02-20T22:25:42
+22:31:50 [INFO   ] [UE4 Scanner] Trying history (no-move): pattern #1, offset 0x7E84588
+22:31:50 [INFO   ] [UE4 Scanner]   Chain: 0x78 -> 0x48 -> 0x328 -> 0x158 -> 0x1E0
+22:31:50 [INFO   ] [UE4 Scanner] Chain broken at step 2 (offset 0x328)
+22:31:50 [INFO   ] [UE4 Scanner] Entry 1 failed, trying next...
+22:31:50 [INFO   ] [UE4 Scanner] Trying history entry 2/5 from 2026-02-20T21:47:26
+22:31:50 [INFO   ] [UE4 Scanner] Trying history (no-move): pattern #1, offset 0x7E84588
+22:31:50 [INFO   ] [UE4 Scanner]   Chain: 0x1D8 -> 0x28 -> 0x0 -> 0x308 -> 0x190 -> 0x134
+22:31:50 [INFO   ] [UE4 Scanner] Chain broken at step 4 (offset 0x190)
+22:31:50 [INFO   ] [UE4 Scanner] Entry 2 failed, trying next...
+22:31:50 [INFO   ] [UE4 Scanner] Trying history entry 3/5 from 2026-02-20T21:42:39
+22:31:50 [INFO   ] [UE4 Scanner] Trying history (no-move): pattern #1, offset 0x7E84588
+22:31:50 [INFO   ] [UE4 Scanner]   Chain: 0x188 -> 0x38 -> 0x0 -> 0x240 -> 0x188 -> 0x108
+22:31:50 [INFO   ] [UE4 Scanner] Chain broken at step 1 (offset 0x38)
+22:31:50 [INFO   ] [UE4 Scanner] Entry 3 failed, trying next...
+22:31:50 [INFO   ] [UE4 Scanner] Trying history entry 4/5 from 2026-02-20T21:30:04
+22:31:50 [INFO   ] [UE4 Scanner] Trying history (no-move): pattern #1, offset 0x7E84588
+22:31:50 [INFO   ] [UE4 Scanner]   Chain: 0x240 -> 0xD8 -> 0x0 -> 0x318 -> 0x128 -> 0x108
+22:31:50 [INFO   ] [UE4 Scanner] Chain broken at step 1 (offset 0xD8)
+22:31:50 [INFO   ] [UE4 Scanner] Entry 4 failed, trying next...
+22:31:50 [INFO   ] [UE4 Scanner] Trying history entry 5/5 from 2026-02-20T20:51:36
+22:31:50 [INFO   ] [UE4 Scanner] Trying history (no-move): pattern #1, offset 0x7E84588
+22:31:50 [INFO   ] [UE4 Scanner]   Chain: 0x148 -> 0x78 -> 0x0 -> 0x218 -> 0x168 -> 0x114
+22:31:50 [INFO   ] [UE4 Scanner] Chain broken at step 3 (offset 0x218)
+22:31:50 [INFO   ] [UE4 Scanner] Entry 5 failed, trying next...
+22:31:50 [INFO   ] [UE4 Scanner] All history entries failed, falling through to full no-move scan...
+22:31:50 [INFO   ] [UE4 Scanner] === Phase 1 - Full no-move scan ===
+22:31:50 [INFO   ] [UE4 Scanner] Starting no-move scan (spawn point matching)...
+22:31:50 [INFO   ] [UE4 Scanner] Process: torchlight_infinite.exe
+22:31:50 [INFO   ] [UE4 Scanner] Main module: torchlight_infinite.exe at 0x7FF693540000 (size: 0x8B2E000)
+22:31:50 [INFO   ] [UE4 Scanner] Trying GWorld pattern 1/8...
+22:32:09 [INFO   ] [UE4 Scanner] Trying GWorld pattern 2/8...
+22:32:29 [INFO   ] [UE4 Scanner] Pattern 2 match at 0x7FF693D00BB3, GWorld at 0x7FF69B3C4588
+22:32:29 [INFO   ] [UE4 Scanner] GWorld static at 0x7FF69B3C4588, points to 0x1B3CE85E4A0
+22:32:29 [INFO   ] [UE4 Scanner] Looking for GameInstance (no-move mode)...
+22:32:29 [INFO   ] [UE4 Scanner] GameInstance path produced no candidates
+22:32:29 [INFO   ] [UE4 Scanner] Also trying PersistentLevel path...
+22:32:29 [INFO   ] [UE4 Scanner] PersistentLevel path found 107 candidate(s)
+22:32:29 [INFO   ] [UE4 Scanner] Found 107 FVector candidate(s), matching against spawn points...
+22:32:29 [INFO   ] [UE4 Scanner] Running stability pre-check on candidates...
+22:32:29 [INFO   ] [UE4 Scanner] Stability pre-check: 0 candidates eliminated, 107 remain (from 107)
+22:32:29 [INFO   ] [UE4 Scanner] Unknown zone - candidates at: (1.0, 1.0), (1.0, -7283.5), (-7283.5, -1219.3), (1.0, 1.0), (1.0, -7283.5), (-7283.5, -1219.3), (-2048.0, -32768.4), (-8192.1, -128.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 0.6), (0.6, 0.6), (0.6, 0.6), (-1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (0.6, 0.6), (0.6, 0.6), (-1050.3, 400089.0), (1.0, 1.0), (1.0, 1.0), (-4479.6, 9.1), (-4.2, 17.4), (-11.2, -25.1), (402522.2, 147810.1), (147810.1, 156098.1), (402522.2, 147810.1), (147810.1, 156098.1), (8.1, 13.5), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (32.0, 32.0), (-4479.6, 9.1), (-4.2, 17.4), (-11.2, -25.1), (402522.2, 147810.1), (147810.1, 156098.1), (402522.2, 147810.1), (147810.1, 156098.1), (8.1, 13.5), (0.5, 1.0), (0.9, -81.2), (-81.2, 90.0), (90.0, -90.0), (30.7, 30.7), (1.0, 0.5), (0.5, 0.5), (0.5, 0.5), (0.1, 0.1), (0.9, 0.6), (-13.0, -23.0), (-23.0, 0.1), (0.1, 0.3), (1.5, 1.0), (1.0, 0.9), (0.9, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.0, 1.0), (1.4, -22.0), (1.0, 1.0), (0.0, 8.8), (4.4, 3.6), (-20340.3, 1.5), (1096.1, 2997.5), (2997.5, 141818.0), (294926.7, 342636.3), (164088.1, 492204.4), (164088.1, 492204.4), (-884991.2, 202277.6), (-10.8, 590079.2), (402522.2, 147810.1), (147810.1, 156098.1), (-1050.3, 400089.0), (2.1, 16.8), (16.8, 24.6), (24.6, 2.1), (2.1, 16.5), (16.5, 24.2), (24.2, 2.0), (2.0, 16.1), (2.0, 15.8), (23.3, 1.9), (15.5, 22.9), (1.9, 15.2), (22.5, 1.9), (1.9, 14.8), (14.8, 22.1), (1.4, 11.9), (11.9, 18.3), (18.3, 1.4), (1.4, 11.6), (11.6, 17.9), (1.0, 1.0), (1.0, 1.0)
+22:32:29 [INFO   ] [UE4 Scanner] You can add new spawn points to src/utils/constants.py SPAWN_POINTS dict
+22:32:29 [INFO   ] [UE4 Scanner] No candidates matched any known spawn point
+22:32:29 [INFO   ] [UE4 Scanner] FAILED: Could not find pointer chain matching any spawn point
+22:37:19 [INFO   ] [UE4 Scanner] === Phase 0 - History fast-path ===
+22:37:19 [INFO   ] [UE4 Scanner] Found 5 verified chain(s) in history
+22:37:19 [INFO   ] [UE4 Scanner] Trying history entry 1/5 from 2026-02-20T22:25:42
+22:37:19 [INFO   ] [UE4 Scanner] Trying history: pattern #1, offset 0x7E84588
+22:37:19 [INFO   ] [UE4 Scanner]   Chain: 0x78 -> 0x48 -> 0x328 -> 0x158 -> 0x1E0
+22:37:19 [INFO   ] [UE4 Scanner] GWorld still valid at 0x7FF69B3C4588 -> 0x1B3CE85E4A0
+22:37:19 [INFO   ] [UE4 Scanner] Chain broken at step 2 (offset 0x328)
+22:37:19 [INFO   ] [UE4 Scanner] Entry 1 failed, trying next...
+22:37:19 [INFO   ] [UE4 Scanner] Trying history entry 2/5 from 2026-02-20T21:47:26
+22:37:19 [INFO   ] [UE4 Scanner] Trying history: pattern #1, offset 0x7E84588
+22:37:19 [INFO   ] [UE4 Scanner]   Chain: 0x1D8 -> 0x28 -> 0x0 -> 0x308 -> 0x190 -> 0x134
+22:37:19 [INFO   ] [UE4 Scanner] GWorld still valid at 0x7FF69B3C4588 -> 0x1B3CE85E4A0
+22:37:19 [INFO   ] [UE4 Scanner] Chain broken at step 4 (offset 0x190)
+22:37:19 [INFO   ] [UE4 Scanner] Entry 2 failed, trying next...
+22:37:19 [INFO   ] [UE4 Scanner] Trying history entry 3/5 from 2026-02-20T21:42:39
+22:37:20 [INFO   ] [UE4 Scanner] Trying history: pattern #1, offset 0x7E84588
+22:37:20 [INFO   ] [UE4 Scanner]   Chain: 0x188 -> 0x38 -> 0x0 -> 0x240 -> 0x188 -> 0x108
+22:37:20 [INFO   ] [UE4 Scanner] GWorld still valid at 0x7FF69B3C4588 -> 0x1B3CE85E4A0
+22:37:20 [INFO   ] [UE4 Scanner] Chain broken at step 1 (offset 0x38)
+22:37:20 [INFO   ] [UE4 Scanner] Entry 3 failed, trying next...
+22:37:20 [INFO   ] [UE4 Scanner] Trying history entry 4/5 from 2026-02-20T21:30:04
+22:37:20 [INFO   ] [UE4 Scanner] Trying history: pattern #1, offset 0x7E84588
+22:37:20 [INFO   ] [UE4 Scanner]   Chain: 0x240 -> 0xD8 -> 0x0 -> 0x318 -> 0x128 -> 0x108
+22:37:20 [INFO   ] [UE4 Scanner] GWorld still valid at 0x7FF69B3C4588 -> 0x1B3CE85E4A0
+22:37:20 [INFO   ] [UE4 Scanner] Chain broken at step 1 (offset 0xD8)
+22:37:20 [INFO   ] [UE4 Scanner] Entry 4 failed, trying next...
+22:37:20 [INFO   ] [UE4 Scanner] Trying history entry 5/5 from 2026-02-20T20:51:36
+22:37:20 [INFO   ] [UE4 Scanner] Trying history: pattern #1, offset 0x7E84588
+22:37:20 [INFO   ] [UE4 Scanner]   Chain: 0x148 -> 0x78 -> 0x0 -> 0x218 -> 0x168 -> 0x114
+22:37:20 [INFO   ] [UE4 Scanner] GWorld still valid at 0x7FF69B3C4588 -> 0x1B3CE85E4A0
+22:37:20 [INFO   ] [UE4 Scanner] Chain broken at step 3 (offset 0x218)
+22:37:20 [INFO   ] [UE4 Scanner] Entry 5 failed, trying next...
+22:37:20 [INFO   ] [UE4 Scanner] All history entries failed, falling through to full scan...
+22:37:20 [INFO   ] [UE4 Scanner] === Phase 1 - Normal UE4 scan ===
+22:37:20 [INFO   ] [UE4 Scanner] Starting UE4 GWorld scan (normal pass)...
+22:37:20 [INFO   ] [UE4 Scanner] Process: torchlight_infinite.exe
+22:37:20 [INFO   ] [UE4 Scanner] Main module: torchlight_infinite.exe at 0x7FF693540000 (size: 0x8B2E000)
+22:37:20 [INFO   ] [UE4 Scanner] Trying GWorld pattern 1/8...
+22:37:39 [INFO   ] [UE4 Scanner] Trying GWorld pattern 2/8...
+22:37:59 [INFO   ] [UE4 Scanner] Pattern 2 match at 0x7FF693D00BB3, GWorld at 0x7FF69B3C4588
+22:37:59 [INFO   ] [UE4 Scanner] GWorld static at 0x7FF69B3C4588, points to 0x1B3CE85E4A0
+22:37:59 [INFO   ] [UE4 Scanner] Looking for GameInstance...
+22:37:59 [INFO   ] [UE4 Scanner] GameInstance path produced no candidates, trying PersistentLevel path...
+22:37:59 [INFO   ] [UE4 Scanner] Found 125 FVector candidate(s), verifying with movement...
+22:37:59 [INFO   ] [UE4 Scanner] Running stability pre-check on candidates...
+22:38:00 [INFO   ] [UE4 Scanner] Stability pre-check: 0 candidates eliminated, 125 remain (from 125)
+22:38:00 [INFO   ] [UE4 Scanner] IMPORTANT: Keep the game window focused during movement tests!
+22:38:00 [INFO   ] [UE4 Scanner] Waiting 2 seconds for character to be ready...
+22:38:02 [INFO   ] [UE4 Scanner] Focused game window
+22:38:02 [INFO   ] [UE4 Scanner] === Axis 1 test: pressing 'w' (forward) ===
+22:38:03 [INFO   ] [UE4 Scanner] Axis 1: no candidates moved with 'w', re-focusing and trying 's'...
+22:38:03 [INFO   ] [UE4 Scanner] Focused game window
+22:38:04 [INFO   ] [UE4 Scanner] No candidates respond to W/S movement
+22:38:04 [INFO   ] [UE4 Scanner] TIP: Make sure the game window stays focused during scanning
+22:38:04 [INFO   ] [UE4 Scanner] Movement verification failed after all retries
+22:38:04 [INFO   ] [UE4 Scanner] FAILED: Could not build pointer chain to player location
+22:38:04 [INFO   ] [UE4 Scanner] === Phase 2 - Wide UE4 scan ===
+22:38:04 [INFO   ] [UE4 Scanner] Starting UE4 GWorld scan (wide pass)...
+22:38:04 [INFO   ] [UE4 Scanner] Process: torchlight_infinite.exe
+22:38:04 [INFO   ] [UE4 Scanner] Main module: torchlight_infinite.exe at 0x7FF693540000 (size: 0x8B2E000)
+22:38:04 [INFO   ] [UE4 Scanner] Trying GWorld pattern 1/8...
+22:38:24 [INFO   ] [UE4 Scanner] Trying GWorld pattern 2/8...
+22:38:45 [INFO   ] [UE4 Scanner] Pattern 2 match at 0x7FF693D00BB3, GWorld at 0x7FF69B3C4588
+22:38:45 [INFO   ] [UE4 Scanner] GWorld static at 0x7FF69B3C4588, points to 0x1B3CE85E4A0
+22:38:45 [INFO   ] [UE4 Scanner] Using WIDE offset ranges for exhaustive scan...
+22:38:45 [INFO   ] [UE4 Scanner] Looking for GameInstance...
+22:38:45 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 0%
+22:38:45 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 9%
+22:38:48 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 18%
+22:38:49 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 28%
+22:38:50 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 37%
+22:38:51 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 46%
+22:38:52 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 56%
+22:38:55 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 65%
+22:38:57 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 75%
+22:38:57 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 84%
+22:38:57 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 93%
+22:39:03 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 100%
+22:39:03 [INFO   ] [UE4 Scanner] Found 2483 FVector candidate(s), verifying with movement...
+22:39:03 [INFO   ] [UE4 Scanner] Running stability pre-check on candidates...
+22:39:04 [INFO   ] [UE4 Scanner] Stability pre-check: 24 candidates eliminated, 2459 remain (from 2483)
+22:39:04 [INFO   ] [UE4 Scanner] IMPORTANT: Keep the game window focused during movement tests!
+22:39:04 [INFO   ] [UE4 Scanner] Waiting 2 seconds for character to be ready...
+22:39:06 [INFO   ] [UE4 Scanner] Focused game window
+22:39:06 [INFO   ] [UE4 Scanner] === Axis 1 test: pressing 'w' (forward) ===
+22:39:07 [INFO   ] [UE4 Scanner] Axis 1: no candidates moved with 'w', re-focusing and trying 's'...
+22:39:07 [INFO   ] [UE4 Scanner] Focused game window
+22:39:08 [INFO   ] [UE4 Scanner] No candidates respond to W/S movement
+22:39:08 [INFO   ] [UE4 Scanner] TIP: Make sure the game window stays focused during scanning
+22:39:08 [INFO   ] [UE4 Scanner] Movement verification failed after all retries
+22:39:08 [INFO   ] [UE4 Scanner] FAILED: Could not build pointer chain to player location
+22:39:08 [INFO   ] [UE4 Scanner] === Phase 3 - WASD brute-force ===
+22:39:08 [INFO   ] [WASD Scanner] Starting WASD brute-force scan...
+22:39:08 [INFO   ] [WASD Scanner] This scans ALL process memory for floats that change with movement
+22:39:08 [INFO   ] [WASD Scanner] Make sure you are in-game and can move with WASD
+22:39:08 [INFO   ] [WASD Scanner] Stand still for initial scan...
+22:39:08 [INFO   ] [WASD Scanner] Scanning all loaded modules for floats (this may take a while)...
+22:39:46 [INFO   ] [WASD Scanner] Found 20803605 plausible float addresses across 188 modules
+22:39:46 [INFO   ] [WASD Scanner] IMPORTANT: Keep the game window focused during movement tests!
+22:39:46 [INFO   ] [WASD Scanner] Focused game window
+22:39:46 [INFO   ] [WASD Scanner] Hold W to move forward...
+22:39:47 [INFO   ] [WASD Scanner] Filtering for changed values (X candidates from W/S axis)...
+22:40:56 [INFO   ] [WASD Scanner] X axis candidates: 74
+22:40:56 [INFO   ] [WASD Scanner] Reading current values...
+22:40:56 [INFO   ] [WASD Scanner] Hold S to move backward...
+22:40:57 [INFO   ] [WASD Scanner] Confirming X candidates reversed direction...
+22:40:57 [INFO   ] [WASD Scanner] Confirmed X candidates: 4
+22:40:57 [INFO   ] [WASD Scanner] Now scanning Y axis...
+22:40:57 [INFO   ] [WASD Scanner] Reading current state...
+22:42:10 [INFO   ] [WASD Scanner] Hold A to move left...
+22:43:21 [INFO   ] [WASD Scanner] Y axis candidates: 62
+22:43:21 [INFO   ] [WASD Scanner] Verifying 4 X and 62 Y candidate pairs with movement...
+22:43:33 [INFO   ] [WASD Scanner]   Pair verified: stability OK, W/S opposite on x, A/D opposite on y, final drift=nan
+22:43:33 [INFO   ] [WASD Scanner] Verified pair: X=0x7FF69B275484 (143.1), Y=0x7FFD2E3B2BFC (nan)
+22:43:33 [INFO   ] [WASD Scanner] SUCCESS! Verified addresses saved
+22:43:33 [INFO   ] [WASD Scanner] NOTE: Static addresses may not survive game restarts
+22:43:33 [INFO   ] [WASD Scanner] Re-run scan after each game restart if values are wrong
+22:43:33 [INFO   ] [UE4 Scanner] === Auto-retry scan: SUCCESS via WASD fallback ===
+22:49:05 [INFO   ] [UE4 Scanner] Starting UE4 GWorld scan (normal pass)...
+22:49:05 [INFO   ] [UE4 Scanner] Process: torchlight_infinite.exe
+22:49:05 [INFO   ] [UE4 Scanner] Main module: torchlight_infinite.exe at 0x7FF693540000 (size: 0x8B2E000)
+22:49:05 [INFO   ] [UE4 Scanner] Trying GWorld pattern 1/8...
+22:49:26 [INFO   ] [UE4 Scanner] Trying GWorld pattern 2/8...
+22:49:47 [INFO   ] [UE4 Scanner] Pattern 2 match at 0x7FF693D00BB3, GWorld at 0x7FF69B3C4588
+22:49:47 [INFO   ] [UE4 Scanner] GWorld static at 0x7FF69B3C4588, points to 0x1B3CE85E4A0
+22:49:47 [INFO   ] [UE4 Scanner] Looking for GameInstance...
+22:49:47 [INFO   ] [UE4 Scanner] GameInstance path produced no candidates, trying PersistentLevel path...
+22:49:48 [INFO   ] [UE4 Scanner] Found 123 FVector candidate(s), verifying with movement...
+22:49:48 [INFO   ] [UE4 Scanner] Running stability pre-check on candidates...
+22:49:48 [INFO   ] [UE4 Scanner] Stability pre-check: 0 candidates eliminated, 123 remain (from 123)
+22:49:48 [INFO   ] [UE4 Scanner] IMPORTANT: Keep the game window focused during movement tests!
+22:49:48 [INFO   ] [UE4 Scanner] Waiting 2 seconds for character to be ready...
+22:49:50 [INFO   ] [UE4 Scanner] Focused game window
+22:49:50 [INFO   ] [UE4 Scanner] === Axis 1 test: pressing 'w' (forward) ===
+22:49:51 [INFO   ] [UE4 Scanner] Axis 1: no candidates moved with 'w', re-focusing and trying 's'...
+22:49:51 [INFO   ] [UE4 Scanner] Focused game window
+22:49:52 [INFO   ] [UE4 Scanner] No candidates respond to W/S movement
+22:49:52 [INFO   ] [UE4 Scanner] TIP: Make sure the game window stays focused during scanning
+22:49:52 [INFO   ] [UE4 Scanner] Movement verification failed after all retries
+22:49:52 [INFO   ] [UE4 Scanner] FAILED: Could not build pointer chain to player location

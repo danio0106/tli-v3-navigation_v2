@@ -1,0 +1,188 @@
+======================================
+Torchlight Infinite Bot - Launcher
+======================================
+Running as Administrator
+Working directory: C:\Users\Daniel\Documents\GitHub\tli v2
+
+Attempting to launch the bot...
+
+20:56:45 [INFO   ] Config loaded from config.json
+20:56:45 [INFO   ] Loaded 8 addresses from addresses.json
+20:56:45 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+20:56:45 [INFO   ] Torchlight Infinite Bot V2 v2.0.0 started
+20:57:22 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 17504)
+20:57:22 [INFO   ] Attached to torchlight_infinite.exe
+20:57:22 [INFO   ] Found game window by class 'UnrealWindow' + PID 17504 (HWND: 198466)
+20:57:22 [INFO   ] Target window set: HWND=198466
+20:57:22 [INFO   ] Target window set: HWND=198466
+20:57:32 [INFO   ] [UE4 Scanner] === Phase 0 - History fast-path ===
+20:57:32 [INFO   ] [UE4 Scanner] Found previous successful scan from 2026-02-20T20:51:36
+20:57:32 [INFO   ] [UE4 Scanner] Trying history: pattern #1, offset 0x7E84588
+20:57:32 [INFO   ] [UE4 Scanner]   Chain: 0x148 -> 0x78 -> 0x0 -> 0x218 -> 0x168 -> 0x114
+20:57:32 [INFO   ] [UE4 Scanner] GWorld still valid at 0x7FF69B3C4588 -> 0x1B3DE534060
+20:57:32 [INFO   ] [UE4 Scanner] Chain resolves to position: (67.9, 66.9, 96.3)
+20:57:32 [INFO   ] [UE4 Scanner] Running stability pre-check on candidates...
+20:57:33 [INFO   ] [UE4 Scanner] Stability pre-check: 0 candidates eliminated, 1 remain (from 1)
+20:57:33 [INFO   ] [UE4 Scanner] Focused game window
+20:57:33 [INFO   ] [UE4 Scanner] === Axis 1 test: pressing 'w' (forward) ===
+20:57:34 [INFO   ] [UE4 Scanner] Axis 1: no candidates moved with 'w', trying 's'...
+20:57:35 [INFO   ] [UE4 Scanner] No candidates respond to W/S movement
+20:57:35 [INFO   ] [UE4 Scanner] Movement verification failed for history chain
+20:57:35 [INFO   ] [UE4 Scanner] Fast-path failed, falling through to full scan...
+20:57:35 [INFO   ] [UE4 Scanner] === Phase 1 - Normal UE4 scan ===
+20:57:35 [INFO   ] [UE4 Scanner] Starting UE4 GWorld scan (normal pass)...
+20:57:35 [INFO   ] [UE4 Scanner] Process: torchlight_infinite.exe
+20:57:35 [INFO   ] [UE4 Scanner] Main module: torchlight_infinite.exe at 0x7FF693540000 (size: 0x8B2E000)
+20:57:35 [INFO   ] [UE4 Scanner] Trying GWorld pattern 1/8...
+20:57:56 [INFO   ] [UE4 Scanner] Trying GWorld pattern 2/8...
+20:58:17 [INFO   ] [UE4 Scanner] Pattern 2 match at 0x7FF693D00BB3, GWorld at 0x7FF69B3C4588
+20:58:17 [INFO   ] [UE4 Scanner] GWorld static at 0x7FF69B3C4588, points to 0x1B3DE534060
+20:58:17 [INFO   ] [UE4 Scanner] Looking for GameInstance...
+20:58:17 [INFO   ] [UE4 Scanner] GameInstance path produced no candidates, trying PersistentLevel path...
+20:58:17 [INFO   ] [UE4 Scanner] Found 54 FVector candidate(s), verifying with movement...
+20:58:17 [INFO   ] [UE4 Scanner] Running stability pre-check on candidates...
+20:58:18 [INFO   ] [UE4 Scanner] Stability pre-check: 0 candidates eliminated, 54 remain (from 54)
+20:58:18 [INFO   ] [UE4 Scanner] Focused game window
+20:58:18 [INFO   ] [UE4 Scanner] === Axis 1 test: pressing 'w' (forward) ===
+20:58:19 [INFO   ] [UE4 Scanner] Axis 1: 1 candidates responded to forward/back movement
+20:58:19 [INFO   ] [UE4 Scanner]   Candidate 51: dx=454.1 dy=0.0 pos=(-14014.3, -4146.6, 2094.8095703125)
+20:58:19 [INFO   ] [UE4 Scanner] === Axis 2 test: pressing 'a' (left) ===
+20:58:19 [INFO   ] [UE4 Scanner] Axis 2: 3 candidates responded to left/right movement
+20:58:19 [INFO   ] [UE4 Scanner]   Candidate 51: dx=254.3 dy=347.4 pos=(-14268.6, -4493.9, 2222.624267578125)
+20:58:19 [INFO   ] [UE4 Scanner]   Candidate 52: dx=347.4 dy=127.8 pos=(-4493.9, 2222.6, 1.0)
+20:58:19 [INFO   ] [UE4 Scanner]   Candidate 53: dx=127.8 dy=0.0 pos=(2222.6, 1.0, -4.085971106149235e+23)
+20:58:19 [INFO   ] [UE4 Scanner] 1 candidate(s) respond to BOTH axes!
+20:58:19 [INFO   ] [UE4 Scanner]   Candidate 51: axis1=454.1, axis2=601.6, pos=(-14268.6, -4493.9, 2222.624267578125), magnitude=18763
+20:58:19 [INFO   ] [UE4 Scanner] Testing candidate 51 (magnitude=18763) with directional consistency...
+20:58:19 [INFO   ] [UE4 Scanner]   Step 1: Stability check (standing still)...
+20:58:20 [INFO   ] [UE4 Scanner]   Stable: drift=0.00 (OK)
+20:58:20 [INFO   ] [UE4 Scanner]   Step 2: W/S directional test...
+20:58:20 [INFO   ] [UE4 Scanner]   W pressed: dx=-13675.4 dy=-4370.3
+20:58:21 [INFO   ] [UE4 Scanner]   FAIL: no movement detected with S (delta=0.0)
+20:58:21 [INFO   ] [UE4 Scanner] Candidate 51 failed directional consistency check, trying next...
+20:58:21 [INFO   ] [UE4 Scanner] No single candidate responds to both W/S AND A/D movement with directional consistency
+20:58:21 [INFO   ] [UE4 Scanner] Checking if X and Y might be at different offsets...
+20:58:21 [INFO   ] [UE4 Scanner]   Potential split: candidate 51 (offset 0x1D0) moves on axis1, candidate 52 (offset 0x1D4) moves on axis2 — same root pointer!
+20:58:21 [INFO   ] [UE4 Scanner]   Split candidate looks good: X@0x1D0=-13675.4, Y@0x1D4=-4369.3
+20:58:21 [INFO   ] [UE4 Scanner]   Potential split: candidate 51 (offset 0x1D0) moves on axis1, candidate 53 (offset 0x1D8) moves on axis2 — same root pointer!
+20:58:21 [INFO   ] [UE4 Scanner]   Split candidate looks good: X@0x1D0=-13675.4, Y@0x1D8=2091.6
+20:58:21 [INFO   ] [UE4 Scanner] Movement verification failed — no candidate passed all checks
+20:58:21 [INFO   ] [UE4 Scanner] Movement verification failed after all retries
+20:58:21 [INFO   ] [UE4 Scanner] FAILED: Could not build pointer chain to player location
+20:58:21 [INFO   ] [UE4 Scanner] === Phase 2 - Wide UE4 scan ===
+20:58:21 [INFO   ] [UE4 Scanner] Starting UE4 GWorld scan (wide pass)...
+20:58:21 [INFO   ] [UE4 Scanner] Process: torchlight_infinite.exe
+20:58:21 [INFO   ] [UE4 Scanner] Main module: torchlight_infinite.exe at 0x7FF693540000 (size: 0x8B2E000)
+20:58:21 [INFO   ] [UE4 Scanner] Trying GWorld pattern 1/8...
+20:58:42 [INFO   ] [UE4 Scanner] Trying GWorld pattern 2/8...
+20:59:03 [INFO   ] [UE4 Scanner] Pattern 2 match at 0x7FF693D00BB3, GWorld at 0x7FF69B3C4588
+20:59:03 [INFO   ] [UE4 Scanner] GWorld static at 0x7FF69B3C4588, points to 0x1B3DE534060
+20:59:03 [INFO   ] [UE4 Scanner] Using WIDE offset ranges for exhaustive scan...
+20:59:03 [INFO   ] [UE4 Scanner] Looking for GameInstance...
+20:59:03 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 0%
+20:59:03 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 9%
+20:59:06 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 18%
+20:59:07 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 28%
+20:59:08 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 37%
+20:59:10 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 46%
+20:59:12 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 56%
+20:59:14 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 65%
+20:59:15 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 75%
+20:59:15 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 84%
+20:59:15 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 93%
+20:59:21 [INFO   ] [UE4 Scanner]   GameInstance scan progress: 100%
+20:59:21 [INFO   ] [UE4 Scanner] Found 2605 FVector candidate(s), verifying with movement...
+20:59:21 [INFO   ] [UE4 Scanner] Running stability pre-check on candidates...
+20:59:22 [INFO   ] [UE4 Scanner] Stability pre-check: 114 candidates eliminated, 2491 remain (from 2605)
+20:59:22 [INFO   ] [UE4 Scanner] Focused game window
+20:59:22 [INFO   ] [UE4 Scanner] === Axis 1 test: pressing 'w' (forward) ===
+20:59:23 [INFO   ] [UE4 Scanner] Axis 1: 20 candidates responded to forward/back movement
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2013: dx=746.4 dy=0.0 pos=(-13538.9, -4333.7, 2118.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2014: dx=0.0 dy=2.8 pos=(-4333.7, 2118.0, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2017: dx=746.4 dy=0.0 pos=(-13538.9, -4333.7, 2118.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2018: dx=0.0 dy=2.8 pos=(-4333.7, 2118.0, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2034: dx=746.4 dy=0.0 pos=(-13538.9, -4333.7, 2118.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2035: dx=0.0 dy=2.8 pos=(-4333.7, 2118.0, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2038: dx=746.4 dy=0.0 pos=(-13538.9, -4333.7, 2118.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2039: dx=0.0 dy=2.8 pos=(-4333.7, 2118.0, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2057: dx=746.4 dy=0.0 pos=(-13538.9, -4333.7, 2118.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2058: dx=0.0 dy=2.8 pos=(-4333.7, 2118.0, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2061: dx=746.4 dy=0.0 pos=(-13538.9, -4333.7, 2118.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2062: dx=0.0 dy=2.8 pos=(-4333.7, 2118.0, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2099: dx=746.4 dy=0.0 pos=(-13538.9, -4333.7, 2118.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2100: dx=0.0 dy=2.8 pos=(-4333.7, 2118.0, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2103: dx=746.4 dy=0.0 pos=(-13538.9, -4333.7, 2118.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2104: dx=0.0 dy=2.8 pos=(-4333.7, 2118.0, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2111: dx=746.4 dy=0.0 pos=(-13538.9, -4333.7, 2118.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2112: dx=0.0 dy=2.8 pos=(-4333.7, 2118.0, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2115: dx=746.4 dy=0.0 pos=(-13538.9, -4333.7, 2118.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2116: dx=0.0 dy=2.8 pos=(-4333.7, 2118.0, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner] === Axis 2 test: pressing 'a' (left) ===
+20:59:23 [INFO   ] [UE4 Scanner] Axis 2: 20 candidates responded to left/right movement
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2013: dx=749.0 dy=167.2 pos=(-14288.0, -4500.9, 2118.347412109375)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2014: dx=167.2 dy=0.3 pos=(-4500.9, 2118.3, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2017: dx=749.0 dy=167.2 pos=(-14288.0, -4500.9, 2118.347412109375)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2018: dx=167.2 dy=0.3 pos=(-4500.9, 2118.3, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2034: dx=749.0 dy=167.2 pos=(-14288.0, -4500.9, 2118.347412109375)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2035: dx=167.2 dy=0.3 pos=(-4500.9, 2118.3, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2038: dx=749.0 dy=167.2 pos=(-14288.0, -4500.9, 2118.347412109375)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2039: dx=167.2 dy=0.3 pos=(-4500.9, 2118.3, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2057: dx=749.0 dy=167.2 pos=(-14288.0, -4500.9, 2118.347412109375)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2058: dx=167.2 dy=0.3 pos=(-4500.9, 2118.3, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2061: dx=749.0 dy=167.2 pos=(-14288.0, -4500.9, 2118.347412109375)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2062: dx=167.2 dy=0.3 pos=(-4500.9, 2118.3, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2099: dx=749.0 dy=167.2 pos=(-14288.0, -4500.9, 2118.347412109375)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2100: dx=167.2 dy=0.3 pos=(-4500.9, 2118.3, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2103: dx=749.0 dy=167.2 pos=(-14288.0, -4500.9, 2118.347412109375)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2104: dx=167.2 dy=0.3 pos=(-4500.9, 2118.3, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2111: dx=749.0 dy=167.2 pos=(-14288.0, -4500.9, 2118.347412109375)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2112: dx=167.2 dy=0.3 pos=(-4500.9, 2118.3, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2115: dx=749.0 dy=167.2 pos=(-14288.0, -4500.9, 2118.347412109375)
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2116: dx=167.2 dy=0.3 pos=(-4500.9, 2118.3, 0.0)
+20:59:23 [INFO   ] [UE4 Scanner] 20 candidate(s) respond to BOTH axes!
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2057: axis1=746.4, axis2=916.2, pos=(-14288.0, -4500.9, 2118.347412109375), magnitude=18789
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2058: axis1=2.8, axis2=167.5, pos=(-4500.9, 2118.3, 0.0), magnitude=6619
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2061: axis1=746.4, axis2=916.2, pos=(-14288.0, -4500.9, 2118.347412109375), magnitude=18789
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2062: axis1=2.8, axis2=167.5, pos=(-4500.9, 2118.3, 0.0), magnitude=6619
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2099: axis1=746.4, axis2=916.2, pos=(-14288.0, -4500.9, 2118.347412109375), magnitude=18789
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2100: axis1=2.8, axis2=167.5, pos=(-4500.9, 2118.3, 0.0), magnitude=6619
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2103: axis1=746.4, axis2=916.2, pos=(-14288.0, -4500.9, 2118.347412109375), magnitude=18789
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2104: axis1=2.8, axis2=167.5, pos=(-4500.9, 2118.3, 0.0), magnitude=6619
+20:59:23 [INFO   ] [UE4 Scanner]   Candidate 2111: axis1=746.4, axis2=916.2, pos=(-14288.0, -4500.9, 2118.347412109375), magnitude=18789
+20:59:24 [INFO   ] [UE4 Scanner]   Candidate 2112: axis1=2.8, axis2=167.5, pos=(-4500.9, 2118.3, 0.0), magnitude=6619
+20:59:24 [INFO   ] [UE4 Scanner]   Candidate 2115: axis1=746.4, axis2=916.2, pos=(-14288.0, -4500.9, 2118.347412109375), magnitude=18789
+20:59:24 [INFO   ] [UE4 Scanner]   Candidate 2116: axis1=2.8, axis2=167.5, pos=(-4500.9, 2118.3, 0.0), magnitude=6619
+20:59:24 [INFO   ] [UE4 Scanner]   Candidate 2013: axis1=746.4, axis2=916.2, pos=(-14288.0, -4500.9, 2118.347412109375), magnitude=18789
+20:59:24 [INFO   ] [UE4 Scanner]   Candidate 2014: axis1=2.8, axis2=167.5, pos=(-4500.9, 2118.3, 0.0), magnitude=6619
+20:59:24 [INFO   ] [UE4 Scanner]   Candidate 2017: axis1=746.4, axis2=916.2, pos=(-14288.0, -4500.9, 2118.347412109375), magnitude=18789
+20:59:24 [INFO   ] [UE4 Scanner]   Candidate 2018: axis1=2.8, axis2=167.5, pos=(-4500.9, 2118.3, 0.0), magnitude=6619
+20:59:24 [INFO   ] [UE4 Scanner]   Candidate 2034: axis1=746.4, axis2=916.2, pos=(-14288.0, -4500.9, 2118.347412109375), magnitude=18789
+20:59:24 [INFO   ] [UE4 Scanner]   Candidate 2035: axis1=2.8, axis2=167.5, pos=(-4500.9, 2118.3, 0.0), magnitude=6619
+20:59:24 [INFO   ] [UE4 Scanner]   Candidate 2038: axis1=746.4, axis2=916.2, pos=(-14288.0, -4500.9, 2118.347412109375), magnitude=18789
+20:59:24 [INFO   ] [UE4 Scanner]   Candidate 2039: axis1=2.8, axis2=167.5, pos=(-4500.9, 2118.3, 0.0), magnitude=6619
+20:59:24 [INFO   ] [UE4 Scanner] Testing candidate 2057 (magnitude=18789) with directional consistency...
+20:59:24 [INFO   ] [UE4 Scanner]   Step 1: Stability check (standing still)...
+20:59:24 [INFO   ] [UE4 Scanner]   Stable: drift=0.00 (OK)
+20:59:24 [INFO   ] [UE4 Scanner]   Step 2: W/S directional test...
+20:59:25 [INFO   ] [UE4 Scanner]   W pressed: dx=+748.1 dy=+191.8
+20:59:25 [INFO   ] [UE4 Scanner]   S pressed: dx=-779.3 dy=+0.0
+20:59:25 [INFO   ] [UE4 Scanner]   W/S directional consistency OK (dominant axis: x)
+20:59:25 [INFO   ] [UE4 Scanner]   Step 3: A/D directional test...
+20:59:26 [INFO   ] [UE4 Scanner]   A pressed: dx=-414.2 dy=-479.4
+20:59:26 [INFO   ] [UE4 Scanner]   D pressed: dx=+0.0 dy=+779.3
+20:59:26 [INFO   ] [UE4 Scanner]   A/D directional consistency OK (dominant axis: y)
+20:59:26 [INFO   ] [UE4 Scanner]   Step 4: Final stability check...
+20:59:27 [INFO   ] [UE4 Scanner]   Final position: (-14733.4, -4009.1), drift=0.00 (OK)
+20:59:27 [INFO   ] [UE4 Scanner]   ALL CHECKS PASSED!
+20:59:27 [INFO   ] [UE4 Scanner] VERIFIED candidate 2057: both axes move + directional consistency passed!
+20:59:27 [INFO   ] [UE4 Scanner] Verified via GameInstance path:
+20:59:27 [INFO   ] [UE4 Scanner]   Chain: 0x240 -> 0xD8 -> 0x0 -> 0x318 -> 0x128 -> 0x108
+20:59:27 [INFO   ] [UE4 Scanner] SUCCESS!
+20:59:27 [INFO   ] [UE4 Scanner] Position: (-14733.4, -4009.1, 2119.9)
+20:59:27 [INFO   ] [UE4 Scanner] Base: torchlight_infinite.exe+0x7E84588
+20:59:27 [INFO   ] [UE4 Scanner] Chain: 0x240 -> 0xD8 -> 0x0 -> 0x318 -> 0x128 -> 0x108
+20:59:27 [INFO   ] [UE4 Scanner] Verifying chain resolves correctly...
+20:59:27 [INFO   ] [UE4 Scanner] Verification PASSED: chain resolves to -14733.4
+20:59:27 [INFO   ] [UE4 Scanner] Saving discovered addresses (verified)...
+20:59:27 [INFO   ] [UE4 Scanner] Addresses saved to Address Setup
+20:59:27 [INFO   ] [UE4 Scanner] Scan history saved to scan_history.json

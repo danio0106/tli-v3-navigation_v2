@@ -1,0 +1,118 @@
+======================================
+Torchlight Infinite Bot - Launcher
+======================================
+Running as Administrator
+Working directory: C:\Users\Daniel\Documents\GitHub\tli v2
+
+Attempting to launch the bot...
+
+16:33:38 [INFO   ] Config loaded from config.json
+16:33:38 [INFO   ] Loaded 8 addresses from addresses.json
+16:33:38 [WARNING] [HexCalibrator] Failed to load history: Expecting value: line 19 column 11 (char 409)
+16:33:38 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+16:33:39 [INFO   ] Torchlight Infinite Bot V2 v2.5.1 started
+16:33:42 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 18588)
+16:33:42 [INFO   ] Attached to torchlight_infinite.exe
+16:33:42 [INFO   ] Found game window by class 'UnrealWindow' + PID 18588 (HWND: 393828)
+16:33:42 [INFO   ] Target window set: HWND=393828
+16:33:43 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary); player_x not movement-verified; player_y not movement-verified | pos=(0, 0)
+16:33:43 [INFO   ] [Scanner] Scanning for FNamePool...
+16:33:43 [INFO   ] Target window set: HWND=393828
+16:33:43 [INFO   ] [Scanner]   Trying FNamePool pattern 1/3...
+16:33:43 [INFO   ] [Scanner]   Trying FNamePool pattern 2/3...
+16:33:43 [INFO   ] [Scanner]   Trying FNamePool pattern 3/3...
+16:33:43 [INFO   ] [Scanner] FNamePool not found via sig scan
+16:33:43 [INFO   ] [Scanner] Scanning for GObjects...
+16:33:43 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+16:33:44 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+16:33:44 [INFO   ] [Scanner]   GObjects found at 0x7FF6BD49ADE8 (pattern 2)
+16:33:44 [INFO   ] [Scanner]   NumElements=127381, NumChunks=2
+16:33:47 [INFO   ] [CardDetector] client_rect=(631, 159, 2551, 1239)
+16:33:47 [INFO   ] [CardDetector] frame=1920x1080
+16:33:47 [INFO   ] [CardDetector] === Detection Start === frame=1920x1080
+16:33:47 [INFO   ] [CardDetector] Card 0 (High Court Maze) -> INACTIVE
+  vertices(active): top=195 tr=194 br=84 bot=34 bl=87 tl=176
+  inactive_top=(497,299) gray=113.0
+  ice=3/6 on_card=3/6
+  reason: inactive_top 113.0 >= 50 (not popped up), 3/6 ice, 3/6 on-card
+16:33:47 [INFO   ] [CardDetector] Card 1 (Shadow Outpost) -> INACTIVE
+  vertices(active): top=179 tr=215 br=87 bot=61 bl=83 tl=161
+  inactive_top=(933,300) gray=97.8
+  ice=3/6 on_card=3/6
+  reason: inactive_top 97.8 >= 50 (not popped up), 3/6 ice, 3/6 on-card
+16:33:47 [INFO   ] [CardDetector] Card 2 (Rainforest of Divine Legacy) -> ACTIVE
+  vertices(active): top=107 tr=124 br=64 bot=37 bl=91 tl=113
+  inactive_top=(1128,238) gray=22.5
+  ice=0/6 on_card=6/6
+  reason: 6/6 vertices on card (<130) AND inactive_top 22.5 < 45 (popped up)
+16:33:47 [INFO   ] [CardDetector] Card 3 (Grimwind Woods) -> INACTIVE
+  vertices(active): top=64 tr=59 br=71 bot=49 bl=70 tl=93
+  inactive_top=(1352,300) gray=74.0
+  ice=0/6 on_card=6/6
+  reason: inactive_top 74.0 >= 50 (not popped up), 0/6 ice, 6/6 on-card
+16:33:47 [INFO   ] [CardDetector] Card 4 (Demiman Village) -> INACTIVE
+  vertices(active): top=206 tr=83 br=59 bot=44 bl=101 tl=207
+  inactive_top=(911,512) gray=99.0
+  ice=2/6 on_card=4/6
+  reason: inactive_top 99.0 >= 50 (not popped up), 2/6 ice, 4/6 on-card
+16:33:47 [INFO   ] [CardDetector] Card 5 (Swirling Mines) -> INACTIVE
+  vertices(active): top=130 tr=194 br=78 bot=57 bl=94 tl=169
+  inactive_top=(1152,469) gray=101.6
+  ice=2/6 on_card=4/6
+  reason: inactive_top 101.6 >= 50 (not popped up), 2/6 ice, 4/6 on-card
+16:33:47 [INFO   ] [CardDetector] Card 6 (Blustery Canyon) -> INACTIVE
+  vertices(active): top=66 tr=51 br=42 bot=28 bl=50 tl=55
+  inactive_top=(1520,471) gray=72.3
+  ice=0/6 on_card=6/6
+  reason: inactive_top 72.3 >= 50 (not popped up), 0/6 ice, 6/6 on-card
+16:33:47 [INFO   ] [CardDetector] Card 7 (Defiled Side Chamber) -> ACTIVE
+  vertices(active): top=132 tr=128 br=88 bot=41 bl=100 tl=128
+  inactive_top=(449,498) gray=20.3
+  ice=0/6 on_card=5/6
+  reason: 5/6 vertices on card (<130) AND inactive_top 20.3 < 45 (popped up)
+16:33:47 [INFO   ] [CardDetector] Card 8 (Deserted District) -> ACTIVE
+  vertices(active): top=126 tr=107 br=89 bot=44 bl=113 tl=72
+  inactive_top=(622,606) gray=28.0
+  ice=0/6 on_card=6/6
+  reason: 6/6 vertices on card (<130) AND inactive_top 28.0 < 45 (popped up)
+16:33:47 [INFO   ] [CardDetector] Card 9 (Wall of the Last Breath) -> INACTIVE
+  vertices(active): top=186 tr=142 br=77 bot=52 bl=64 tl=175
+  inactive_top=(1386,592) gray=77.3
+  ice=2/6 on_card=3/6
+  reason: inactive_top 77.3 >= 50 (not popped up), 2/6 ice, 3/6 on-card
+16:33:47 [INFO   ] [CardDetector] Card 10 (Abandoned Mines) -> INACTIVE
+  vertices(active): top=145 tr=180 br=75 bot=30 bl=87 tl=129
+  inactive_top=(980,726) gray=94.0
+  ice=1/6 on_card=4/6
+  reason: inactive_top 94.0 >= 50 (not popped up), 1/6 ice, 4/6 on-card
+16:33:47 [INFO   ] [CardDetector] Card 11 (Singing Sand) -> INACTIVE
+  vertices(active): top=155 tr=188 br=85 bot=52 bl=74 tl=220
+  inactive_top=(724,769) gray=86.5
+  ice=3/6 on_card=3/6
+  reason: inactive_top 86.5 >= 50 (not popped up), 3/6 ice, 3/6 on-card
+16:33:47 [INFO   ] [CardDetector] Card 2 RARITY: PURPLE
+  glow band at (1128,216) pixels=792
+  RGB=(168,109,197) B-R=28.2
+  HSV: H=133.1 S=109.8 V=197.0
+  classification: B-R=28.2 -> PURPLE
+16:33:47 [INFO   ] [CardDetector] Card 7 RARITY: BLUE
+  glow band at (449,476) pixels=792
+  RGB=(117,188,221) B-R=103.9
+  HSV: H=98.4 S=117.2 V=220.7
+  classification: B-R=103.9 -> BLUE
+16:33:47 [INFO   ] [CardDetector] Card 8 RARITY: ORANGE
+  glow band at (623,584) pixels=781
+  RGB=(185,150,122) B-R=-63.0
+  HSV: H=29.5 S=80.6 V=186.0
+  classification: B-R=-63.0 -> ORANGE
+16:33:47 [INFO   ] [CardDetector] === Detection Complete === active=[2, 7, 8] time=39ms
+16:33:47 [INFO   ] [CardDetector] Debug image saved to debug/detection_debug.png
+Exception in thread Thread-2:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\Daniel\Documents\GitHub\tli v2\src\gui\tabs\address_manager_tab.py", line 312, in _run
+    i_mean = i_gray.get("mean", 0)
+AttributeError: 'float' object has no attribute 'get'

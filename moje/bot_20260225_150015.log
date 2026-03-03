@@ -1,0 +1,103 @@
+15:00:15 [INFO   ] === Torchlight Infinite Bot V2 v3.8.0 starting ===
+15:00:15 [INFO   ] Config loaded from config.json
+15:00:15 [INFO   ] Loaded 8 addresses from addresses.json
+15:00:15 [INFO   ] [Input] Initialized with mode: hardware
+15:00:15 [INFO   ] [ScaleCalibrator] Loaded calibrations for 12 maps: ['Swirling Mines', 'High Court Maze', 'Defiled Side Chamber', 'Deserted District', 'Singing Sand', 'Shadow Outpost', 'Abandoned Mines', 'Rainforest of Divine Legacy', 'Grimwind Woods', 'Wall of the Last Breath', 'Blustery Canyon', 'Demiman Village']
+15:00:15 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+15:00:16 [INFO   ] Torchlight Infinite Bot V2 v3.8.0 started
+15:00:16 [INFO   ] [Hotkeys] Global hotkeys registered: F9=Start, F10=Stop, F11=Pause, F5=Record, F6=PauseRec
+15:00:18 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 22352)
+15:00:18 [INFO   ] Attached to torchlight_infinite.exe
+15:00:18 [INFO   ] Found game window by class 'UnrealWindow' + PID 22352 (HWND: 459624)
+15:00:18 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+15:00:18 [INFO   ] [Input] Hardware mode: will focus window before each input
+15:00:18 [DEBUG  ] Module torchlight_infinite.exe base: 0x7FF7D77E0000
+15:00:18 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary) | pos=(5276, 3852)
+15:00:19 [INFO   ] [Scanner] Scanning for FNamePool...
+15:00:19 [INFO   ] [Scanner] Cannot read zone name - FNamePool not resolved yet
+15:00:19 [INFO   ] [Scanner]   Trying FNamePool pattern 1/6...
+15:00:19 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+15:00:19 [INFO   ] [Input] Hardware mode: will focus window before each input
+15:00:19 [INFO   ] [AddrMgr] Attached - using scan results from attach
+15:00:19 [INFO   ] [Scanner]   FNamePool found at 0x7FF7DF501D40 (pattern 1)
+15:00:19 [INFO   ] [Scanner]   Validation: 3/5 indices readable, FName[3] = 'ByteProperty'
+15:00:19 [INFO   ] [Scanner] Scanning for GObjects...
+15:00:19 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+15:00:19 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+15:00:19 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CA042E20)
+15:00:19 [INFO   ] [Scanner]   GObjects found at 0x7FF7DF51ADE8 (pattern 2)
+15:00:19 [INFO   ] [Scanner]   NumElements=158212, NumChunks=3
+15:00:19 [INFO   ] Portal detector initialized (deferred)
+15:00:19 [INFO   ] [AddrMgr] FNamePool auto-populated: 0x7FF7DF501D40
+15:00:19 [INFO   ] [Overlay] No calibration for map: Embers Rest — use 'Calibrate Scale' button
+15:00:19 [INFO   ] [Overlay] Debug overlay started
+15:00:19 [DEBUG  ] [GObjects] NumElements=158212, NumChunks=3
+15:00:20 [DEBUG  ] [GObjects] Found 2 objects named 'FightMgr'
+15:00:20 [INFO   ] [Scanner] [Scanner] FightMgr live instance at 0x2F1C7EE40C0 (outer: /Engine/Transient)
+15:00:23 [INFO   ] [Overlay] Debug overlay stopped
+15:00:28 [INFO   ] [Overlay] No calibration for map: Embers Rest — use 'Calibrate Scale' button
+15:00:28 [INFO   ] [Overlay] Debug overlay started
+15:00:29 [INFO   ] [Overlay] Debug overlay stopped
+15:00:30 [INFO   ] [Overlay] No calibration for map: Embers Rest — use 'Calibrate Scale' button
+15:00:30 [INFO   ] [Overlay] Debug overlay started
+15:00:49 [DEBUG  ] Config saved
+15:01:12 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1A484C020)
+15:01:12 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CA042E20)
+15:01:12 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1A484C020)
+15:01:12 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CA042E20)
+15:01:12 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1A484C020)
+15:01:12 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CA042E20)
+15:01:13 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1A484C020)
+15:01:13 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CA042E20)
+15:01:14 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1A484C020)
+15:01:14 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CA042E20)
+15:01:15 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1A484C020)
+15:01:15 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1CA042E20)
+15:01:16 [INFO   ] [Scanner] Failed to read FName index at GWorld+0x18 (0x2F1CA042E38)
+15:01:16 [INFO   ] [Overlay] Switched calibration to map: Swirling Mines
+15:01:16 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1ECBFADE0)
+15:01:16 [INFO   ] [Overlay] Switched calibration to map: Defiled Side Chamber
+15:01:41 [INFO   ] [PathRecorder] No saved path for: Defiled Side Chamber
+15:01:48 [INFO   ] [AddrMgr] === UE4 Dump-Verified Chain ===
+15:01:48 [INFO   ] [AddrMgr] Chain: GWorld -> OwningGameInstance -> LocalPlayers[0] -> PlayerController -> Pawn -> RootComponent -> RelativeLocation
+15:01:48 [INFO   ] [AddrMgr] Offsets: 0x210 -> 0x38 -> 0x0 -> 0x30 -> 0x250 -> 0x130 -> 0x124
+15:01:48 [INFO   ] [AddrMgr] Main module: torchlight_infinite.exe at 0x7FF7D77E0000
+15:01:48 [INFO   ] [AddrMgr] Trying saved GWorld offset 0x7E84588...
+15:01:48 [INFO   ] [AddrMgr] GWorld static at 0x7FF7DF664588, points to 0x2F1ECBFADE0
+15:01:48 [INFO   ] [AddrMgr]   OwningGameInstance: 0x2F1ECBFADE0+0x210 -> 0x2F0A5193C40
+15:01:48 [INFO   ] [AddrMgr]   LocalPlayers (TArray data): 0x2F0A5193C40+0x38 -> 0x2F0B0222E80
+15:01:48 [INFO   ] [AddrMgr]   LocalPlayer[0]: 0x2F0B0222E80+0x0 -> 0x2F0BD9F5D80
+15:01:48 [INFO   ] [AddrMgr]   PlayerController: 0x2F0BD9F5D80+0x30 -> 0x2F125151420
+15:01:48 [INFO   ] [AddrMgr]   Pawn (ERolePlayer): 0x2F125151420+0x250 -> 0x2F211D2C080
+15:01:48 [INFO   ] [AddrMgr]   RootComponent: 0x2F211D2C080+0x130 -> 0x2F1DB09B380
+15:01:48 [INFO   ] [AddrMgr]   RelativeLocation: (-13950.0, 8450.0, 5.0)
+15:01:48 [INFO   ] [AddrMgr] Stability check (reading twice, 0.3s apart)...
+15:01:48 [INFO   ] [AddrMgr]   Drift: 0.00 (threshold: 2.0)
+15:01:48 [INFO   ] [AddrMgr] SUCCESS! Dump-verified chain resolved
+15:01:48 [INFO   ] [AddrMgr] Position: (-13950.0, 8450.0, 5.0)
+15:01:48 [INFO   ] [AddrMgr] Base: torchlight_infinite.exe+0x7E84588
+15:01:48 [INFO   ] [AddrMgr] Chain: 0x210 -> 0x38 -> 0x0 -> 0x30 -> 0x250 -> 0x130 -> 0x124
+15:01:48 [INFO   ] [AddrMgr] Saving discovered addresses...
+15:01:48 [DEBUG  ] Addresses saved
+15:01:48 [DEBUG  ] Addresses saved
+15:01:48 [DEBUG  ] Addresses saved
+15:01:48 [INFO   ] [AddrMgr] Addresses saved to Address Setup
+15:01:48 [INFO   ] [AddrMgr] Scanning for FNamePool...
+15:01:48 [INFO   ] [AddrMgr]   Trying FNamePool pattern 1/6...
+15:01:48 [INFO   ] [AddrMgr]   FNamePool found at 0x7FF7DF501D40 (pattern 1)
+15:01:48 [INFO   ] [AddrMgr]   Validation: 3/5 indices readable, FName[3] = 'ByteProperty'
+15:01:48 [INFO   ] [AddrMgr] Scanning for GObjects...
+15:01:48 [INFO   ] [AddrMgr]   Trying GObjects pattern 1/3...
+15:01:48 [INFO   ] [AddrMgr]   Trying GObjects pattern 2/3...
+15:01:49 [INFO   ] [AddrMgr]   GObjects found at 0x7FF7DF51ADE8 (pattern 2)
+15:01:49 [INFO   ] [AddrMgr]   NumElements=158212, NumChunks=3
+15:01:51 [INFO   ] [WallScan] Manual scan requested for 'Defiled Side Chamber'
+15:01:51 [DEBUG  ] [GObjects] Found 1 instances of class 'EMapTaleCollisionPoint'
+15:01:51 [INFO   ] [WallScanner] Found 1 EMapTaleCollisionPoint candidates
+15:01:51 [INFO   ] [WallScanner] Collected 0 wall actors (filtered 1 at origin)
+15:01:51 [INFO   ] [WallScan] No wall actors found during manual scan
+15:02:02 [INFO   ] [WallScan] Manual scan requested for 'Defiled Side Chamber'
+15:02:03 [DEBUG  ] [GObjects] Found 1 instances of class 'EMapTaleCollisionPoint'
+15:02:03 [INFO   ] [WallScanner] Found 1 EMapTaleCollisionPoint candidates
+15:02:03 [INFO   ] [WallScanner] Collected 0 wall actors (filtered 1 at origin)
+15:02:03 [INFO   ] [WallScan] No wall actors found during manual scan

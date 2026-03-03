@@ -1,0 +1,306 @@
+22:38:52 [INFO   ] === Torchlight Infinite Bot V2 v4.7.0 starting ===
+22:38:52 [INFO   ] Config loaded from config.json
+22:38:52 [INFO   ] Loaded 8 addresses from addresses.json
+22:38:52 [INFO   ] [Input] Initialized with mode: hardware
+22:38:52 [INFO   ] [ScaleCalibrator] Loaded calibrations for 12 maps: ['Swirling Mines', 'High Court Maze', 'Defiled Side Chamber', 'Deserted District', 'Singing Sand', 'Shadow Outpost', 'Abandoned Mines', 'Rainforest of Divine Legacy', 'Grimwind Woods', 'Wall of the Last Breath', 'Blustery Canyon', 'Demiman Village']
+22:38:52 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+22:38:53 [INFO   ] Torchlight Infinite Bot V2 v4.7.0 started
+22:38:53 [INFO   ] [Hotkeys] Global hotkeys registered: F9=Start, F10=Stop, F11=Pause, F5=Record, F6=PauseRec
+22:39:27 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 22352)
+22:39:27 [INFO   ] Attached to torchlight_infinite.exe
+22:39:27 [INFO   ] Found game window by class 'UnrealWindow' + PID 22352 (HWND: 459624)
+22:39:27 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+22:39:27 [INFO   ] [Input] Hardware mode: will focus window before each input
+22:39:27 [DEBUG  ] Module torchlight_infinite.exe base: 0x7FF7D77E0000
+22:39:28 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary) | pos=(0, 0)
+22:39:28 [INFO   ] [Scanner] Scanning for FNamePool...
+22:39:28 [INFO   ] [ZoneWatcher] Started — will auto-scan walkable area on map entry
+22:39:28 [INFO   ] [Scanner]   Trying FNamePool pattern 1/6...
+22:39:28 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+22:39:28 [INFO   ] [Input] Hardware mode: will focus window before each input
+22:39:28 [INFO   ] [AddrMgr] Attached - using scan results from attach
+22:39:28 [INFO   ] [Scanner]   FNamePool found at 0x7FF7DF501D40 (pattern 1)
+22:39:28 [INFO   ] [Scanner]   Validation: 3/5 indices readable, FName[3] = 'ByteProperty'
+22:39:28 [INFO   ] [Scanner] Scanning for GObjects...
+22:39:28 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+22:39:28 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+22:39:28 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:39:28 [INFO   ] [Scanner]   GObjects found at 0x7FF7DF51ADE8 (pattern 2)
+22:39:28 [INFO   ] [Scanner]   NumElements=171242, NumChunks=3
+22:39:28 [INFO   ] Portal detector initialized (deferred)
+22:39:28 [INFO   ] [AddrMgr] FNamePool auto-populated: 0x7FF7DF501D40
+22:39:30 [DEBUG  ] [GObjects] NumElements=171242, NumChunks=3
+22:39:30 [INFO   ] [ZoneWatcher] Entered 'Singing Sand' — auto-scanning walkable area + starting position sampler
+22:39:30 [DEBUG  ] [GObjects] Found 2 objects named 'FightMgr'
+22:39:30 [INFO   ] [Scanner] [Scanner] FightMgr live instance at 0x2F1FCD240C0 (outer: /Engine/Transient)
+22:39:30 [INFO   ] [WallScan] Cache hit: 3999 visited-position points for 'Singing Sand'
+22:39:31 [INFO   ] [WallScan] Walkable grid built from 3999 visited points in 0.171s: GridData(217×212 cells, cell=150u, walkable=10480/46004, mode=inverted(visited→walkable))
+22:39:31 [INFO   ] [Pathfinder] Grid installed: GridData(217×212 cells, cell=150u, walkable=10480/46004, mode=inverted(visited→walkable))
+22:39:31 [INFO   ] [WallScan] A* grid ready from cache: GridData(217×212 cells, cell=150u, walkable=10480/46004, mode=inverted(visited→walkable))
+22:39:32 [INFO   ] [ZoneWatcher] Cache for 'Singing Sand' has 3999 pts — skipping MinimapSaveObject retries, direct sampler is active
+22:39:33 [INFO   ] [Explorer] +33 positions for 'Singing Sand' (total: 4032)
+22:39:36 [INFO   ] [Explorer] +20 positions for 'Singing Sand' (total: 4052)
+22:39:39 [INFO   ] [Explorer] +6 positions for 'Singing Sand' (total: 4058)
+22:39:44 [INFO   ] [Explorer] +1 positions for 'Singing Sand' (total: 4059)
+22:39:47 [INFO   ] [Explorer] +58 positions for 'Singing Sand' (total: 4117)
+22:39:50 [INFO   ] [Explorer] +62 positions for 'Singing Sand' (total: 4179)
+22:39:53 [INFO   ] [Explorer] +63 positions for 'Singing Sand' (total: 4242)
+22:39:56 [INFO   ] [Explorer] +59 positions for 'Singing Sand' (total: 4301)
+22:40:00 [INFO   ] [Explorer] +59 positions for 'Singing Sand' (total: 4360)
+22:40:03 [INFO   ] [Explorer] +60 positions for 'Singing Sand' (total: 4420)
+22:40:06 [INFO   ] [Explorer] +50 positions for 'Singing Sand' (total: 4470)
+22:40:09 [INFO   ] [Explorer] +8 positions for 'Singing Sand' (total: 4478)
+22:40:19 [INFO   ] [Explorer] +1 positions for 'Singing Sand' (total: 4479)
+22:40:22 [INFO   ] [Explorer] +58 positions for 'Singing Sand' (total: 4537)
+22:40:25 [INFO   ] [Explorer] +52 positions for 'Singing Sand' (total: 4589)
+22:40:28 [INFO   ] [Explorer] +61 positions for 'Singing Sand' (total: 4650)
+22:40:31 [INFO   ] [Explorer] +49 positions for 'Singing Sand' (total: 4699)
+22:40:34 [INFO   ] [Explorer] +24 positions for 'Singing Sand' (total: 4723)
+22:40:37 [INFO   ] [Explorer] +6 positions for 'Singing Sand' (total: 4729)
+22:40:41 [INFO   ] [Explorer] +1 positions for 'Singing Sand' (total: 4730)
+22:40:44 [INFO   ] [Explorer] +51 positions for 'Singing Sand' (total: 4781)
+22:40:47 [INFO   ] [Explorer] +28 positions for 'Singing Sand' (total: 4809)
+22:40:50 [INFO   ] [Explorer] +53 positions for 'Singing Sand' (total: 4862)
+22:40:54 [INFO   ] [Explorer] +57 positions for 'Singing Sand' (total: 4919)
+22:40:57 [INFO   ] [Explorer] +56 positions for 'Singing Sand' (total: 4975)
+22:41:00 [INFO   ] [Explorer] +46 positions for 'Singing Sand' (total: 5021)
+22:41:03 [INFO   ] [Explorer] +35 positions for 'Singing Sand' (total: 5056)
+22:41:03 [INFO   ] [Overlay] Loaded calibration for map: Singing Sand
+22:41:03 [INFO   ] [Overlay] Debug overlay started
+22:41:03 [DEBUG  ] [UE4 Scanner] [typed_event] MapCustomTrap Sandlord arena class='EMapCustomTrap' pos=(14150,3720)
+22:41:03 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x6 → Sandlord (platform pos assigned) platform=(14150,3720)
+22:41:03 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x8 → Carjack (pos match) vehicle_pos=(17850,3080)
+22:41:03 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x9 → Unknown (ignored) pos=(0,0)
+22:41:03 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xa → Unknown (ignored) pos=(0,0)
+22:41:06 [INFO   ] [Explorer] +9 positions for 'Singing Sand' (total: 5065)
+22:41:13 [INFO   ] [Explorer] +1 positions for 'Singing Sand' (total: 5066)
+22:41:16 [INFO   ] [Explorer] +22 positions for 'Singing Sand' (total: 5088)
+22:41:19 [INFO   ] [Explorer] +12 positions for 'Singing Sand' (total: 5100)
+22:41:22 [INFO   ] [Explorer] +1 positions for 'Singing Sand' (total: 5101)
+22:41:23 [DEBUG  ] [UE4 Scanner] [typed_event] MapCustomTrap Sandlord arena class='EMapCustomTrap' pos=(14150,3720)
+22:41:23 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x6 → Sandlord (platform pos assigned) platform=(14150,3720)
+22:41:23 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x8 → Carjack (pos match) vehicle_pos=(17850,3080)
+22:41:23 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x9 → Unknown (ignored) pos=(0,0)
+22:41:23 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xa → Unknown (ignored) pos=(0,0)
+22:41:23 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x68b6 → Carjack (pos match) vehicle_pos=(17850,3080)
+22:41:25 [INFO   ] [Explorer] +3 positions for 'Singing Sand' (total: 5104)
+22:41:27 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:28 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:28 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:28 [INFO   ] [Explorer] +6 positions for 'Singing Sand' (total: 5110)
+22:41:28 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:29 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:29 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:29 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:29 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:29 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:30 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:30 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:30 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:32 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:32 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:32 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:34 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:34 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:34 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:37 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:37 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:37 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:38 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:38 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:38 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:39 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:39 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:39 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:39 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:39 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:45 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:45 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:47 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:47 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:47 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:48 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:49 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:49 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:50 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:50 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:50 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:52 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:52 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:52 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:54 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:54 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:54 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:54 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:55 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:55 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:56 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:56 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:56 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:41:58 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:41:58 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:41:58 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:05 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:05 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:05 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:07 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:07 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:07 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:09 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:09 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:09 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:11 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:11 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:11 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:11 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:11 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:13 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:13 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:13 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:15 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:15 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:15 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:16 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:16 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:16 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:21 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:21 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:21 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:29 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:29 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:29 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:29 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:30 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:30 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:30 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:30 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:30 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:31 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:31 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:32 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:32 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:32 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:34 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:34 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:36 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:36 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:36 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:37 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:37 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:39 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:39 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:39 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:39 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:39 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:40 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:40 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:40 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:42 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:42 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:42 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:43 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:43 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:43 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:49 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:49 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:49 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:55 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:55 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:55 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:55 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:57 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:57 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:57 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:42:58 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:42:58 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:42:58 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:01 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:01 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:01 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:02 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:02 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:05 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:06 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:06 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:08 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:08 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:10 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:10 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:10 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:11 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:11 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:14 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:14 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:14 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:14 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:14 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:14 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:15 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:15 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:17 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:17 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:17 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:17 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:17 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:18 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:18 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:18 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:20 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:20 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:21 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:21 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:21 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:23 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:23 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:23 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:24 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:24 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:24 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:25 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:25 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:25 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:30 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:30 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:30 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:32 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:32 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:37 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:37 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:38 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:38 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:38 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:41 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:41 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:41 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:42 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:42 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:42 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:43 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:43 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:43 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:46 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:46 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:46 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:47 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:47 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:47 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:47 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:47 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:47 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:52 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:53 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:53 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:53 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:53 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:53 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:54 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:54 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:54 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:43:55 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:43:55 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:43:55 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:44:00 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:44:00 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)
+22:44:00 [INFO   ] [Overlay] Switched calibration to map: Singing Sand
+22:44:01 [INFO   ] [Scanner] Zone FName[1910540] = 'UIMainLevelV2' (GWorld 0x2F1FC18E4A0)
+22:44:01 [INFO   ] [Scanner] Zone FName[2975678] = 'SQ_MingShaJuLuo100' (GWorld 0x2F1A3054060)

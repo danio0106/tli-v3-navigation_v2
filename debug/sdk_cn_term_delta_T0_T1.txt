@@ -1,0 +1,36 @@
+TERM: 通缉
+  added_hits=0
+  removed_hits=0
+
+TERM: 押运
+  added_hits=0
+  removed_hits=0
+
+TERM: 保镖
+  added_hits=0
+  removed_hits=0
+
+TERM: 沙海
+  added_hits=0
+  removed_hits=0
+
+TERM: 首领
+  added_hits=0
+  removed_hits=0
+
+TERM: Carjack
+  added_hits=0
+  removed_hits=0
+
+TERM: Sandlord
+  added_hits=0
+  removed_hits=0
+
+TERM: JiaoDuJun
+  added_hits=0
+  removed_hits=0
+
+TERM: ShaGu
+  added_hits=0
+  removed_hits=0
+

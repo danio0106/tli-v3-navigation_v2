@@ -1,0 +1,53 @@
+16:01:18 [INFO   ] === Torchlight Infinite Bot V2 v3.9.1 starting ===
+16:01:18 [INFO   ] Config loaded from config.json
+16:01:18 [INFO   ] Loaded 8 addresses from addresses.json
+16:01:18 [INFO   ] [Input] Initialized with mode: hardware
+16:01:18 [INFO   ] [ScaleCalibrator] Loaded calibrations for 12 maps: ['Swirling Mines', 'High Court Maze', 'Defiled Side Chamber', 'Deserted District', 'Singing Sand', 'Shadow Outpost', 'Abandoned Mines', 'Rainforest of Divine Legacy', 'Grimwind Woods', 'Wall of the Last Breath', 'Blustery Canyon', 'Demiman Village']
+16:01:18 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+16:01:19 [INFO   ] Torchlight Infinite Bot V2 v3.9.1 started
+16:01:19 [INFO   ] [Hotkeys] Global hotkeys registered: F9=Start, F10=Stop, F11=Pause, F5=Record, F6=PauseRec
+16:01:21 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 22352)
+16:01:21 [INFO   ] Attached to torchlight_infinite.exe
+16:01:21 [INFO   ] Found game window by class 'UnrealWindow' + PID 22352 (HWND: 459624)
+16:01:21 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+16:01:21 [INFO   ] [Input] Hardware mode: will focus window before each input
+16:01:21 [DEBUG  ] Module torchlight_infinite.exe base: 0x7FF7D77E0000
+16:01:22 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary) | pos=(5418, 4357)
+16:01:22 [INFO   ] [Scanner] Scanning for FNamePool...
+16:01:22 [INFO   ] [Scanner] Cannot read zone name - FNamePool not resolved yet
+16:01:22 [INFO   ] [Scanner]   Trying FNamePool pattern 1/6...
+16:01:22 [INFO   ] [Input] Target window set: HWND=459624, mode=hardware
+16:01:22 [INFO   ] [Input] Hardware mode: will focus window before each input
+16:01:22 [INFO   ] [AddrMgr] Attached - using scan results from attach
+16:01:22 [INFO   ] [Scanner]   FNamePool found at 0x7FF7DF501D40 (pattern 1)
+16:01:22 [INFO   ] [Scanner]   Validation: 3/5 indices readable, FName[3] = 'ByteProperty'
+16:01:22 [INFO   ] [Scanner] Scanning for GObjects...
+16:01:22 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+16:01:22 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+16:01:22 [INFO   ] [Scanner]   GObjects found at 0x7FF7DF51ADE8 (pattern 2)
+16:01:22 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1B5F34060)
+16:01:22 [INFO   ] [Scanner]   NumElements=158212, NumChunks=3
+16:01:22 [INFO   ] Portal detector initialized (deferred)
+16:01:22 [INFO   ] [AddrMgr] FNamePool auto-populated: 0x7FF7DF501D40
+16:01:56 [INFO   ] [Scanner] Zone FName[1444123] = 'YJ_XieDuYuZuo200' (GWorld 0x2F1C92CEDC0)
+16:03:16 [INFO   ] [Overlay] Loaded calibration for map: Defiled Side Chamber
+16:03:16 [INFO   ] [Overlay] Debug overlay started
+16:03:16 [DEBUG  ] [GObjects] NumElements=158212, NumChunks=3
+16:03:17 [DEBUG  ] [GObjects] Found 2 objects named 'FightMgr'
+16:03:17 [INFO   ] [Scanner] [Scanner] FightMgr live instance at 0x2F1E04FA060 (outer: /Engine/Transient)
+16:03:17 [DEBUG  ] [UE4 Scanner] [typed_event] MapCustomTrap Sandlord arena class='EMapCustomTrap' pos=(-2500,400)
+16:03:17 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x9 → Sandlord (platform pos assigned) platform=(-2500,400)
+16:03:17 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xa → Carjack (pos match) vehicle_pos=(-2500,-950)
+16:03:17 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0xb → Unknown (ignored) pos=(0,0)
+16:03:57 [DEBUG  ] [UE4 Scanner] [typed_event] MapCustomTrap Sandlord arena class='EMapCustomTrap' pos=(-2500,400)
+16:03:57 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x1 → Sandlord (platform pos assigned) platform=(-2500,400)
+16:03:57 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=0x2 → Carjack (pos match) vehicle_pos=(-2500,-950)
+16:03:57 [DEBUG  ] [UE4 Scanner] [typed_event] spawn=-0x1 → Unknown (ignored) pos=(0,0)
+16:03:57 [INFO   ] [Scanner] Failed to read FName index at GWorld+0x18 (0x2F1C92CEDD8)
+16:03:57 [INFO   ] [Overlay] Switched calibration to map: Swirling Mines
+16:03:57 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x2F1E2177720)
+16:05:39 [INFO   ] [Overlay] Debug overlay stopped
+16:05:41 [INFO   ] [Overlay] No calibration for map: Embers Rest — use 'Calibrate Scale' button
+16:05:41 [INFO   ] [Overlay] Debug overlay started
+16:12:30 [INFO   ] [Hotkeys] F5 pressed - Record
+16:12:39 [INFO   ] [Overlay] Debug overlay stopped

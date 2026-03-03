@@ -1,0 +1,233 @@
+======================================
+Torchlight Infinite Bot - Launcher
+======================================
+Running as Administrator
+Working directory: C:\Users\Daniel\Documents\GitHub\tli v2
+
+Attempting to launch the bot...
+
+15:31:23 [INFO   ] Config loaded from config.json
+15:31:23 [INFO   ] Loaded 8 addresses from addresses.json
+15:31:23 [INFO   ] [Input] Initialized with mode: hardware
+15:31:23 [WARNING] [HexCalibrator] Failed to load history: Expecting value: line 19 column 11 (char 409)
+15:31:23 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[10]
+15:31:23 [INFO   ] Torchlight Infinite Bot V2 v2.5.1 started
+15:31:23 [INFO   ] [Hotkeys] Global hotkeys registered: F9=Start, F10=Stop, F11=Pause, F5=Record, F6=PauseRec
+15:31:35 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 528)
+15:31:35 [INFO   ] Attached to torchlight_infinite.exe
+15:31:35 [INFO   ] Found game window by class 'UnrealWindow' + PID 528 (HWND: 196726)
+15:31:35 [INFO   ] [Input] Target window set: HWND=196726, mode=hardware
+15:31:35 [INFO   ] [Input] Hardware mode: will focus window before each input
+15:31:35 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary) | pos=(1847, -936)
+15:31:35 [INFO   ] [Scanner] Scanning for FNamePool...
+15:31:35 [INFO   ] [Input] Target window set: HWND=196726, mode=hardware
+15:31:35 [INFO   ] [Input] Hardware mode: will focus window before each input
+15:31:35 [INFO   ] [Scanner]   Trying FNamePool pattern 1/3...
+15:31:35 [INFO   ] [Scanner]   Trying FNamePool pattern 2/3...
+15:31:35 [INFO   ] [Scanner]   Trying FNamePool pattern 3/3...
+15:31:36 [INFO   ] [Scanner] FNamePool not found via sig scan
+15:31:36 [INFO   ] [Scanner] Scanning for GObjects...
+15:31:36 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+15:31:36 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+15:31:36 [INFO   ] [Scanner]   GObjects found at 0x7FF64F62ADE8 (pattern 2)
+15:31:36 [INFO   ] [Scanner]   NumElements=136937, NumChunks=3
+15:31:38 [INFO   ] [ScaleCalibrator] Starting calibration - keep game focused!
+15:31:38 [INFO   ] [ScaleCalibrator] Starting calibration...
+15:31:38 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,738)
+15:31:40 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1886,738)
+15:31:40 [INFO   ] [Input] Hardware click left at (1252,569)
+15:31:40 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0)
+15:31:42 [INFO   ] [ScaleCalibrator] X-axis: px=300 world=504 scale=0.594685 (avg=0.594685, n=1)
+15:31:42 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1586,742)
+15:31:45 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1585,1042)
+15:31:45 [INFO   ] [Input] Hardware click left at (952,869)
+15:31:45 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300)
+15:31:47 [INFO   ] [ScaleCalibrator] Y-axis: px=300 world=708 scale=0.423668 (avg=0.509176, n=2)
+15:31:47 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1585,742)
+15:31:47 [INFO   ] [ScaleCalibrator] Calibration complete: scale=0.509176 stable=False
+15:31:47 [INFO   ] [ScaleCalibrator] Scale saved: 0.509176
+15:32:00 [INFO   ] [Overlay] Using saved scale: 0.509176
+15:32:00 [INFO   ] [Overlay] Debug overlay started
+15:32:03 [INFO   ] [PathRecorder] No saved path for: High Court Maze
+15:32:04 [INFO   ] [PathRecorder] Recording started for: High Court Maze
+15:32:13 [INFO   ] [PathRecorder] Recording stopped: 4 waypoints
+15:32:59 [INFO   ] [ScaleCalibrator] Starting calibration - keep game focused!
+15:32:59 [INFO   ] [ScaleCalibrator] Starting calibration...
+15:32:59 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,739)
+15:33:02 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1886,740)
+15:33:02 [INFO   ] [Input] Hardware click left at (1252,569)
+15:33:02 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0)
+15:33:04 [INFO   ] [ScaleCalibrator] X-axis: px=300 world=505 scale=0.594041 (avg=0.537464, n=3)
+15:33:04 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1584,740)
+15:33:06 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1584,1040)
+15:33:06 [INFO   ] [Input] Hardware click left at (952,869)
+15:33:06 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300)
+15:33:08 [INFO   ] [ScaleCalibrator] Y-axis: px=300 world=704 scale=0.426064 (avg=0.509614, n=4)
+15:33:08 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1585,741)
+15:33:08 [INFO   ] [ScaleCalibrator] Calibration complete: scale=0.509614 stable=True
+15:33:08 [INFO   ] [ScaleCalibrator] Scale saved: 0.509614
+15:33:15 [INFO   ] [ScaleCalibrator] Starting calibration - keep game focused!
+15:33:15 [INFO   ] [ScaleCalibrator] Starting calibration...
+15:33:16 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1584,740)
+15:33:18 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1885,739)
+15:33:18 [INFO   ] [Input] Hardware click left at (1252,569)
+15:33:18 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0)
+15:33:20 [INFO   ] [ScaleCalibrator] X-axis: px=300 world=503 scale=0.596709 (avg=0.538263, n=5)
+15:33:20 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,739)
+15:33:23 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1585,1039)
+15:33:23 [INFO   ] [Input] Hardware click left at (952,869)
+15:33:23 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300)
+15:33:27 [INFO   ] [ScaleCalibrator] Y-axis: px=300 world=702 scale=0.427288 (avg=0.510519, n=6)
+15:33:27 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1587,740)
+15:33:27 [INFO   ] [ScaleCalibrator] Calibration complete: scale=0.510519 stable=True
+15:33:27 [INFO   ] [ScaleCalibrator] Scale saved: 0.510519
+15:50:16 [INFO   ] [ScaleCalibrator] Starting calibration - keep game focused!
+15:50:16 [INFO   ] [ScaleCalibrator] Starting calibration...
+15:50:16 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1585,741)
+15:50:19 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1883,738)
+15:50:19 [INFO   ] [Input] Hardware click left at (1252,569)
+15:50:19 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0)
+15:50:21 [INFO   ] [ScaleCalibrator] X-axis: px=300 world=498 scale=0.602390 (avg=0.527757, n=7)
+15:50:21 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1584,738)
+15:50:24 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1584,1042)
+15:50:24 [INFO   ] [Input] Hardware click left at (952,869)
+15:50:24 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300)
+15:50:26 [INFO   ] [ScaleCalibrator] Y-axis: px=300 world=167 scale=1.796339 (avg=0.540196, n=8)
+15:50:26 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1584,741)
+15:50:26 [INFO   ] [ScaleCalibrator] Calibration complete: scale=0.540196 stable=True
+15:50:26 [INFO   ] [ScaleCalibrator] Scale saved: 0.540196
+15:50:31 [INFO   ] [ScaleCalibrator] Starting calibration - keep game focused!
+15:50:31 [INFO   ] [ScaleCalibrator] Starting calibration...
+15:50:31 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1586,738)
+15:50:33 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1884,739)
+15:50:33 [INFO   ] [Input] Hardware click left at (1252,569)
+15:50:33 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0)
+15:50:35 [INFO   ] [ScaleCalibrator] X-axis: px=300 world=501 scale=0.598728 (avg=0.548558, n=9)
+15:50:35 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1587,741)
+15:50:38 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1586,1038)
+15:50:38 [INFO   ] [Input] Hardware click left at (952,869)
+15:50:38 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300)
+15:50:42 [INFO   ] [ScaleCalibrator] Y-axis: px=300 world=700 scale=0.428494 (avg=0.539991, n=10)
+15:50:42 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1587,740)
+15:50:42 [INFO   ] [ScaleCalibrator] Calibration complete: scale=0.539991 stable=True
+15:50:42 [INFO   ] [ScaleCalibrator] Scale saved: 0.539991
+15:52:36 [INFO   ] [ScaleCalibrator] Starting calibration - keep game focused!
+15:52:36 [INFO   ] [ScaleCalibrator] Starting calibration...
+15:52:36 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1586,742)
+15:52:39 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1884,739)
+15:52:39 [INFO   ] [Input] Hardware click left at (1252,569)
+15:52:39 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0)
+15:52:41 [INFO   ] [ScaleCalibrator] X-axis: px=300 world=500 scale=0.599515 (avg=0.548494, n=11)
+15:52:41 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1587,740)
+15:52:43 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1583,1040)
+15:52:43 [INFO   ] [Input] Hardware click left at (952,869)
+15:52:43 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300)
+15:52:45 [INFO   ] [ScaleCalibrator] Y-axis: px=300 world=704 scale=0.425864 (avg=0.533190, n=12)
+15:52:45 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1586,741)
+15:52:45 [INFO   ] [ScaleCalibrator] Calibration complete: scale=0.533190 stable=True
+15:52:45 [INFO   ] [ScaleCalibrator] Scale saved: 0.533190
+15:53:29 [INFO   ] [ScaleCalibrator] Starting calibration - keep game focused!
+15:53:29 [INFO   ] [ScaleCalibrator] Starting calibration...
+15:53:29 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1587,740)
+15:53:32 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1885,739)
+15:53:32 [INFO   ] [Input] Hardware click left at (1252,569)
+15:53:32 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0)
+15:53:34 [INFO   ] [ScaleCalibrator] X-axis: px=300 world=505 scale=0.593809 (avg=0.539926, n=13)
+15:53:34 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1586,738)
+15:53:37 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1585,1040)
+15:53:37 [INFO   ] [Input] Hardware click left at (952,869)
+15:53:37 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300)
+15:53:41 [INFO   ] [ScaleCalibrator] Y-axis: px=300 world=704 scale=0.425913 (avg=0.528524, n=14)
+15:53:41 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1586,742)
+15:53:41 [INFO   ] [ScaleCalibrator] Calibration complete: scale=0.528524 stable=True
+15:53:41 [INFO   ] [ScaleCalibrator] Scale saved: 0.528524
+15:54:48 [INFO   ] [ScaleCalibrator] Starting calibration - keep game focused!
+15:54:48 [INFO   ] [ScaleCalibrator] Starting calibration...
+15:54:48 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1587,740)
+15:54:51 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1887,741)
+15:54:51 [INFO   ] [Input] Hardware click left at (1252,569)
+15:54:51 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0)
+15:54:53 [INFO   ] [ScaleCalibrator] X-axis: px=300 world=507 scale=0.591775 (avg=0.539066, n=15)
+15:54:53 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,738)
+15:54:56 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1586,1042)
+15:54:56 [INFO   ] [Input] Hardware click left at (952,869)
+15:54:56 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300)
+15:54:58 [INFO   ] [ScaleCalibrator] Y-axis: px=300 world=585 scale=0.513240 (avg=0.536483, n=16)
+15:54:58 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1584,739)
+15:54:58 [INFO   ] [ScaleCalibrator] Calibration complete: scale=0.536483 stable=True
+15:54:58 [INFO   ] [ScaleCalibrator] Scale saved: 0.536483
+15:58:25 [INFO   ] [ScaleCalibrator] Starting calibration - keep game focused!
+15:58:25 [INFO   ] [ScaleCalibrator] Starting calibration...
+15:58:25 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1586,738)
+15:58:28 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1884,741)
+15:58:28 [INFO   ] [Input] Hardware click left at (1252,569)
+15:58:28 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0)
+15:58:30 [INFO   ] [ScaleCalibrator] X-axis: px=300 world=501 scale=0.599265 (avg=0.542191, n=17)
+15:58:30 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1587,742)
+15:58:32 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1583,1038)
+15:58:32 [INFO   ] [Input] Hardware click left at (952,869)
+15:58:32 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300)
+15:58:36 [INFO   ] [ScaleCalibrator] Y-axis: px=300 world=701 scale=0.427849 (avg=0.532662, n=18)
+15:58:36 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1586,742)
+15:58:36 [INFO   ] [ScaleCalibrator] Calibration complete: scale=0.532662 stable=True
+15:58:36 [INFO   ] [ScaleCalibrator] Scale saved: 0.532662
+15:59:16 [INFO   ] [ScaleCalibrator] Starting calibration - keep game focused!
+15:59:16 [INFO   ] [ScaleCalibrator] Starting calibration...
+15:59:16 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1587,741)
+15:59:19 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1886,742)
+15:59:19 [INFO   ] [Input] Hardware click left at (1252,569)
+15:59:19 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0)
+15:59:21 [INFO   ] [ScaleCalibrator] X-axis: px=300 world=504 scale=0.595692 (avg=0.537511, n=19)
+15:59:21 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,742)
+15:59:23 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1587,1038)
+15:59:23 [INFO   ] [Input] Hardware click left at (952,869)
+15:59:23 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300)
+15:59:27 [INFO   ] [ScaleCalibrator] Y-axis: px=300 world=700 scale=0.428528 (avg=0.532570, n=20)
+15:59:27 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1587,738)
+15:59:27 [INFO   ] [ScaleCalibrator] Calibration complete: scale=0.532570 stable=True
+15:59:27 [INFO   ] [ScaleCalibrator] Scale saved: 0.532570
+16:00:21 [INFO   ] [ScaleCalibrator] Starting calibration - keep game focused!
+16:00:21 [INFO   ] [ScaleCalibrator] Starting calibration...
+16:00:21 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1584,740)
+16:00:24 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1885,741)
+16:00:24 [INFO   ] [Input] Hardware click left at (1252,569)
+16:00:24 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0)
+16:00:26 [INFO   ] [ScaleCalibrator] X-axis: px=300 world=502 scale=0.597515 (avg=0.532806, n=20)
+16:00:26 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1587,742)
+16:00:29 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1586,1040)
+16:00:29 [INFO   ] [Input] Hardware click left at (952,869)
+16:00:29 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300)
+16:00:31 [INFO   ] [ScaleCalibrator] Y-axis: px=300 world=704 scale=0.425913 (avg=0.532806, n=20)
+16:00:31 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1585,738)
+16:00:31 [INFO   ] [ScaleCalibrator] Calibration complete: scale=0.532806 stable=True
+16:00:31 [INFO   ] [ScaleCalibrator] Scale saved: 0.532806
+16:01:14 [INFO   ] [ScaleCalibrator] Starting calibration - keep game focused!
+16:01:14 [INFO   ] [ScaleCalibrator] Starting calibration...
+16:01:14 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1586,742)
+16:01:17 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1885,738)
+16:01:17 [INFO   ] [Input] Hardware click left at (1252,569)
+16:01:17 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0)
+16:01:19 [INFO   ] [ScaleCalibrator] X-axis: px=300 world=502 scale=0.597347 (avg=0.533081, n=20)
+16:01:19 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,738)
+16:01:22 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1586,1042)
+16:01:22 [INFO   ] [Input] Hardware click left at (952,869)
+16:01:22 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300)
+16:01:23 [INFO   ] [ScaleCalibrator] Y-axis: px=300 world=708 scale=0.423793 (avg=0.533081, n=20)
+16:01:24 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,739)
+16:01:24 [INFO   ] [ScaleCalibrator] Calibration complete: scale=0.533081 stable=True
+16:01:24 [INFO   ] [ScaleCalibrator] Scale saved: 0.533081
+16:02:20 [INFO   ] [ScaleCalibrator] Starting calibration - keep game focused!
+16:02:20 [INFO   ] [ScaleCalibrator] Starting calibration...
+16:02:20 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1585,741)
+16:02:23 [INFO   ] [Input] Hardware mouse move: client(1252,569) -> screen(1883,738)
+16:02:23 [INFO   ] [Input] Hardware click left at (1252,569)
+16:02:23 [INFO   ] [ScaleCalibrator] Left-clicked at client (1252, 569), pixel offset=(300, 0)
+16:02:25 [INFO   ] [ScaleCalibrator] X-axis: px=300 world=500 scale=0.600164 (avg=0.533294, n=20)
+16:02:25 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1583,738)
+16:02:27 [INFO   ] [Input] Hardware mouse move: client(952,869) -> screen(1585,1038)
+16:02:27 [INFO   ] [Input] Hardware click left at (952,869)
+16:02:27 [INFO   ] [ScaleCalibrator] Left-clicked at client (952, 869), pixel offset=(0, 300)
+16:02:31 [INFO   ] [ScaleCalibrator] Y-axis: px=300 world=699 scale=0.429131 (avg=0.533448, n=20)
+16:02:31 [INFO   ] [Input] Hardware mouse move: client(952,569) -> screen(1587,738)
+16:02:31 [INFO   ] [ScaleCalibrator] Calibration complete: scale=0.533448 stable=True
+16:02:31 [INFO   ] [ScaleCalibrator] Scale saved: 0.533448

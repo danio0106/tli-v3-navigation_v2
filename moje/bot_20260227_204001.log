@@ -1,0 +1,180 @@
+20:40:01 [INFO   ] === Torchlight Infinite Bot V2 v4.49.0 starting ===
+20:40:02 [INFO   ] Config loaded from config.json
+20:40:02 [INFO   ] Loaded 8 addresses from addresses.json
+20:40:02 [INFO   ] [Input] Initialized with mode: hardware
+20:40:02 [INFO   ] [ScaleCalibrator] Loaded calibrations for 12 maps: ['Swirling Mines', 'High Court Maze', 'Defiled Side Chamber', 'Deserted District', 'Singing Sand', 'Shadow Outpost', 'Abandoned Mines', 'Rainforest of Divine Legacy', 'Grimwind Woods', 'Wall of the Last Breath', 'Blustery Canyon', 'Demiman Village']
+20:40:02 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[]
+20:40:03 [INFO   ] Torchlight Infinite Bot V2 v4.49.0 started
+20:40:03 [INFO   ] [Hotkeys] Global hotkeys registered: F9=Start, F10=Stop, F11=Pause, F5=Record, F6=PauseRec
+20:40:04 [INFO   ] [AutoAttach] torchlight_infinite.exe detected — attaching automatically
+20:40:04 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 14348)
+20:40:04 [INFO   ] Attached to torchlight_infinite.exe
+20:40:04 [INFO   ] Found game window by class 'UnrealWindow' + PID 14348 (HWND: 525410)
+20:40:04 [INFO   ] [Input] Target window set: HWND=525410, mode=hardware
+20:40:04 [INFO   ] [Input] Hardware mode: will focus window before each input
+20:40:04 [DEBUG  ] Module torchlight_infinite.exe base: 0x7FF6EFBA0000
+20:40:04 [INFO   ] Saved addresses valid - skipping scan: OK: pos=(2834, 151)
+20:40:04 [INFO   ] [Scanner] Scanning for FNamePool...
+20:40:04 [INFO   ] [Scanner] Cannot read zone name - FNamePool not resolved yet
+20:40:04 [INFO   ] [Scanner]   Trying FNamePool pattern 1/6...
+20:40:04 [INFO   ] [ZoneWatcher] Started — will auto-scan walkable area on map entry
+20:40:04 [INFO   ] [Input] Target window set: HWND=525410, mode=hardware
+20:40:04 [INFO   ] [Input] Hardware mode: will focus window before each input
+20:40:04 [INFO   ] [AddrMgr] Attached - using scan results from attach
+20:40:05 [INFO   ] [Scanner]   FNamePool found at 0x7FF6F78C1D40 (pattern 1)
+20:40:05 [INFO   ] [Scanner]   Validation: 3/5 indices readable, FName[3] = 'ByteProperty'
+20:40:05 [INFO   ] [Scanner] Scanning for GObjects...
+20:40:05 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+20:40:05 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x18E192D64E0)
+20:40:05 [DEBUG  ] [HPScan] Pawn at 0x18DB5F3D850, scanning ueComponents for ERoleComponent...
+20:40:05 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+20:40:05 [DEBUG  ] [HPScan]   ueComp[0] key_class='EAccumulatedValueComponent' comp=0x18DEF612C40
+20:40:05 [DEBUG  ] [HPScan]   ueComp[1] key_class='EAnimeComponent' comp=0x18E0289B050
+20:40:05 [DEBUG  ] [HPScan]   ueComp[2] key_class='EBoundingCapsuleComponent' comp=0x18DB5508380
+20:40:05 [DEBUG  ] [HPScan]   ueComp[3] key_class='EBuffComponent' comp=0x18DC262DB80
+20:40:05 [DEBUG  ] [HPScan]   ueComp[4] key_class='ECtrlComponent' comp=0x18DDDAB7EC0
+20:40:05 [DEBUG  ] [HPScan]   ueComp[5] key_class='ECtrlPadComponent' comp=0x18DC262EDC0
+20:40:05 [DEBUG  ] [HPScan]   ueComp[6] key_class='ECameraComponent' comp=0x18E06F37180
+20:40:05 [DEBUG  ] [HPScan]   ueComp[7] key_class='ECapsuleComponent' comp=0x18DA2743A80
+20:40:05 [DEBUG  ] [HPScan]   ueComp[8] key_class='EBoxComponent' comp=0x18DA27477C0
+20:40:05 [DEBUG  ] [HPScan]   ueComp[9] key_class='ECfgComponent' comp=0x18DB5E26B80
+20:40:05 [INFO   ] [Scanner]   GObjects found at 0x7FF6F78DADE8 (pattern 2)
+20:40:05 [DEBUG  ] [HPScan]   ueComp[10] key_class='ECtrlAimComponent' comp=0x18E140B9E80
+20:40:05 [INFO   ] [Scanner]   NumElements=202783, NumChunks=4
+20:40:05 [DEBUG  ] [HPScan]   ueComp[11] key_class='ECullObstacleComponent' comp=0x18DB5E26280
+20:40:05 [INFO   ] Portal detector initialized (deferred)
+20:40:05 [DEBUG  ] [HPScan]   ueComp[12] key_class='ECustomWidgetComponent' comp=0x18DB550BB00
+20:40:05 [INFO   ] [AddrMgr] FNamePool auto-populated: 0x7FF6F78C1D40
+20:40:05 [DEBUG  ] [HPScan]   ueComp[13] key_class='EFashionComponent' comp=0x18DB5F390E0
+20:40:05 [DEBUG  ] [HPScan]   ueComp[14] key_class='EFashionAssistComponent' comp=0x18E0B400760
+20:40:05 [DEBUG  ] [HPScan]   ueComp[15] key_class='EFigureShadowComponent' comp=0x18D9DDBC180
+20:40:05 [DEBUG  ] [HPScan]   ueComp[16] key_class='ELightComponent' comp=0x18E06F32180
+20:40:05 [DEBUG  ] [HPScan]   ueComp[17] key_class='EMoveComponent' comp=0x18DDDAB9A40
+20:40:05 [DEBUG  ] [HPScan]   ueComp[18] key_class='EMoveCtrlComponent' comp=0x18D9A032540
+20:40:05 [DEBUG  ] [HPScan]   ueComp[19] key_class='EMsgComponent' comp=0x18DB5505380
+20:40:05 [DEBUG  ] [HPScan]   ueComp[20] key_class='EOverheadDialogComponent' comp=0x18DB550F880
+20:40:05 [DEBUG  ] [HPScan]   ueComp[21] key_class='EParticleFxComponent' comp=0x18E0B40B380
+20:40:05 [DEBUG  ] [HPScan]   ueComp[22] key_class='EParticleFxTickComponent' comp=0x18D9DDBFEC0
+20:40:05 [DEBUG  ] [HPScan]   ueComp[23] key_class='EPlayerCameraShakeComponent' comp=0x18DB5502080
+20:40:05 [DEBUG  ] [HPScan]   ueComp[24] key_class='EPlayerComponent' comp=0x18DFBF42600
+20:40:05 [DEBUG  ] [HPScan]   ueComp[25] key_class='EHeroSpecialityComponent' comp=0x18DB5508200
+20:40:05 [DEBUG  ] [HPScan]   ueComp[26] key_class='ERoleComponent' comp=0x18E1DBA8B20
+20:40:05 [INFO   ] [HPScan] Found ERoleComponent at 0x18E1DBA8B20 (ueComponents[26])
+20:40:05 [INFO   ] [HPScan] RoleLogic candidate at comp+0x158: LogicFrame=42 HpMax=100 Hp=33
+20:40:05 [INFO   ] [HPScan] RoleLogic found: ERoleComponent=0x18E1DBA8B20  offset=+0x158
+20:40:08 [INFO   ] [Scanner] Zone FName[1912793] = 'UIMainLevelV2' (UI overlay, suppressing repeats for 30s)
+20:40:08 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x18E192D64E0)
+20:40:09 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x18E192D64E0)
+20:40:16 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x18E192D64E0)
+20:40:18 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x18E192D64E0)
+20:40:21 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x18E192D64E0)
+20:40:22 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x18E192D64E0)
+20:40:25 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x18E192D64E0)
+20:40:32 [INFO   ] [Scanner] Zone FName[2828224] = 'SD_ZhongXiGaoQiang200' (GWorld 0x18DDD49EDC0)
+20:40:32 [DEBUG  ] [HPScan] Pawn pointer not available — retrying later
+20:40:33 [INFO   ] [ZoneWatcher] Entered 'Wall of the Last Breath' — auto-scanning walkable area + starting position sampler
+20:40:33 [INFO   ] [WallScan] Cache hit: 1351 visited-position points for 'Wall of the Last Breath'
+20:40:33 [INFO   ] [WallScan] Walkable grid built from 1351 visited points in 0.062s: GridData(112×174 cells, cell=150u, walkable=3029/19488, mode=inverted(visited→walkable))
+20:40:33 [INFO   ] [Pathfinder] Grid installed: GridData(112×174 cells, cell=150u, walkable=3029/19488, mode=inverted(visited→walkable))
+20:40:33 [INFO   ] [WallScan] A* grid ready from cache: GridData(112×174 cells, cell=150u, walkable=3029/19488, mode=inverted(visited→walkable))
+20:40:35 [INFO   ] [ZoneWatcher] Cache for 'Wall of the Last Breath' has 1351 pts — skipping MinimapSaveObject retries, direct sampler is active
+20:40:36 [INFO   ] [Explorer] +45 positions for 'Wall of the Last Breath' (total: 1396)
+20:40:37 [DEBUG  ] [HPScan] Pawn at 0x18E0C2A19D0, scanning ueComponents for ERoleComponent...
+20:40:37 [DEBUG  ] [HPScan]   ueComp[0] key_class='EAccumulatedValueComponent' comp=0x18DBA839A80
+20:40:37 [DEBUG  ] [HPScan]   ueComp[1] key_class='EAnimeComponent' comp=0x18DA5160BA0
+20:40:37 [DEBUG  ] [HPScan]   ueComp[2] key_class='EBoundingCapsuleComponent' comp=0x18DA760B980
+20:40:37 [DEBUG  ] [HPScan]   ueComp[3] key_class='EBuffComponent' comp=0x18DF970C4B0
+20:40:37 [DEBUG  ] [HPScan]   ueComp[4] key_class='ECtrlComponent' comp=0x18DFC10A280
+20:40:37 [DEBUG  ] [HPScan]   ueComp[5] key_class='ECtrlPadComponent' comp=0x18E1D5EF6E0
+20:40:37 [DEBUG  ] [HPScan]   ueComp[6] key_class='ECameraComponent' comp=0x18DB8536A00
+20:40:37 [DEBUG  ] [HPScan]   ueComp[7] key_class='ECapsuleComponent' comp=0x18E0C1C72C0
+20:40:37 [DEBUG  ] [HPScan]   ueComp[8] key_class='EBoxComponent' comp=0x18DA2650240
+20:40:37 [DEBUG  ] [HPScan]   ueComp[9] key_class='ECfgComponent' comp=0x18DEECF9D00
+20:40:37 [DEBUG  ] [HPScan]   ueComp[10] key_class='ECtrlAimComponent' comp=0x18E140B27C0
+20:40:37 [DEBUG  ] [HPScan]   ueComp[11] key_class='ECullObstacleComponent' comp=0x18DA7C713C0
+20:40:37 [DEBUG  ] [HPScan]   ueComp[12] key_class='ECustomWidgetComponent' comp=0x18C8188E080
+20:40:37 [DEBUG  ] [HPScan]   ueComp[13] key_class='EFashionComponent' comp=0x18E0C2AB890
+20:40:37 [DEBUG  ] [HPScan]   ueComp[14] key_class='EFashionAssistComponent' comp=0x18DE09B9A00
+20:40:37 [DEBUG  ] [HPScan]   ueComp[15] key_class='EFigureShadowComponent' comp=0x18E140B54C0
+20:40:37 [DEBUG  ] [HPScan]   ueComp[16] key_class='ELightComponent' comp=0x18DB8537680
+20:40:37 [DEBUG  ] [HPScan]   ueComp[17] key_class='EMoveComponent' comp=0x18DFB070300
+20:40:37 [DEBUG  ] [HPScan]   ueComp[18] key_class='EMoveCtrlComponent' comp=0x18E2022F900
+20:40:37 [DEBUG  ] [HPScan]   ueComp[19] key_class='EMsgComponent' comp=0x18DA760AF00
+20:40:37 [DEBUG  ] [HPScan]   ueComp[20] key_class='EOverheadDialogComponent' comp=0x18C8188E500
+20:40:37 [DEBUG  ] [HPScan]   ueComp[21] key_class='EParticleFxComponent' comp=0x18DE09B6700
+20:40:37 [DEBUG  ] [HPScan]   ueComp[22] key_class='EParticleFxTickComponent' comp=0x18E140BC040
+20:40:37 [DEBUG  ] [HPScan]   ueComp[23] key_class='EPlayerCameraShakeComponent' comp=0x18C8188DD80
+20:40:37 [DEBUG  ] [HPScan]   ueComp[24] key_class='EPlayerComponent' comp=0x18DB680C800
+20:40:37 [DEBUG  ] [HPScan]   ueComp[25] key_class='EHeroSpecialityComponent' comp=0x18C81887600
+20:40:37 [DEBUG  ] [HPScan]   ueComp[26] key_class='ERoleComponent' comp=0x18DC7383620
+20:40:37 [INFO   ] [HPScan] Found ERoleComponent at 0x18DC7383620 (ueComponents[26])
+20:40:37 [INFO   ] [HPScan] RoleLogic candidate at comp+0x158: LogicFrame=42 HpMax=100 Hp=33
+20:40:37 [INFO   ] [HPScan] RoleLogic found: ERoleComponent=0x18DC7383620  offset=+0x158
+20:40:39 [INFO   ] [Explorer] +60 positions for 'Wall of the Last Breath' (total: 1456)
+20:40:42 [INFO   ] [Explorer] +34 positions for 'Wall of the Last Breath' (total: 1490)
+20:40:45 [INFO   ] [Explorer] +1 positions for 'Wall of the Last Breath' (total: 1491)
+20:40:48 [INFO   ] [Explorer] +8 positions for 'Wall of the Last Breath' (total: 1499)
+20:40:51 [INFO   ] [Explorer] +1 positions for 'Wall of the Last Breath' (total: 1500)
+20:40:54 [INFO   ] [Explorer] +2 positions for 'Wall of the Last Breath' (total: 1502)
+20:40:57 [INFO   ] [Explorer] +2 positions for 'Wall of the Last Breath' (total: 1504)
+20:41:00 [INFO   ] [Explorer] +8 positions for 'Wall of the Last Breath' (total: 1512)
+20:41:04 [INFO   ] [Explorer] +1 positions for 'Wall of the Last Breath' (total: 1513)
+20:41:07 [INFO   ] [Explorer] +18 positions for 'Wall of the Last Breath' (total: 1531)
+20:41:10 [INFO   ] [Explorer] +51 positions for 'Wall of the Last Breath' (total: 1582)
+20:41:13 [INFO   ] [Explorer] +38 positions for 'Wall of the Last Breath' (total: 1620)
+20:41:17 [INFO   ] [Explorer] +60 positions for 'Wall of the Last Breath' (total: 1680)
+20:41:20 [INFO   ] [Explorer] +51 positions for 'Wall of the Last Breath' (total: 1731)
+20:41:23 [INFO   ] [Explorer] +63 positions for 'Wall of the Last Breath' (total: 1794)
+20:41:26 [INFO   ] [Explorer] +60 positions for 'Wall of the Last Breath' (total: 1854)
+20:41:26 [INFO   ] [Scanner] Zone FName[1444051] = 'XZ_YuJinZhiXiBiNanSuo200' (GWorld 0x18DB75B12C0)
+20:41:27 [DEBUG  ] [HPScan] Pawn pointer not available — retrying later
+20:41:29 [INFO   ] [ZoneWatcher] Zone exited → final scan attempt for 'Wall of the Last Breath'
+20:41:29 [INFO   ] [WallScan] Exit scan started for 'Wall of the Last Breath' (zone='SD_ZhongXiGaoQiang200') — capturing positions accumulated this run
+20:41:29 [INFO   ] [WallScan] Reading MinimapSaveObject.Records for 'Wall of the Last Breath' (zone='SD_ZhongXiGaoQiang200')
+20:41:30 [DEBUG  ] [GObjects] Found 2 instances of class 'MinimapSaveObject'
+20:41:30 [DEBUG  ] [MinimapScan] Found 2 MinimapSaveObject candidate(s)
+20:41:30 [DEBUG  ] [MinimapScan]   Skipping CDO: 'Default__MinimapSaveObject' @ 0x18C86B10480
+20:41:30 [DEBUG  ] [MinimapScan]   Candidate 'MinimapSaveObject' @ 0x18DB7F45E80, outer='/Engine/Transient'
+20:41:30 [INFO   ] [MinimapScan] MinimapSaveObject live instance at 0x18DB7F45E80 (outer: /Engine/Transient)
+20:41:30 [DEBUG  ] [MinimapScan] Records TMap @ 0x18DB7F45EA8: data_ptr=0x18E0A7D3A00, array_num=1 (stride=0xD8 bytes/entry)
+20:41:30 [DEBUG  ] [MinimapScan] Looking for zone 'SD_ZhongXiGaoQiang200' in 1 TMap entries (key_map has 9 cached entries: [('5302_0', 'GeBuLinCunLuo01'), ('5305_0', 'SD_ZhongXiGaoQiang200'), ('110_0', 'SD_ZhongXiGaoQiang200'), ('5300_0', 'DD_ZaWuJieQu000'), ('5306_0', 'YL_BeiFengLinDi201'), ('5304_0', 'KD_WeiJiKuangDong01'), ('5311_0', 'SD_GeBuLinYingDi'), ('5307_0', 'DD_TingYuanMiGong200'), ('5303_0', 'KD_AiRenKuangDong01')])
+20:41:30 [DEBUG  ] [MinimapScan]   entry[0]: raw bytes [0x00..0x2F] = d0 da b4 af 8c 01 00 00 06 00 00 00 08 00 00 00 78 01 a2 69 00 00 00 00 40 e1 b0 0a 8e 01 00 00 01 00 00 00 04 00 00 00 70 e4 3d 01 8e 01 00 00
+20:41:30 [DEBUG  ] [MinimapScan]   entry[0]: key='110_0' | pos_count=1 | pos_ptr=0x18E0AB0E140 | cached_zone='SD_ZhongXiGaoQiang200'
+20:41:30 [DEBUG  ] [MinimapScan] Matched entry[0] key='110_0' via cached key map ('110_0' → 'SD_ZhongXiGaoQiang200') — Pos TArray @ 0x18E0AB0E140, declared count=1
+20:41:30 [INFO   ] [MinimapScan] ✓ 1 valid visited positions (0 zero-origin filtered) for 'SD_ZhongXiGaoQiang200' | X:[5650..5650]  Y:[4500..4500]  span=(0×0) world units
+20:41:30 [INFO   ] [WallScan] MinimapSaveObject: 1 visited positions for 'Wall of the Last Breath' in 1.42s — building walkable-area cache
+20:41:30 [DEBUG  ] [GObjects] Found 1 instances of class 'MapBossRoom'
+20:41:30 [INFO   ] [WallScan] Exit scan: 1 positions (cache already has 1854) — no update needed for 'Wall of the Last Breath'
+20:41:30 [DEBUG  ] [UE4 Scanner] [BossRoom] MapBossRoom position is (0,0) — not yet placed
+20:41:30 [INFO   ] [Boss] No boss area found (neither MapBossRoom nor predefined) — skipping
+20:41:32 [DEBUG  ] [HPScan] Pawn at 0x18C8210E830, scanning ueComponents for ERoleComponent...
+20:41:32 [DEBUG  ] [HPScan]   ueComp[0] key_class='EAccumulatedValueComponent' comp=0x18E0B353180
+20:41:32 [DEBUG  ] [HPScan]   ueComp[1] key_class='EAnimeComponent' comp=0x18DD45EC590
+20:41:32 [DEBUG  ] [HPScan]   ueComp[2] key_class='EBoundingCapsuleComponent' comp=0x18DE0C23280
+20:41:32 [DEBUG  ] [HPScan]   ueComp[3] key_class='EBuffComponent' comp=0x18DD450A030
+20:41:32 [DEBUG  ] [HPScan]   ueComp[4] key_class='ECtrlComponent' comp=0x18DE3FDA540
+20:41:32 [DEBUG  ] [HPScan]   ueComp[5] key_class='ECtrlPadComponent' comp=0x18CA5B0B700
+20:41:32 [DEBUG  ] [HPScan]   ueComp[6] key_class='ECameraComponent' comp=0x18DB42DFD80
+20:41:32 [DEBUG  ] [HPScan]   ueComp[7] key_class='ECapsuleComponent' comp=0x18DF8D381C0
+20:41:32 [DEBUG  ] [HPScan]   ueComp[8] key_class='EBoxComponent' comp=0x18E19580EC0
+20:41:32 [DEBUG  ] [HPScan]   ueComp[9] key_class='ECfgComponent' comp=0x18DF81D3E80
+20:41:32 [DEBUG  ] [HPScan]   ueComp[10] key_class='ECtrlAimComponent' comp=0x18E1CF3A880
+20:41:32 [DEBUG  ] [HPScan]   ueComp[11] key_class='ECullObstacleComponent' comp=0x18DFB4188C0
+20:41:32 [DEBUG  ] [HPScan]   ueComp[12] key_class='ECustomWidgetComponent' comp=0x18DE0C2A600
+20:41:32 [DEBUG  ] [HPScan]   ueComp[13] key_class='EFashionComponent' comp=0x18E1B0888F0
+20:41:32 [DEBUG  ] [HPScan]   ueComp[14] key_class='EFashionAssistComponent' comp=0x18DBA926700
+20:41:32 [DEBUG  ] [HPScan]   ueComp[15] key_class='EFigureShadowComponent' comp=0x18E1CF3C2C0
+20:41:32 [DEBUG  ] [HPScan]   ueComp[16] key_class='ELightComponent' comp=0x18DE73AD800
+20:41:32 [DEBUG  ] [HPScan]   ueComp[17] key_class='EMoveComponent' comp=0x18E1D447680
+20:41:32 [DEBUG  ] [HPScan]   ueComp[18] key_class='EMoveCtrlComponent' comp=0x18E0B351C80
+20:41:32 [DEBUG  ] [HPScan]   ueComp[19] key_class='EMsgComponent' comp=0x18DE0C27C00
+20:41:32 [DEBUG  ] [HPScan]   ueComp[20] key_class='EOverheadDialogComponent' comp=0x18DE0C2E380
+20:41:32 [DEBUG  ] [HPScan]   ueComp[21] key_class='EParticleFxComponent' comp=0x18DBA92B9E0
+20:41:32 [DEBUG  ] [HPScan]   ueComp[22] key_class='EParticleFxTickComponent' comp=0x18CA5E13440
+20:41:32 [DEBUG  ] [HPScan]   ueComp[23] key_class='EPlayerCameraShakeComponent' comp=0x18DA56B1000
+20:41:32 [DEBUG  ] [HPScan]   ueComp[24] key_class='EPlayerComponent' comp=0x18DACD2DC00
+20:41:32 [DEBUG  ] [HPScan]   ueComp[25] key_class='EHeroSpecialityComponent' comp=0x18DE0C2EB00
+20:41:32 [DEBUG  ] [HPScan]   ueComp[26] key_class='ERoleComponent' comp=0x18DC6F65600
+20:41:32 [INFO   ] [HPScan] Found ERoleComponent at 0x18DC6F65600 (ueComponents[26])
+20:41:32 [INFO   ] [HPScan] RoleLogic candidate at comp+0x158: LogicFrame=42 HpMax=100 Hp=34
+20:41:32 [INFO   ] [HPScan] RoleLogic found: ERoleComponent=0x18DC6F65600  offset=+0x158

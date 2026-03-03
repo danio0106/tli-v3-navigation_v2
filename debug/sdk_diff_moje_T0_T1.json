@@ -1,0 +1,319 @@
+{
+  "generated": "2026-03-01T00:14:12.330487",
+  "input_files": {
+    "names_t0": "c:\\Users\\Daniel\\Documents\\GitHub\\tli-v3\\moje\\[torchlight_infinite] Names Dump_T0.txt",
+    "names_t1": "c:\\Users\\Daniel\\Documents\\GitHub\\tli-v3\\moje\\[torchlight_infinite] Names Dump_T1.txt",
+    "objects_t0": "c:\\Users\\Daniel\\Documents\\GitHub\\tli-v3\\moje\\[torchlight_infinite] Objects Dump_T0.txt",
+    "objects_t1": "c:\\Users\\Daniel\\Documents\\GitHub\\tli-v3\\moje\\[torchlight_infinite] Objects Dump_T1.txt"
+  },
+  "names": {
+    "t0_total_lines": 165973,
+    "t1_total_lines": 166085,
+    "t0_unique": 3061,
+    "t1_unique": 3069,
+    "added_count": 8,
+    "removed_count": 0,
+    "added_sample": [
+      "CONST_UITEXTBLOCK22908",
+      "CONST_WRAPCANVAS22670",
+      "CONST_WRAPCANVAS22682",
+      "CONST_WRAPCANVAS22908",
+      "CONST_WRAPCANVAS22910",
+      "CONST_WRAPSIZEBOX22670",
+      "CONST_WRAPSIZEBOX22682",
+      "CONST_WRAPSIZEBOX22694"
+    ],
+    "removed_sample": []
+  },
+  "objects": {
+    "t0_total_lines": 183392,
+    "t1_total_lines": 194983,
+    "t0_declared_total_objects": 121983,
+    "t1_declared_total_objects": 133426,
+    "t0_class_count": 951,
+    "t1_class_count": 951,
+    "t0_field_count": 44932,
+    "t1_field_count": 45080,
+    "classes_added_count": 0,
+    "classes_removed_count": 0,
+    "fields_added_count": 148,
+    "fields_removed_count": 0,
+    "fields_changed_count": 0,
+    "classes_added_sample": [],
+    "classes_removed_sample": [],
+    "fields_added_sample": [
+      "/Game/BluePrint/UI/Common/GoodsItem/EquipActionItem.EquipActionItem_C:EquipItem\t~\tWidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipItem.EquipItem_C",
+      "/Game/BluePrint/UI/Common/GoodsItem/EquipActionItem.EquipActionItem_C:PlayShake:CallFunc_PlayAnimation_ReturnValue\t~\tClass  /Script/UMG.UMGSequencePlayer",
+      "/Game/BluePrint/UI/Common/GoodsItem/EquipActionItem.EquipActionItem_C:Shake\t~\tClass  /Script/UMG.WidgetAnimation",
+      "/Game/BluePrint/UI/Common/GoodsItem/EquipActionView.EquipActionView_C:EquipActionItem\t~\tWidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipActionItem.EquipActionItem_C",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:CoverBtn\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:ExecuteUbergraph_TouchRoleDragRectItem:EntryPoint",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:MouseDragMoved",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:MouseDragMoved__DelegateSignature:InMouseEvent\t~\tScriptStruct  /Script/SlateCore.PointerEvent",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:MouseDragMoved__DelegateSignature:MyGeometry\t~\tScriptStruct  /Script/SlateCore.Geometry",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:MouseDragMoved__DelegateSignature:OutOperation\t~\tClass  /Script/UMG.DragDropOperation",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchEnded",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchEnded__DelegateSignature:InTouchEvent\t~\tScriptStruct  /Script/SlateCore.PointerEvent",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchEnded__DelegateSignature:MyGeometry\t~\tScriptStruct  /Script/SlateCore.Geometry",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchGesture",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchGesture__DelegateSignature:GestureEvent\t~\tScriptStruct  /Script/SlateCore.PointerEvent",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchGesture__DelegateSignature:MyGeometry\t~\tScriptStruct  /Script/SlateCore.Geometry",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchMoved",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchMoved__DelegateSignature:InTouchEvent\t~\tScriptStruct  /Script/SlateCore.PointerEvent",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchMoved__DelegateSignature:MyGeometry\t~\tScriptStruct  /Script/SlateCore.Geometry",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchStarted",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchStarted__DelegateSignature:InTouchEvent\t~\tScriptStruct  /Script/SlateCore.PointerEvent",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:TouchStarted__DelegateSignature:MyGeometry\t~\tScriptStruct  /Script/SlateCore.Geometry",
+      "/Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C:UberGraphFrame\t~\tScriptStruct  /Script/Engine.PointerToUberGraphFrame",
+      "/Game/BluePrint/UI/Tips/TipBaseAffixItem.TipBaseAffixItem_C:LineImage\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/BluePrint/UI/Tips/TipBaseAffixItem.TipBaseAffixItem_C:TipsBaseAttrItem\t~\tWidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Tips/TipsBaseAttrItem.TipsBaseAttrItem_C",
+      "/Game/BluePrint/UI/Tips/TipCorrodeItem.TipCorrodeItem_C:TipCorrosionCartTagItem_Con\t~\tWidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Tips/TipCorrosionCartTagItem.TipCorrosionCartTagItem_C",
+      "/Game/BluePrint/UI/Tips/TipCorrodeItem.TipCorrodeItem_C:UIImage\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/BluePrint/UI/Tips/TipCorrodeItem.TipCorrodeItem_C:UIImage_238\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/BluePrint/UI/Tips/TipCorrodeItem.TipCorrodeItem_C:UIImage_395\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/BluePrint/UI/Tips/TipCorrosionCartTagItem.TipCorrosionCartTagItem_C:UIRichTextBlock_Tag\t~\tClass  /Script/UE_game.UIRichTextBlock",
+      "/Game/BluePrint/UI/Tips/TipEnhantAffixItem.TipEnhantAffixItem_C:UIImage_Icon\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/BluePrint/UI/Tips/TipEnhantAffixItem.TipEnhantAffixItem_C:UIRichTextBlock_AffixDesc\t~\tClass  /Script/UE_game.UIRichTextBlock",
+      "/Game/BluePrint/UI/Tips/TipEnhantAffixItem.TipEnhantAffixItem_C:UIShrinkTextBlock_Tip\t~\tClass  /Script/UE_game.UIRichTextBlock",
+      "/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:DamageDesBox\t~\tClass  /Script/UMG.VerticalBox",
+      "/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:DamageDetailSwitcher\t~\tClass  /Script/UMG.WidgetSwitcher",
+      "/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:DamageOrInfoSwitcher\t~\tClass  /Script/UMG.WidgetSwitcher",
+      "/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:ForgeOverwriteContentSlot\t~\tClass  /Script/UMG.NamedSlot",
+      "/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:FpsGuideBtn\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:UIImage_975\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/BluePrint/UI/Tips/TipEquipScrollTopItem.TipEquipScrollTopItem_C:UIImage_Def\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/BluePrint/UI/Tips/TipsAttrChildItem.TipsAttrChildItem_C:UIRichTextBlock_AffixDesc\t~\tClass  /Script/UE_game.UIRichTextBlock",
+      "/Game/BluePrint/UI/Tips/TipsBaseAttrItem.TipsBaseAttrItem_C:TipsBaseAttrItemAnim\t~\tClass  /Script/UMG.WidgetAnimation",
+      "/Game/BluePrint/UI/Tips/TipsBaseAttrItem.TipsBaseAttrItem_C:UIImage_Select\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/BluePrint/UI/Tips/TipsEnergyItem.TipsEnergyItem_C:ProgressBar_Cost\t~\tClass  /Script/UMG.ProgressBar",
+      "/Game/BluePrint/UI/Tips/TipsEnergyItem.TipsEnergyItem_C:UIImage_BG\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/BluePrint/UI/Tips/TipsEnergyItem.TipsEnergyItem_C:UIImage_flag\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:BezelBg\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:EquipActionView\t~\tWidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipActionView.EquipActionView_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:PCBagMain\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:UIButton_CloseTip\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:UIButton_CloseTip1\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:UIButton_Pro\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBag.PCBag_C:WidgetSwitcher_Left\t~\tClass  /Script/UMG.WidgetSwitcher",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagDreamForgeItem.PCBagDreamForgeItem_C:TipsBtn\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagDreamForgeItem.PCBagDreamForgeItem_C:UIImage_0\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:BindedGamepadKey\t~\tEnum  /Script/UE_game.EUIGamepadKey",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:EquipItem\t~\tWidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipItem.EquipItem_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:EquipPosMarkItem\t~\tWidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipPosMarkItem.EquipPosMarkItem_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:EquipSelectItem\t~\tWidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipSelectItem.EquipSelectItem_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:EquipSlotItem\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlotBgItem.PCBagEquipSlotBgItem_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:ExecuteUbergraph_PCBagEquipSlot:EntryPoint",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C:UberGraphFrame\t~\tScriptStruct  /Script/Engine.PointerToUberGraphFrame",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlotBgItem.PCBagEquipSlotBgItem_C:Icon\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:Frame1\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:Frame2\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:Frame3\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:Frame4\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:Frame5\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:Frame6\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBox0\t~\tClass  /Script/UMG.CheckBox",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBox1\t~\tClass  /Script/UMG.CheckBox",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBox100\t~\tClass  /Script/UMG.CheckBox",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBox2\t~\tClass  /Script/UMG.CheckBox",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBox3\t~\tClass  /Script/UMG.CheckBox",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBox4\t~\tClass  /Script/UMG.CheckBox",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBtn0\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBtn1\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBtn100\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBtn2\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBtn3\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagFilterRarityItem.PCBagFilterRarityItem_C:SelectBtn4\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:HeroImage\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:KeyInd\t~\tClass  /Script/UE_game.UIGamepadIcon",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:KeyInd_1\t~\tClass  /Script/UE_game.UIGamepadIcon",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:PCBagDreamForgeItem\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagDreamForgeItem.PCBagDreamForgeItem_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:PCBagHeroShowItem\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagHeroShowItem.PCBagHeroShowItem_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:PCUIBagEquipItem\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:PCUIGridListView\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:TouchRectItem\t~\tWidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Login/TouchRoleDragRectItem.TouchRoleDragRectItem_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIButton_AniPro\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIButton_Close\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIButton_CloseTip\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIButton_Pro\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIButton_RoleInfo\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIButton_pro_Change\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIImage_152\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIImage_51\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIImage_BG\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIImage_BG2\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIImage_BG_1\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagMain.PCBagMain_C:UIImage_RoleInfo\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C:Button_Tab\t~\tClass  /Script/UE_game.UIButton",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C:KeyInd\t~\tClass  /Script/UE_game.UIGamepadIcon",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C:RedDot\t~\tWidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/RedDot/RedDot.RedDot_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C:TabIcon\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C:UIImage_Arrow\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCBagTabButtonItem.PCBagTabButtonItem_C:UIImage_Grow\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCEquipItem.PCEquipItem_C:EquipItem\t~\tWidgetBlueprintGeneratedClass  /Game/BluePrint/UI/Common/GoodsItem/EquipItem.EquipItem_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCEquipItem.PCEquipItem_C:UIImage_Empty\t~\tClass  /Script/UE_game.UIImage",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot1\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot10\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot2\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot3\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot4\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot5\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot6\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot7\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot8\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCUIBagEquipItem.PCUIBagEquipItem_C:PCBagEquipSlot9\t~\tWidgetBlueprintGeneratedClass  /Game/Platform/PC/BluePrint/UI/PCBag/PCBagEquipSlot.PCBagEquipSlot_C",
+      "/Game/Platform/PC/BluePrint/UI/PCBag/PCUIGridListView.PCUIGridListView_C:KeyInd\t~\tClass  /Script/UE_game.UIGamepadIcon"
+    ],
+    "fields_removed_sample": [],
+    "fields_changed_sample": []
+  },
+  "critical_diff": {
+    "/Script/UE_game.FightMgr:MapRoleMonster": {
+      "t0": {
+        "offset": 288,
+        "size": 80,
+        "ptype": "MapProperty"
+      },
+      "t1": {
+        "offset": 288,
+        "size": 80,
+        "ptype": "MapProperty"
+      },
+      "changed": false
+    },
+    "/Script/UE_game.FightMgr:MapCustomTrap": {
+      "t0": {
+        "offset": 1968,
+        "size": 80,
+        "ptype": "MapProperty"
+      },
+      "t1": {
+        "offset": 1968,
+        "size": 80,
+        "ptype": "MapProperty"
+      },
+      "changed": false
+    },
+    "/Script/UE_game.FightMgr:MapGamePlay": {
+      "t0": {
+        "offset": 2048,
+        "size": 80,
+        "ptype": "MapProperty"
+      },
+      "t1": {
+        "offset": 2048,
+        "size": 80,
+        "ptype": "MapProperty"
+      },
+      "changed": false
+    },
+    "/Script/UE_game.FightMgr:MapServant": {
+      "t0": {
+        "offset": 2128,
+        "size": 80,
+        "ptype": "MapProperty"
+      },
+      "t1": {
+        "offset": 2128,
+        "size": 80,
+        "ptype": "MapProperty"
+      },
+      "changed": false
+    },
+    "/Script/UE_game.FightMgr:MapUnit": {
+      "t0": {
+        "offset": 1888,
+        "size": 80,
+        "ptype": "MapProperty"
+      },
+      "t1": {
+        "offset": 1888,
+        "size": 80,
+        "ptype": "MapProperty"
+      },
+      "changed": false
+    },
+    "/Script/UE_game.EEntity:ueComponents": {
+      "t0": {
+        "offset": 648,
+        "size": 80,
+        "ptype": "MapProperty"
+      },
+      "t1": {
+        "offset": 648,
+        "size": 80,
+        "ptype": "MapProperty"
+      },
+      "changed": false
+    },
+    "/Script/UE_game.EEntity:bValid": {
+      "t0": {
+        "offset": 1824,
+        "size": 1,
+        "ptype": "BoolProperty"
+      },
+      "t1": {
+        "offset": 1824,
+        "size": 1,
+        "ptype": "BoolProperty"
+      },
+      "changed": false
+    },
+    "/Script/UE_game.EAnimeComponent:SkeletalMesh": {
+      "t0": null,
+      "t1": null,
+      "changed": false
+    },
+    "/Script/Engine.SkeletalMeshComponent:AnimBlueprintGeneratedClass": {
+      "t0": null,
+      "t1": null,
+      "changed": false
+    },
+    "/Script/Engine.SkeletalMeshComponent:AnimClass": {
+      "t0": null,
+      "t1": null,
+      "changed": false
+    }
+  },
+  "class_presence": {
+    "/Script/UE_game.EMapCustomTrap": {
+      "t0": true,
+      "t1": true
+    },
+    "/Script/UE_game.EMapCustomTrap2": {
+      "t0": true,
+      "t1": true
+    },
+    "/Script/UE_game.EMapCustomTrap3": {
+      "t0": true,
+      "t1": true
+    },
+    "/Script/UE_game.EMapCustomTrapS5": {
+      "t0": false,
+      "t1": false
+    },
+    "/Script/UE_game.EMapCustomTrapS7": {
+      "t0": false,
+      "t1": false
+    },
+    "/Script/UE_game.EMapCustomTrapS10": {
+      "t0": true,
+      "t1": true
+    },
+    "/Script/UE_game.EMapCustomTrapS11": {
+      "t0": true,
+      "t1": true
+    },
+    "/Script/UE_game.EServant": {
+      "t0": false,
+      "t1": false
+    },
+    "/Script/UE_game.EMonster": {
+      "t0": false,
+      "t1": false
+    },
+    "/Script/UE_game.EGameplay": {
+      "t0": false,
+      "t1": false
+    }
+  }
+}

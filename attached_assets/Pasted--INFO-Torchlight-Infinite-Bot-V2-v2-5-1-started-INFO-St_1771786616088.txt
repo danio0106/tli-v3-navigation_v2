@@ -1,0 +1,130 @@
+[INFO] Torchlight Infinite Bot V2 v2.5.1 started
+[INFO] State: IDLE -> STARTING
+[INFO] Bot started
+[INFO] Attached to process: torchlight_infinite.exe (PID: 18588)
+[INFO] Found game window by class 'UnrealWindow' + PID 18588 (HWND: 393828)
+[INFO] [Input] Target window set: HWND=393828, mode=hardware
+[INFO] [Input] Hardware mode: will focus window before each input
+[DEBUG] Module torchlight_infinite.exe base: 0x7FF6B5760000
+[WARNING] Address validation: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary); player_x not movement-verified; player_y not movement-verified | pos=(5594, 4535)
+[INFO] State: STARTING -> IN_HIDEOUT
+[INFO] In hideout - starting map selection sequence
+[INFO] State: IN_HIDEOUT -> SELECTING_MAP
+[INFO] Calibrating hexagon positions...
+[INFO] [HexCalibrator] Starting calibration...
+[INFO] [HexCalibrator] Capturing from HWND=393828
+[INFO] [HexCalibrator] [template] Pos 0 (497,301): crop (94, 80), std=40.1
+[INFO] [HexCalibrator] [template] Using template from pos 0 (497,301): size=80x94, mean=127.1, std=40.1
+[INFO] [HexCalibrator] [template] Raw matches above 0.65: 16121
+[INFO] [HexCalibrator] [template] After NMS (dist=40): 35 unique matches
+[INFO] [HexCalibrator] [template] ACCEPT (497,301) score=1.000
+[INFO] [HexCalibrator] [template] SKIP (708,118) score=0.890: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (630,942) score=0.817: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (149,641) score=0.803: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (781,68) score=0.781: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (132,526) score=0.770: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (1846,515) score=0.758: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (1813,390) score=0.748: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (1677,654) score=0.747: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (712,186) score=0.746: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (275,788) score=0.743: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (720,436) score=0.731: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (859,47) score=0.723: not near any known position
+[INFO] [HexCalibrator] [template] ACCEPT (504,341) score=0.720
+[INFO] [HexCalibrator] [template] ACCEPT (1040,367) score=0.719
+[INFO] [HexCalibrator] [template] ACCEPT (428,407) score=0.715
+[INFO] [HexCalibrator] [template] ACCEPT (447,613) score=0.715
+[INFO] [HexCalibrator] [template] ACCEPT (1281,590) score=0.714
+[INFO] [HexCalibrator] [template] SKIP (142,601) score=0.713: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (1791,725) score=0.712: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (1880,705) score=0.710: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (1185,671) score=0.703: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (1471,211) score=0.684: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (1865,820) score=0.684: not near any known position
+[INFO] [HexCalibrator] [template] ACCEPT (395,599) score=0.681
+[INFO] [HexCalibrator] [template] SKIP (1780,512) score=0.680: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (1587,842) score=0.674: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (1736,479) score=0.672: not near any known position
+[INFO] [HexCalibrator] [template] ACCEPT (489,261) score=0.669
+[INFO] [HexCalibrator] [template] SKIP (701,78) score=0.664: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (716,243) score=0.661: not near any known position
+[INFO] [HexCalibrator] [template] ACCEPT (936,217) score=0.660
+[INFO] [HexCalibrator] [template] SKIP (1698,448) score=0.658: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (424,671) score=0.655: not near any known position
+[INFO] [HexCalibrator] [template] SKIP (156,681) score=0.654: not near any known position
+[INFO] [HexCalibrator] Template matching found 9 matches (>= 6), using template results
+[INFO] [HexCalibrator] Detected 9 valid hexagons, rejected 0 non-hexagons
+[INFO] [HexCalibrator] Matched 1 hexagons to reference positions
+[WARNING] [HexCalibrator] Only 1 matches (need 6), using hardcoded
+[INFO] [HexCalibrator] Hex 0: CV-detected center=(497,301) hw=40 hh=47 vertices=6 glow_box=(457,244,80,34)
+[INFO] [HexCalibrator] Hex 1: fallback center=(933,321) hw=35 hh=57 vertices=6 glow_box=(898,254,70,40)
+[INFO] [HexCalibrator] Hex 2: fallback center=(1127,259) hw=35 hh=57 vertices=6 glow_box=(1092,192,70,40)
+[INFO] [HexCalibrator] Hex 3: fallback center=(1351,321) hw=35 hh=57 vertices=6 glow_box=(1316,254,70,40)
+[INFO] [HexCalibrator] Hex 4: fallback center=(911,532) hw=35 hh=57 vertices=6 glow_box=(876,465,70,40)
+[INFO] [HexCalibrator] Hex 5: fallback center=(1151,489) hw=35 hh=57 vertices=6 glow_box=(1116,422,70,40)
+[INFO] [HexCalibrator] Hex 6: fallback center=(1519,491) hw=35 hh=57 vertices=6 glow_box=(1484,424,70,40)
+[INFO] [HexCalibrator] Hex 7: fallback center=(449,499) hw=35 hh=57 vertices=6 glow_box=(414,432,70,40)
+[INFO] [HexCalibrator] Hex 8: fallback center=(622,627) hw=35 hh=57 vertices=6 glow_box=(587,560,70,40)
+[INFO] [HexCalibrator] Hex 9: fallback center=(1385,613) hw=35 hh=57 vertices=6 glow_box=(1350,546,70,40)
+[INFO] [HexCalibrator] Hex 10: fallback center=(979,727) hw=35 hh=57 vertices=6 glow_box=(944,660,70,40)
+[INFO] [HexCalibrator] Hex 11: fallback center=(723,789) hw=35 hh=57 vertices=6 glow_box=(688,722,70,40)
+[INFO] [HexCalibrator] Debug image saved to debug/calibration_20260222_195623.png
+[INFO] [HexCalibrator] === Calibration Results (source: hardcoded) ===
+[INFO] [HexCalibrator] Detected: 0 active + 9 inactive = 9 hexagons
+[INFO] [HexCalibrator] Node 0 (High Court Maze): center=(497, 301) glow=(462, 266, 70, 70)
+[INFO] [HexCalibrator] Node 1 (Shadow Outpost): center=(933, 321) glow=(898, 286, 70, 70)
+[INFO] [HexCalibrator] Node 2 (Rainforest of Divine Legacy): center=(1127, 259) glow=(1092, 224, 70, 70)
+[INFO] [HexCalibrator] Node 3 (Grimwind Woods): center=(1351, 321) glow=(1316, 286, 70, 70)
+[INFO] [HexCalibrator] Node 4 (Demiman Village): center=(911, 532) glow=(876, 497, 70, 70)
+[INFO] [HexCalibrator] Node 5 (Swirling Mines): center=(1151, 489) glow=(1116, 454, 70, 70)
+[INFO] [HexCalibrator] Node 6 (Blustery Canyon): center=(1519, 491) glow=(1484, 456, 70, 70)
+[INFO] [HexCalibrator] Node 7 (Defiled Side Chamber): center=(449, 499) glow=(414, 464, 70, 70)
+[INFO] [HexCalibrator] Node 8 (Deserted District): center=(622, 627) glow=(587, 592, 70, 70)
+[INFO] [HexCalibrator] Node 9 (Wall of the Last Breath): center=(1385, 613) glow=(1350, 578, 70, 70)
+[INFO] [HexCalibrator] Node 10 (Abandoned Mines): center=(979, 727) glow=(944, 692, 70, 70)
+[INFO] [HexCalibrator] Node 11 (Singing Sand): center=(723, 789) glow=(688, 754, 70, 70)
+[INFO] [HexCalibrator] ================================================
+[INFO] [MapSelector] Step: OPEN_DEVICE
+[INFO] [MapSelector]   Pressing F to open map device (attempt 1/3)
+[INFO] [Input] Hardware key 'f' (VK=0x46)
+[INFO] [MapSelector]   Loaded Glacial Abyss template: (26, 123, 3)
+[INFO] [MapSelector]   Region selection check (template): score=0.997 threshold=0.7 loc=(475,585) -> OPEN
+[INFO] [MapSelector] Step: SELECT_ZONE
+[INFO] [MapSelector]   Clicking Glacial Abyss zone (attempt 1/3)
+[INFO] [Input] Hardware mouse move: client(537,598) -> screen(1170,758)
+[INFO] [Input] Hardware click left at (537,598)
+[INFO] [CardDetector] UI check: ice=0 border=5 -> NOT OPEN
+  card0=g119 rgb(117,120,122) ??? | card2=g97 rgb(95,97,99) BRD | card5=g97 rgb(96,98,99) BRD | card7=g107 rgb(106,107,108) BRD | card9=g81 rgb(78,82,85) BRD | card11=g83 rgb(79,83,88) BRD
+[INFO] [MapSelector]   WARNING: card selection UI does NOT appear to be open
+[INFO] [MapSelector]   Card UI not visible after zone click — retrying
+[INFO] [Input] Hardware key 'escape' (VK=0x1B)
+[INFO] [MapSelector]   Re-pressing F to re-open map device
+[INFO] [Input] Hardware key 'f' (VK=0x46)
+[INFO] [MapSelector]   Clicking Glacial Abyss zone (attempt 2/3)
+[INFO] [Input] Hardware mouse move: client(537,598) -> screen(1169,756)
+[INFO] [Input] Hardware click left at (537,598)
+[INFO] [CardDetector] UI check: ice=1 border=5 -> NOT OPEN
+  card0=g121 rgb(119,122,124) ICE | card2=g96 rgb(94,96,98) BRD | card5=g97 rgb(96,97,99) BRD | card7=g107 rgb(106,107,109) BRD | card9=g81 rgb(78,81,85) BRD | card11=g83 rgb(80,84,89) BRD
+[INFO] [MapSelector]   WARNING: card selection UI does NOT appear to be open
+[INFO] [MapSelector]   Card UI not visible after zone click — retrying
+[INFO] [Input] Hardware key 'escape' (VK=0x1B)
+[INFO] [MapSelector]   Re-pressing F to re-open map device
+[INFO] [Input] Hardware key 'f' (VK=0x46)
+[INFO] [MapSelector]   Clicking Glacial Abyss zone (attempt 3/3)
+[INFO] [Input] Hardware mouse move: client(537,598) -> screen(1170,758)
+[INFO] [Input] Hardware click left at (537,598)
+[INFO] [CardDetector] UI check: ice=0 border=5 -> NOT OPEN
+  card0=g113 rgb(110,113,115) ??? | card2=g93 rgb(91,94,95) BRD | card5=g97 rgb(96,98,99) BRD | card7=g108 rgb(107,109,110) BRD | card9=g79 rgb(76,79,83) BRD | card11=g86 rgb(82,87,91) BRD
+[INFO] [MapSelector]   WARNING: card selection UI does NOT appear to be open
+[INFO] [MapSelector]   Card UI not visible after zone click — retrying
+[INFO] [MapSelector]   FAILED: Card selection UI never appeared after zone clicks
+[ERROR] Map selection failed
+[INFO] State: SELECTING_MAP -> ERROR
+[ERROR] Bot in error state - attempting recovery
+[INFO] State: ERROR -> STOPPING
+[INFO] State: STOPPING -> IDLE
+[INFO] Bot stopped
+[ERROR] Bot loop error: cannot join current thread
+[INFO] State: IDLE -> ERROR
+[INFO] Main loop exited
+

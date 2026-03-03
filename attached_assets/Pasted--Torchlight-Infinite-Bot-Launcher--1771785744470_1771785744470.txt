@@ -1,0 +1,149 @@
+======================================
+Torchlight Infinite Bot - Launcher
+======================================
+Running as Administrator
+Working directory: C:\Users\Daniel\Documents\GitHub\tli v2
+
+Attempting to launch the bot...
+
+19:40:50 [INFO   ] Config loaded from config.json
+19:40:50 [INFO   ] Loaded 8 addresses from addresses.json
+19:40:50 [INFO   ] [Input] Initialized with mode: virtual_post
+19:40:50 [WARNING] [HexCalibrator] Failed to load history: Expecting value: line 19 column 11 (char 409)
+19:40:50 [INFO   ] [MapSelector] Loaded card state: 12 cards, active=[3, 5, 6, 10]
+19:40:51 [INFO   ] Torchlight Infinite Bot V2 v2.5.1 started
+19:40:56 [INFO   ] Attached to process: torchlight_infinite.exe (PID: 18588)
+19:40:56 [INFO   ] Attached to torchlight_infinite.exe
+19:40:56 [INFO   ] Found game window by class 'UnrealWindow' + PID 18588 (HWND: 393828)
+19:40:56 [INFO   ] [Input] Target window set: HWND=393828, mode=virtual_post
+19:40:56 [INFO   ] [Input] Virtual mode: coordinates must be CLIENT AREA (not screen)
+19:40:57 [INFO   ] Saved addresses valid - skipping scan: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary); player_x not movement-verified; player_y not movement-verified | pos=(5594, 4535)
+19:40:57 [INFO   ] [Scanner] Scanning for FNamePool...
+19:40:57 [INFO   ] [Input] Target window set: HWND=393828, mode=virtual_post
+19:40:57 [INFO   ] [Input] Virtual mode: coordinates must be CLIENT AREA (not screen)
+19:40:57 [INFO   ] [Scanner]   Trying FNamePool pattern 1/3...
+19:40:57 [INFO   ] [Scanner]   Trying FNamePool pattern 2/3...
+19:40:57 [INFO   ] [Scanner]   Trying FNamePool pattern 3/3...
+19:40:57 [INFO   ] [Scanner] FNamePool not found via sig scan
+19:40:57 [INFO   ] [Scanner] Scanning for GObjects...
+19:40:57 [INFO   ] [Scanner]   Trying GObjects pattern 1/3...
+19:40:57 [INFO   ] [Scanner]   Trying GObjects pattern 2/3...
+19:40:58 [INFO   ] [Scanner]   GObjects found at 0x7FF6BD49ADE8 (pattern 2)
+19:40:58 [INFO   ] [Scanner]   NumElements=140162, NumChunks=3
+19:41:51 [INFO   ] State: IDLE -> STARTING
+19:41:51 [INFO   ] Bot started
+19:41:51 [INFO   ] Found game window by class 'UnrealWindow' + PID 18588 (HWND: 393828)
+19:41:51 [INFO   ] [Input] Target window set: HWND=393828, mode=virtual_post
+19:41:51 [INFO   ] [Input] Virtual mode: coordinates must be CLIENT AREA (not screen)
+19:41:52 [WARNING] Address validation: WARNING: WARNING: coordinates unchanged (may be stale or character is stationary); player_x not movement-verified; player_y not movement-verified | pos=(5594, 4535)
+19:41:52 [INFO   ] State: STARTING -> IN_HIDEOUT
+19:41:52 [INFO   ] In hideout - starting map selection sequence
+19:41:52 [INFO   ] State: IN_HIDEOUT -> SELECTING_MAP
+19:41:52 [INFO   ] Calibrating hexagon positions...
+19:41:52 [INFO   ] [HexCalibrator] Starting calibration...
+19:41:52 [INFO   ] [HexCalibrator] Capturing from HWND=393828
+19:41:54 [INFO   ] [HexCalibrator] [template] Pos 0 (497,301): crop (94, 80), std=40.1
+19:41:54 [INFO   ] [HexCalibrator] [template] Using template from pos 0 (497,301): size=80x94, mean=127.1, std=40.1
+19:41:54 [INFO   ] [HexCalibrator] [template] Raw matches above 0.65: 16194
+19:41:55 [INFO   ] [HexCalibrator] [template] After NMS (dist=40): 35 unique matches
+19:41:55 [INFO   ] [HexCalibrator] [template] ACCEPT (497,301) score=1.000
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (708,118) score=0.890: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (629,942) score=0.822: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (149,641) score=0.804: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (781,68) score=0.781: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (132,526) score=0.771: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (1846,515) score=0.758: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (1813,390) score=0.748: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (1677,654) score=0.747: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (712,186) score=0.746: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (275,788) score=0.744: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (720,436) score=0.731: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (859,47) score=0.723: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] ACCEPT (504,341) score=0.719
+19:41:55 [INFO   ] [HexCalibrator] [template] ACCEPT (428,407) score=0.715
+19:41:55 [INFO   ] [HexCalibrator] [template] ACCEPT (447,613) score=0.715
+19:41:55 [INFO   ] [HexCalibrator] [template] ACCEPT (1281,590) score=0.713
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (142,601) score=0.713: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (1791,725) score=0.713: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (1880,705) score=0.710: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (1185,671) score=0.703: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] ACCEPT (1040,367) score=0.701
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (1865,820) score=0.684: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (378,253) score=0.682: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] ACCEPT (395,599) score=0.681
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (1780,512) score=0.680: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (1587,842) score=0.674: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (1736,479) score=0.672: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] ACCEPT (489,261) score=0.669
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (701,78) score=0.664: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (716,243) score=0.661: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] ACCEPT (936,217) score=0.660
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (1698,448) score=0.659: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (156,681) score=0.656: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] [template] SKIP (424,671) score=0.655: not near any known position
+19:41:55 [INFO   ] [HexCalibrator] Template matching found 9 matches (>= 6), using template results
+19:41:55 [INFO   ] [HexCalibrator] Detected 9 valid hexagons, rejected 0 non-hexagons
+19:41:55 [INFO   ] [HexCalibrator] Matched 1 hexagons to reference positions
+19:41:55 [WARNING] [HexCalibrator] Only 1 matches (need 6), using hardcoded
+19:41:55 [INFO   ] [HexCalibrator] Hex 0: CV-detected center=(497,301) hw=40 hh=47 vertices=6 glow_box=(457,244,80,34)
+19:41:55 [INFO   ] [HexCalibrator] Hex 1: fallback center=(933,321) hw=35 hh=57 vertices=6 glow_box=(898,254,70,40)
+19:41:55 [INFO   ] [HexCalibrator] Hex 2: fallback center=(1127,259) hw=35 hh=57 vertices=6 glow_box=(1092,192,70,40)
+19:41:55 [INFO   ] [HexCalibrator] Hex 3: fallback center=(1351,321) hw=35 hh=57 vertices=6 glow_box=(1316,254,70,40)
+19:41:55 [INFO   ] [HexCalibrator] Hex 4: fallback center=(911,532) hw=35 hh=57 vertices=6 glow_box=(876,465,70,40)
+19:41:55 [INFO   ] [HexCalibrator] Hex 5: fallback center=(1151,489) hw=35 hh=57 vertices=6 glow_box=(1116,422,70,40)
+19:41:55 [INFO   ] [HexCalibrator] Hex 6: fallback center=(1519,491) hw=35 hh=57 vertices=6 glow_box=(1484,424,70,40)
+19:41:55 [INFO   ] [HexCalibrator] Hex 7: fallback center=(449,499) hw=35 hh=57 vertices=6 glow_box=(414,432,70,40)
+19:41:55 [INFO   ] [HexCalibrator] Hex 8: fallback center=(622,627) hw=35 hh=57 vertices=6 glow_box=(587,560,70,40)
+19:41:55 [INFO   ] [HexCalibrator] Hex 9: fallback center=(1385,613) hw=35 hh=57 vertices=6 glow_box=(1350,546,70,40)
+19:41:55 [INFO   ] [HexCalibrator] Hex 10: fallback center=(979,727) hw=35 hh=57 vertices=6 glow_box=(944,660,70,40)
+19:41:55 [INFO   ] [HexCalibrator] Hex 11: fallback center=(723,789) hw=35 hh=57 vertices=6 glow_box=(688,722,70,40)
+19:41:55 [INFO   ] [HexCalibrator] Debug image saved to debug/calibration_20260222_194155.png
+19:41:55 [INFO   ] [HexCalibrator] === Calibration Results (source: hardcoded) ===
+19:41:55 [INFO   ] [HexCalibrator] Detected: 0 active + 9 inactive = 9 hexagons
+19:41:55 [INFO   ] [HexCalibrator] Node 0 (High Court Maze): center=(497, 301) glow=(462, 266, 70, 70)
+19:41:55 [INFO   ] [HexCalibrator] Node 1 (Shadow Outpost): center=(933, 321) glow=(898, 286, 70, 70)
+19:41:55 [INFO   ] [HexCalibrator] Node 2 (Rainforest of Divine Legacy): center=(1127, 259) glow=(1092, 224, 70, 70)
+19:41:55 [INFO   ] [HexCalibrator] Node 3 (Grimwind Woods): center=(1351, 321) glow=(1316, 286, 70, 70)
+19:41:55 [INFO   ] [HexCalibrator] Node 4 (Demiman Village): center=(911, 532) glow=(876, 497, 70, 70)
+19:41:55 [INFO   ] [HexCalibrator] Node 5 (Swirling Mines): center=(1151, 489) glow=(1116, 454, 70, 70)
+19:41:55 [INFO   ] [HexCalibrator] Node 6 (Blustery Canyon): center=(1519, 491) glow=(1484, 456, 70, 70)
+19:41:55 [INFO   ] [HexCalibrator] Node 7 (Defiled Side Chamber): center=(449, 499) glow=(414, 464, 70, 70)
+19:41:55 [INFO   ] [HexCalibrator] Node 8 (Deserted District): center=(622, 627) glow=(587, 592, 70, 70)
+19:41:55 [INFO   ] [HexCalibrator] Node 9 (Wall of the Last Breath): center=(1385, 613) glow=(1350, 578, 70, 70)
+19:41:55 [INFO   ] [HexCalibrator] Node 10 (Abandoned Mines): center=(979, 727) glow=(944, 692, 70, 70)
+19:41:55 [INFO   ] [HexCalibrator] Node 11 (Singing Sand): center=(723, 789) glow=(688, 754, 70, 70)
+19:41:55 [INFO   ] [HexCalibrator] ================================================
+19:41:55 [INFO   ] [MapSelector] Step: OPEN_DEVICE
+19:41:55 [INFO   ] [MapSelector]   Pressing F to open map device (attempt 1/3)
+19:41:55 [INFO   ] [Input] #1 PostMessageW(HWND=393828, WM_KEYDOWN, wP=0x46, lP=0x210001) -> 1 key='f' scan=0x21
+19:41:55 [INFO   ] [Input] #2 PostMessageW(HWND=393828, WM_KEYUP, wP=0x46, lP=0xC0210001) -> 1 key='f'
+19:41:56 [INFO   ] [MapSelector]   Loaded Glacial Abyss template: (26, 123, 3)
+19:41:56 [INFO   ] [MapSelector]   Region selection check (template): score=0.159 threshold=0.7 loc=(491,556) -> NOT OPEN
+19:41:56 [INFO   ] [MapSelector]   Region selection UI not detected — will retry
+19:41:56 [INFO   ] [Input] #3 PostMessageW(HWND=393828, WM_KEYDOWN, wP=0x1B, lP=0x10001) -> 1 key='escape' scan=0x01
+19:41:56 [INFO   ] [Input] #4 PostMessageW(HWND=393828, WM_KEYUP, wP=0x1B, lP=0xC0010001) -> 1 key='escape'
+19:41:56 [INFO   ] [MapSelector]   Pressing F to open map device (attempt 2/3)
+19:41:56 [INFO   ] [Input] #5 PostMessageW(HWND=393828, WM_KEYDOWN, wP=0x46, lP=0x210001) -> 1 key='f' scan=0x21
+19:41:57 [INFO   ] [Input] #6 PostMessageW(HWND=393828, WM_KEYUP, wP=0x46, lP=0xC0210001) -> 1 key='f'
+19:41:57 [INFO   ] [MapSelector]   Region selection check (template): score=0.159 threshold=0.7 loc=(491,556) -> NOT OPEN
+19:41:57 [INFO   ] [MapSelector]   Region selection UI not detected — will retry
+19:41:57 [INFO   ] [Input] #7 PostMessageW(HWND=393828, WM_KEYDOWN, wP=0x1B, lP=0x10001) -> 1 key='escape' scan=0x01
+19:41:57 [INFO   ] [Input] #8 PostMessageW(HWND=393828, WM_KEYUP, wP=0x1B, lP=0xC0010001) -> 1 key='escape'
+19:41:58 [INFO   ] [MapSelector]   Pressing F to open map device (attempt 3/3)
+19:41:58 [INFO   ] [Input] #9 PostMessageW(HWND=393828, WM_KEYDOWN, wP=0x46, lP=0x210001) -> 1 key='f' scan=0x21
+19:41:58 [INFO   ] [Input] #10 PostMessageW(HWND=393828, WM_KEYUP, wP=0x46, lP=0xC0210001) -> 1 key='f'
+19:41:59 [INFO   ] [MapSelector]   Region selection check (template): score=0.159 threshold=0.7 loc=(491,556) -> NOT OPEN
+19:41:59 [INFO   ] [MapSelector]   Region selection UI not detected — will retry
+19:41:59 [INFO   ] [Input] #11 PostMessageW(HWND=393828, WM_KEYDOWN, wP=0x1B, lP=0x10001) -> 1 key='escape' scan=0x01
+19:41:59 [INFO   ] [Input] #12 PostMessageW(HWND=393828, WM_KEYUP, wP=0x1B, lP=0xC0010001) -> 1 key='escape'
+19:41:59 [INFO   ] [MapSelector]   FAILED: Could not open map device after all retries
+19:41:59 [ERROR  ] Map selection failed
+19:41:59 [INFO   ] State: SELECTING_MAP -> ERROR
+19:41:59 [ERROR  ] Bot in error state - attempting recovery
+19:42:04 [INFO   ] State: ERROR -> STOPPING
+19:42:04 [ERROR  ] Bot loop error: cannot join current thread
+19:42:04 [INFO   ] State: STOPPING -> ERROR
+19:42:04 [INFO   ] Main loop exited
+19:42:11 [INFO   ] State: ERROR -> STOPPING
+19:42:11 [INFO   ] State: STOPPING -> IDLE
+19:42:11 [INFO   ] Bot stopped
