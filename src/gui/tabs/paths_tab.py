@@ -23,9 +23,9 @@ class PathsTab(ctk.CTkFrame):
         self._manual_stop_event: Optional[threading.Event] = None
         self._manual_thread: Optional[threading.Thread] = None
         self._is_paused = False
-        # "record" shows recording controls; "auto" shows auto-navigation controls.
-        # Persisted as nav_mode config key ("manual" ↔ "auto").
-        self._nav_mode = "auto" if bot_engine.config.get("nav_mode", "manual") == "auto" else "record"
+        # Default to auto-navigation mode on startup.
+        self._nav_mode = "auto"
+        self._engine.config.set("nav_mode", "auto")
         self._build_ui()
 
     def _get_active_map(self) -> str:
@@ -298,39 +298,19 @@ class PathsTab(ctk.CTkFrame):
 
 
 
-        # ── Boss area section (always visible) ─────────────────────────
-        boss_card = create_card_frame(container)
-        boss_card.pack(fill="x", padx=10, pady=(0, 8))
-        create_label(boss_card, "Boss Area", "subheading").pack(anchor="w", padx=10, pady=(10, 4))
-
-        self._boss_status = create_label(boss_card, "Not recorded", "small", "text_muted")
-        self._boss_status.pack(anchor="w", padx=10, pady=(0, 6))
-
-        boss_btns = ctk.CTkFrame(boss_card, fg_color="transparent")
-        boss_btns.pack(fill="x", padx=10, pady=(0, 10))
-
-        self._boss_record_btn = create_accent_button(
-            boss_btns, "Record Boss Area (player pos)", self._on_record_boss_area, color="accent_orange"
-        )
-        self._boss_record_btn.pack(side="left", fill="x", expand=True, padx=(0, 2))
-        self._boss_delete_btn = create_accent_button(
-            boss_btns, "Delete", self._on_delete_boss_area, color="accent_red", width=70
-        )
-        self._boss_delete_btn.pack(side="left")
-
         # ── Waypoints section ──────────────────────────────────────────
-        wp_card = create_card_frame(container)
-        wp_card.pack(fill="x", padx=10, pady=(0, 8))
-        wp_header = ctk.CTkFrame(wp_card, fg_color="transparent")
+        self._wp_card = create_card_frame(container)
+        self._wp_card.pack(fill="x", padx=10, pady=(0, 8))
+        wp_header = ctk.CTkFrame(self._wp_card, fg_color="transparent")
         wp_header.pack(fill="x", padx=10, pady=(10, 4))
         create_label(wp_header, "Waypoints", "subheading").pack(side="left")
         self._wp_count_label = create_label(wp_header, "(0)", "small", "text_muted")
         self._wp_count_label.pack(side="left", padx=(6, 0))
 
-        self._wp_listbox = ctk.CTkScrollableFrame(wp_card, fg_color=COLORS["bg_dark"], corner_radius=4, height=220)
+        self._wp_listbox = ctk.CTkScrollableFrame(self._wp_card, fg_color=COLORS["bg_dark"], corner_radius=4, height=220)
         self._wp_listbox.pack(fill="x", padx=10, pady=(0, 6))
 
-        edit_frame = ctk.CTkFrame(wp_card, fg_color="transparent")
+        edit_frame = ctk.CTkFrame(self._wp_card, fg_color="transparent")
         edit_frame.pack(fill="x", padx=10, pady=(0, 6))
 
         row1 = ctk.CTkFrame(edit_frame, fg_color="transparent")
@@ -356,7 +336,7 @@ class PathsTab(ctk.CTkFrame):
         self._btn_toggle_portal = create_accent_button(row3, "Toggle Portal", self._on_toggle_portal, color="accent_purple")
         self._btn_toggle_portal.pack(side="left", fill="x", expand=True, padx=(2, 0))
 
-        edit_fields = ctk.CTkFrame(wp_card, fg_color="transparent")
+        edit_fields = ctk.CTkFrame(self._wp_card, fg_color="transparent")
         edit_fields.pack(fill="x", padx=10, pady=(0, 6))
 
         coord_row = ctk.CTkFrame(edit_fields, fg_color="transparent")
@@ -384,11 +364,11 @@ class PathsTab(ctk.CTkFrame):
         self._btn_add_wp.pack(side="left", padx=(4, 0))
 
         # ── Actions section ────────────────────────────────────────────
-        actions_card = create_card_frame(container)
-        actions_card.pack(fill="x", padx=10, pady=(0, 8))
-        create_label(actions_card, "Actions", "subheading").pack(anchor="w", padx=10, pady=(10, 4))
+        self._actions_card = create_card_frame(container)
+        self._actions_card.pack(fill="x", padx=10, pady=(0, 8))
+        create_label(self._actions_card, "Actions", "subheading").pack(anchor="w", padx=10, pady=(10, 4))
 
-        action_btns = ctk.CTkFrame(actions_card, fg_color="transparent")
+        action_btns = ctk.CTkFrame(self._actions_card, fg_color="transparent")
         action_btns.pack(fill="x", padx=10, pady=(0, 10))
 
         self._delete_path_btn = create_accent_button(action_btns, "Delete Path", self._on_delete_path, color="accent_red")
@@ -397,6 +377,7 @@ class PathsTab(ctk.CTkFrame):
         # Refresh status on initial load and apply mode
         self._sync_auto_behavior_ui_from_config()
         self._update_mode_ui()
+        self._update_recording_sections_visibility()
 
     # ── Mode toggle helpers ────────────────────────────────────────────
 
@@ -441,8 +422,28 @@ class PathsTab(ctk.CTkFrame):
             self._mode_record_btn.configure(fg_color=COLORS["bg_light"])
             self._mode_auto_btn.configure(fg_color=COLORS["accent_purple"])
             self._mode_info.configure(text="Bot navigates autonomously via A*")
-        self._refresh_boss_status()
+        self._update_recording_sections_visibility()
         self._refresh_wall_status()
+
+    def _update_recording_sections_visibility(self):
+        """Show waypoint/actions sections while Recording mode is selected.
+
+        Legacy waypoint editing tools stay visible in recording mode even when
+        the recorder is idle, and remain visible during active recording.
+        """
+        recorder = self._engine.path_recorder
+        is_recording = bool(recorder and recorder.is_recording)
+        show_legacy_panels = (self._nav_mode == "record") or is_recording
+        if show_legacy_panels:
+            if not self._wp_card.winfo_manager():
+                self._wp_card.pack(fill="x", padx=10, pady=(0, 8))
+            if not self._actions_card.winfo_manager():
+                self._actions_card.pack(fill="x", padx=10, pady=(0, 8))
+        else:
+            if self._wp_card.winfo_manager():
+                self._wp_card.pack_forget()
+            if self._actions_card.winfo_manager():
+                self._actions_card.pack_forget()
 
     def _on_scan_walls(self):
         """Trigger a walkable-area scan for the selected map in a background thread."""
@@ -737,57 +738,11 @@ class PathsTab(ctk.CTkFrame):
 
 
 
-    def _refresh_boss_status(self):
-        """Update the boss area status label for the current map."""
-        map_name = self._get_active_map()
-        if not map_name:
-            self._boss_status.configure(text="Map not detected", text_color=COLORS.get("text_muted", "#484f58"))
-            return
-        pos = self._engine.get_boss_area(map_name)
-        if pos:
-            bx, by = pos
-            self._boss_status.configure(
-                text=f"Recorded: ({bx:.0f}, {by:.0f})",
-                text_color=COLORS.get("accent_green", "#2ea043"),
-            )
-        else:
-            self._boss_status.configure(
-                text="Not recorded — walk to boss area and press Record",
-                text_color=COLORS.get("text_muted", "#484f58"),
-            )
-
-    def _on_record_boss_area(self):
-        map_name = self._get_active_map()
-        if not map_name:
-            return
-        gs = self._engine.game_state
-        if not gs:
-            return
-        try:
-            gs.update()
-        except Exception:
-            pass
-        if not hasattr(gs, 'player') or not gs.player:
-            return
-        pos = gs.player.position
-        if not pos or (pos.x == 0 and pos.y == 0):
-            return
-        self._engine.save_boss_area(map_name, pos.x, pos.y)
-        self._refresh_boss_status()
-
-    def _on_delete_boss_area(self):
-        map_name = self._get_active_map()
-        if not map_name:
-            return
-        self._engine.delete_boss_area(map_name)
-        self._refresh_boss_status()
-
     def _load_waypoints_for_map(self, map_name: str):
         recorder = self._engine.path_recorder
         if not recorder:
             self._loaded_waypoints = []
             self._refresh_waypoint_list()
-            self._refresh_boss_status()
             self._refresh_wall_status()
             return
 
@@ -795,7 +750,6 @@ class PathsTab(ctk.CTkFrame):
         self._loaded_waypoints = waypoints if waypoints else []
         self._selected_indices.clear()
         self._refresh_waypoint_list()
-        self._refresh_boss_status()
         self._refresh_wall_status()
         self._notify_overlay()
 
@@ -986,12 +940,14 @@ class PathsTab(ctk.CTkFrame):
             self._is_paused = False
             self._refresh_waypoint_list()
             self._notify_overlay()
+            self._update_recording_sections_visibility()
         else:
             recorder.start_recording(map_name)
             self._record_btn.configure(text="Stop Recording (F5)")
             self._pause_btn.configure(text="Pause (F6)", state="normal")
             self._rec_status.configure(text="Status: Recording...", text_color=COLORS["accent_green"])
             self._is_paused = False
+            self._update_recording_sections_visibility()
             self._start_record_update()
 
     def _on_pause_record(self):
@@ -1047,6 +1003,7 @@ class PathsTab(ctk.CTkFrame):
             self._pause_btn.configure(text="Pause (F6)", state="disabled")
             self._rec_status.configure(text="Status: Stopped", text_color=COLORS["text_secondary"])
             self._is_paused = False
+            self._update_recording_sections_visibility()
 
         if self._loaded_waypoints:
             recorder._waypoints = list(self._loaded_waypoints)

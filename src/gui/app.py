@@ -64,6 +64,7 @@ class BotApp(ctk.CTk):
         self._overlay_worker_stop = threading.Event()
         self._overlay_worker_thread: Optional[threading.Thread] = None
         self._overlay_last_map_check_t = 0.0
+        self._debug_ui_enabled = bool(self._engine.config.get("debug_ui_enabled", False))
 
         self._build_ui()
         self._setup_log_callback()
@@ -102,6 +103,7 @@ class BotApp(ctk.CTk):
         sidebar = ctk.CTkFrame(self, fg_color=COLORS["bg_medium"], width=130, corner_radius=0)
         sidebar.pack(side="left", fill="y")
         sidebar.pack_propagate(False)
+        self._sidebar = sidebar
 
         logo_frame = ctk.CTkFrame(sidebar, fg_color="transparent")
         logo_frame.pack(fill="x", padx=16, pady=(20, 8))
@@ -113,30 +115,13 @@ class BotApp(ctk.CTk):
         separator.pack(fill="x", padx=16, pady=12)
 
         self._nav_buttons = {}
-        nav_items = [
-            ("dashboard", "Dashboard"),
-            ("addresses", "Address Setup"),
-            ("paths", "Map Paths"),
-            ("entities", "Entity Scanner"),
-            ("cards", "Card Priority"),
-            ("settings", "Settings"),
-        ]
-
-        for tab_id, label in nav_items:
-            btn = ctk.CTkButton(
-                sidebar,
-                text=f"  {label}",
-                anchor="w",
-                fg_color="transparent",
-                hover_color=COLORS["bg_light"],
-                text_color=COLORS["text_secondary"],
-                font=FONTS["small"],
-                height=34,
-                corner_radius=6,
-                command=lambda t=tab_id: self._switch_tab(t),
-            )
-            btn.pack(fill="x", padx=8, pady=2)
-            self._nav_buttons[tab_id] = btn
+        self._create_nav_button("dashboard", "Dashboard")
+        self._create_nav_button("addresses", "Address Setup")
+        self._create_nav_button("paths", "Map Paths")
+        if self._debug_ui_enabled:
+            self._create_nav_button("entities", "Entity Scanner")
+        self._create_nav_button("cards", "Card Priority")
+        self._create_nav_button("settings", "Settings")
 
         sidebar_bottom = ctk.CTkFrame(sidebar, fg_color="transparent")
         sidebar_bottom.pack(side="bottom", fill="x", padx=16, pady=16)
@@ -165,15 +150,22 @@ class BotApp(ctk.CTk):
         self._content.pack(side="right", fill="both", expand=True)
 
         self._tabs["dashboard"] = DashboardTab(self._content, self._engine)
-        self._tabs["addresses"] = AddressManagerTab(self._content, self._engine)
+        self._tabs["addresses"] = AddressManagerTab(
+            self._content,
+            self._engine,
+            on_debug_ui_changed=self._on_debug_ui_changed,
+        )
         self._tabs["paths"] = PathsTab(self._content, self._engine)
-        self._tabs["entities"] = EntityScannerTab(self._content, self._engine)
+        if self._debug_ui_enabled:
+            self._tabs["entities"] = EntityScannerTab(self._content, self._engine)
         self._tabs["cards"] = CardPriorityTab(self._content, self._engine)
         self._tabs["settings"] = SettingsTab(self._content, self._engine)
 
         self._switch_tab("dashboard")
 
     def _switch_tab(self, tab_id):
+        if tab_id not in self._tabs:
+            return
         if self._active_tab:
             self._tabs[self._active_tab].pack_forget()
 
@@ -191,6 +183,55 @@ class BotApp(ctk.CTk):
 
         self._tabs[tab_id].pack(fill="both", expand=True)
         self._active_tab = tab_id
+
+    def _create_nav_button(self, tab_id: str, label: str, before: Optional[ctk.CTkButton] = None):
+        btn = ctk.CTkButton(
+            self._sidebar,
+            text=f"  {label}",
+            anchor="w",
+            fg_color="transparent",
+            hover_color=COLORS["bg_light"],
+            text_color=COLORS["text_secondary"],
+            font=FONTS["small"],
+            height=34,
+            corner_radius=6,
+            command=lambda t=tab_id: self._switch_tab(t),
+        )
+        pack_kwargs = {"fill": "x", "padx": 8, "pady": 2}
+        if before is not None:
+            pack_kwargs["before"] = before
+        btn.pack(**pack_kwargs)
+        self._nav_buttons[tab_id] = btn
+        return btn
+
+    def _on_debug_ui_changed(self, enabled: bool):
+        self._set_debug_ui_enabled(enabled)
+
+    def _set_debug_ui_enabled(self, enabled: bool):
+        enabled = bool(enabled)
+        if self._debug_ui_enabled == enabled:
+            return
+        self._debug_ui_enabled = enabled
+
+        if enabled:
+            if "entities" not in self._tabs:
+                self._tabs["entities"] = EntityScannerTab(self._content, self._engine)
+            if "entities" not in self._nav_buttons:
+                before_btn = self._nav_buttons.get("cards")
+                self._create_nav_button("entities", "Entity Scanner", before=before_btn)
+        else:
+            if self._active_tab == "entities":
+                self._switch_tab("dashboard")
+            tab = self._tabs.pop("entities", None)
+            if tab is not None:
+                try:
+                    tab.pack_forget()
+                except Exception:
+                    pass
+                tab.destroy()
+            btn = self._nav_buttons.pop("entities", None)
+            if btn is not None:
+                btn.destroy()
 
     def _setup_log_callback(self):
         dashboard = self._tabs.get("dashboard")

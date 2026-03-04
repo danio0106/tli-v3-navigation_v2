@@ -2,7 +2,7 @@ from enum import Enum, auto
 
 
 APP_NAME = "Torchlight Infinite Bot V2"
-APP_VERSION = 'v5.56.0'
+APP_VERSION = 'v5.62.0'
 GAME_PROCESS_NAME = "torchlight_infinite.exe"
 GAME_WINDOW_TITLE = "Torchlight Infinite"
 
@@ -25,7 +25,6 @@ CONFIG_FILE = "config.json"
 ADDRESSES_FILE = "addresses.json"
 PATHS_DIR = "paths"
 LOG_FILE = "bot.log"
-BOSS_AREAS_FILE = "data/boss_areas.json"
 MINIMAP_KEY_MAP_FILE = "data/minimap_key_map.json"  # auto-learned: numeric TMap key → zone FName
 PORTAL_PRIORS_FILE = "data/portal_priors.json"
 
@@ -96,6 +95,25 @@ MAP_NAMES = [
     "Abandoned Mines",
     "Singing Sand",
 ]
+
+# Per-map final destination goals (typically exit-map portal anchor positions).
+# Fill x/y values as they are measured from live runs.
+# Expected format per map:
+#   "Map Name": {"x": 1234.5, "y": -678.9}
+HARDCODED_MAP_FINAL_DESTINATIONS = {
+    "High Court Maze": None,
+    "Shadow Outpost": None,
+    "Rainforest of Divine Legacy": None,
+    "Grimwind Woods": None,
+    "Demiman Village": None,
+    "Swirling Mines": None,
+    "Blustery Canyon": None,
+    "Defiled Side Chamber": None,
+    "Deserted District": None,
+    "Wall of the Last Breath": None,
+    "Abandoned Mines": None,
+    "Singing Sand": None,
+}
 
 UE4_OFFSETS = {
     "OwningGameInstance": 0x210,
@@ -582,6 +600,8 @@ DEFAULT_SETTINGS = {
     "runtime_debug_heavy_enabled": False,
     # Input low-level spam logger (mouse/key per-action traces).
     "input_debug_logging": False,
+    # UI debug tooling visibility (Address Probe Events + Entity Scanner tab).
+    "debug_ui_enabled": False,
     "nav_mode": "manual",  # "manual" (recorded path) or "auto" (A* autonomous)
     "auto_behavior": "rush_events",  # rush_events | kill_all | boss_rush
     # Wall model mode: "legacy" = current binary grid only, "hybrid" =

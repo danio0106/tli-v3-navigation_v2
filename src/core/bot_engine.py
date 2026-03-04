@@ -27,7 +27,7 @@ from src.core.card_database import CardDatabase
 from src.core.memory_card_selector import MemoryCardSelector
 from src.utils.constants import (
     BotState, GAME_PROCESS_NAME, CARD_SLOTS, EVENT_PROXIMITY_TRIGGER_UNITS,
-    BOSS_AREAS_FILE, WALL_GRID_CELL_SIZE, WALL_GRID_HALF_SIZE,
+    WALL_GRID_CELL_SIZE, WALL_GRID_HALF_SIZE,
     ZONE_WATCHER_EXIT_THRESHOLD, MINIMAP_SCAN_SKIP_THRESHOLD,
     MAP_EXPLORER_POSITION_SAMPLE_DIST, MAP_EXPLORER_POSITION_POLL_S,
     MAP_EXPLORER_POSITION_FLUSH_EVERY, MAP_EXPLORER_POSITION_FLUSH_S,
@@ -40,6 +40,7 @@ from src.utils.constants import (
     CHARACTER_CENTER,
     EXIT_PORTAL_TEMPLATE_PATH, EXIT_PORTAL_MATCH_THRESHOLD,
     EXIT_PORTAL_SEARCH_REGION,
+    HARDCODED_MAP_FINAL_DESTINATIONS,
 )
 from src.utils.config_manager import ConfigManager
 from src.utils.logger import log
@@ -2193,54 +2194,26 @@ class BotEngine:
         return False
 
     # ------------------------------------------------------------------
-    # Boss area helpers
+    # Final-goal helpers (hardcoded per map)
     # ------------------------------------------------------------------
 
-    def _load_boss_areas(self) -> dict:
-        """Load boss area coordinates from data/boss_areas.json."""
-        if os.path.exists(BOSS_AREAS_FILE):
-            try:
-                with open(BOSS_AREAS_FILE, "r") as f:
-                    return json.load(f)
-            except (json.JSONDecodeError, IOError):
-                return {}
-        return {}
+    def get_map_final_goal(self, map_name: str) -> Optional[tuple]:
+        """Return hardcoded final-goal coordinates for map_name, or None.
 
-    def save_boss_area(self, map_name: str, x: float, y: float) -> bool:
-        """Save boss area coordinates for a map. Called from GUI."""
-        areas = self._load_boss_areas()
-        areas[map_name] = {"x": round(x, 1), "y": round(y, 1)}
+        This is intended for per-map exit-portal anchor positions that are
+        maintained in constants once measured from live runs.
+        """
+        entry = HARDCODED_MAP_FINAL_DESTINATIONS.get(map_name)
+        if not isinstance(entry, dict):
+            return None
+        x = entry.get("x")
+        y = entry.get("y")
+        if x is None or y is None:
+            return None
         try:
-            os.makedirs(os.path.dirname(BOSS_AREAS_FILE), exist_ok=True)
-            with open(BOSS_AREAS_FILE, "w") as f:
-                json.dump(areas, f, indent=2)
-            log.info(f"[Boss] Saved boss area for '{map_name}': ({x:.0f}, {y:.0f})")
-            return True
-        except Exception as e:
-            log.error(f"[Boss] Failed to save boss area: {e}")
-            return False
-
-    def delete_boss_area(self, map_name: str) -> bool:
-        """Delete boss area for a map."""
-        areas = self._load_boss_areas()
-        if map_name in areas:
-            del areas[map_name]
-            try:
-                with open(BOSS_AREAS_FILE, "w") as f:
-                    json.dump(areas, f, indent=2)
-                log.info(f"[Boss] Deleted boss area for '{map_name}'")
-                return True
-            except Exception as e:
-                log.error(f"[Boss] Failed to delete boss area: {e}")
-        return False
-
-    def get_boss_area(self, map_name: str) -> Optional[tuple]:
-        """Return (x, y) boss area coords for map_name, or None."""
-        areas = self._load_boss_areas()
-        entry = areas.get(map_name)
-        if entry:
-            return (entry.get("x", 0.0), entry.get("y", 0.0))
-        return None
+            return (float(x), float(y))
+        except Exception:
+            return None
 
     # ── Wall-scanner GUI helpers ────────────────────────────────────────────────
 
@@ -2531,18 +2504,18 @@ class BotEngine:
         map_name = self.config.get("current_map", "")
 
         boss_pos = None
-        if self._scanner:
-            boss_pos = self._scanner.scan_boss_room()
-            if boss_pos:
-                log.info(f"[Boss] MapBossRoom detected at ({boss_pos[0]:.0f}, {boss_pos[1]:.0f})")
-
-        if not boss_pos and map_name:
-            boss_pos = self.get_boss_area(map_name)
+        if map_name:
+            boss_pos = self.get_map_final_goal(map_name)
             if boss_pos:
                 log.info(
-                    f"[Boss] Using predefined boss area for '{map_name}': "
+                    f"[Boss] Using hardcoded final goal for '{map_name}': "
                     f"({boss_pos[0]:.0f}, {boss_pos[1]:.0f})"
                 )
+
+        if not boss_pos and self._scanner:
+            boss_pos = self._scanner.scan_boss_room()
+            if boss_pos:
+                log.info(f"[Boss] MapBossRoom fallback detected at ({boss_pos[0]:.0f}, {boss_pos[1]:.0f})")
 
         return boss_pos
 
@@ -2550,7 +2523,7 @@ class BotEngine:
         """Navigate to the boss arena for the current map and linger for kill."""
         boss_pos = self._get_boss_position()
         if not boss_pos:
-            log.info("[Boss] No boss area found (neither MapBossRoom nor predefined) — skipping")
+            log.info("[Boss] No final goal found (hardcoded or MapBossRoom fallback) - skipping")
             return False
 
         bx, by = boss_pos

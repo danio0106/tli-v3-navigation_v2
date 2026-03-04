@@ -1,3 +1,37 @@
+### Mar 04, 2026 — v5.62.0 (Recording-mode panel visibility refinement)
+- Adjusted Paths tab legacy-panel visibility rule after UX feedback: Waypoints and Actions are now visible whenever `Recording` mode is selected, not only when active recorder ticking is in progress.
+- Active recording still keeps the same panels visible; switching back to Auto mode hides them.
+- Version bump: `APP_VERSION` -> `v5.62.0`.
+
+### Mar 04, 2026 — v5.61.0 (Paths default auto mode + recording-gated legacy sections)
+- Paths tab now opens in **Auto Navigation** mode by default on startup (`nav_mode` forced to `auto` during tab init), so the auto button is active immediately after bot open.
+- Recording remains available as legacy/manual tooling, but Waypoints UI is now hidden unless recording is actively running.
+- Actions section visibility is now tied to recording state as well.
+- Clarified Actions usage: it currently contains only `Delete Path`, which removes the saved waypoint path for the currently detected map.
+- Also fixed an accidental regression in `PathsTab` where `_on_add_waypoint` / `_on_record` bodies were partially malformed; both handlers are now restored and validated.
+- Version bump: `APP_VERSION` -> `v5.61.0`.
+
+### Mar 04, 2026 — v5.60.0 (Paths Boss Area removal + final-goal scaffold)
+- Removed `Paths` tab Boss Area section entirely (UI + callbacks): no more `Record Boss Area` / `Delete` controls.
+- Deleted legacy boss-area persistence path in `BotEngine` (`data/boss_areas.json` read/write helpers and related methods).
+- Added hardcoded per-map final-goal scaffold in constants: `HARDCODED_MAP_FINAL_DESTINATIONS` with all map keys initialized to `None` placeholders.
+- Return-phase goal selection priority updated:
+  - 1) use hardcoded final-goal coordinates when present,
+  - 2) fallback to memory offset path (`scan_boss_room` / MapBossRoom) when hardcoded value is missing.
+- This keeps current runtime behavior functional while making room for future exit-portal coordinate collection.
+- Version bump: `APP_VERSION` -> `v5.60.0`.
+
+### Mar 04, 2026 — v5.59.0 (Address debug-ui gate + Entity Scanner visibility)
+- Added a persisted `debug_ui_enabled` feature toggle in `DEFAULT_SETTINGS` (default `False`) to control diagnostics-heavy UI exposure.
+- `AddressManagerTab` now includes a `Debug UI` switch (top controls row). Toggle state is persisted via `ConfigManager`.
+- `Probe Events` button in Address Setup is now hidden when debug UI is disabled, and shown only when enabled.
+- `BotApp` now conditionally exposes Entity Scanner in full:
+  - startup: nav item/tab are created only if `debug_ui_enabled=True`,
+  - runtime toggle OFF: active Entity Scanner tab is closed, tab frame is destroyed, and sidebar nav button is removed,
+  - runtime toggle ON: Entity Scanner tab/button are recreated and inserted back before Card Priority.
+- Safety: full map-cycle runtime logic unchanged (`BotEngine`, navigation, map selection, event handling untouched). Change is GUI visibility/wiring only.
+- Version bump: `APP_VERSION` → `v5.59.0`.
+
 ### Mar 04, 2026 — v5.56.0 (Lightweight runtime defaults + log flood control)
 - Added production-lightweight runtime profile defaults in `DEFAULT_SETTINGS`:
   - `runtime_debug_heavy_enabled=False`
@@ -4518,6 +4552,59 @@ Following extensive memory dump archaeology, the logical index issue was complet
 ### Expected behavior
 - Portal-hop fallback remains active for disconnected map sections.
 - Exit portal is only considered in context where current goal is the exit, preventing accidental exit-as-mid-hop misrouting.
+
+## v5.57.0 - Address tab card-detection cleanup (UI + handlers removed)
+
+### User request
+- Continue repository/code cleanup and remove obsolete card-detection tooling from Address tab because map-card workflow now has dedicated systems outside Address Setup.
+
+### Implementation
+- `src/gui/tabs/address_manager_tab.py`:
+  - removed entire `Card Detection` section UI from Address tab:
+    - `Calibrate Hexagons`
+    - `Detect Cards`
+    - `Probe Card Memory`
+    - card/calibration log textbox and status label.
+  - deleted associated callback methods and helper logger:
+    - `_append_calib_log`
+    - `_on_calibrate`
+    - `_on_detect_cards`
+    - `_on_probe_card_memory`.
+  - kept Address tab focused on attach/rescan/FNamePool/address testing plus `Probe Events` diagnostics.
+- `src/utils/constants.py`:
+  - version bump `v5.56.0` -> `v5.57.0`.
+
+### Validation
+- Static checks: no Python errors in modified Address tab file after removal.
+- Grep verification: no leftover references to removed Address-tab card UI handlers/buttons.
+
+### Notes
+- This change is UI/maintenance cleanup only; runtime map-cycle logic remains unchanged.
+
+## v5.58.0 - Address tab manual slot-editor removal (Player X/Y/Z/HP rows)
+
+### User request
+- Remove the remaining Address tab manual offset fields (Player X/Y/Z, HP and similar rows), because values are already shown in Dashboard and offsets are handled automatically now.
+- Keep full map-cycle runtime behavior intact.
+
+### Implementation
+- `src/gui/tabs/address_manager_tab.py` was simplified to diagnostics-only UI:
+  - kept: `Attach to Game`, `Re-scan`, `Probe Events`, `FNamePool` set/validation, scan log.
+  - removed: full per-slot editor section (module/base offset/type/pointer chain/test/live value rows), including Player X/Y/Z and health rows.
+  - removed deprecated controls and code paths tied to manual editing:
+    - `Save All`, `Reset Defaults`
+    - PRESET slot constants/type options
+    - slot parsing/testing/saving/reset methods
+    - live-value polling loop for slot rows.
+- `src/utils/constants.py`:
+  - version bump `v5.57.0` -> `v5.58.0`.
+
+### Validation
+- No leftover references to removed slot-editor methods/constants in `AddressManagerTab`.
+- Edited file remains loadable; only environment baseline warning remains for `customtkinter` import resolution in static checker.
+
+### Notes
+- Runtime bot logic was not changed; scanner/address-chain automation used by the map cycle remains intact.
 
 ## v5.12.0 - Kill-all unreachable cluster guard (adjacent tunnel lanes)
 
