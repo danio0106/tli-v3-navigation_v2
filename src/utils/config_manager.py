@@ -8,6 +8,12 @@ from src.utils.logger import log
 
 class ConfigManager:
     _instance = None
+    _FORCED_POLICY = {
+        "nav_collision_grid_inflate_u": 0.0,
+        "nav_collision_grid_gap_bridge_enabled": False,
+        "nav_collision_overlay_show_bridges": False,
+        "nav_collision_overlay_inflate_debug": False,
+    }
 
     def __new__(cls):
         if cls._instance is None:
@@ -29,11 +35,14 @@ class ConfigManager:
                 with open(self._path, "r") as f:
                     saved = json.load(f)
                 self._config.update(saved)
+                if self._enforce_policy(log_changes=True):
+                    self.save()
                 log.info(f"Config loaded from {self._path}")
             except Exception as e:
                 log.error(f"Failed to load config: {e}")
         else:
             log.info("No config file found, using defaults")
+            self._enforce_policy(log_changes=False)
             self.save()
 
     def save(self):
@@ -48,7 +57,13 @@ class ConfigManager:
         return self._config.get(key, default)
 
     def set(self, key: str, value: Any):
-        self._config[key] = value
+        if key in self._FORCED_POLICY:
+            forced = self._FORCED_POLICY[key]
+            self._config[key] = forced
+            log.info(f"[Config] '{key}' is policy-locked → forcing {forced}")
+        else:
+            self._config[key] = value
+        self._enforce_policy(log_changes=False)
         self.save()
 
     def get_all(self) -> dict:
@@ -56,5 +71,16 @@ class ConfigManager:
 
     def reset(self):
         self._config = dict(DEFAULT_SETTINGS)
+        self._enforce_policy(log_changes=False)
         self.save()
         log.info("Config reset to defaults")
+
+    def _enforce_policy(self, log_changes: bool = False) -> bool:
+        changed = False
+        for key, forced in self._FORCED_POLICY.items():
+            if self._config.get(key) != forced:
+                self._config[key] = forced
+                changed = True
+                if log_changes:
+                    log.info(f"[Config] Policy lock applied: {key}={forced}")
+        return changed

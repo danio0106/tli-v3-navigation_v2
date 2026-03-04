@@ -53,9 +53,15 @@ from src.utils.constants import (
     MAP_EXPLORER_POSITION_FLUSH_S,
     MAP_EXPLORER_NO_PROGRESS_TIMEOUT_S,
     MAP_EXPLORER_NO_PROGRESS_DIST,
+    MAP_EXPLORER_FORCE_FAR_STILL_S,
+    MAP_EXPLORER_FORCE_FAR_MIN_DIST,
+    MAP_EXPLORER_PORTAL_SHIFT_COVERAGE_PCT,
+    MAP_EXPLORER_PORTAL_SHIFT_NO_GAIN_STREAK,
+    MAP_EXPLORER_PORTAL_SHIFT_MIN_FRONTIER_DIST,
     VISITED_CELL_WALKABLE_RADIUS,
     WALL_GRID_HALF_SIZE,
     WALL_GRID_CELL_SIZE,
+    MAP_EXPLORER_FRONTIER_CANDIDATES,
 )
 
 if TYPE_CHECKING:
@@ -130,6 +136,13 @@ class MapExplorer:
         # background position sampler.  Used to compute per-target nav timeouts.
         self._speed_ups: float = 0.0
 
+        # Anti-idle + local saturation telemetry
+        self._known_keys_lock = threading.Lock()
+        self._known_pos_keys: set = set()
+        self._no_gain_streak: int = 0
+        self._still_known_anchor: Optional[Tuple[float, float]] = None
+        self._still_known_since: float = 0.0
+
         # Live coverage/estimate telemetry
         self.coverage_percent: float = 0.0
         self.covered_points: int = 0
@@ -165,6 +178,8 @@ class MapExplorer:
         cx, cy = self._wait_for_valid_player_pos(timeout_s=2.0)
 
         self._refresh_frontier_live(force_rebuild=True)
+        with self._known_keys_lock:
+            self._known_pos_keys = self._load_existing_keys()
         if self._frontier:
             log.info(
                 f"[Explorer] Frontier-guided mode: {len(self._frontier)} unexplored-edge targets"
@@ -288,7 +303,8 @@ class MapExplorer:
                 timeout = MAP_EXPLORER_TARGET_TIMEOUT_S
 
             px, py = self._player_pos()
-            tx, ty = self._pick_target(cx, cy, px, py)
+            force_far = self._update_still_known_state(px, py)
+            tx, ty = self._pick_target(cx, cy, px, py, coverage_pct=pct, force_far=force_far)
 
             targets += 1
             self.targets_attempted = targets
@@ -333,6 +349,14 @@ class MapExplorer:
             after_count = self._read_cached_count()
             gained = max(0, after_count - before_count)
             end_dist = math.sqrt((tx - after_x) ** 2 + (ty - after_y) ** 2)
+
+            if gained == 0:
+                self._no_gain_streak += 1
+            else:
+                self._no_gain_streak = 0
+
+            if gained == 0 and (reached or moved_dist < max(140.0, MAP_EXPLORER_NO_PROGRESS_DIST)):
+                self._remember_failed_target(tx, ty)
 
             if not reached and (
                 gained == 0
@@ -425,6 +449,8 @@ class MapExplorer:
                     if self._sampler_last_pos is None:
                         self._sampler_last_pos = (x, y)
                         existing_keys.add(key)
+                        with self._known_keys_lock:
+                            self._known_pos_keys.add(key)
                         pending.append((x, y))
                     else:
                         dx = x - self._sampler_last_pos[0]
@@ -432,6 +458,8 @@ class MapExplorer:
                         if dx * dx + dy * dy >= MAP_EXPLORER_POSITION_SAMPLE_DIST ** 2:
                             self._sampler_last_pos = (x, y)
                             existing_keys.add(key)
+                            with self._known_keys_lock:
+                                self._known_pos_keys.add(key)
                             pending.append((x, y))
                             self._live_grid_update(x, y)
 
@@ -448,6 +476,8 @@ class MapExplorer:
                             e_key = self._pos_key(ex, ey)
                             if e_key not in existing_keys:
                                 existing_keys.add(e_key)
+                                with self._known_keys_lock:
+                                    self._known_pos_keys.add(e_key)
                                 pending.append((ex, ey))
                                 self._live_grid_update(ex, ey)
                 except Exception:
@@ -582,7 +612,9 @@ class MapExplorer:
                      cx: float,
                      cy: float,
                      current_x: float,
-                     current_y: float) -> Tuple[float, float]:
+                     current_y: float,
+                     coverage_pct: float = 0.0,
+                     force_far: bool = False) -> Tuple[float, float]:
         """Pick the next exploration target.
 
         Priority order:
@@ -595,28 +627,59 @@ class MapExplorer:
         """
         has_current = abs(current_x) > 1.0 or abs(current_y) > 1.0
         self._prune_failed_targets()
+        sector_saturated = (
+            self._no_gain_streak >= MAP_EXPLORER_PORTAL_SHIFT_NO_GAIN_STREAK
+            and coverage_pct >= MAP_EXPLORER_PORTAL_SHIFT_COVERAGE_PCT
+        )
 
         # ── 1. Frontier-guided pick (nearest-first / roomba style) ───────────
         if self._frontier:
-            # Always head to the NEAREST unexplored edge first so the character
-            # sweeps the map line-by-line like a vacuum cleaner before going far.
             available = [f for f in self._frontier if not self._is_failed_target(f[0], f[1])]
             if not available:
                 # All frontier cells are on cooldown — ignore cooldown and try the
                 # full frontier anyway; wall-freeze abort will bail fast if walled.
                 available = list(self._frontier)
 
-            if has_current:
-                available.sort(
-                    key=lambda p: (p[0] - current_x) ** 2 + (p[1] - current_y) ** 2
-                )
+            if has_current and (force_far or sector_saturated):
+                min_dist = MAP_EXPLORER_PORTAL_SHIFT_MIN_FRONTIER_DIST if sector_saturated else MAP_EXPLORER_FORCE_FAR_MIN_DIST
+                far_only = [
+                    p for p in available
+                    if (p[0] - current_x) ** 2 + (p[1] - current_y) ** 2 >= (min_dist ** 2)
+                ]
+                if far_only:
+                    available = far_only
 
-            # Pre-validate A* reachability on the nearest 8 candidates.
-            # Unreachable cells get a short failure cooldown; we move to next nearest.
-            # If all 8 fail, hand the first one to the navigator anyway — the
-            # wall-freeze detector in navigate_to_position() will abort in ~150 ms.
+            if has_current:
+                if force_far or sector_saturated:
+                    available.sort(key=lambda p: (p[0] - current_x) ** 2 + (p[1] - current_y) ** 2, reverse=True)
+                else:
+                    available.sort(key=lambda p: (p[0] - current_x) ** 2 + (p[1] - current_y) ** 2)
+
+            candidates = available[: max(8, MAP_EXPLORER_FRONTIER_CANDIDATES)]
+            best = None
+            best_score = -1.0
+            for candidate in candidates:
+                dcur = math.sqrt((candidate[0] - current_x) ** 2 + (candidate[1] - current_y) ** 2) if has_current else 0.0
+                if self._previous_targets:
+                    spread = min(math.sqrt((candidate[0] - px) ** 2 + (candidate[1] - py) ** 2)
+                                 for px, py in self._previous_targets)
+                else:
+                    spread = dcur
+                score = spread + (0.35 * dcur)
+                if score > best_score:
+                    best_score = score
+                    best = candidate
+
+            probe_list = []
+            if best is not None:
+                probe_list.append(best)
+            for candidate in candidates:
+                if best is not None and candidate == best:
+                    continue
+                probe_list.append(candidate)
+
             chosen = None
-            for candidate in available[:8]:
+            for candidate in probe_list:
                 if (
                     not has_current
                     or self._is_target_reachable(current_x, current_y, candidate[0], candidate[1])
@@ -631,6 +694,17 @@ class MapExplorer:
 
             if chosen is None:
                 chosen = available[0]
+
+            if sector_saturated and has_current:
+                log.debug(
+                    f"[Explorer] Local saturation (no_gain={self._no_gain_streak}, cov={coverage_pct:.1f}%) "
+                    f"— forcing far frontier target ({chosen[0]:.0f},{chosen[1]:.0f})"
+                )
+            elif force_far and has_current:
+                log.debug(
+                    f"[Explorer] Known-position standstill — forcing farther frontier target "
+                    f"({chosen[0]:.0f},{chosen[1]:.0f})"
+                )
 
             try:
                 self._frontier.remove(chosen)
@@ -670,8 +744,39 @@ class MapExplorer:
                 best_pos = (tx, ty)
 
         if best_pos is None:
-            return base_x, base_y
+            return (
+                base_x + random.uniform(-MAP_EXPLORER_RADIUS * 0.35, MAP_EXPLORER_RADIUS * 0.35),
+                base_y + random.uniform(-MAP_EXPLORER_RADIUS * 0.35, MAP_EXPLORER_RADIUS * 0.35),
+            )
         return best_pos
+
+    def _update_still_known_state(self, px: float, py: float) -> bool:
+        """Return True when player is standing on already-known sampled cells.
+
+        This catches the explorer anti-pattern where targets keep changing but
+        movement does not create new coverage.
+        """
+        now = time.time()
+        if self._still_known_anchor is None:
+            self._still_known_anchor = (px, py)
+            self._still_known_since = now
+            return False
+
+        moved = math.hypot(px - self._still_known_anchor[0], py - self._still_known_anchor[1])
+        if moved >= 90.0:
+            self._still_known_anchor = (px, py)
+            self._still_known_since = now
+            return False
+
+        key = self._pos_key(px, py)
+        with self._known_keys_lock:
+            known = key in self._known_pos_keys
+        if not known:
+            self._still_known_anchor = (px, py)
+            self._still_known_since = now
+            return False
+
+        return (now - self._still_known_since) >= MAP_EXPLORER_FORCE_FAR_STILL_S
 
     def _remember_failed_target(self, tx: float, ty: float):
         expiry = time.time() + self._FAILED_TARGET_COOLDOWN_S

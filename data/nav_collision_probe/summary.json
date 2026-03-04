@@ -1,0 +1,19 @@
+{
+  "updated_at": "2026-03-04T22:04:58",
+  "session_file": "C:\\Users\\Daniel\\Documents\\GitHub\\tli-v3-navigation_v2\\data\\nav_collision_probe\\nav_probe_20260304_220458.jsonl",
+  "sequence": 31,
+  "zone": "YL_BeiFengLinDi201",
+  "counts": {
+    "nav_modifier_volume": 232,
+    "nav_mesh_bounds_volume": 1,
+    "recast_nav_mesh": 2
+  },
+  "collision_box_count": 232,
+  "decode_stats": {
+    "actors_seen": 232,
+    "missing_box_array": 232,
+    "actors_with_boxes": 232,
+    "boxes_total": 232
+  },
+  "is_transient": false
+}

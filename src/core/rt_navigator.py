@@ -76,7 +76,11 @@ from src.utils.constants import (
     RT_NAV_HEADING_BUF_SIZE,
     RT_NAV_ESCAPE_DURATION_S,
     RT_NAV_DRIFT_THRESHOLD,
+    RT_NAV_HARD_STALL_FRAMES,
+    RT_NAV_HARD_STALL_DIST,
     LEARNED_WALLS_FILE,
+    PORTAL_PRIORS_FILE,
+    HARDCODED_MAP_PORTALS,
     WALL_GRID_CELL_SIZE,
 )
 
@@ -177,6 +181,8 @@ class RTNavigator:
         # Rolling buffer of per-frame (dx, dy) displacement vectors.
         # Averaged to produce the character's actual heading at stuck time.
         self._heading_buf: deque = deque(maxlen=RT_NAV_HEADING_BUF_SIZE)
+        self._stall_buf: deque = deque(maxlen=RT_NAV_HARD_STALL_FRAMES)
+        self._hard_stalled: bool = False
 
         # ── Non-blocking escape state machine (under _lock) ─────────────
         # Instead of blocking the 60 Hz loop with time.sleep(), the escape
@@ -197,6 +203,19 @@ class RTNavigator:
         self._replan_request  : Optional[Tuple[float, float, float, float]] = None
         self._replan_worker   : Optional[threading.Thread] = None
         self._replan_pending  : bool = False
+        self._last_replan_sig : Optional[Tuple[int, int, int, int]] = None
+
+        # ── Reliability counters (run-scoped) ───────────────────────────
+        self._metrics: Dict[str, int] = {
+            "replans_requested": 0,
+            "replans_suppressed": 0,
+            "replans_success": 0,
+            "no_path": 0,
+            "stuck_escapes": 0,
+            "navigate_timeout": 0,
+            "navigate_no_progress_abort": 0,
+        }
+        self._consecutive_no_path: int = 0
 
         # ── Portal-hop fallback state (for disconnected map segments) ───
         # When direct A* to goal fails, planner can route to a reachable portal
@@ -207,6 +226,10 @@ class RTNavigator:
         self._portal_hop_next_try_t  : float = 0.0
         self._portal_hop_cooldowns   : Dict[Tuple[int, int], float] = {}
         self._portal_hop_last_interact_pos: Optional[Tuple[float, float]] = None
+        self._portal_hop_arrival_hold_until: float = 0.0
+        self._portal_priors_cache    : Dict[str, List[Tuple[float, float]]] = {}
+        self._portal_priors_last_save_t: float = 0.0
+        self._portal_link_dest_by_key: Dict[Tuple[int, int], Tuple[float, float]] = {}
 
         # ── Overlay reference (set externally) ──────────────────────────
         self._overlay = None
@@ -252,6 +275,18 @@ class RTNavigator:
             self._loop_thread.join(timeout=1.5)
         self._input.move_mouse(*CHARACTER_CENTER)
         # Persist any walls learned during this run
+        with self._lock:
+            metrics = dict(self._metrics)
+        log.info(
+            "[RTNav] Reliability summary: "
+            f"replan req={metrics['replans_requested']} "
+            f"supp={metrics['replans_suppressed']} "
+            f"ok={metrics['replans_success']} "
+            f"no_path={metrics['no_path']} "
+            f"stuck={metrics['stuck_escapes']} "
+            f"timeout={metrics['navigate_timeout']} "
+            f"no_prog={metrics['navigate_no_progress_abort']}"
+        )
         log.info("[RTNav] Loop stopped")
 
     def set_overlay(self, overlay) -> None:
@@ -1092,6 +1127,9 @@ class RTNavigator:
                 def _cluster_cancel() -> bool:
                     if is_cancelled():
                         return True
+                    with self._lock:
+                        if not self._hard_stalled:
+                            return False
                     now = time.time()
                     if now - _eval_t[0] < 3.0:
                         return False
@@ -1348,10 +1386,14 @@ class RTNavigator:
                             f"[RTNav] _navigate_to ({gx:.0f},{gy:.0f}) no-progress abort "
                             f"after {no_progress_timeout:.2f}s (moved {moved:.0f}u)"
                         )
+                        with self._lock:
+                            self._metrics["navigate_no_progress_abort"] += 1
                         return False
                 time.sleep(0.04)  # check at 25 Hz — no need to poll faster
 
             log.warning(f"[RTNav] _navigate_to ({gx:.0f},{gy:.0f}) timed out after {timeout:.0f}s")
+            with self._lock:
+                self._metrics["navigate_timeout"] += 1
             return False
         finally:
             with self._lock:
@@ -1419,6 +1461,14 @@ class RTNavigator:
         dx_frame = px - old_px
         dy_frame = py - old_py
         self._heading_buf.append((dx_frame, dy_frame))
+        self._stall_buf.append((px, py))
+        hard_stalled = False
+        if len(self._stall_buf) >= RT_NAV_HARD_STALL_FRAMES:
+            sx, sy = self._stall_buf[0]
+            wx, wy = self._stall_buf[-1]
+            hard_stalled = math.hypot(wx - sx, wy - sy) < RT_NAV_HARD_STALL_DIST
+        with self._lock:
+            self._hard_stalled = hard_stalled
 
         # 1c. Non-blocking escape state machine.
         # When active, steer toward the escape target for ESCAPE_DURATION_S
@@ -1480,6 +1530,7 @@ class RTNavigator:
         # near the portal and force rapid replans toward the original goal.
         with self._lock:
             hop_target = self._portal_hop_target
+            hop_key = self._portal_hop_key
             hop_next_try_t = self._portal_hop_next_try_t
             hop_last_interact_pos = self._portal_hop_last_interact_pos
 
@@ -1493,13 +1544,28 @@ class RTNavigator:
             if verify_hop and hop_last_interact_pos is not None:
                 hop_moved = math.hypot(px - hop_last_interact_pos[0], py - hop_last_interact_pos[1])
                 if hop_moved >= 900.0:
+                    self._learn_portal_link_from_transition(hop_key, px, py)
+                    now_confirm = time.time()
                     with self._lock:
+                        # Anti-bounce guard: after successful transition through
+                        # a hop portal, suppress immediate re-selection of the
+                        # same portal so planner can continue deeper instead of
+                        # instantly hopping back.
+                        if hop_key is not None:
+                            self._portal_hop_cooldowns[hop_key] = time.time() + 12.0
                         self._portal_hop_target = None
                         self._portal_hop_key = None
                         self._portal_hop_next_try_t = 0.0
                         self._portal_hop_last_interact_pos = None
+                        # Short hold right after teleport to avoid immediate
+                        # re-hopping through nearby return-side portals.
+                        self._portal_hop_arrival_hold_until = now_confirm + 3.5
                         self._path = []
                         self._path_idx = 0
+                    # Important: the immediate bounce source after teleport is
+                    # usually the arrival-side return portal near current pos,
+                    # not the departure portal key above.
+                    self._cooldown_arrival_return_portal(px, py, duration_s=12.0)
                     log.info(f"[RTNav] Portal transition confirmed (moved {hop_moved:.0f}u) — replanning to original goal")
                     self._request_replan(px, py, gx, gy)
 
@@ -1528,7 +1594,7 @@ class RTNavigator:
                 self._progress_t         = now_t
             progress_stalled = (now_t - self._progress_t) > RT_NAV_PROGRESS_TIMEOUT
 
-        if progress_stalled:
+        if progress_stalled and hard_stalled:
             log.debug(f"[RTNav] Progress stalled at ({px:.0f},{py:.0f}) dist={dist_goal:.0f} "
                       f"— no improvement in {RT_NAV_PROGRESS_TIMEOUT:.0f}s, escaping")
             self._handle_stuck(px, py, gx, gy)
@@ -1588,10 +1654,9 @@ class RTNavigator:
             # If movement speed is healthy, drift should not trigger immediate
             # replans; otherwise we get oscillation even while traversing open
             # areas. Slow-movement drift still accumulates and can replan.
-            moving_normally = frame_dist >= (RT_NAV_STUCK_DIST * 1.6)
-            if deviation > RT_NAV_DRIFT_THRESHOLD and not moving_normally:
+            if deviation > RT_NAV_DRIFT_THRESHOLD and hard_stalled:
                 drift_hits += 1
-            elif deviation > RT_NAV_DRIFT_THRESHOLD and moving_normally:
+            elif deviation > RT_NAV_DRIFT_THRESHOLD and not hard_stalled:
                 drift_hits = max(0, drift_hits - 2)
             else:
                 drift_hits = max(0, drift_hits - 1)
@@ -1605,7 +1670,7 @@ class RTNavigator:
                 self._drift_replan_hits = 0
 
         # Periodic safety-net replan (8 s) — catches all other stale-path cases.
-        interval_hit = time.time() - last_replan > RT_NAV_REPLAN_INTERVAL
+        interval_hit = hard_stalled and (time.time() - last_replan > RT_NAV_REPLAN_INTERVAL)
         if goal_changed or drift_replan or interval_hit:
             self._request_replan(px, py, gx, gy)
 
@@ -1619,16 +1684,39 @@ class RTNavigator:
     # A* path planning
     # ────────────────────────────────────────────────────────────────────────
 
-    def _request_replan(self, px: float, py: float, gx: float, gy: float):
+    @staticmethod
+    def _replan_signature(px: float, py: float, gx: float, gy: float) -> Tuple[int, int, int, int]:
+        """Coarse signature for duplicate replan suppression (100u bins)."""
+        return (
+            int(round(px / 100.0)),
+            int(round(py / 100.0)),
+            int(round(gx / 100.0)),
+            int(round(gy / 100.0)),
+        )
+
+    def _request_replan(self, px: float, py: float, gx: float, gy: float,
+                        force: bool = False):
         """Submit an A* replan request to the background worker thread.
 
         Non-blocking — the 60 Hz loop continues steering the existing path
         (or direct-to-goal) while the worker computes.  Only one request is
         active at a time; newer requests override stale ones.
         """
+        now = time.time()
+        sig = self._replan_signature(px, py, gx, gy)
+        min_dt = float((self._config or {}).get("rt_nav_replan_duplicate_cooldown_s", 0.45) or 0.45)
+
         with self._lock:
+            self._metrics["replans_requested"] += 1
+            if (not force
+                    and self._last_replan_sig == sig
+                    and (now - self._last_replan_t) < min_dt):
+                self._metrics["replans_suppressed"] += 1
+                return
+
             self._replan_request = (px, py, gx, gy)
-            self._last_replan_t  = time.time()  # prevent re-queueing
+            self._last_replan_t  = now  # prevent re-queueing
+            self._last_replan_sig = sig
 
             if not self._replan_pending:
                 self._replan_pending = True
@@ -1693,6 +1781,13 @@ class RTNavigator:
             self._portal_hop_next_try_t = 0.0
             self._portal_hop_last_interact_pos = None
 
+            if path:
+                self._metrics["replans_success"] += 1
+                self._consecutive_no_path = 0
+            else:
+                self._metrics["no_path"] += 1
+                self._consecutive_no_path += 1
+
         if path:
             wp_str = " ".join(f"({int(x)},{int(y)})" for x, y in path[:10])
             extra = f" (+{len(path)-10} more)" if len(path) > 10 else ""
@@ -1713,6 +1808,24 @@ class RTNavigator:
             if hop_key is not None:
                 with self._lock:
                     self._portal_hop_cooldowns[hop_key] = time.time() + 8.0
+
+            # Fallback ladder (local recovery): after no-path, arm a short
+            # side/back nudge so the next replan samples a different start cell.
+            # This avoids repeating identical failed replans at the same spot.
+            nudge_s = float((self._config or {}).get("rt_nav_nopath_escape_duration_s", 0.35) or 0.35)
+            with self._lock:
+                step_idx = self._escape_idx % len(self.ESCAPE_ANGLES)
+                self._escape_idx += 1
+            angle_deg = self.ESCAPE_ANGLES[step_idx]
+            angle_rad = math.radians(angle_deg)
+            step_u = WALL_GRID_CELL_SIZE * 2.0
+            nudge_wx = px + math.cos(angle_rad) * step_u
+            nudge_wy = py + math.sin(angle_rad) * step_u
+            with self._lock:
+                self._escape_target = (nudge_wx, nudge_wy)
+                self._escape_deadline = time.time() + nudge_s
+                self._escape_gx = gx
+                self._escape_gy = gy
             log.warning(f"[RTNav] A* found no path to ({gx:.0f},{gy:.0f})")
 
     def _find_portal_hop_path(self, px: float, py: float,
@@ -1736,8 +1849,67 @@ class RTNavigator:
         except Exception:
             return None
 
-        if not markers:
-            return None
+        map_name = (self._map_name_for_walls or "").strip()
+        hardcoded_markers: List[Dict[str, Any]] = []
+        hardcoded_name_to_xy: Dict[str, Tuple[float, float]] = {}
+        hardcoded_dest_by_key: Dict[Tuple[int, int], Tuple[float, float]] = {}
+        hardcoded_meta_by_key: Dict[Tuple[int, int], Dict[str, Any]] = {}
+        if map_name:
+            for hp in (HARDCODED_MAP_PORTALS.get(map_name, []) or []):
+                try:
+                    hx = float(hp.get("x", 0.0))
+                    hy = float(hp.get("y", 0.0))
+                    hname = str(hp.get("name", "") or "").strip()
+                    hpair = str(hp.get("pair", "") or "").strip()
+                    his_return = bool(hp.get("is_return", False))
+                    if not his_return and hname:
+                        lname = hname.lower()
+                        his_return = lname.startswith("return") or ("_return" in lname)
+                    hprio = int(hp.get("hop_priority", 500) or 500)
+                    hardcoded_markers.append({
+                        "x": hx,
+                        "y": hy,
+                        "name": hname,
+                        "pair": hpair,
+                        "is_return": his_return,
+                        "hop_priority": hprio,
+                        "is_exit": bool(hp.get("is_exit", False)),
+                        "use_for_hop": bool(hp.get("use_for_hop", True)),
+                    })
+                    if hname:
+                        hardcoded_name_to_xy[hname] = (hx, hy)
+                    hkey = (int(round(hx)), int(round(hy)))
+                    hardcoded_meta_by_key[hkey] = {
+                        "name": hname,
+                        "is_return": his_return,
+                        "hop_priority": hprio,
+                    }
+                except Exception:
+                    continue
+
+        if hardcoded_markers and hardcoded_name_to_xy:
+            for hm in hardcoded_markers:
+                try:
+                    hpair = str(hm.get("pair", "") or "").strip()
+                    if not hpair:
+                        continue
+                    dest_xy = hardcoded_name_to_xy.get(hpair)
+                    if not dest_xy:
+                        continue
+                    hkey = (int(round(float(hm.get("x", 0.0)))), int(round(float(hm.get("y", 0.0)))))
+                    hardcoded_dest_by_key[hkey] = (float(dest_xy[0]), float(dest_xy[1]))
+                except Exception:
+                    continue
+
+        with self._lock:
+            learned_dest_by_key = dict(self._portal_link_dest_by_key)
+
+        dest_by_key: Dict[Tuple[int, int], Tuple[float, float]] = {}
+        dest_by_key.update(learned_dest_by_key)
+        dest_by_key.update(hardcoded_dest_by_key)
+
+        if markers and map_name:
+            self._record_portal_priors(map_name, markers)
 
         goal_is_exit = False
         try:
@@ -1747,16 +1919,78 @@ class RTNavigator:
         except Exception:
             goal_is_exit = False
 
+        if not markers and map_name:
+            prior_pts = self._load_portal_priors(map_name)
+            if prior_pts:
+                markers = [{"x": x, "y": y, "is_exit": False} for (x, y) in prior_pts]
+
+        if hardcoded_markers:
+            existing = {
+                (int(round(float(m.get("x", 0.0)))), int(round(float(m.get("y", 0.0)))) )
+                for m in markers
+            }
+            for hm in hardcoded_markers:
+                key = (int(round(hm["x"])), int(round(hm["y"])))
+                if key in existing:
+                    continue
+                markers.append(hm)
+                existing.add(key)
+
+        if not markers:
+            return None
+
+        # Reliability guard: with only a single observed portal marker, hop
+        # routing is usually low-value/noisy (common at map start before portal
+        # set stabilizes). Keep pursuing normal no-path recovery until at least
+        # two non-exit portal markers are available.
+        if not goal_is_exit:
+            non_exit_count = 0
+            for m in markers:
+                try:
+                    if not bool(m.get("is_exit", False)):
+                        non_exit_count += 1
+                except Exception:
+                    continue
+            if non_exit_count < 2 and map_name:
+                prior_pts = self._load_portal_priors(map_name)
+                if prior_pts:
+                    existing = {
+                        (int(round(float(m.get("x", 0.0)))), int(round(float(m.get("y", 0.0)))) )
+                        for m in markers
+                    }
+                    for x, y in prior_pts:
+                        key = (int(round(x)), int(round(y)))
+                        if key in existing:
+                            continue
+                        markers.append({"x": x, "y": y, "is_exit": False})
+                        existing.add(key)
+                    non_exit_count = sum(1 for m in markers if not bool(m.get("is_exit", False)))
+            if non_exit_count < 2:
+                return None
+
         now = time.time()
+        with self._lock:
+            arrival_hold_until = self._portal_hop_arrival_hold_until
+            no_path_streak = int(self._consecutive_no_path)
         candidate_best = None
-        best_score = float("inf")
+        best_rank: Optional[Tuple[int, float]] = None
+        goal_dist_before = math.hypot(px - gx, py - gy)
+        min_improve_u = 250.0
+        require_known_dest = bool((self._config or {}).get("portal_hop_require_known_destination", True))
 
         for m in markers:
             try:
                 mx = float(m.get("x", 0.0))
                 my = float(m.get("y", 0.0))
                 is_exit = bool(m.get("is_exit", False))
+                use_for_hop = bool(m.get("use_for_hop", True))
+                mname = str(m.get("name", "") or "").strip()
+                mis_return = bool(m.get("is_return", False))
+                mprio = int(m.get("hop_priority", 500) or 500)
             except Exception:
+                continue
+
+            if not use_for_hop:
                 continue
 
             # Guard against exit/mid-portal semantic confusion:
@@ -1772,8 +2006,32 @@ class RTNavigator:
                 continue
 
             key = (int(round(mx)), int(round(my)))
+            meta = hardcoded_meta_by_key.get(key) or {}
+            if meta:
+                if not mname:
+                    mname = str(meta.get("name", "") or "")
+                mis_return = bool(meta.get("is_return", mis_return))
+                try:
+                    mprio = int(meta.get("hop_priority", mprio) or mprio)
+                except Exception:
+                    pass
+
+            # Return portals are heavily restricted by policy:
+            # default: never use for non-exit goals.
+            # rare recovery escape hatch: only when no-path streak is very high
+            # and we are already near the return portal (possible wrong teleport).
+            if mis_return and not goal_is_exit:
+                rare_recovery = (no_path_streak >= 16 and math.hypot(mx - px, my - py) <= 1100.0)
+                if not rare_recovery:
+                    continue
+
             cooldown_until = self._portal_hop_cooldowns.get(key, 0.0)
             if cooldown_until > now:
+                continue
+
+            # Immediately after a hop transition, ignore portals very close to
+            # current position for a short grace window to prevent A↔B bounce.
+            if now < arrival_hold_until and math.hypot(mx - px, my - py) <= 1200.0:
                 continue
 
             # Reachability test: only portals with a valid path from current
@@ -1786,12 +2044,231 @@ class RTNavigator:
             if not ppath:
                 continue
 
-            score = float(len(ppath)) + 0.002 * math.hypot(mx - gx, my - gy)
-            if score < best_score:
-                best_score = score
+            teleport_dest = dest_by_key.get(key)
+            if teleport_dest is None:
+                if require_known_dest and not goal_is_exit:
+                    continue
+                # Exit-goal safety: without destination evidence we still skip
+                # unknown hops to avoid teleporting into disconnected sectors.
+                continue
+
+            dest_goal_dist = math.hypot(float(teleport_dest[0]) - gx, float(teleport_dest[1]) - gy)
+            if not goal_is_exit and (goal_dist_before - dest_goal_dist) < min_improve_u:
+                continue
+
+            dpath = self._pf.find_path(
+                float(teleport_dest[0]), float(teleport_dest[1]), gx, gy,
+                max_nodes=max(20000, AUTO_NAV_ASTAR_MAX_NODES // 3),
+            )
+            if not dpath:
+                continue
+
+            score = float(len(ppath)) + 0.002 * dest_goal_dist
+            rank = (int(mprio), float(score))
+            if best_rank is None or rank < best_rank:
+                best_rank = rank
                 candidate_best = (ppath, (mx, my), key)
 
         return candidate_best
+
+    def _load_portal_priors(self, map_name: str) -> List[Tuple[float, float]]:
+        if not map_name:
+            return []
+        try:
+            with self._lock:
+                if map_name in self._portal_priors_cache:
+                    return list(self._portal_priors_cache.get(map_name, []))
+
+            if not os.path.exists(PORTAL_PRIORS_FILE):
+                with self._lock:
+                    self._portal_priors_cache[map_name] = []
+                return []
+
+            with open(PORTAL_PRIORS_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f) or {}
+
+            raw = data.get(map_name, [])
+            pts: List[Tuple[float, float]] = []
+            for item in raw:
+                try:
+                    pts.append((float(item[0]), float(item[1])))
+                except Exception:
+                    continue
+            with self._lock:
+                self._portal_priors_cache[map_name] = pts
+            return list(pts)
+        except Exception:
+            return []
+
+    def _record_portal_priors(self, map_name: str, markers: List[Dict[str, Any]]) -> None:
+        if not map_name:
+            return
+
+        live_pts: List[Tuple[float, float]] = []
+        for m in markers:
+            try:
+                if bool(m.get("is_exit", False)):
+                    continue
+                x = float(m.get("x", 0.0))
+                y = float(m.get("y", 0.0))
+                live_pts.append((x, y))
+            except Exception:
+                continue
+
+        if not live_pts:
+            return
+
+        try:
+            prior = self._load_portal_priors(map_name)
+            merged = list(prior)
+            merge_dist = 350.0
+            changed = False
+
+            for x, y in live_pts:
+                if any(math.hypot(x - px, y - py) <= merge_dist for px, py in merged):
+                    continue
+                merged.append((x, y))
+                changed = True
+
+            if not changed:
+                return
+
+            now = time.time()
+            if now - self._portal_priors_last_save_t < 1.0:
+                with self._lock:
+                    self._portal_priors_cache[map_name] = merged
+                return
+
+            directory = os.path.dirname(PORTAL_PRIORS_FILE)
+            if directory:
+                os.makedirs(directory, exist_ok=True)
+
+            data: Dict[str, List[List[float]]] = {}
+            if os.path.exists(PORTAL_PRIORS_FILE):
+                try:
+                    with open(PORTAL_PRIORS_FILE, "r", encoding="utf-8") as f:
+                        data = json.load(f) or {}
+                except Exception:
+                    data = {}
+
+            data[map_name] = [[round(p[0], 1), round(p[1], 1)] for p in merged]
+            with open(PORTAL_PRIORS_FILE, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+
+            with self._lock:
+                self._portal_priors_cache[map_name] = merged
+                self._portal_priors_last_save_t = now
+        except Exception:
+            return
+
+    def _cooldown_arrival_return_portal(self, px: float, py: float, duration_s: float = 12.0) -> None:
+        """Cooldown nearest non-exit portal around current position.
+
+        After hop transition, player appears near the paired return portal on
+        the arrival side. Cooling this nearby portal avoids immediate
+        bounce-back re-selection on the next replan cycle.
+        """
+        if not self._portal_det:
+            return
+
+        markers: List[Dict[str, Any]] = []
+        try:
+            if hasattr(self._portal_det, "get_portal_markers"):
+                markers = self._portal_det.get_portal_markers() or []
+            elif hasattr(self._portal_det, "get_portal_positions"):
+                raw = self._portal_det.get_portal_positions() or []
+                markers = [{"x": p[0], "y": p[1], "is_exit": False} for p in raw]
+        except Exception:
+            return
+
+        if not markers:
+            return
+
+        nearest_non_exit_key: Optional[Tuple[int, int]] = None
+        nearest_any_key: Optional[Tuple[int, int]] = None
+        nearest_dist = float("inf")
+        nearest_any_dist = float("inf")
+
+        for m in markers:
+            try:
+                is_exit = bool(m.get("is_exit", False))
+                mx = float(m.get("x", 0.0))
+                my = float(m.get("y", 0.0))
+            except Exception:
+                continue
+
+            d = math.hypot(px - mx, py - my)
+            key = (int(round(mx)), int(round(my)))
+            if d < nearest_any_dist:
+                nearest_any_dist = d
+                nearest_any_key = key
+            if (not is_exit) and d < nearest_dist:
+                nearest_dist = d
+                nearest_non_exit_key = key
+
+        # Arrival paired portal should be close after transition.
+        selected_key = nearest_non_exit_key if nearest_non_exit_key is not None else nearest_any_key
+        selected_dist = nearest_dist if nearest_non_exit_key is not None else nearest_any_dist
+        if selected_key is not None and selected_dist <= 900.0:
+            with self._lock:
+                self._portal_hop_cooldowns[selected_key] = max(
+                    self._portal_hop_cooldowns.get(selected_key, 0.0),
+                    time.time() + max(2.0, float(duration_s)),
+                )
+
+    def _learn_portal_link_from_transition(self, source_key: Optional[Tuple[int, int]],
+                                           px: float, py: float) -> None:
+        """Learn source-portal -> arrival-side destination mapping after a hop.
+
+        Uses the nearest non-exit portal around the post-transition position as
+        destination anchor. This keeps hop routing destination-aware even when
+        live portal markers are sparse or delayed.
+        """
+        if source_key is None or not self._portal_det:
+            return
+
+        markers: List[Dict[str, Any]] = []
+        try:
+            if hasattr(self._portal_det, "get_portal_markers"):
+                markers = self._portal_det.get_portal_markers() or []
+            elif hasattr(self._portal_det, "get_portal_positions"):
+                raw = self._portal_det.get_portal_positions() or []
+                markers = [{"x": p[0], "y": p[1], "is_exit": False} for p in raw]
+        except Exception:
+            return
+
+        if not markers:
+            return
+
+        nearest_key: Optional[Tuple[int, int]] = None
+        nearest_xy: Optional[Tuple[float, float]] = None
+        nearest_dist = float("inf")
+
+        for m in markers:
+            try:
+                if bool(m.get("is_exit", False)):
+                    continue
+                mx = float(m.get("x", 0.0))
+                my = float(m.get("y", 0.0))
+            except Exception:
+                continue
+            key = (int(round(mx)), int(round(my)))
+            if key == source_key:
+                continue
+            d = math.hypot(px - mx, py - my)
+            if d < nearest_dist:
+                nearest_dist = d
+                nearest_key = key
+                nearest_xy = (mx, my)
+
+        if nearest_key is None or nearest_xy is None or nearest_dist > 1200.0:
+            return
+
+        with self._lock:
+            self._portal_link_dest_by_key[source_key] = (nearest_xy[0], nearest_xy[1])
+            src_xy = self._portal_link_dest_by_key.get(source_key)
+            if src_xy is not None:
+                self._portal_link_dest_by_key[nearest_key] = (float(source_key[0]), float(source_key[1]))
 
     # ────────────────────────────────────────────────────────────────────────
     # Steering
@@ -1945,6 +2422,7 @@ class RTNavigator:
         """
         with self._lock:
             self._stuck_frames = 0  # reset immediately
+            self._metrics["stuck_escapes"] += 1
 
         # ── 1. Heading inference ─────────────────────────────────────────────
         avg_hx, avg_hy = self._get_avg_heading()

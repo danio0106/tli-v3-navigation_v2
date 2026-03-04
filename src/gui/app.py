@@ -16,7 +16,7 @@ from src.gui.tabs.entity_scanner_tab import EntityScannerTab
 from src.gui.tabs.card_priority_tab import CardPriorityTab
 from src.gui.overlay import DebugOverlay
 from src.core.bot_engine import BotEngine
-from src.utils.constants import APP_NAME, APP_VERSION, WALL_GRID_CELL_SIZE
+from src.utils.constants import APP_NAME, APP_VERSION, WALL_GRID_CELL_SIZE, HARDCODED_MAP_PORTALS
 from src.utils.logger import log
 
 IS_WINDOWS = sys.platform == "win32"
@@ -54,6 +54,16 @@ class BotApp(ctk.CTk):
         self._gui_log_drop_lock = threading.Lock()
         self._log_callback = None
         self._log_pump_after_id = None
+        self._overlay_data_lock = threading.Lock()
+        self._overlay_data = {
+            "portal_positions": [],
+            "event_markers": [],
+            "guard_markers": [],
+            "nav_collision_markers": [],
+        }
+        self._overlay_worker_stop = threading.Event()
+        self._overlay_worker_thread: Optional[threading.Thread] = None
+        self._overlay_last_map_check_t = 0.0
 
         self._build_ui()
         self._setup_log_callback()
@@ -367,6 +377,7 @@ class BotApp(ctk.CTk):
     def _toggle_overlay(self):
         if self._overlay and self._overlay._running:
             self._stop_position_poll()
+            self._stop_overlay_worker()
             self._overlay.stop()
             self._overlay = None
             self._overlay_btn.configure(text="Overlay: OFF")
@@ -405,7 +416,181 @@ class BotApp(ctk.CTk):
             self._engine.set_debug_overlay(self._overlay)
             log.info("[Overlay] Debug overlay started")
             self._start_position_poll()
+            self._start_overlay_worker()
             self._start_overlay_feed()
+
+    def _start_overlay_worker(self):
+        """Start background worker that collects heavy overlay data from memory.
+
+        Keeps memory reads off Tk thread to avoid GUI stalls/freezes.
+        """
+        self._overlay_worker_stop.clear()
+        if self._overlay_worker_thread and self._overlay_worker_thread.is_alive():
+            return
+
+        def _worker_loop():
+            interval = 0.20  # 5 Hz heavy-data refresh
+            while not self._overlay_worker_stop.is_set():
+                t0 = time.monotonic()
+                try:
+                    overlay = self._overlay
+                    if not overlay or not overlay._running:
+                        break
+
+                    portal_positions = []
+                    event_markers = []
+                    guard_markers = []
+                    nav_collision_markers = []
+
+                    portal_det = getattr(self._engine, 'portal_detector', None)
+                    if portal_det:
+                        try:
+                            if hasattr(portal_det, 'get_portal_markers'):
+                                portal_positions = portal_det.get_portal_markers() or []
+                            elif hasattr(portal_det, 'get_portal_positions'):
+                                portal_positions = portal_det.get_portal_positions() or []
+                        except Exception:
+                            portal_positions = []
+
+                    # Merge hardcoded per-map portal presets for deterministic
+                    # portal maps (e.g., Grimwind), so overlay stays informative
+                    # even when live portal set is temporarily sparse.
+                    try:
+                        current_map = self._resolve_current_map()
+                        hardcoded = HARDCODED_MAP_PORTALS.get(current_map, []) or []
+                        if hardcoded:
+                            existing = {
+                                (int(round(float(p.get("x", 0.0)))), int(round(float(p.get("y", 0.0)))))
+                                for p in portal_positions if isinstance(p, dict)
+                            }
+                            for hp in hardcoded:
+                                key = (
+                                    int(round(float(hp.get("x", 0.0)))),
+                                    int(round(float(hp.get("y", 0.0)))),
+                                )
+                                if key in existing:
+                                    continue
+                                portal_positions.append({
+                                    "x": float(hp.get("x", 0.0)),
+                                    "y": float(hp.get("y", 0.0)),
+                                    "is_exit": bool(hp.get("is_exit", False)),
+                                })
+                                existing.add(key)
+                    except Exception:
+                        pass
+
+                    # Final coalescing pass: live portal feed may contain
+                    # duplicate markers at identical coordinates (including
+                    # live + hardcoded overlap with slightly different fields).
+                    # Keep one marker per rounded (x,y); prefer exit=True when
+                    # both variants exist at the same position.
+                    try:
+                        dedup: dict = {}
+                        for p in portal_positions:
+                            if not isinstance(p, dict):
+                                continue
+                            x = float(p.get("x", 0.0))
+                            y = float(p.get("y", 0.0))
+                            key = (int(round(x)), int(round(y)))
+                            prev = dedup.get(key)
+                            if prev is None:
+                                dedup[key] = dict(p)
+                            else:
+                                prev_exit = bool(prev.get("is_exit", False))
+                                cur_exit = bool(p.get("is_exit", False))
+                                if (not prev_exit) and cur_exit:
+                                    dedup[key] = dict(p)
+                        portal_positions = list(dedup.values())
+                    except Exception:
+                        pass
+
+                    scanner = getattr(self._engine, 'scanner', None)
+                    if scanner:
+                        try:
+                            events = scanner.get_typed_events() or []
+                            for e in events:
+                                if abs(e.position[0]) <= 1.0 and abs(e.position[1]) <= 1.0:
+                                    continue
+                                event_markers.append({
+                                    "x": e.position[0],
+                                    "y": e.position[1],
+                                    "type": e.event_type,
+                                    "wave": e.wave_counter,
+                                    "guards": -1,
+                                    "guard_classes": "",
+                                    "is_target": e.is_target_event,
+                                })
+                        except Exception:
+                            event_markers = []
+
+                        try:
+                            _raw_guards = scanner.get_carjack_guard_positions() or []
+                            guard_markers = [
+                                {
+                                    "x": g["x"],
+                                    "y": g["y"],
+                                    "abp": g.get("abp", ""),
+                                    "score": 0.0,
+                                    "dist_truck": g.get("dist_truck", -1.0),
+                                }
+                                for g in _raw_guards
+                            ]
+                        except Exception:
+                            guard_markers = []
+
+                        try:
+                            if self._engine.config.get("nav_collision_overlay_enabled", False):
+                                raw_markers = scanner.get_nav_collision_markers() or []
+                                show_raw = bool(self._engine.config.get("nav_collision_overlay_show_raw", True))
+                                show_inflated = bool(self._engine.config.get("nav_collision_overlay_inflate_debug", False))
+                                try:
+                                    inflate_u = float(self._engine.config.get("nav_collision_grid_inflate_u", 0.0) or 0.0)
+                                except Exception:
+                                    inflate_u = 0.0
+
+                                if show_raw:
+                                    for m in raw_markers:
+                                        mm = dict(m)
+                                        mm["overlay_style"] = "raw"
+                                        mm["overlay_label"] = ""
+                                        nav_collision_markers.append(mm)
+
+                                if show_inflated and inflate_u > 0.0:
+                                    for m in raw_markers:
+                                        mm = dict(m)
+                                        mm["extent_x"] = max(1.0, float(m.get("extent_x", 0.0)) + inflate_u)
+                                        mm["extent_y"] = max(1.0, float(m.get("extent_y", 0.0)) + inflate_u)
+                                        mm["overlay_style"] = "inflated"
+                                        mm["overlay_label"] = "NAV+"
+                                        nav_collision_markers.append(mm)
+                        except Exception:
+                            nav_collision_markers = []
+
+                    with self._overlay_data_lock:
+                        self._overlay_data["portal_positions"] = portal_positions
+                        self._overlay_data["event_markers"] = event_markers
+                        self._overlay_data["guard_markers"] = guard_markers
+                        self._overlay_data["nav_collision_markers"] = nav_collision_markers
+                except Exception:
+                    pass
+
+                sleep_for = interval - (time.monotonic() - t0)
+                if sleep_for > 0.001:
+                    time.sleep(sleep_for)
+
+        self._overlay_worker_thread = threading.Thread(
+            target=_worker_loop,
+            daemon=True,
+            name="OverlayDataWorker",
+        )
+        self._overlay_worker_thread.start()
+
+    def _stop_overlay_worker(self):
+        self._overlay_worker_stop.set()
+        t = self._overlay_worker_thread
+        if t and t.is_alive():
+            t.join(timeout=0.5)
+        self._overlay_worker_thread = None
 
     def _resolve_current_map(self) -> str:
         """Return the English map name for the currently loaded zone.
@@ -551,7 +736,8 @@ class BotApp(ctk.CTk):
                     self._overlay.set_game_rect((x, y, x2 - x, y2 - y))
 
             calibrator = self._engine.scale_calibrator
-            if calibrator:
+            if calibrator and (time.monotonic() - self._overlay_last_map_check_t >= 0.5):
+                self._overlay_last_map_check_t = time.monotonic()
                 current_map = self._resolve_current_map()
                 if current_map != self._overlay._current_map_name:
                     cal = calibrator.get_calibration(current_map)
@@ -561,52 +747,22 @@ class BotApp(ctk.CTk):
                     else:
                         self._overlay.set_calibration(None, current_map)
 
-            portal_det = getattr(self._engine, 'portal_detector', None)
-            if portal_det:
-                try:
-                    if hasattr(portal_det, 'get_portal_markers'):
-                        portal_markers = portal_det.get_portal_markers()
-                        self._overlay.set_portal_positions(portal_markers or [])
-                    elif hasattr(portal_det, 'get_portal_positions'):
-                        portals = portal_det.get_portal_positions()
-                        self._overlay.set_portal_positions(portals or [])
-                except Exception:
-                    pass
+            with self._overlay_data_lock:
+                portal_positions = self._overlay_data["portal_positions"]
+                event_markers = self._overlay_data["event_markers"]
+                guard_markers = self._overlay_data["guard_markers"]
+                nav_collision_markers = self._overlay_data["nav_collision_markers"]
 
-            scanner = getattr(self._engine, 'scanner', None)
-            if scanner:
-                try:
-                    events = scanner.get_typed_events()
-                    markers = []
-                    for e in (events or []):
-                        if abs(e.position[0]) <= 1.0 and abs(e.position[1]) <= 1.0:
-                            continue
-                        marker = {
-                            "x": e.position[0],
-                            "y": e.position[1],
-                            "type": e.event_type,
-                            "wave": e.wave_counter,
-                            "guards": -1,
-                            "guard_classes": "",
-                            "is_target": e.is_target_event,
-                        }
-                        markers.append(marker)
-                    self._overlay.set_event_markers(markers)
-                    # Guard overlay: flee-detected positions (v4.65.0).
-                    _raw_guards = scanner.get_carjack_guard_positions() or []
-                    self._overlay.set_guard_markers([
-                        {"x": g["x"], "y": g["y"], "abp": g.get("abp", ""),
-                         "score": 0.0, "dist_truck": g.get("dist_truck", -1.0)}
-                        for g in _raw_guards
-                    ])
-                except Exception:
-                    pass
+            self._overlay.set_portal_positions(portal_positions)
+            self._overlay.set_event_markers(event_markers)
+            self._overlay.set_guard_markers(guard_markers)
+            self._overlay.set_nav_collision_markers(nav_collision_markers)
 
         except Exception:
             pass
 
         if self._overlay and self._overlay._running:
-            self.after(16, self._start_overlay_feed)
+            self.after(33, self._start_overlay_feed)
 
     def on_closing(self):
         if self._log_pump_after_id is not None:
@@ -624,6 +780,7 @@ class BotApp(ctk.CTk):
         if hasattr(self, '_hotkey_thread_running'):
             self._hotkey_thread_running = False
         self._stop_position_poll()
+        self._stop_overlay_worker()
         if self._overlay:
             self._overlay.stop()
             self._overlay = None

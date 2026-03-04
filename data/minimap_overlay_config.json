@@ -1,0 +1,116 @@
+{
+  "input_dir": "data/minimap_debug/captures",
+  "output_dir": "data/minimap_debug/overlay",
+  "file_prefix": "atlas_capture_preview_",
+  "target_files": [],
+  "clear_output_dir": true,
+  "crop_top_px": 0,
+  "crop_bottom_px": 8,
+  "crop_left_px": 0,
+  "crop_right_px": 0,
+  "minimap_circle_margin_px": 10,
+  "walk_ranges": [
+    {
+      "h_min": 0.95,
+      "h_max": 0.06,
+      "s_min": 0.0,
+      "s_max": 0.1,
+      "v_min": 0.56,
+      "v_max": 0.33
+    },
+    {
+      "h_min": 0.58,
+      "h_max": 0.92,
+      "s_min": 0.03,
+      "s_max": 0.09,
+      "v_min": 0.54,
+      "v_max": 0.34
+    },
+    {
+      "h_min": 0.63,
+      "h_max": 0.76,
+      "s_min": 0.05,
+      "s_max": 0.12,
+      "v_min": 0.58,
+      "v_max": 0.33
+    },
+    {
+  "edge_wall_val_min": 0.38,
+  "edge_wall_sat_max": 0.24,
+      "s_min": 0.08,
+      "s_max": 0.13,
+      "v_min": 0.22,
+      "v_max": 0.27
+    },
+    {
+      "h_min": 0.53,
+      "h_max": 0.57,
+      "s_min": 0.43,
+      "s_max": 0.58,
+      "v_min": 0.30,
+      "v_max": 0.46
+    }
+  ],
+  "wall_ranges": [
+    {
+      "h_min": 0.90,
+      "h_max": 0.08,
+      "s_min": 0.0,
+      "s_max": 0.07,
+      "v_min": 0.60,
+      "v_max": 0.80
+    },
+    {
+      "h_min": 0.00,
+      "h_max": 1.00,
+      "s_min": 0.0,
+      "s_max": 0.06,
+      "v_min": 0.58,
+      "v_max": 0.82
+    },
+    {
+      "h_min": 0.53,
+      "h_max": 0.57,
+      "s_min": 0.42,
+      "s_max": 0.70,
+      "v_min": 0.62,
+      "v_max": 0.82
+    }
+  ],
+  "edge_wall_val_min": 0.42,
+  "edge_wall_sat_max": 0.18,
+  "overlap_mode": "walk_priority",
+  "walk_gray_min": 0.20,
+  "walk_gray_max": 0.31,
+  "walk_gray_sat_max": 0.32,
+  "wall_gray_min": 0.46,
+  "wall_gray_sat_max01": 0.16,
+  "min_walk_blob_area": 5,
+  "min_wall_blob_area": 7,
+  "wall_gray_sat_max": 22,
+  "wall_gray_val_min": 155,
+  "unexplored_hue_min": 88,
+  "unexplored_hue_max": 108,
+  "unexplored_sat_min": 95,
+  "unexplored_walk_val_min": 70,
+  "unexplored_walk_val_max": 128,
+  "unexplored_wall_val_min": 145,
+  "walk_explored_hue_min": 148,
+  "walk_explored_hue_max": 179,
+  "walk_explored_sat_min": 16,
+  "walk_explored_sat_max": 68,
+  "walk_explored_val_min": 58,
+  "walk_explored_val_max": 112,
+  "sat_neutral_max": 65,
+  "active_min_val": 30,
+  "walkable_percentile": 42,
+  "walkable_min_val": 92,
+  "wall_percentile": 72,
+  "wall_max_val": 105,
+  "canny_low": 45,
+  "canny_high": 120,
+  "edge_dilate_iter": 1,
+  "morph_kernel": 3,
+  "overlay_alpha_walkable": 0.36,
+  "overlay_alpha_walls": 0.45
+}

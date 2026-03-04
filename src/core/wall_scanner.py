@@ -40,7 +40,7 @@ import struct
 import threading
 import time
 from dataclasses import dataclass, field
-from typing import List, Optional, Tuple, TYPE_CHECKING
+from typing import Any, Dict, List, Optional, Set, Tuple, TYPE_CHECKING
 
 from src.utils.logger import log
 from src.utils.constants import (
@@ -186,6 +186,45 @@ class GridData:
 
     def clear_cell(self, row: int, col: int):
         self.set_blocked(row, col, False)
+
+    def mark_rotated_box_blocked(self,
+                                 cx: float,
+                                 cy: float,
+                                 extent_x: float,
+                                 extent_y: float,
+                                 yaw_deg: float,
+                                 inflate_u: float = 0.0):
+        """Rasterize a rotated rectangle into blocked cells.
+
+        Used for NavModifierVolume priors decoded from runtime memory.
+        The optional inflate_u expands extents to close small geometry gaps.
+        """
+        ex = max(1.0, float(extent_x) + max(0.0, float(inflate_u)))
+        ey = max(1.0, float(extent_y) + max(0.0, float(inflate_u)))
+
+        rad = math.radians(float(yaw_deg))
+        cos_y = math.cos(rad)
+        sin_y = math.sin(rad)
+
+        # Axis-aligned bounding radius for candidate cell iteration.
+        bound_r = math.hypot(ex, ey)
+        cell_radius = int(math.ceil(bound_r / self.cell_size)) + 1
+        center_row, center_col = self.world_to_grid(cx, cy)
+
+        for dr in range(-cell_radius, cell_radius + 1):
+            for dc in range(-cell_radius, cell_radius + 1):
+                row = center_row + dr
+                col = center_col + dc
+                if row < 0 or row >= self.rows or col < 0 or col >= self.cols:
+                    continue
+                wx, wy = self.grid_to_world(row, col)
+                dx = wx - cx
+                dy = wy - cy
+                # Inverse-rotate world delta into box-local frame.
+                lx = dx * cos_y + dy * sin_y
+                ly = -dx * sin_y + dy * cos_y
+                if abs(lx) <= ex and abs(ly) <= ey:
+                    self.set_blocked(row, col, True)
 
     # ── Hybrid confidence overlay ───────────────────────────────────────
 
@@ -380,10 +419,146 @@ class WallScanner:
         ]
         return points
 
+    @staticmethod
+    def _projected_half_extent(ex: float,
+                               ey: float,
+                               yaw_deg: float,
+                               dir_x: float,
+                               dir_y: float) -> float:
+        """Project an oriented rectangle half-extent onto world direction."""
+        rad = math.radians(float(yaw_deg))
+        ax_x = math.cos(rad)
+        ax_y = math.sin(rad)
+        ay_x = -ax_y
+        ay_y = ax_x
+        return (
+            abs(dir_x * ax_x + dir_y * ax_y) * float(ex)
+            + abs(dir_x * ay_x + dir_y * ay_y) * float(ey)
+        )
+
+    @staticmethod
+    def compose_nav_collision_blockers(nav_collision_markers: Optional[List[dict]],
+                                       inflate_u: float = 0.0,
+                                       bridge_gap_u: float = 0.0,
+                                       bridge_half_width_u: float = 0.0) -> Tuple[List[Dict[str, Any]], int]:
+        """Build final nav blockers from raw markers.
+
+        Output includes:
+        - source='raw' markers (optionally inflated extents)
+        - source='bridge' markers joining small pairwise gaps between boxes
+        """
+        raw_inflate = max(0.0, float(inflate_u))
+        max_gap = max(0.0, float(bridge_gap_u))
+        bridge_half_width = max(10.0, float(bridge_half_width_u))
+
+        cleaned: List[Dict[str, Any]] = []
+        for marker in (nav_collision_markers or []):
+            try:
+                area_class = str(marker.get("area_class", "") or "").lower()
+                if "portal" in area_class:
+                    continue
+                mx = float(marker.get("x", 0.0))
+                my = float(marker.get("y", 0.0))
+                ex = float(marker.get("extent_x", 0.0))
+                ey = float(marker.get("extent_y", 0.0))
+                yaw = float(marker.get("yaw", 0.0))
+                if ex < 1.0 or ey < 1.0:
+                    continue
+                cleaned.append({
+                    "x": mx,
+                    "y": my,
+                    "extent_x": max(1.0, ex + raw_inflate),
+                    "extent_y": max(1.0, ey + raw_inflate),
+                    "yaw": yaw,
+                    "area_class": area_class,
+                    "source": "raw",
+                })
+            except Exception:
+                continue
+
+        if not cleaned:
+            return [], 0
+
+        blockers: List[Dict[str, Any]] = list(cleaned)
+        if max_gap <= 0.0 or len(cleaned) < 2:
+            return blockers, 0
+
+        bucket_size = max(150.0, max_gap * 1.5)
+        buckets: Dict[Tuple[int, int], List[int]] = {}
+        for i, marker in enumerate(cleaned):
+            bx = int(math.floor(marker["x"] / bucket_size))
+            by = int(math.floor(marker["y"] / bucket_size))
+            buckets.setdefault((bx, by), []).append(i)
+
+        bridge_count = 0
+        seen_pairs: Set[Tuple[int, int]] = set()
+        for i, a in enumerate(cleaned):
+            abx = int(math.floor(a["x"] / bucket_size))
+            aby = int(math.floor(a["y"] / bucket_size))
+            for nx in (abx - 1, abx, abx + 1):
+                for ny in (aby - 1, aby, aby + 1):
+                    for j in buckets.get((nx, ny), []):
+                        if j <= i:
+                            continue
+                        pair = (i, j)
+                        if pair in seen_pairs:
+                            continue
+                        seen_pairs.add(pair)
+
+                        b = cleaned[j]
+                        dx = b["x"] - a["x"]
+                        dy = b["y"] - a["y"]
+                        dist = math.hypot(dx, dy)
+                        if dist < 1e-3:
+                            continue
+
+                        dir_x = dx / dist
+                        dir_y = dy / dist
+
+                        reach_a = WallScanner._projected_half_extent(
+                            a["extent_x"], a["extent_y"], a["yaw"], dir_x, dir_y
+                        )
+                        reach_b = WallScanner._projected_half_extent(
+                            b["extent_x"], b["extent_y"], b["yaw"], -dir_x, -dir_y
+                        )
+
+                        gap = dist - reach_a - reach_b
+                        if gap <= 1.0 or gap > max_gap:
+                            continue
+
+                        sx = a["x"] + dir_x * reach_a
+                        sy = a["y"] + dir_y * reach_a
+                        ex2 = b["x"] - dir_x * reach_b
+                        ey2 = b["y"] - dir_y * reach_b
+
+                        cx = (sx + ex2) * 0.5
+                        cy = (sy + ey2) * 0.5
+                        yaw = math.degrees(math.atan2(dir_y, dir_x))
+
+                        blockers.append({
+                            "x": cx,
+                            "y": cy,
+                            "extent_x": max(1.0, gap * 0.5),
+                            "extent_y": bridge_half_width,
+                            "yaw": yaw,
+                            "area_class": a.get("area_class", "") or b.get("area_class", ""),
+                            "source": "bridge",
+                        })
+                        bridge_count += 1
+
+        return blockers, bridge_count
+
     def build_walkable_grid(self, visited_points: List[WallPoint],
                              center_x: float, center_y: float,
                              half_size: float = WALL_GRID_HALF_SIZE,
-                             cell_size: float = WALL_GRID_CELL_SIZE) -> GridData:
+                             cell_size: float = WALL_GRID_CELL_SIZE,
+                             apply_blocked_points: bool = False,
+                             nav_collision_markers: Optional[List[dict]] = None,
+                             nav_collision_inflate_u: float = 0.0,
+                             nav_collision_bridge_gap_u: float = 0.0,
+                             nav_collision_bridge_half_width_u: float = 0.0,
+                             nav_collision_min_raw_priors: int = 20,
+                             nav_collision_min_coverage_ratio: float = 0.02) -> GridData:
         """Build an INVERTED walkability grid from visited-position points.
 
         Starts with all cells BLOCKED.  Each visited position marks a circle of
@@ -427,11 +602,43 @@ class WallScanner:
         # NOTE (v5.8.0): persisted SLAM blocked points proved too aggressive and
         # could sever narrow corridors, leading to immediate "A* found no path"
         # loops from map start. Keep blocked points in cache for forensics, but
-        # do NOT apply them when constructing the production navigation grid.
+        # do NOT apply them by default when constructing the production grid.
+        #
+        # apply_blocked_points=True is reserved for explicitly curated priors
+        # (e.g. offline atlas) where blocked confidence has already been filtered.
+        if apply_blocked_points:
+            for pt in blocked_pts:
+                grid.mark_circle_blocked(pt.x, pt.y, pt.radius)
+
+        # Runtime NavModifierVolume priors: apply raw decode markers directly.
+        # Nav collision is treated as authoritative blocked geometry.
+        nav_raw_count = 0
+        for marker in (nav_collision_markers or []):
+            try:
+                mx = float(marker.get("x", 0.0))
+                my = float(marker.get("y", 0.0))
+                ex = float(marker.get("extent_x", 0.0))
+                ey = float(marker.get("extent_y", 0.0))
+                yaw = float(marker.get("yaw", 0.0))
+                if ex < 1.0 or ey < 1.0:
+                    continue
+                grid.mark_rotated_box_blocked(
+                    mx,
+                    my,
+                    ex,
+                    ey,
+                    yaw,
+                    inflate_u=0.0,
+                )
+                nav_raw_count += 1
+            except Exception:
+                continue
 
         elapsed = time.monotonic() - t0
         log.info(
-            f"[WallScan] Walkable grid built from {len(walkable_pts)} Walkable, {len(blocked_pts)} Blocked points (ignored) "
+            f"[WallScan] Walkable grid built from {len(walkable_pts)} Walkable, "
+            f"{len(blocked_pts)} Blocked points ({'applied' if apply_blocked_points else 'ignored'}) "
+            f"+ {nav_raw_count} nav-collision priors "
             f"in {elapsed:.3f}s: {grid}"
         )
         return grid

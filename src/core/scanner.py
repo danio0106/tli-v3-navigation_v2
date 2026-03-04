@@ -3,6 +3,7 @@ import struct
 import os
 import json
 import csv
+import math
 import threading
 from collections import deque
 from datetime import datetime
@@ -29,6 +30,25 @@ from src.utils.constants import (
     ENTITY_SCAN_INTERVAL_S,
     GUARD_SEED_WINDOW_SECS, GUARD_SEED_MAX,
     GUARD_FLEE_MIN_SPEED, GUARD_MIN_SURVIVE_SECS,
+    NAV_COLLISION_PROBE_DIR, NAV_COLLISION_PROBE_SUMMARY_FILE,
+    NAVMODIFIER_AREA_CLASS_OFFSET,
+    BRUSH_COMPONENT_OFFSET,
+    BRUSH_BODY_SETUP_OFFSET,
+    BODYSETUP_AGGGEOM_OFFSET,
+    KAGGREGATEGEOM_BOXELEMS_OFFSET,
+    KAGGREGATEGEOM_CONVEXELEMS_OFFSET,
+    KBOXELEM_STRIDE,
+    KBOXELEM_CENTER_OFFSET,
+    KBOXELEM_ROTATION_OFFSET,
+    KBOXELEM_X_OFFSET,
+    KBOXELEM_Y_OFFSET,
+    KBOXELEM_Z_OFFSET,
+    KCONVEXELEM_STRIDE,
+    KCONVEXELEM_ELEMBOX_OFFSET,
+    KCONVEXELEM_ELEMBOX_MIN_OFFSET,
+    KCONVEXELEM_ELEMBOX_MAX_OFFSET,
+    KCONVEXELEM_TRANSFORM_OFFSET,
+    KCONVEXELEM_TRANSFORM_TRANSLATION_OFFSET,
 )
 
 # Distance threshold (in world units) for detecting ABP cache address reuse.
@@ -234,15 +254,168 @@ class UE4Scanner:
         self._movdata_open_done: bool = False          # True after first open
         self._movdata_stop: threading.Event = threading.Event()
         self._movdata_thread: Optional[threading.Thread] = None
+        # ── Nav collision probe logger (NavModifierVolume/Recast/NavBounds) ──
+        self._nav_probe_enabled: bool = False
+        self._nav_probe_interval_s: float = 2.0
+        self._nav_probe_thread_active: bool = False
+        self._nav_probe_thread: Optional[threading.Thread] = None
+        self._nav_probe_file = None
+        self._nav_probe_file_path: str = ""
+        self._nav_probe_seq: int = 0
+        self._nav_probe_lock = threading.RLock()
+        self._nav_collision_boxes: List[dict] = []
 
     def cancel(self):
         self._movdata_close_session()
+        self._stop_nav_probe_thread()
+        self._close_nav_probe_session()
         self._cancelled = True
         self._entity_scan_thread_active = False   # stop background EntityScan thread
         t = self._entity_scan_thread
         if t and t.is_alive() and t is not threading.current_thread():
             t.join(timeout=0.5)
         self._entity_scan_thread = None
+
+    def set_nav_collision_probe(self, enabled: bool, interval_s: float = 2.0) -> None:
+        """Enable/disable runtime nav-collision probe artifact logging.
+
+        The probe writes periodic JSONL snapshots of NavModifierVolume,
+        NavMeshBoundsVolume and RecastNavMesh runtime objects to
+        NAV_COLLISION_PROBE_DIR for offline analysis.
+        """
+        self._nav_probe_enabled = bool(enabled)
+        try:
+            self._nav_probe_interval_s = max(0.5, float(interval_s))
+        except Exception:
+            self._nav_probe_interval_s = 2.0
+
+        if self._nav_probe_enabled:
+            self._start_nav_probe_thread_if_needed()
+            log.info(
+                f"[NavProbe] Enabled (interval={self._nav_probe_interval_s:.2f}s)"
+            )
+        else:
+            self._stop_nav_probe_thread()
+            self._close_nav_probe_session()
+            log.info("[NavProbe] Disabled")
+
+    def _start_nav_probe_thread_if_needed(self) -> None:
+        if self._nav_probe_thread and self._nav_probe_thread.is_alive():
+            return
+        self._nav_probe_thread_active = True
+        t = threading.Thread(target=self._nav_probe_loop, daemon=True, name="NavCollisionProbe")
+        self._nav_probe_thread = t
+        t.start()
+
+    def _stop_nav_probe_thread(self) -> None:
+        self._nav_probe_thread_active = False
+        t = self._nav_probe_thread
+        if t and t.is_alive() and t is not threading.current_thread():
+            t.join(timeout=0.8)
+        self._nav_probe_thread = None
+
+    def _close_nav_probe_session(self) -> None:
+        with self._nav_probe_lock:
+            if self._nav_probe_file:
+                try:
+                    self._nav_probe_file.flush()
+                    self._nav_probe_file.close()
+                except Exception:
+                    pass
+            self._nav_probe_file = None
+            self._nav_probe_file_path = ""
+
+    def _ensure_nav_probe_session(self) -> bool:
+        with self._nav_probe_lock:
+            if self._nav_probe_file:
+                return True
+            try:
+                os.makedirs(NAV_COLLISION_PROBE_DIR, exist_ok=True)
+                ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+                path = os.path.abspath(os.path.join(NAV_COLLISION_PROBE_DIR, f"nav_probe_{ts}.jsonl"))
+                self._nav_probe_file = open(path, "a", encoding="utf-8")
+                self._nav_probe_file_path = path
+                self._nav_probe_seq = 0
+                log.info(f"[NavProbe] Session opened: {path}")
+                return True
+            except Exception as exc:
+                log.warning(f"[NavProbe] Failed to open session file: {exc}")
+                self._nav_probe_file = None
+                self._nav_probe_file_path = ""
+                return False
+
+    def _write_nav_probe_snapshot(self, payload: dict) -> None:
+        if not self._ensure_nav_probe_session():
+            return
+        with self._nav_probe_lock:
+            if not self._nav_probe_file:
+                return
+            try:
+                self._nav_probe_file.write(json.dumps(payload, ensure_ascii=False) + "\n")
+                self._nav_probe_file.flush()
+            except Exception as exc:
+                log.debug(f"[NavProbe] Snapshot write failed: {exc}")
+                return
+
+        try:
+            counts = payload.get("counts", {}) or {}
+            zone = payload.get("zone", "") or ""
+            is_transient = (
+                not zone
+                or (
+                    int(counts.get("nav_mesh_bounds_volume", 0)) == 0
+                    and int(counts.get("recast_nav_mesh", 0)) == 0
+                )
+            )
+            summary = {
+                "updated_at": payload.get("timestamp"),
+                "session_file": self._nav_probe_file_path,
+                "sequence": payload.get("sequence", 0),
+                "zone": zone,
+                "counts": counts,
+                "collision_box_count": len(payload.get("nav_collision_boxes", []) or []),
+                "decode_stats": payload.get("nav_collision_decode_stats", {}),
+                "is_transient": is_transient,
+            }
+            # Keep last stable in-map snapshot to avoid terminal UI/transition ticks
+            # overwriting summary with empty-zone / zero-navmesh states.
+            prev = None
+            if os.path.exists(NAV_COLLISION_PROBE_SUMMARY_FILE):
+                try:
+                    with open(NAV_COLLISION_PROBE_SUMMARY_FILE, "r", encoding="utf-8") as rf:
+                        prev = json.load(rf)
+                except Exception:
+                    prev = None
+            if prev and is_transient and not bool(prev.get("is_transient", False)):
+                summary["last_stable"] = {
+                    "updated_at": prev.get("updated_at"),
+                    "sequence": prev.get("sequence"),
+                    "zone": prev.get("zone", ""),
+                    "counts": prev.get("counts", {}),
+                    "collision_box_count": prev.get("collision_box_count", 0),
+                }
+            os.makedirs(os.path.dirname(NAV_COLLISION_PROBE_SUMMARY_FILE), exist_ok=True)
+            with open(NAV_COLLISION_PROBE_SUMMARY_FILE, "w", encoding="utf-8") as f:
+                json.dump(summary, f, indent=2)
+        except Exception as exc:
+            log.debug(f"[NavProbe] Summary write failed: {exc}")
+
+    def _nav_probe_loop(self) -> None:
+        while self._nav_probe_thread_active:
+            if not self._nav_probe_enabled:
+                time.sleep(0.25)
+                continue
+
+            t0 = time.monotonic()
+            try:
+                self._run_nav_collision_probe_snapshot()
+            except Exception as exc:
+                log.debug(f"[NavProbe] Snapshot error: {exc}")
+
+            elapsed = time.monotonic() - t0
+            sleep_for = self._nav_probe_interval_s - elapsed
+            if sleep_for > 0.01:
+                time.sleep(sleep_for)
 
     def _log(self, msg: str):
         self._progress(msg)
@@ -267,6 +440,316 @@ class UE4Scanner:
         if ptr and self._is_probable_game_ptr(ptr):
             return ptr
         return None
+
+    def _read_actor_transform(self, actor_ptr: int) -> dict:
+        root_comp = self._read_ptr(actor_ptr + UE4_OFFSETS["RootComponent"])
+        if not root_comp:
+            return {
+                "root_component": 0,
+                "root_class": "",
+                "position": [0.0, 0.0, 0.0],
+                "rotation": [0.0, 0.0, 0.0],
+                "scale": [0.0, 0.0, 0.0],
+            }
+
+        fnamepool = self._fnamepool_addr
+        root_cls = ""
+        if fnamepool:
+            root_cls_ptr = self._read_ptr(root_comp + 0x10)
+            if root_cls_ptr:
+                root_cls = self._memory.read_uobject_name(fnamepool, root_cls_ptr)
+
+        pos = self._memory.read_bytes(root_comp + UE4_OFFSETS["RelativeLocation"], 12) or b""
+        rot = self._memory.read_bytes(root_comp + UE4_OFFSETS["RelativeRotation"], 12) or b""
+        scl = self._memory.read_bytes(root_comp + 0x13C, 12) or b""
+
+        def _vec3(buf: bytes) -> List[float]:
+            if not buf or len(buf) < 12:
+                return [0.0, 0.0, 0.0]
+            x, y, z = struct.unpack_from("<fff", buf, 0)
+            return [round(float(x), 2), round(float(y), 2), round(float(z), 2)]
+
+        return {
+            "root_component": root_comp,
+            "root_class": root_cls,
+            "position": _vec3(pos),
+            "rotation": _vec3(rot),
+            "scale": _vec3(scl),
+        }
+
+    def get_nav_collision_markers(self) -> List[dict]:
+        """Return latest decoded NavModifierVolume box markers for overlay/debug.
+
+        Marker schema:
+            {
+                "x", "y", "extent_x", "extent_y", "yaw",
+                "area_class", "source", "name"
+            }
+        """
+        with self._nav_probe_lock:
+            return list(self._nav_collision_boxes)
+
+    def _collect_nav_actor_records(self, class_name: str, include_area_class: bool = False) -> List[dict]:
+        fnamepool = self._fnamepool_addr
+        gobjects = self._gobjects_addr
+        if not fnamepool or not gobjects:
+            return []
+
+        items = self._memory.find_gobjects_by_class_name(gobjects, fnamepool, class_name) or []
+        records: List[dict] = []
+        for obj_ptr, obj_name in items:
+            if not self._is_probable_game_ptr(obj_ptr):
+                continue
+            if obj_name.startswith("Default__"):
+                continue
+
+            cls_ptr = self._read_ptr(obj_ptr + 0x10)
+            cls_name = self._memory.read_uobject_name(fnamepool, cls_ptr) if self._is_probable_game_ptr(cls_ptr) else ""
+            outer_ptr = self._read_ptr(obj_ptr + UE4_UOBJECT_OUTER_OFFSET)
+            outer_name = self._memory.read_uobject_name(fnamepool, outer_ptr) if self._is_probable_game_ptr(outer_ptr) else ""
+            tf = self._read_actor_transform(obj_ptr)
+
+            rec = {
+                "_ptr": obj_ptr,
+                "address": f"0x{obj_ptr:X}",
+                "name": obj_name,
+                "class": cls_name,
+                "outer": outer_name,
+                "root_class": tf["root_class"],
+                "position": tf["position"],
+                "rotation": tf["rotation"],
+                "scale": tf["scale"],
+            }
+
+            if include_area_class:
+                area_cls_ptr = self._read_ptr(obj_ptr + NAVMODIFIER_AREA_CLASS_OFFSET)
+                area_cls_name = self._memory.read_uobject_name(fnamepool, area_cls_ptr) if self._is_probable_game_ptr(area_cls_ptr) else ""
+                rec["area_class"] = area_cls_name
+                rec["area_class_ptr"] = f"0x{area_cls_ptr:X}" if area_cls_ptr else ""
+
+            records.append(rec)
+        return records
+
+    @staticmethod
+    def _rotate_xy(x: float, y: float, yaw_deg: float) -> Tuple[float, float]:
+        rad = math.radians(yaw_deg)
+        cos_y = math.cos(rad)
+        sin_y = math.sin(rad)
+        return (x * cos_y - y * sin_y, x * sin_y + y * cos_y)
+
+    def _decode_nav_modifier_boxes(self, actor_ptr: int, actor_record: dict, stats: Optional[dict] = None) -> List[dict]:
+        boxes: List[dict] = []
+        if stats is not None:
+            stats["actors_seen"] = int(stats.get("actors_seen", 0)) + 1
+        if not self._is_probable_game_ptr(actor_ptr):
+            if stats is not None:
+                stats["invalid_actor_ptr"] = int(stats.get("invalid_actor_ptr", 0)) + 1
+            return boxes
+
+        brush_comp = self._read_ptr(actor_ptr + BRUSH_COMPONENT_OFFSET)
+        if not self._is_probable_game_ptr(brush_comp):
+            if stats is not None:
+                stats["missing_brush_component"] = int(stats.get("missing_brush_component", 0)) + 1
+            return boxes
+        if not brush_comp:
+            return boxes
+
+        body_setup = self._read_ptr(brush_comp + BRUSH_BODY_SETUP_OFFSET)
+        if not self._is_probable_game_ptr(body_setup):
+            if stats is not None:
+                stats["missing_body_setup"] = int(stats.get("missing_body_setup", 0)) + 1
+            return boxes
+        if not body_setup:
+            return boxes
+
+        boxes_arr = body_setup + BODYSETUP_AGGGEOM_OFFSET + KAGGREGATEGEOM_BOXELEMS_OFFSET
+        data_ptr = self._memory.read_value(boxes_arr, "ulong") or 0
+        count = self._memory.read_value(boxes_arr + 0x08, "int") or 0
+        raw = b""
+        if self._is_probable_game_ptr(data_ptr) and 0 < count <= 256:
+            raw = self._memory.read_bytes(data_ptr, count * KBOXELEM_STRIDE) or b""
+        else:
+            if stats is not None:
+                stats["missing_box_array"] = int(stats.get("missing_box_array", 0)) + 1
+
+        ap = actor_record.get("position", [0.0, 0.0, 0.0])
+        ar = actor_record.get("rotation", [0.0, 0.0, 0.0])
+        asc = actor_record.get("scale", [1.0, 1.0, 1.0])
+        actor_x, actor_y, actor_z = float(ap[0]), float(ap[1]), float(ap[2])
+        actor_yaw = float(ar[1])
+        sx = float(asc[0]) if abs(float(asc[0])) > 1e-3 else 1.0
+        sy = float(asc[1]) if abs(float(asc[1])) > 1e-3 else 1.0
+
+        if raw and len(raw) >= count * KBOXELEM_STRIDE:
+            for idx in range(count):
+                off = idx * KBOXELEM_STRIDE
+                try:
+                    cx, cy, cz = struct.unpack_from("<fff", raw, off + KBOXELEM_CENTER_OFFSET)
+                    rp, ry, rr = struct.unpack_from("<fff", raw, off + KBOXELEM_ROTATION_OFFSET)
+                    bx = struct.unpack_from("<f", raw, off + KBOXELEM_X_OFFSET)[0]
+                    by = struct.unpack_from("<f", raw, off + KBOXELEM_Y_OFFSET)[0]
+                    bz = struct.unpack_from("<f", raw, off + KBOXELEM_Z_OFFSET)[0]
+                except Exception:
+                    continue
+
+                if not (1.0 <= bx <= 50000.0 and 1.0 <= by <= 50000.0 and 1.0 <= bz <= 50000.0):
+                    continue
+
+                local_x = float(cx) * sx
+                local_y = float(cy) * sy
+                off_x, off_y = self._rotate_xy(local_x, local_y, actor_yaw)
+                world_x = actor_x + off_x
+                world_y = actor_y + off_y
+                world_z = actor_z + float(cz)
+                extent_x = abs(float(bx) * sx) * 0.5
+                extent_y = abs(float(by) * sy) * 0.5
+                world_yaw = actor_yaw + float(ry)
+
+                boxes.append({
+                    "x": round(world_x, 2),
+                    "y": round(world_y, 2),
+                    "z": round(world_z, 2),
+                    "extent_x": round(extent_x, 2),
+                    "extent_y": round(extent_y, 2),
+                    "extent_z": round(abs(float(bz)) * 0.5, 2),
+                    "yaw": round(world_yaw, 2),
+                    "area_class": actor_record.get("area_class", ""),
+                    "source": "NavModifierVolume.AggGeom.BoxElems",
+                    "name": actor_record.get("name", ""),
+                    "box_index": idx,
+                    "box_rot_pitch": round(float(rp), 2),
+                    "box_rot_roll": round(float(rr), 2),
+                })
+        elif stats is not None and self._is_probable_game_ptr(data_ptr) and count > 0:
+            stats["box_bytes_read_failed"] = int(stats.get("box_bytes_read_failed", 0)) + 1
+
+        # Fallback: many NavModifierVolume entries encode geometry in ConvexElems
+        # with empty BoxElems. Decode convex ElemBox + local Transform into an
+        # axis-aligned prior in actor space and rotate by actor yaw.
+        if not boxes:
+            convex_arr = body_setup + BODYSETUP_AGGGEOM_OFFSET + KAGGREGATEGEOM_CONVEXELEMS_OFFSET
+            convex_ptr = self._memory.read_value(convex_arr, "ulong") or 0
+            convex_num = self._memory.read_value(convex_arr + 0x08, "int") or 0
+            if not self._is_probable_game_ptr(convex_ptr) or convex_num <= 0 or convex_num > 1024:
+                if stats is not None:
+                    stats["missing_convex_array"] = int(stats.get("missing_convex_array", 0)) + 1
+            else:
+                convex_raw = self._memory.read_bytes(convex_ptr, convex_num * KCONVEXELEM_STRIDE) or b""
+                if not convex_raw or len(convex_raw) < convex_num * KCONVEXELEM_STRIDE:
+                    if stats is not None:
+                        stats["convex_bytes_read_failed"] = int(stats.get("convex_bytes_read_failed", 0)) + 1
+                else:
+                    for idx in range(convex_num):
+                        off = idx * KCONVEXELEM_STRIDE
+                        try:
+                            minx, miny, minz = struct.unpack_from(
+                                "<fff", convex_raw,
+                                off + KCONVEXELEM_ELEMBOX_OFFSET + KCONVEXELEM_ELEMBOX_MIN_OFFSET,
+                            )
+                            maxx, maxy, maxz = struct.unpack_from(
+                                "<fff", convex_raw,
+                                off + KCONVEXELEM_ELEMBOX_OFFSET + KCONVEXELEM_ELEMBOX_MAX_OFFSET,
+                            )
+                            tx, ty, tz = struct.unpack_from(
+                                "<fff", convex_raw,
+                                off + KCONVEXELEM_TRANSFORM_OFFSET + KCONVEXELEM_TRANSFORM_TRANSLATION_OFFSET,
+                            )
+                        except Exception:
+                            continue
+
+                        ex = abs(float(maxx) - float(minx)) * 0.5
+                        ey = abs(float(maxy) - float(miny)) * 0.5
+                        ez = abs(float(maxz) - float(minz)) * 0.5
+                        if ex < 1.0 or ey < 1.0:
+                            continue
+
+                        local_cx = ((float(minx) + float(maxx)) * 0.5 + float(tx)) * sx
+                        local_cy = ((float(miny) + float(maxy)) * 0.5 + float(ty)) * sy
+                        off_x, off_y = self._rotate_xy(local_cx, local_cy, actor_yaw)
+
+                        boxes.append({
+                            "x": round(actor_x + off_x, 2),
+                            "y": round(actor_y + off_y, 2),
+                            "z": round(actor_z + ((float(minz) + float(maxz)) * 0.5 + float(tz)), 2),
+                            "extent_x": round(max(1.0, ex * abs(sx)), 2),
+                            "extent_y": round(max(1.0, ey * abs(sy)), 2),
+                            "extent_z": round(max(1.0, ez), 2),
+                            "yaw": round(actor_yaw, 2),
+                            "area_class": actor_record.get("area_class", ""),
+                            "source": "NavModifierVolume.AggGeom.ConvexElems",
+                            "name": actor_record.get("name", ""),
+                            "box_index": idx,
+                            "box_rot_pitch": 0.0,
+                            "box_rot_roll": 0.0,
+                        })
+
+                    if not boxes and stats is not None:
+                        stats["invalid_convex_count"] = int(stats.get("invalid_convex_count", 0)) + 1
+
+        if stats is not None and boxes:
+            stats["actors_with_boxes"] = int(stats.get("actors_with_boxes", 0)) + 1
+            stats["boxes_total"] = int(stats.get("boxes_total", 0)) + len(boxes)
+
+        return boxes
+
+    def _run_nav_collision_probe_snapshot(self) -> None:
+        if not self._memory.is_attached:
+            return
+
+        if not self._fnamepool_addr or not self._gobjects_addr:
+            mods = self._memory.list_modules()
+            if mods:
+                self.scan_fnamepool(mods[0][1], mods[0][2])
+                self.scan_gobjects(mods[0][1], mods[0][2])
+        if not self._fnamepool_addr or not self._gobjects_addr:
+            return
+
+        nav_modifiers = self._collect_nav_actor_records("NavModifierVolume", include_area_class=True)
+        nav_bounds = self._collect_nav_actor_records("NavMeshBoundsVolume")
+        recast_meshes = self._collect_nav_actor_records("RecastNavMesh")
+        if not nav_modifiers and not nav_bounds and not recast_meshes:
+            return
+
+        nav_collision_boxes: List[dict] = []
+        decode_stats: dict = {}
+        for rec in nav_modifiers:
+            obj_ptr = int(rec.get("_ptr", 0) or 0)
+            if not obj_ptr:
+                continue
+            nav_collision_boxes.extend(self._decode_nav_modifier_boxes(obj_ptr, rec, decode_stats))
+
+        with self._nav_probe_lock:
+            self._nav_collision_boxes = list(nav_collision_boxes)
+
+        zone = self.read_real_zone_name() or ""
+        self._nav_probe_seq += 1
+        payload = {
+            "type": "nav_collision_probe_snapshot",
+            "timestamp": datetime.now().isoformat(timespec="seconds"),
+            "sequence": self._nav_probe_seq,
+            "zone": zone,
+            "counts": {
+                "nav_modifier_volume": len(nav_modifiers),
+                "nav_mesh_bounds_volume": len(nav_bounds),
+                "recast_nav_mesh": len(recast_meshes),
+            },
+            "nav_modifier_volume": nav_modifiers,
+            "nav_mesh_bounds_volume": nav_bounds,
+            "recast_nav_mesh": recast_meshes,
+            "nav_collision_boxes": nav_collision_boxes,
+            "nav_collision_decode_stats": decode_stats,
+        }
+        self._write_nav_probe_snapshot(payload)
+        log.debug(
+            "[NavProbe] "
+            f"#{self._nav_probe_seq} "
+            f"NMV={len(nav_modifiers)} "
+            f"NMBV={len(nav_bounds)} "
+            f"RNM={len(recast_meshes)} "
+            f"BOX={len(nav_collision_boxes)} "
+            f"dec={decode_stats} "
+            f"zone='{zone}'"
+        )
 
     def scan_dump_chain(self, use_cache=True) -> ScanResult:
         result = ScanResult()
@@ -2426,10 +2909,11 @@ class UE4Scanner:
                 # No FNamePool yet — fall back to first result
                 break
 
-        # Fallback: return first result and log a warning
-        ptr = results[0][0]
-        self._log(f"[Scanner] FightMgr fallback (no transient match) at 0x{ptr:X}")
-        return ptr
+        # No transient instance matched; do not fall back to class definition.
+        # Returning a non-transient FightMgr object causes bogus TMap reads
+        # (portal/event markers jump to incorrect positions).
+        self._log("[Scanner] FightMgr transient instance not found yet; deferring read")
+        return 0
 
     def get_fightmgr_ptr(self) -> int:
         """Return the live FightMgr singleton pointer, finding it via GObjects if needed.
@@ -2437,8 +2921,13 @@ class UE4Scanner:
         Public wrapper used by PortalDetector so both share the same cached ptr
         and avoid duplicating the transient-outer matching logic.
         """
-        if not self._fightmgr_ptr:
-            self._fightmgr_ptr = self._find_fightmgr()
+        if self._fightmgr_ptr:
+            test = self._memory.read_value(self._fightmgr_ptr, "ulong")
+            if test and test >= 0x10000:
+                return self._fightmgr_ptr
+            self._fightmgr_ptr = 0
+
+        self._fightmgr_ptr = self._find_fightmgr()
         return self._fightmgr_ptr
 
     def _read_tmap_events(self, tmap_addr: int,

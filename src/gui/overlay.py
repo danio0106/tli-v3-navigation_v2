@@ -41,10 +41,14 @@ class DebugOverlay:
     COLOR_GUARD = "#FF8C00"         # vivid orange — Carjack security guard markers
 
     LAYER_GRID          = "grid"      # manual-explore coverage panel + near-frontier markers
+    LAYER_NAV_COLLISION = "nav_collision"  # decoded NavModifierVolume AggGeom boxes
     COLOR_GRID_EXPLORED = "#1B4332"   # visited cells — dark green
     COLOR_GRID_FRONTIER = "#39D353"   # unexplored edge — bright green (matches auto-path)
     COLOR_GRID_PANEL_BG = "#0D1117"   # panel background
     COLOR_GRID_PANEL_BDR= "#30363D"   # panel border
+    COLOR_NAV_COLLISION = "#7EE787"
+    COLOR_NAV_COLLISION_INFLATED = "#F2CC60"
+    COLOR_NAV_COLLISION_BRIDGE = "#58A6FF"
     _GRID_PANEL_SIZE    = 260         # grid panel width and height in screen pixels
     _GRID_NEAR_RANGE    = 3500.0      # world units: show wall-edge lines in game-space
 
@@ -102,6 +106,7 @@ class DebugOverlay:
             self.LAYER_MINIMAP: True,
             self.LAYER_AUTO_PATH: True,
             self.LAYER_GRID: False,   # enabled only during manual explore
+            self.LAYER_NAV_COLLISION: True,
         }
 
         self._calibration: Optional[MapCalibration] = None
@@ -132,6 +137,9 @@ class DebugOverlay:
         self._guard_markers: List[Dict[str, Any]] = []
         self._pool_guard_dot: List[int] = []
         self._pool_guard_label: List[int] = []
+        self._nav_collision_markers: List[Dict[str, Any]] = []
+        self._pool_nav_collision_poly: List[int] = []
+        self._pool_nav_collision_label: List[int] = []
 
         # --- Minimap canvas items (fully pooled — no delete/recreate each frame) ---
         self._mm_id_bg: Optional[int] = None
@@ -277,6 +285,10 @@ class DebugOverlay:
         """Set the A* computed path waypoints for display on the overlay."""
         with self._lock:
             self._auto_path_waypoints = list(path)
+
+    def set_nav_collision_markers(self, markers: List[Dict[str, Any]]):
+        with self._lock:
+            self._nav_collision_markers = list(markers)
 
     def set_grid_data(self, walkable: List[Tuple[float, float]], frontier: List[Tuple[float, float]],
                        cell_size: float = WALL_GRID_CELL_SIZE):
@@ -467,6 +479,7 @@ class DebugOverlay:
             events = list(self._event_markers)
             entities = list(self._entity_positions)
             guards = list(self._guard_markers)
+            nav_collision = list(self._nav_collision_markers)
             is_stuck = self._is_stuck
             selected = set(self._selected_wp_indices)
             gw = self._game_rect[2]
@@ -527,6 +540,12 @@ class DebugOverlay:
         else:
             self._hide_pool(self._pool_guard_dot)
             self._hide_pool(self._pool_guard_label)
+
+        if self._layers[self.LAYER_NAV_COLLISION] and nav_collision:
+            self._update_nav_collision(nav_collision, gw, gh)
+        else:
+            self._hide_pool(self._pool_nav_collision_poly)
+            self._hide_pool(self._pool_nav_collision_label)
 
         if self._layers[self.LAYER_PLAYER] and player_pos:
             self._update_player(player_pos)
@@ -590,6 +609,8 @@ class DebugOverlay:
         self._pool_entity_label.clear()
         self._pool_guard_dot.clear()
         self._pool_guard_label.clear()
+        self._pool_nav_collision_poly.clear()
+        self._pool_nav_collision_label.clear()
         # Grid coverage layer
         self._grid_dirty       = False
         self._grid_walkable_keys = frozenset()
@@ -635,7 +656,8 @@ class DebugOverlay:
                      self._pool_portal_shape, self._pool_portal_label,
                      self._pool_event_shape, self._pool_event_label,
                      self._pool_entity_dot, self._pool_entity_label,
-                     self._pool_guard_dot, self._pool_guard_label):
+                     self._pool_guard_dot, self._pool_guard_label,
+                     self._pool_nav_collision_poly, self._pool_nav_collision_label):
             self._hide_pool(pool)
         for item_id in (self._id_player_dot, self._id_player_label,
                         self._id_nav_line, self._id_stuck_rect, self._id_stuck_text):
@@ -1212,6 +1234,75 @@ class DebugOverlay:
             c.itemconfig(dot_id, outline=color, fill=color, state='normal')
             c.coords(lbl_id, sx + r + 3, sy)
             c.itemconfig(lbl_id, text=label, state='normal')
+
+    def _update_nav_collision(self, markers: List[Dict[str, Any]], gw: int, gh: int):
+        n = len(markers)
+        c = self._canvas
+        color = self.COLOR_NAV_COLLISION
+
+        self._pool_ensure(self._pool_nav_collision_poly, n,
+                          lambda: c.create_polygon(
+                              0, 0, 0, 0, 0, 0, 0, 0,
+                              outline=color, fill="", width=2,
+                              state='hidden'))
+        self._pool_ensure(self._pool_nav_collision_label, n,
+                          lambda: c.create_text(0, 0, text="",
+                                                fill=color,
+                                                font=("Consolas", 8), anchor="w",
+                                                state='hidden'))
+
+        for i, marker in enumerate(markers):
+            wx = float(marker.get("x", 0.0))
+            wy = float(marker.get("y", 0.0))
+            ex = max(1.0, float(marker.get("extent_x", 0.0)))
+            ey = max(1.0, float(marker.get("extent_y", 0.0)))
+            style = str(marker.get("overlay_style", "raw") or "raw").lower()
+            yaw = math.radians(float(marker.get("yaw", 0.0)))
+            cos_y = math.cos(yaw)
+            sin_y = math.sin(yaw)
+
+            local_corners = [(-ex, -ey), (ex, -ey), (ex, ey), (-ex, ey)]
+            world_corners = []
+            for lx, ly in local_corners:
+                rx = lx * cos_y - ly * sin_y
+                ry = lx * sin_y + ly * cos_y
+                world_corners.append((wx + rx, wy + ry))
+
+            points: List[int] = []
+            visible = False
+            for cw_x, cw_y in world_corners:
+                sx, sy = self._world_to_screen(cw_x, cw_y)
+                points.extend([sx, sy])
+                if self._is_on_screen(sx, sy, gw, gh):
+                    visible = True
+
+            poly_id = self._pool_nav_collision_poly[i]
+            lbl_id = self._pool_nav_collision_label[i]
+
+            if not visible:
+                c.itemconfig(poly_id, state='hidden')
+                c.itemconfig(lbl_id, state='hidden')
+                continue
+
+            if style == "inflated":
+                line_color = self.COLOR_NAV_COLLISION_INFLATED
+                line_width = 2
+            elif style == "bridge":
+                line_color = self.COLOR_NAV_COLLISION_BRIDGE
+                line_width = 2
+            else:
+                line_color = color
+                line_width = 1
+            c.coords(poly_id, *points)
+            c.itemconfig(poly_id, outline=line_color, width=line_width, state='normal')
+
+            cx, cy = self._world_to_screen(wx, wy)
+            label_override = str(marker.get("overlay_label", "") or "")
+            if label_override:
+                c.coords(lbl_id, cx + 8, cy)
+                c.itemconfig(lbl_id, text=label_override, fill=line_color, state='normal')
+            else:
+                c.itemconfig(lbl_id, state='hidden')
 
     def _update_stuck_indicator(self, is_stuck: bool, gw: int, gh: int):
         c = self._canvas

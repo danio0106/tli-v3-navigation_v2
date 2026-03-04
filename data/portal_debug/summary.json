@@ -1,0 +1,43 @@
+{
+  "ts": 1772659322.258601,
+  "fightmgr_ptr": 2987067007136,
+  "strict_class_check": false,
+  "dedup": {
+    "heartbeat_s": 10.0,
+    "suppressed_repeats_pending": 20
+  },
+  "counters": {
+    "ticks_written": 120,
+    "accepted": 5922,
+    "ticks": 2961,
+    "accepted_total": 5922,
+    "rejected_total": 0,
+    "ticks_suppressed_repeats": 2841
+  },
+  "top_reasons": [
+    {
+      "reason": "accepted",
+      "count": 5922
+    },
+    {
+      "reason": "accepted_total",
+      "count": 5922
+    },
+    {
+      "reason": "ticks",
+      "count": 2961
+    },
+    {
+      "reason": "ticks_suppressed_repeats",
+      "count": 2841
+    },
+    {
+      "reason": "ticks_written",
+      "count": 120
+    },
+    {
+      "reason": "rejected_total",
+      "count": 0
+    }
+  ]
+}

@@ -1,7 +1,9 @@
 import json
 import os
+import math
 import time
 import threading
+from collections import deque
 from typing import Optional, Callable
 
 from src.core.memory_reader import MemoryReader
@@ -17,7 +19,7 @@ from src.core.portal_detector import PortalDetector
 from src.core.screen_capture import ScreenCapture
 from src.core.hex_calibrator import HexCalibrator
 from src.core.scale_calibrator import ScaleCalibrator
-from src.core.wall_scanner import WallScanner
+from src.core.wall_scanner import WallScanner, WallPoint
 from src.core.pathfinder import Pathfinder
 from src.core.rt_navigator import RTNavigator
 from src.core.position_poller import PositionPoller
@@ -53,6 +55,7 @@ class BotEngine:
         self.window = WindowManager()
         input_mode = self.config.get("input_mode", "hardware")
         self.input = InputController(input_mode=input_mode)
+        self.input.debug_input = bool(self.config.get("input_debug_logging", False))
 
         self._screen_capture = ScreenCapture(self.window)
         self._hex_calibrator = HexCalibrator(self._screen_capture)
@@ -83,6 +86,20 @@ class BotEngine:
         self._navigation_completed = False
         self._handled_event_addrs: set = set()
         self.last_scan_failed: bool = False  # set True when scan_dump_chain fails — indicates outdated offsets
+
+        # ── Cycle diagnostics (map-entry -> map-complete/error) ──────────
+        self._cycle_active = False
+        self._cycle_started_at = 0.0
+        self._cycle_map_name = ""
+        self._cycle_durations_s = deque(maxlen=50)
+        self._cycle_total_count = 0
+        self._cycle_success_count = 0
+        self._cycle_fail_count = 0
+        self._cycle_abort_count = 0
+        self._cycle_best_s = float("inf")
+        self._cycle_worst_s = 0.0
+        self._last_cycle_duration_s = 0.0
+        self._last_cycle_status = ""
 
         # Auto-navigation components (lazy-initialised on first map entry in auto mode)
         self._wall_scanner: Optional[WallScanner] = None
@@ -227,6 +244,8 @@ class BotEngine:
         with self._state_lock:
             state_name = self._state.name
             maps = self._maps_completed
+            avg_cycle = (sum(self._cycle_durations_s) / len(self._cycle_durations_s)) if self._cycle_durations_s else 0.0
+            success_rate = (self._cycle_success_count / self._cycle_total_count * 100.0) if self._cycle_total_count else 0.0
         return {
             "state": state_name,
             "maps_completed": maps,
@@ -235,7 +254,56 @@ class BotEngine:
             "portal_status": portal_info,
             "map_selection_step": map_step,
             "calibrated": self._map_selector.is_calibrated,
+            "avg_cycle_time_s": avg_cycle,
+            "last_cycle_time_s": self._last_cycle_duration_s,
+            "cycle_success_rate_pct": success_rate,
+            "cycle_total": self._cycle_total_count,
         }
+
+    def _cycle_begin(self):
+        """Mark start of a map cycle (highest-priority KPI: cycle time)."""
+        self._cycle_active = True
+        self._cycle_started_at = time.time()
+        self._cycle_map_name = self.config.get("current_map", "") or self._current_map_name or ""
+
+    def _cycle_end(self, status: str):
+        """Finalize cycle diagnostics and emit a compact KPI summary log."""
+        if not self._cycle_active or self._cycle_started_at <= 0.0:
+            return
+
+        dur = max(0.0, time.time() - self._cycle_started_at)
+        self._cycle_active = False
+        self._cycle_started_at = 0.0
+
+        self._cycle_total_count += 1
+        if status == "success":
+            self._cycle_success_count += 1
+            self._cycle_durations_s.append(dur)
+            self._cycle_best_s = min(self._cycle_best_s, dur)
+            self._cycle_worst_s = max(self._cycle_worst_s, dur)
+        elif status == "failed":
+            self._cycle_fail_count += 1
+        else:
+            self._cycle_abort_count += 1
+
+        self._last_cycle_duration_s = dur
+        self._last_cycle_status = status
+
+        avg_s = (sum(self._cycle_durations_s) / len(self._cycle_durations_s)) if self._cycle_durations_s else 0.0
+        success_rate = (self._cycle_success_count / self._cycle_total_count * 100.0) if self._cycle_total_count else 0.0
+        best_s = 0.0 if self._cycle_best_s == float("inf") else self._cycle_best_s
+
+        log.info(
+            "[CycleKPI] "
+            f"map='{self._cycle_map_name or 'unknown'}' "
+            f"cycle={dur:.1f}s "
+            f"avg={avg_s:.1f}s "
+            f"best={best_s:.1f}s "
+            f"worst={self._cycle_worst_s:.1f}s "
+            f"success={self._cycle_success_count}/{self._cycle_total_count} ({success_rate:.1f}%) "
+            f"fail={self._cycle_fail_count} abort={self._cycle_abort_count} "
+            f"status={status}"
+        )
 
     def add_state_callback(self, callback: Callable):
         self._state_callbacks.append(callback)
@@ -253,6 +321,38 @@ class BotEngine:
                 log.info("Memory card selector initialized and attached to MapSelector")
             except Exception as e:
                 log.warning(f"Failed to init memory card selector: {e}")
+
+    def _configure_scanner_probes(self, scanner: Optional[UE4Scanner]) -> None:
+        if not scanner:
+            return
+        heavy_debug = bool(self.config.get("runtime_debug_heavy_enabled", False))
+        enabled = heavy_debug and bool(self.config.get("nav_collision_probe_enabled", False))
+        try:
+            interval_s = float(self.config.get("nav_collision_probe_interval_s", 2.0) or 2.0)
+        except Exception:
+            interval_s = 2.0
+        scanner.set_nav_collision_probe(enabled, interval_s)
+
+    def _create_portal_detector(self, scanner: UE4Scanner) -> PortalDetector:
+        heavy_debug = bool(self.config.get("runtime_debug_heavy_enabled", False))
+        debug_enabled = heavy_debug and bool(self.config.get("portal_debug_enabled", False))
+        try:
+            summary_interval_s = float(self.config.get("portal_debug_summary_interval_s", 5.0) or 5.0)
+        except Exception:
+            summary_interval_s = 5.0
+        strict_class_check = bool(self.config.get("portal_debug_strict_class_check", False))
+        try:
+            max_entries = int(self.config.get("portal_debug_max_entries_per_tick", 60) or 60)
+        except Exception:
+            max_entries = 60
+        return PortalDetector(
+            self.memory,
+            scanner,
+            debug_enabled=debug_enabled,
+            debug_summary_interval_s=summary_interval_s,
+            debug_strict_class_check=strict_class_check,
+            debug_max_entries_per_tick=max_entries,
+        )
 
     def _set_state(self, new_state: BotState):
         with self._state_lock:
@@ -303,7 +403,7 @@ class BotEngine:
                                     self._scanner.scan_fnamepool(modules[0][1], modules[0][2])
                                     self._scanner.scan_gobjects(modules[0][1], modules[0][2])
                                     if self._scanner.fnamepool_addr and self._scanner.gobjects_addr:
-                                        self._portal_detector = PortalDetector(self.memory, self._scanner)
+                                        self._portal_detector = self._create_portal_detector(self._scanner)
                                         log.info("Portal detector initialized (deferred)")
                                         self._init_memory_card_selector()
                                     for cb in getattr(self, '_deferred_scan_callbacks', []):
@@ -312,6 +412,7 @@ class BotEngine:
                                         except Exception:
                                             pass
                                 threading.Thread(target=_deferred_extras, daemon=True, name="DeferredExtras").start()
+                self._configure_scanner_probes(self._scanner)
             else:
                 log.info("Saved addresses invalid - running dump chain scan...")
                 scanner = UE4Scanner(self.memory, self.addresses, lambda msg: log.info(f"[Scanner] {msg}"))
@@ -319,9 +420,10 @@ class BotEngine:
                 if result.success:
                     log.info(f"Dump chain resolved: ({result.player_x:.1f}, {result.player_y:.1f}, {result.player_z:.1f})")
                     self._scanner = scanner
+                    self._configure_scanner_probes(self._scanner)
                     self.last_scan_failed = False
                     if result.fnamepool_addr and result.gobjects_addr:
-                        self._portal_detector = PortalDetector(self.memory, scanner)
+                        self._portal_detector = self._create_portal_detector(scanner)
                         log.info("Portal detector initialized")
                         self._init_memory_card_selector()
                 else:
@@ -374,6 +476,9 @@ class BotEngine:
             self._paused = False
             self._demo_mode = False
             self._start_time = 0.0
+
+        if self._cycle_active:
+            self._cycle_end("aborted")
 
         try:
             if self._helper_rt_nav:
@@ -633,7 +738,7 @@ class BotEngine:
 
         try:
             if self._scanner.fnamepool_addr and self._scanner.gobjects_addr and not self._portal_detector:
-                self._portal_detector = PortalDetector(self.memory, self._scanner)
+                self._portal_detector = self._create_portal_detector(self._scanner)
                 log.info("Portal detector initialized")
                 self._init_memory_card_selector()
         except Exception as e:
@@ -809,6 +914,7 @@ class BotEngine:
                     if map_name and map_name != "hideout":
                         self._record_starting_position(map_name, result.player_x, result.player_y)
                     log.info(f"Entered map successfully ({elapsed:.1f}s)")
+                    self._cycle_begin()
                     self._set_state(BotState.IN_MAP)
             else:
                 log.warning("Re-scan failed, waiting for level to stabilize...")
@@ -818,9 +924,13 @@ class BotEngine:
         if self._demo_mode:
             log.info("[DEMO] In map - simulating navigation")
             time.sleep(2.0)
+            self._cycle_begin()
             self._navigation_completed = True
             self._set_state(BotState.RETURNING)
             return
+
+        if not self._cycle_active:
+            self._cycle_begin()
 
         if self._portal_detector and not self._portal_detector.is_polling:
             self._portal_detector.find_fightmgr()
@@ -918,6 +1028,45 @@ class BotEngine:
         except Exception as ex:
             log.debug(f"[Events] Entry scan error: {ex}")
 
+    def _build_navigation_grid_for_map(self,
+                                       ws: WallScanner,
+                                       map_name: str,
+                                       cx: float,
+                                       cy: float,
+                                       runtime_points: Optional[list]) -> Optional[object]:
+        """Build runtime-only walkable grid from sampled/map-cached points."""
+        runtime_points = runtime_points or []
+        runtime_walk = [pt for pt in runtime_points if getattr(pt, "pt_type", "walkable") == "walkable"]
+        merged = runtime_walk
+        apply_blocked = False
+
+        if not merged:
+            return None
+
+        nav_markers = []
+        if self._scanner and self.config.get("nav_collision_grid_blocking_enabled", True):
+            try:
+                nav_markers = self._scanner.get_nav_collision_markers() or []
+            except Exception:
+                nav_markers = []
+
+        try:
+            nav_inflate = float(self.config.get("nav_collision_grid_inflate_u", 0.0) or 0.0)
+        except Exception:
+            nav_inflate = 0.0
+
+        grid = ws.build_walkable_grid(
+            merged,
+            cx,
+            cy,
+            half_size=WALL_GRID_HALF_SIZE,
+            cell_size=WALL_GRID_CELL_SIZE,
+            apply_blocked_points=apply_blocked,
+            nav_collision_markers=nav_markers,
+            nav_collision_inflate_u=nav_inflate,
+        )
+        return grid
+
     def _start_wall_scan_background(self, map_name: str, force_rescan: bool = False):
         """Background task: build A* walkable-area grid from MinimapSaveObject.
 
@@ -963,11 +1112,12 @@ class BotEngine:
                     log.info(f"[WallScan] Cache hit: {len(cached)} visited-position points for '{map_name}'")
                     cx = self.game_state.read_chain("player_x") or 0.0
                     cy = self.game_state.read_chain("player_y") or 0.0
-                    grid = ws.build_walkable_grid(cached, cx, cy,
-                                                  half_size=WALL_GRID_HALF_SIZE,
-                                                  cell_size=WALL_GRID_CELL_SIZE)
-                    self._pathfinder.set_grid(grid)
-                    log.info(f"[WallScan] A* grid ready from cache: {grid}")
+                    grid = self._build_navigation_grid_for_map(ws, map_name, cx, cy, cached)
+                    if grid is not None:
+                        self._pathfinder.set_grid(grid)
+                        log.info(f"[WallScan] A* grid ready from cache: {grid}")
+                    else:
+                        log.info(f"[WallScan] Cache exists for '{map_name}' but no grid was composed")
                     return
 
                 # ── Read MinimapSaveObject (cache miss or force rescan) ──────
@@ -992,12 +1142,25 @@ class BotEngine:
                             f"[WallScan] Re-scan: MinimapSaveObject empty for '{map_name}' "
                             f"in {elapsed:.2f}s — keeping {old_count} cached pts"
                         )
+                        cx = self.game_state.read_chain("player_x") or 0.0
+                        cy = self.game_state.read_chain("player_y") or 0.0
+                        grid = self._build_navigation_grid_for_map(ws, map_name, cx, cy, cached)
+                        if grid is not None:
+                            self._pathfinder.set_grid(grid)
                     else:
                         log.info(
                             f"[WallScan] MinimapSaveObject returned 0 positions in {elapsed:.2f}s "
                             f"— map '{map_name}' not yet visited or GObjects not ready; "
-                            f"RTNavigator will use direct navigation (no wall avoidance)"
+                            f"trying atlas/fail-open composition"
                         )
+                        cx = self.game_state.read_chain("player_x") or 0.0
+                        cy = self.game_state.read_chain("player_y") or 0.0
+                        grid = self._build_navigation_grid_for_map(ws, map_name, cx, cy, [])
+                        if grid is not None:
+                            self._pathfinder.set_grid(grid)
+                            log.info(f"[WallScan] A* grid ready from atlas/fallback: {grid}")
+                        else:
+                            log.info("[WallScan] No atlas/fallback grid available — RTNavigator will use direct navigation")
                     log.flush()
                     return
 
@@ -1022,11 +1185,12 @@ class BotEngine:
 
                 cx = self.game_state.read_chain("player_x") or 0.0
                 cy = self.game_state.read_chain("player_y") or 0.0
-                grid = ws.build_walkable_grid(points, cx, cy,
-                                              half_size=WALL_GRID_HALF_SIZE,
-                                              cell_size=WALL_GRID_CELL_SIZE)
-                self._pathfinder.set_grid(grid)
-                log.info(f"[WallScan] A* grid {'updated' if old_count else 'ready'}: {grid}")
+                grid = self._build_navigation_grid_for_map(ws, map_name, cx, cy, points)
+                if grid is not None:
+                    self._pathfinder.set_grid(grid)
+                    log.info(f"[WallScan] A* grid {'updated' if old_count else 'ready'}: {grid}")
+                else:
+                    log.info(f"[WallScan] Grid composition returned empty for '{map_name}'")
                 log.flush()
 
             except Exception as exc:
@@ -1367,7 +1531,7 @@ class BotEngine:
             return
         fn(event, interact_key)
 
-    def _detect_active_sandlord_event(self, min_monsters: int = 6,
+    def _detect_active_sandlord_event(self, min_monsters: int = 3,
                                       radius: float = 2200.0):
         """Return a Sandlord event when wave monsters indicate active combat.
 
@@ -1420,6 +1584,47 @@ class BotEngine:
             ex, ey, _ = event.position
             truck_pos = (ex, ey)
 
+        def _truck_lock() -> bool:
+            """Keep character on truck and hard-stop movement unless chasing guards."""
+            p0 = scanner._read_player_xy() if scanner else None
+            if p0 is None:
+                return False
+            tx0, ty0 = truck_pos
+            d0 = math.hypot(p0[0] - tx0, p0[1] - ty0)
+
+            if d0 > _TRUCK_STAND_RADIUS:
+                log.info(f"[Events] Carjack: off-truck ({d0:.0f}u) — returning")
+                self._get_helper_rt_nav().navigate_to_target(tx0, ty0, tolerance=220.0, timeout=3.0)
+
+            self._get_helper_rt_nav().stop_character()
+            self.input.move_mouse(*CHARACTER_CENTER)
+
+            p1 = scanner._read_player_xy() if scanner else None
+            if p1 is None:
+                return False
+            time.sleep(0.12)
+            p2 = scanner._read_player_xy() if scanner else None
+            if p2 is None:
+                return False
+
+            d_truck = math.hypot(p2[0] - tx0, p2[1] - ty0)
+            settled = math.hypot(p2[0] - p1[0], p2[1] - p1[1]) <= 40.0
+            if d_truck <= _TRUCK_STAND_RADIUS and settled:
+                return True
+
+            self.input.move_mouse(*CHARACTER_CENTER)
+            time.sleep(0.12)
+            p3 = scanner._read_player_xy() if scanner else None
+            if p3 is None:
+                return False
+            d_truck2 = math.hypot(p3[0] - tx0, p3[1] - ty0)
+            settled2 = math.hypot(p3[0] - p2[0], p3[1] - p2[1]) <= 40.0
+            if d_truck2 <= _TRUCK_STAND_RADIUS and settled2:
+                return True
+
+            log.warning(f"[Events] Carjack: truck lock weak (dist={d_truck2:.0f}u, settled={settled2})")
+            return d_truck2 <= _TRUCK_STAND_RADIUS
+
         log.info("[Events] Carjack: truck-stand loop started")
         while self._running and not self._paused:
             now = time.time()
@@ -1469,19 +1674,18 @@ class BotEngine:
                 log.info("[Events] Carjack near-truck monsters stable at 0 — considered complete")
                 break
 
+            guard_positions = scanner.get_carjack_guard_positions() if scanner else []
             player_xy = scanner._read_player_xy() if scanner else None
             if not player_xy:
                 time.sleep(0.2)
                 continue
             px, py = player_xy
-
-            # Stand by truck by default (auto-bomber AoE optimization).
-            truck_dist_sq = (px - tx) ** 2 + (py - ty) ** 2
-            if truck_dist_sq > (_TRUCK_STAND_RADIUS ** 2):
-                self._get_helper_rt_nav().navigate_to_target(tx, ty, tolerance=450.0, timeout=2.5)
-
-            guard_positions = scanner.get_carjack_guard_positions() if scanner else []
             escaped = [g for g in guard_positions if g.get("dist_truck", 0.0) >= _ESCAPE_DIST_TRUCK]
+
+            # Default Carjack posture: stay on truck and hard-stop drift.
+            # Skip this only when actively chasing escaped guards.
+            if not escaped:
+                _truck_lock()
 
             # Chase only escaped guard candidates, then return immediately.
             if escaped:
@@ -1499,6 +1703,7 @@ class BotEngine:
                     if not still_alive:
                         log.info(f"[Events] Carjack chase target down/disappeared: 0x{tgt_addr:X}")
                 self._get_helper_rt_nav().navigate_to_target(tx, ty, tolerance=450.0, timeout=2.2)
+                _truck_lock()
 
             time.sleep(0.5)
 
@@ -1531,6 +1736,59 @@ class BotEngine:
             return
         ex, ey, _ = event.position
         loot_key = self.config.get("loot_key", "e")
+
+        def _platform_lock() -> bool:
+            """Ensure character is on platform and fully stopped before handling waves.
+
+            Sequence:
+            1) Check distance to platform.
+            2) If far, re-approach platform.
+            3) Immediately place cursor on CHARACTER_CENTER to hard-stop drift.
+            4) Verify both proximity and low movement over short interval.
+            """
+            pxy0 = scanner._read_player_xy() if scanner else None
+            if pxy0 is None:
+                return False
+            px0, py0 = pxy0
+            d0 = math.hypot(px0 - ex, py0 - ey)
+            if d0 > 500.0:
+                log.info(f"[Events] Sandlord: off-platform ({d0:.0f}u) — returning")
+                self._get_helper_rt_nav().navigate_to_target(ex, ey, tolerance=120.0, timeout=18.0)
+
+            # Always enforce hard-stop cursor placement after any platform move.
+            self._get_helper_rt_nav().stop_character()
+            self.input.move_mouse(*CHARACTER_CENTER)
+
+            # Verify: close enough + movement has settled.
+            p1 = scanner._read_player_xy() if scanner else None
+            if p1 is None:
+                return False
+            time.sleep(0.12)
+            p2 = scanner._read_player_xy() if scanner else None
+            if p2 is None:
+                return False
+
+            d_platform = math.hypot(p2[0] - ex, p2[1] - ey)
+            settled = math.hypot(p2[0] - p1[0], p2[1] - p1[1]) <= 35.0
+            if d_platform <= 500.0 and settled:
+                return True
+
+            # One quick retry to absorb late follow-drift.
+            self.input.move_mouse(*CHARACTER_CENTER)
+            time.sleep(0.12)
+            p3 = scanner._read_player_xy() if scanner else None
+            if p3 is None:
+                return False
+            d_platform2 = math.hypot(p3[0] - ex, p3[1] - ey)
+            settled2 = math.hypot(p3[0] - p2[0], p3[1] - p2[1]) <= 35.0
+            if d_platform2 <= 500.0 and settled2:
+                return True
+
+            log.warning(f"[Events] Sandlord: platform lock weak (dist={d_platform2:.0f}u, settled={settled2})")
+            return d_platform2 <= 500.0
+
+        # Always acquire a verified platform lock before event handling.
+        _platform_lock()
 
         def _alive() -> int:
             return scanner.count_nearby_monsters(ex, ey, radius=3000.0)
@@ -1586,6 +1844,12 @@ class BotEngine:
             if time.time() - wave_start > TOTAL_TIMEOUT:
                 log.info("[Events] Sandlord: 90s hard cap — resuming navigation")
                 break
+            pxy = scanner._read_player_xy() if scanner else None
+            if pxy is not None:
+                d_platform = math.hypot(pxy[0] - ex, pxy[1] - ey)
+                if d_platform > 500.0:
+                    _platform_lock()
+                    continue
             if _gone_or_invalid():
                 break
 
@@ -2548,6 +2812,7 @@ class BotEngine:
     def _handle_map_complete(self):
         self._maps_completed += 1
         log.info(f"Map #{self._maps_completed} complete")
+        self._cycle_end("success")
         time.sleep(0.5)
 
         self.game_state.update()
@@ -2558,6 +2823,8 @@ class BotEngine:
 
     def _handle_error(self):
         log.error("Bot in error state - attempting recovery")
+        if self._cycle_active:
+            self._cycle_end("failed")
         if self._portal_detector:
             self._portal_detector.stop_polling()
         time.sleep(5.0)

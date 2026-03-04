@@ -2,7 +2,7 @@ from enum import Enum, auto
 
 
 APP_NAME = "Torchlight Infinite Bot V2"
-APP_VERSION = 'v5.14.0'
+APP_VERSION = 'v5.56.0'
 GAME_PROCESS_NAME = "torchlight_infinite.exe"
 GAME_WINDOW_TITLE = "Torchlight Infinite"
 
@@ -27,6 +27,35 @@ PATHS_DIR = "paths"
 LOG_FILE = "bot.log"
 BOSS_AREAS_FILE = "data/boss_areas.json"
 MINIMAP_KEY_MAP_FILE = "data/minimap_key_map.json"  # auto-learned: numeric TMap key → zone FName
+PORTAL_PRIORS_FILE = "data/portal_priors.json"
+
+# Hardcoded portal presets (memory-derived) for maps with deterministic portal
+# topology. Coordinates are extracted from portal debug JSONL clusters.
+#
+# Fields:
+#   x, y         world coordinates
+#   pair         paired portal name (teleport destination anchor)
+#   is_exit      semantic exit marker (used by overlay + hop filtering)
+#   use_for_hop  whether RTNavigator may use this marker for portal-hop routing
+#
+# Grimwind Woods notes:
+# - area-chain portals + returns are hop-eligible
+# - boss-gate pair is kept for future death-recovery logic, but excluded from
+#   current hop planner to avoid accidental mid-run diversion
+# - exit portal appears after boss kill
+HARDCODED_MAP_PORTALS = {
+    "Grimwind Woods": [
+        {"name": "area1_to_area2", "pair": "return_to_area1", "x": 468.5, "y": 1728.6, "is_exit": False, "use_for_hop": True, "is_return": False, "hop_priority": 1},
+        {"name": "area2_to_area3", "pair": "return_to_area2", "x": 1769.3, "y": 652.0, "is_exit": False, "use_for_hop": True, "is_return": False, "hop_priority": 2},
+        {"name": "area3_to_area4", "pair": "return_to_area3", "x": 1044.1, "y": -1200.3, "is_exit": False, "use_for_hop": True, "is_return": False, "hop_priority": 3},
+        {"name": "return_to_area1", "pair": "area1_to_area2", "x": 10810.6, "y": -41.8, "is_exit": False, "use_for_hop": True, "is_return": True, "hop_priority": 90},
+        {"name": "return_to_area2", "pair": "area2_to_area3", "x": -2675.1, "y": -9809.4, "is_exit": False, "use_for_hop": True, "is_return": True, "hop_priority": 91},
+        {"name": "return_to_area3", "pair": "area3_to_area4", "x": -1034.2, "y": -459.5, "is_exit": False, "use_for_hop": True, "is_return": True, "hop_priority": 92},
+        {"name": "boss_gate", "pair": "boss_gate_return", "x": 3296.3, "y": 3385.6, "is_exit": False, "use_for_hop": False},
+        {"name": "boss_gate_return", "pair": "boss_gate", "x": 5997.0, "y": 4942.0, "is_exit": False, "use_for_hop": False},
+        {"name": "boss_exit", "x": -11612.6, "y": 2786.0, "is_exit": True, "use_for_hop": True, "is_return": False, "hop_priority": 999},
+    ]
+}
 
 
 class NavMode(Enum):
@@ -547,13 +576,51 @@ DEFAULT_SETTINGS = {
     "loot_spam_interval_ms": 150,
     "stuck_timeout_sec": 5,
     "waypoint_tolerance": 200,
+    # Lightweight runtime defaults (production map-cycle mode).
+    # When False, heavy diagnostic subsystems are gated off unless explicitly
+    # enabled for troubleshooting sessions.
+    "runtime_debug_heavy_enabled": False,
+    # Input low-level spam logger (mouse/key per-action traces).
+    "input_debug_logging": False,
     "nav_mode": "manual",  # "manual" (recorded path) or "auto" (A* autonomous)
     "auto_behavior": "rush_events",  # rush_events | kill_all | boss_rush
     # Wall model mode: "legacy" = current binary grid only, "hybrid" =
     # binary grid + confidence/decay overlay costs in Pathfinder.
     "wall_model_mode": "hybrid",
+    # Runtime NavModifierVolume/Recast/NavBounds probe logger.
+    "nav_collision_probe_enabled": False,
+    "nav_collision_probe_interval_s": 2.0,
+    "nav_collision_overlay_enabled": False,
+    # Overlay debug: draw inflated boxes alongside raw markers.
+    "nav_collision_overlay_inflate_debug": False,
+    "nav_collision_overlay_show_raw": True,
+    # Overlay debug: draw pairwise bridge segments used by grid gap-closing.
+    "nav_collision_overlay_show_bridges": False,
+    # Apply decoded NavModifierVolume boxes as blocked priors in A* grid.
+    "nav_collision_grid_blocking_enabled": True,
+    # Global box inflation remains off by default; production pathing applies
+    # raw nav-collision boxes directly (no bridge expansion).
+    "nav_collision_grid_inflate_u": 0.0,
+    # Bridge expansion remains configurable for future experiments but is
+    # disabled by policy in production routing.
+    "nav_collision_grid_gap_bridge_enabled": False,
+    "nav_collision_grid_bridge_gap_u": 130.0,
+    "nav_collision_grid_bridge_half_width_u": 45.0,
+    # Reliability gate settings kept for compatibility; production routing
+    # currently does not skip raw nav priors.
+    "nav_collision_grid_min_raw_priors": 20,
+    "nav_collision_grid_min_coverage_ratio": 0.02,
     # Portal-hop transition verification in RTNavigator.
     "portal_transition_verify": True,
+    # Reliability controls: suppress duplicate replans and use a short
+    # local nudge after no-path before the next replan.
+    "rt_nav_replan_duplicate_cooldown_s": 0.45,
+    "rt_nav_nopath_escape_duration_s": 0.35,
+    # Deep portal-detection diagnostics (false-positive root-cause tracing).
+    "portal_debug_enabled": False,
+    "portal_debug_summary_interval_s": 5.0,
+    "portal_debug_strict_class_check": False,
+    "portal_debug_max_entries_per_tick": 60,
 }
 
 # ── Wall detection & auto-navigation ──────────────────────────────────────────
@@ -570,6 +637,31 @@ WALL_ACTOR_CLASS = "EMapTaleCollisionPoint"
 # Since the 12 map layouts are predefined and never change, this JSON is permanent
 # once collected — no re-scan is ever needed unless the file is deleted.
 WALL_DATA_FILE = "data/wall_data.json"
+NAV_COLLISION_PROBE_DIR = "data/nav_collision_probe"
+NAV_COLLISION_PROBE_SUMMARY_FILE = "data/nav_collision_probe/summary.json"
+PORTAL_DEBUG_DIR = "data/portal_debug"
+PORTAL_DEBUG_TICKS_FILE = "data/portal_debug/portal_ticks.jsonl"
+PORTAL_DEBUG_SUMMARY_FILE = "data/portal_debug/summary.json"
+
+# NavModifierVolume brush geometry decode (SDK-guided offsets)
+NAVMODIFIER_AREA_CLASS_OFFSET = 0x260
+BRUSH_COMPONENT_OFFSET = 0x238
+BRUSH_BODY_SETUP_OFFSET = 0x4B8
+BODYSETUP_AGGGEOM_OFFSET = 0x48
+KAGGREGATEGEOM_BOXELEMS_OFFSET = 0x10
+KAGGREGATEGEOM_CONVEXELEMS_OFFSET = 0x30
+KBOXELEM_STRIDE = 0x58
+KBOXELEM_CENTER_OFFSET = 0x30
+KBOXELEM_ROTATION_OFFSET = 0x3C
+KBOXELEM_X_OFFSET = 0x48
+KBOXELEM_Y_OFFSET = 0x4C
+KBOXELEM_Z_OFFSET = 0x50
+KCONVEXELEM_STRIDE = 0xB0
+KCONVEXELEM_ELEMBOX_OFFSET = 0x50
+KCONVEXELEM_ELEMBOX_MIN_OFFSET = 0x00
+KCONVEXELEM_ELEMBOX_MAX_OFFSET = 0x0C
+KCONVEXELEM_TRANSFORM_OFFSET = 0x70
+KCONVEXELEM_TRANSFORM_TRANSLATION_OFFSET = 0x10
 
 # ECollisionThrough bitmask — bit 0 (0x01) = walking allowed.
 COLLISION_THROUGH_WALK = 0x01
@@ -743,6 +835,12 @@ RT_NAV_ESCAPE_DURATION_S = 0.55  # seconds
 # Replaces the old 3 s periodic replan as the primary staleness detector.
 RT_NAV_DRIFT_THRESHOLD = 500.0   # world units
 
+# Hard-stall gate for movement interrupts/replans.
+# If displacement across the last RT_NAV_HARD_STALL_FRAMES is below
+# RT_NAV_HARD_STALL_DIST, the navigator is considered genuinely stuck.
+RT_NAV_HARD_STALL_FRAMES = 20
+RT_NAV_HARD_STALL_DIST   = 100.0
+
 # Learned walls persistence file.  Blocked cells inferred from stuck events are
 # saved per-map so the A* grid improves across runs even without new PosSampler
 # data.  Separate from wall_data.json (which stores walkable circles).
@@ -827,6 +925,19 @@ MAP_EXPLORER_POSITION_FLUSH_S      = 3.0    # or after this many seconds, whiche
 # quickly so the explorer can retarget instead of bumping walls.
 MAP_EXPLORER_NO_PROGRESS_TIMEOUT_S = 0.70   # seconds without meaningful movement
 MAP_EXPLORER_NO_PROGRESS_DIST      = 90.0   # world units considered meaningful progress
+
+# If the explorer detects that the character is standing on an already-known
+# sampled position for this long, it forces the next target selection to a
+# farther frontier sector (anti-idle fail-fast).
+MAP_EXPLORER_FORCE_FAR_STILL_S     = 0.45
+MAP_EXPLORER_FORCE_FAR_MIN_DIST    = 1200.0
+
+# When coverage is already substantial but the recent target sequence yields
+# no new samples, treat the local sector as saturated and bias frontier picks
+# toward far sectors so RTNavigator can use portal-hop on disconnected maps.
+MAP_EXPLORER_PORTAL_SHIFT_COVERAGE_PCT   = 68.0
+MAP_EXPLORER_PORTAL_SHIFT_NO_GAIN_STREAK = 8
+MAP_EXPLORER_PORTAL_SHIFT_MIN_FRONTIER_DIST = 3200.0
 
 # How many consecutive non-map ZoneWatcher readings before declaring map exit.
 # Prevents inventory / pause / brief UI flicker from triggering a false exit.

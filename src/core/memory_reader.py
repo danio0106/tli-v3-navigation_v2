@@ -1,6 +1,7 @@
 import struct
 import ctypes
 import ctypes.wintypes
+import time
 from typing import Optional, List, Tuple, Any
 
 from src.utils.logger import log
@@ -71,6 +72,19 @@ class MemoryReader:
         self._process_name: str = ""
         self._attached = False
         self._module_bases: dict = {}
+        self._read_fail_count: int = 0
+        self._read_fail_last_log_t: float = 0.0
+
+    def _log_read_fail(self, kind: str, address: int, detail: str):
+        """Throttle repetitive read-failure spam to protect runtime IO/CPU."""
+        self._read_fail_count += 1
+        now = time.time()
+        if now - self._read_fail_last_log_t >= 2.0:
+            suppressed = max(0, self._read_fail_count - 1)
+            suffix = f" | suppressed={suppressed}" if suppressed > 0 else ""
+            log.debug(f"{kind} failed at 0x{address:X}: {detail}{suffix}")
+            self._read_fail_last_log_t = now
+            self._read_fail_count = 0
 
     @property
     def is_attached(self) -> bool:
@@ -211,7 +225,7 @@ class MemoryReader:
         try:
             return self._pm.read_bytes(address, size)
         except Exception as e:
-            log.debug(f"read_bytes failed at 0x{address:X} (size={size}): {e}")
+            self._log_read_fail("read_bytes", address, f"size={size} err={e}")
             return None
 
     def read_value(self, address: int, value_type: str = "int") -> Optional[Any]:
@@ -229,7 +243,7 @@ class MemoryReader:
             if data:
                 return struct.unpack(f"<{fmt}", data)[0]
         except Exception as e:
-            log.debug(f"read_value failed at 0x{address:X} (type={value_type}): {e}")
+            self._log_read_fail("read_value", address, f"type={value_type} err={e}")
             return None
         return None
 

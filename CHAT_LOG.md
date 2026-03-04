@@ -1,3 +1,80 @@
+### Mar 04, 2026 — v5.56.0 (Lightweight runtime defaults + log flood control)
+- Added production-lightweight runtime profile defaults in `DEFAULT_SETTINGS`:
+  - `runtime_debug_heavy_enabled=False`
+  - `input_debug_logging=False`
+  - `nav_collision_probe_enabled=False` (unless heavy-debug gate is enabled)
+  - `portal_debug_enabled=False` (unless heavy-debug gate is enabled)
+- `BotEngine` now gates heavy scanner/portal debug subsystems behind `runtime_debug_heavy_enabled`, so accidental stale config/debug toggles no longer keep expensive probe loops always-on.
+- `BotEngine` applies input debug flag at startup (`InputController.debug_input`), removing per-action input spam by default (notably repeated `E` key logs).
+- `MemoryReader` read failure logs (`read_bytes`/`read_value`) are now throttled (batched with suppression count) to avoid thousands of repeated debug lines and reduce file I/O overhead.
+- Version bump: `APP_VERSION` → `v5.56.0`.
+
+### Mar 04, 2026 — v5.55.0 (Explorer anti-idle + saturation frontier shift)
+- Fixed MapExplorer local-loop behavior where frontier targeting repeatedly selected tiny nearby cells and character effectively idled on already-known spots.
+- Added known-position standstill detector in `MapExplorer`: if player remains on already-sampled cells for ~0.45s, next target selection is forced to farther frontier sectors.
+- Added local saturation policy: when coverage is already high and consecutive targets produce no new samples, explorer now biases to far frontier sectors (cross-segment targets) so RTNav can engage portal-hop on disconnected layouts.
+- Added no-gain target cooling: reached/no-progress targets with zero coverage gain are now cooled down to prevent immediate reselection loops.
+- Frontier picking changed from strict nearest-only to spread-aware scoring (`spread + current-distance bias`), reducing repeated micro-retargeting in the same pocket.
+- New config constants (in code constants block): `MAP_EXPLORER_FORCE_FAR_STILL_S`, `MAP_EXPLORER_FORCE_FAR_MIN_DIST`, `MAP_EXPLORER_PORTAL_SHIFT_COVERAGE_PCT`, `MAP_EXPLORER_PORTAL_SHIFT_NO_GAIN_STREAK`, `MAP_EXPLORER_PORTAL_SHIFT_MIN_FRONTIER_DIST`.
+- Version bump: `APP_VERSION` → `v5.55.0`.
+
+### Mar 04, 2026 — v5.54.0 (Strict forward portal priority + return suppression)
+- Implemented strict hardcoded portal-hop policy wiring in `RTNavigator`: reads `hop_priority` and `is_return` from hardcoded map portal metadata and ranks candidates by `(hop_priority, score)` so deterministic forward portals are always preferred when reachable.
+- Return portals are now blocked by default for non-exit goals; a rare escape hatch is allowed only under severe recovery conditions (`consecutive_no_path >= 16` and player already near that return portal), to recover from wrong-sector edge cases without reintroducing normal return-loop behavior.
+- Added hardcoded per-key metadata map in hop planner so merged live/hardcoded markers consistently inherit return/priority semantics.
+- Updated Grimwind hardcoded portals to explicit forward-first priorities (`area1->2`, `area2->3`, `area3->4`) and high-priority return entries (`90+`) for fallback-only usage.
+- Version bump: `APP_VERSION` → `v5.54.0`.
+
+### Mar 04, 2026 — v5.53.0 (Overlay portal marker coalescing)
+- Fixed duplicate overlapping portal labels in overlay after live+hardcoded marker merge.
+- `BotApp` overlay worker now performs a final portal-marker dedup pass by rounded `(x,y)` and keeps one marker per position (prefers `is_exit=True` variant when both exist).
+- This removes 2x `Portal N` text overlap at identical coordinates while preserving semantic exit coloring.
+- Version bump: `APP_VERSION` → `v5.53.0`.
+
+### Mar 04, 2026 — v5.52.0 (Local-only Git workflow guardrail)
+- Added explicit agent guardrail to `.github/copilot-instructions.md` requiring local-first git/workspace analysis.
+- New hard rule: avoid remote GitHub/PR metadata lookups by default (no active/open PR fetch, no default-branch online comparisons) unless user explicitly asks for online analysis.
+- Purpose: prevent slow/hanging sessions caused by unnecessary remote repository operations in this local-first project workflow.
+- Version bump: `APP_VERSION` → `v5.52.0`.
+
+### Mar 04, 2026 — v5.51.0 (Portal-position-only tick dedup)
+- Tightened `PortalDetector` debug dedup fingerprint to depend only on `accepted_portals` coordinates (rounded XYZ), removing pointer/metadata sensitivity.
+- Duplicate portal-position snapshots are now suppressed even if non-position debug fields differ (e.g., TMap metadata/reason counters).
+- Cleaned current `data/portal_debug/portal_ticks.jsonl` by removing duplicate portal-position entries and keeping unique portal-position states only.
+- Version bump: `APP_VERSION` → `v5.51.0`.
+
+### Mar 04, 2026 — v5.50.0 (Portal debug tick dedup)
+- Reduced `data/portal_debug/portal_ticks.jsonl` growth by deduplicating repeated portal-debug snapshots in `PortalDetector._debug_record_tick(...)`.
+- Added stable tick fingerprinting (FightMgr/TMap state + accept/reject reasons + accepted portal signatures), and suppresses unchanged ticks.
+- Added heartbeat behavior: unchanged state is still emitted periodically (~10s) with `suppressed_repeats` so liveness remains visible without per-poll spam.
+- Summary counters now include `ticks_written` and `ticks_suppressed_repeats`; summary also exposes dedup heartbeat metadata.
+- Version bump: `APP_VERSION` → `v5.50.0`.
+
+### Mar 04, 2026 — v5.49.0 (Destination-known portal-hop policy)
+- Tightened `RTNavigator._find_portal_hop_path(...)` to reject non-exit hop candidates that do not have a known teleport destination.
+- Removed entry-distance proxy acceptance for unknown live markers; non-exit hops now require destination evidence (`hardcoded pair` or runtime-learned link).
+- Kept strict two-sided feasibility on accepted candidates: both approach path (`player -> portal`) and destination-side route (`teleport_dest -> goal`) must exist, and destination must improve goal distance by ~250u.
+- Added runtime link learning on verified hop transitions: when a hop is confirmed by post-interact position jump, RTNav records `source portal key -> nearest arrival-side non-exit portal` mapping to expand safe destination-known candidates during the run.
+- Added config toggle `portal_hop_require_known_destination` (default `True` in code path).
+- Version bump: `APP_VERSION` → `v5.49.0`.
+
+### Mar 04, 2026 — v5.48.0 (Hop improvement + reachability hard gates)
+- Tightened `RTNavigator._find_portal_hop_path(...)` so hop candidates are accepted only when they provide measurable progress toward the **current goal**.
+- Added universal non-exit improvement gate (`~250u` minimum):
+  - paired hardcoded candidates: compare **paired destination → goal** vs current distance,
+  - non-paired live candidates: conservative **entry-point → goal** proxy gate.
+- Added strict paired-destination reachability check: candidate is rejected if A* from teleport destination to current goal returns no path in the active grid.
+- Existing approach-path reachability (player → portal entry) remains mandatory; result is two-sided feasibility filtering (reachable entry + reachable paired destination route).
+- Version bump: `APP_VERSION` → `v5.48.0`.
+
+### Mar 04, 2026 — v5.47.0 (Smart paired-portal hop scoring)
+- Reworked `RTNavigator` hop candidate evaluation for hardcoded portal maps (Grimwind preset) to use **teleport destination** distance-to-goal instead of portal-entry distance only.
+- Added `pair` metadata to `HARDCODED_MAP_PORTALS` entries so each portal can resolve its destination anchor (paired portal coordinate).
+- New rule in `_find_portal_hop_path(...)`: for paired hardcoded portals, skip hop if destination does not improve goal distance by at least ~300u (`dest_goal_dist >= current_goal_dist - 300`), except exit-goal context.
+- Effect: return portals are no longer selected by default during forward progress, but are still allowed when they are genuinely beneficial (e.g., character is in later area while target is in earlier area).
+- Existing anti-bounce cooldown/arrival-hold safeguards were kept as safety fallback; smart destination scoring now handles most wrong-return cases at planner level.
+- Version bump: `APP_VERSION` → `v5.47.0`.
+
 # Chat Log — Torchlight Infinite Bot V2
 > **Purpose:** Annotated session history + technical reference for AI agents.  
 > **Read this file + `.github/copilot-instructions.md` before every session.**  
@@ -4511,3 +4588,1146 @@ Following extensive memory dump archaeology, the logical index issue was complet
 ### Expected behavior
 - Reduced cursor flip-flop and smoother forward steering along planned path segments.
 - No helper-induced right-click disruption during Carjack helper navigation.
+
+## v5.15.0 - Offline atlas bootstrap (safe fail-open integration)
+
+### Summary
+Implemented first production-safe increment of the minimap-atlas architecture in the isolated repo:
+- runtime grid source modes (`runtime_only`, `atlas_only`, `hybrid`),
+- passive minimap+position logger for offline dataset collection,
+- offline atlas builder script,
+- atlas-aware grid composition with fail-open fallback,
+- Settings tab controls for all new knobs.
+
+Objective/event logic (events → boss → portal) was intentionally left unchanged.
+
+### Files changed
+- `src/utils/constants.py`
+  - `APP_VERSION`: `v5.14.0` → `v5.15.0`
+  - added atlas constants: `MAP_ATLAS_GEOMETRY_FILE`, `MINIMAP_ATLAS_LOG_DIR`
+  - added config defaults: `geometry_source_mode`, `atlas_fail_open`,
+    `atlas_walkable_conf_min`, `atlas_blocked_conf_min`,
+    `minimap_atlas_logger_enabled`, `minimap_capture_interval_s`,
+    `minimap_capture_save_every`, `minimap_capture_region`
+- `src/core/minimap_atlas.py` (new)
+  - `MinimapAtlasStore`: loads confidence-gated atlas points from `data/map_atlas_geometry.json`
+  - `MinimapAtlasLogger`: map-entry passive logger writing `meta.json` + `samples.jsonl` + frame captures to `data/minimap_atlas_logs/<map>/<session>/`
+- `scripts/build_minimap_atlas.py` (new)
+  - builds `data/map_atlas_geometry.json` from `data/wall_data.json` + optional logger samples
+  - exports per-map walkable/blocked confidence points
+- `src/core/wall_scanner.py`
+  - `build_walkable_grid(..., apply_blocked_points=False)` added;
+    blocked points remain ignored by default (v5.8.0 safety), can be enabled for curated atlas priors
+- `src/core/bot_engine.py`
+  - atlas store/logger initialized
+  - new `_build_navigation_grid_for_map()` composition helper:
+    - `runtime_only`: runtime walkable points only
+    - `atlas_only`: atlas walkable+blocked (or fail-open runtime)
+    - `hybrid`: runtime walkable + atlas walkable (+ optional atlas blocked)
+  - `_start_wall_scan_background()` now uses composition helper for cache-hit, rescan-empty, and normal rebuild paths
+  - zone watcher now starts/stops passive atlas logger per map entry/exit (when enabled)
+- `src/gui/tabs/settings_tab.py`
+  - added "Navigation Geometry" settings section
+  - bool settings now render as switches (and save correctly)
+
+### Behavior and safety notes
+- Default mode is `runtime_only`, so current behavior is preserved unless switched.
+- Atlas modes are fail-open capable (`atlas_fail_open=True`) to avoid no-grid regressions.
+- Runtime blocked-cache poisoning protections from v5.8.0 remain intact.
+- Atlas blocked points are only applied when explicitly composed via atlas mode.
+
+### Next required user test
+1. Settings → enable `minimap_atlas_logger_enabled` and run 1–2 maps; verify `data/minimap_atlas_logs/...` sessions are created.
+2. Run `python scripts/build_minimap_atlas.py` to generate `data/map_atlas_geometry.json`.
+3. Switch `geometry_source_mode` to `hybrid`; run one map and compare path smoothness/no-path incidence vs `runtime_only`.
+4. If any regression: switch back to `runtime_only` immediately (no code rollback needed).
+
+## v5.16.0 - One-click atlas builder in GUI (Settings tab)
+
+### Summary
+Added a direct GUI action to generate atlas geometry without terminal/manual script invocation.
+
+### Files changed
+- `src/gui/tabs/settings_tab.py`
+  - added top-bar `Build Atlas` button in Settings.
+  - added `_on_build_atlas()` background runner:
+    - executes `scripts/build_minimap_atlas.py` via current Python interpreter,
+    - runs in daemon thread (UI stays responsive),
+    - updates status label with success/failure result.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.15.0` → `v5.16.0`.
+
+### Behavior
+- Clicking `Build Atlas` now performs atlas generation in-place from the GUI.
+- Success/failure is shown in Settings status text.
+- No bot navigation/runtime behavior changed.
+
+### Next required user test
+1. Open Settings tab and click `Build Atlas`.
+2. Verify status shows completion and that `data/map_atlas_geometry.json` updates.
+3. If generation fails, share the last status text shown by the button runner.
+
+## v5.17.0 - Open atlas file button in Settings
+
+### Summary
+Added a direct GUI action to open the generated atlas JSON from Settings, so atlas inspection no longer requires manual file browsing.
+
+### Files changed
+- `src/gui/tabs/settings_tab.py`
+  - added `Open Atlas File` button next to `Build Atlas`.
+  - added `_on_open_atlas_file()`:
+    - opens `data/map_atlas_geometry.json` via `os.startfile` on Windows,
+    - reports missing-file and open errors in Settings status label.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.16.0` → `v5.17.0`.
+
+### Next required user test
+1. Build atlas from Settings (`Build Atlas`).
+2. Click `Open Atlas File`.
+3. Verify JSON opens in default editor and status label confirms success.
+
+## v5.18.0 - Foreground-safe atlas capture + minimap wall/walkable overlay analyzer
+
+### Summary
+- Prevented atlas/minimap frame pollution when user alt-tabs out of game.
+- Added a dedicated minimap analysis tool that extracts walkable + wall masks from preview captures and writes visual debug overlays for rapid iterative tuning.
+- Added GUI buttons to run the analyzer and open its output folder.
+
+### Files changed
+- `src/core/minimap_atlas.py`
+  - `MinimapAtlasLogger.run()` now accepts optional `is_capture_allowed_fn` callback.
+  - Logger loop skips sampling/frame capture when callback reports capture not allowed (e.g. game not foreground).
+- `src/core/bot_engine.py`
+  - `_start_minimap_atlas_logger()` now passes `self.window.is_foreground` to atlas logger.
+- `scripts/analyze_minimap_captures.py` (new)
+  - Reads preview files from `moje/` (default prefix `atlas_capture_preview_`).
+  - Produces for each capture: cropped image, walk mask, wall mask, color overlay.
+  - Writes outputs to `moje/minimap_overlay_debug/` + `summary.json`.
+  - Auto-creates/tunes via `data/minimap_overlay_config.json` (created on first run).
+- `src/gui/tabs/settings_tab.py`
+  - Added `Analyze Minimap Captures` button (runs analyzer script in background).
+  - Added `Open Overlay Folder` button (opens `moje/minimap_overlay_debug`).
+  - Existing button layout kept compact (multi-row) so controls remain visible without enlarging app window.
+- `scripts/capture_minimap_preview.py`
+  - Uses bot-equivalent process targeting chain: game PID resolution first, then PID-based window lookup.
+  - Rejects launcher-only sessions (`torchlight_infinite.exe` must exist).
+  - Keeps focus-safety check before capture.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.17.0` → `v5.18.0`.
+
+### Behavior / confirmed outcomes
+- Atlas logger no longer keeps collecting minimap frames while Torchlight window is not foreground.
+- Analyzer run produced debug overlays in `moje/minimap_overlay_debug/` (53 capture files processed in this session).
+- Preview capture now binds to real game PID (`torchlight_infinite`) and no longer relies on launcher-title matching.
+
+### Next required user test
+1. In map, enable atlas logger, then alt-tab to VS Code for ~5-10 seconds, return to game.
+2. Verify new logger session in `data/minimap_atlas_logs/...` does not contain off-game frames during alt-tab interval.
+3. Run `Analyze Minimap Captures` and inspect `moje/minimap_overlay_debug/*_overlay.png`.
+4. If wall/walkable masks are off, report which files look wrong; tune `data/minimap_overlay_config.json` and rerun.
+
+## v5.19.0 - Move minimap debug artifacts out of moje
+
+### Summary
+- Moved minimap preview/overlay workflow off `moje/` to keep `moje/` reserved for user uploads (logs/dumps/assets).
+- Offline minimap analysis now uses dedicated project-internal debug folders under `data/minimap_debug/`.
+
+### Files changed
+- `scripts/capture_minimap_preview.py`
+  - preview output path changed from `moje/` to `data/minimap_debug/captures/`.
+- `scripts/analyze_minimap_captures.py`
+  - default analyzer input/output changed to:
+    - input: `data/minimap_debug/captures`
+    - output: `data/minimap_debug/overlay`
+- `data/minimap_overlay_config.json`
+  - persisted config updated to same new directories.
+- `src/gui/tabs/settings_tab.py`
+  - status messages updated to reference `data/minimap_debug/captures`.
+  - `Open Overlay Folder` now opens `data/minimap_debug/overlay`.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.18.0` → `v5.19.0`.
+
+### Data migration performed
+- Existing files moved from `moje/`:
+  - `atlas_capture_preview_*` → `data/minimap_debug/captures/`
+  - `moje/minimap_overlay_debug/*` → `data/minimap_debug/overlay/`
+- Verified analyzer runs successfully after migration:
+  - `Processed 53 capture(s) -> .../data/minimap_debug/overlay`
+
+### Next required user test
+1. Use `Capture Minimap Preview` and verify new files appear in `data/minimap_debug/captures`.
+2. Use `Analyze Minimap Captures` and verify overlays appear in `data/minimap_debug/overlay`.
+3. Confirm `moje/` remains clean for uploaded logs/dumps.
+
+## v5.20.0 - Minimap session stitching pipeline (live run outputs)
+
+### Summary
+- Added end-to-end stitched minimap generation from real atlas logger sessions.
+- Pipeline now produces one global stitched artifact per session with walk/wall/seen masks and summary metadata.
+- Added one-click GUI actions in Settings for stitching and opening stitch output folder.
+
+### Files changed
+- `scripts/stitch_minimap_session.py` (new)
+  - Input: atlas logger session (`data/minimap_atlas_logs/<map>/<session>/samples.jsonl` + `frames/*`)
+  - Processing:
+    - loads frame-linked samples,
+    - attempts phase-correlation motion pairing to fit pixel→world transform,
+    - uses analyzer masks and adaptive fallback segmentation for atlas-frame domain,
+    - warps/accumulates per-frame walk/wall evidence into global canvas.
+  - Output: `data/minimap_debug/stitch/<map>_<session>/`
+    - `stitched_overlay.png`
+    - `stitched_walk_mask.png`
+    - `stitched_wall_mask.png`
+    - `stitched_seen_mask.png`
+    - `summary.json`
+- `src/gui/tabs/settings_tab.py`
+  - Added `Stitch Latest Session` button (background script run)
+  - Added `Open Stitch Folder` button (`data/minimap_debug/stitch`)
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.19.0` → `v5.20.0`
+  - Added `MINIMAP_STITCH_OUTPUT_DIR = "data/minimap_debug/stitch"`
+- `.github/copilot-instructions.md`
+  - Added v5.20.0 stitcher note under minimap debug/tooling section.
+
+### Live validation in this session
+- Ran stitcher on latest logger session:
+  - `data/minimap_atlas_logs/wall_of_the_last_breath/20260303_192628`
+  - output generated successfully in `data/minimap_debug/stitch/wall_of_the_last_breath_20260303_192628`
+- Also ran on another session:
+  - `data/minimap_atlas_logs/wall_of_the_last_breath/20260303_174703`
+  - output generated successfully in matching stitch folder.
+
+### Important findings / constraints
+- For both tested sessions, transform fit had `pair_count=0` (insufficient reliable motion-correlation pairs), so stitcher used conservative fallback transform (`A=[[60,0],[0,60]]`).
+- Atlas logger frames use a different visual domain than preview captures; overlay analyzer thresholds do not transfer directly. Added adaptive fallback mask extraction and anti-collapse balancing, but quality remains session-dependent.
+
+### Next required test
+1. Run a deliberate manual map-walk with atlas logger enabled (continuous movement, fewer long stationary periods).
+2. Stitch that session and verify `pair_count > 0` in `summary.json`.
+3. Visually validate stitched overlay/masks for:
+   - full-map topology continuity,
+   - wall boundaries in narrow corridors,
+   - walkable interior coherence.
+
+## v5.21.0 - Stitch quality gating + logger presets + frame-cleanup flow
+
+### Summary
+- Added explicit stitch quality diagnostics and low-quality gating in stitch summaries.
+- Added one-click logger presets in Settings for normal operation vs stitch-quality capture density.
+- Added post-stitch source frame cleanup mode and wired Settings stitch action to use it.
+
+### Files changed
+- `scripts/stitch_minimap_session.py`
+  - Added `--cleanup-frames` CLI flag to remove `session/frames/*` after successful stitch.
+  - Added summary quality block:
+    - `quality.status` (`ok` / `low`)
+    - `quality.reasons` (e.g. fallback transform, low pair count)
+  - Added frame-domain debug outputs:
+    - `stitched_cropped_avg.png`
+    - `stitched_frame_centers.png`
+    - `frame_centers.json`
+- `src/gui/tabs/settings_tab.py`
+  - `Stitch Latest Session` now runs stitch script with `--cleanup-frames`.
+  - Reads stitch `summary.json` and surfaces `LOW_QUALITY` reasons in Settings status.
+  - Added logger preset buttons:
+    - `Logger Preset: Normal` → `interval=0.50`, `save_every=6`
+    - `Logger Preset: Stitch Quality` → `interval=0.10`, `save_every=2`
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.20.0` → `v5.21.0`.
+  - default `minimap_capture_save_every` remains `6` for low-overhead baseline.
+
+### Validation in-session
+- Re-stitched session `20260303_214547` after changes.
+- Summary now reports:
+  - `fit_mode: fallback_scale`
+  - `pair_count: 7`
+  - `quality.status: low`
+  - `quality.reasons: ["fallback transform used", "low motion-pair count (7)"]`
+- New frame-domain debug artifacts were generated in stitch output folder.
+
+### Notes
+- Session `20260303_214547` had only ~40.5s of logging (`80` samples at 0.5s and `save_every=3`), which explains `27` frames.
+- Low stitch quality here was due to insufficient robust phase-correlation pairs, not post-stitch cleanup.
+
+## v5.22.0 - Runtime nav-collision probe logger (NavModifierVolume / NavMeshBounds / Recast)
+
+### Summary
+- Implemented a dedicated scanner-side probe pipeline to persist runtime navigation/collision objects for offline analysis.
+- Probe logs are now written continuously as JSONL snapshots (not one-off dumps), with a compact rolling summary file for quick status checks.
+
+### Files changed
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.21.0` → `v5.22.0`.
+  - Added config defaults:
+    - `nav_collision_probe_enabled` (default `True`)
+    - `nav_collision_probe_interval_s` (default `2.0`)
+  - Added artifact paths:
+    - `NAV_COLLISION_PROBE_DIR = data/nav_collision_probe`
+    - `NAV_COLLISION_PROBE_SUMMARY_FILE = data/nav_collision_probe/summary.json`
+- `src/core/scanner.py`
+  - Added probe lifecycle methods:
+    - `set_nav_collision_probe(...)`
+    - `_start_nav_probe_thread_if_needed()` / `_stop_nav_probe_thread()`
+    - `_ensure_nav_probe_session()` / `_close_nav_probe_session()`
+    - `_nav_probe_loop()`
+  - Added snapshot collection:
+    - `_collect_nav_actor_records(class_name, include_area_class=False)`
+    - `_read_actor_transform(actor_ptr)`
+    - `_run_nav_collision_probe_snapshot()`
+    - `_write_nav_probe_snapshot(payload)`
+  - Snapshot payload now captures:
+    - zone name, sequence/timestamp
+    - counts for `NavModifierVolume`, `NavMeshBoundsVolume`, `RecastNavMesh`
+    - per-object address/name/class/outer/root-class/position/rotation/scale
+    - `NavModifierVolume.AreaClass` metadata (pointer + resolved class name)
+  - `cancel()` now cleanly stops/closes nav probe thread/session.
+- `src/core/bot_engine.py`
+  - Added `_configure_scanner_probes(scanner)` and wired it into attach flow for both:
+    - saved-address scanner reuse path
+    - fresh scanner creation path
+- `.github/copilot-instructions.md`
+  - Added v5.22.0 architecture note documenting probe artifacts and config toggles.
+
+### Artifact format/output
+- Session file: `data/nav_collision_probe/nav_probe_<timestamp>.jsonl`
+- Latest status mirror: `data/nav_collision_probe/summary.json`
+- One JSON object per probe tick (default every 2s).
+
+### Next required test
+1. Attach bot and stay in-map for ~20–30s.
+2. Verify `data/nav_collision_probe/` contains a new `nav_probe_*.jsonl` plus `summary.json`.
+3. Confirm snapshot counts are non-zero on maps containing runtime nav objects.
+4. If counts stay zero, upload latest bot log + probe JSONL for class-name/offset calibration.
+
+## v5.23.0 - NavModifier AggGeom box extraction + nav-collision overlay
+
+### Summary
+- Extended nav probe from actor-level snapshots to decoded collision-prior geometry (`NavModifierVolume.AggGeom.BoxElems`).
+- Added live overlay visualization for decoded nav-collision boxes so runtime alignment can be verified directly in-map.
+- Hardened probe summary behavior so transient end-state ticks no longer overwrite stable in-map context.
+
+### Files changed
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.22.0` → `v5.23.0`.
+  - Added nav-collision decode offsets/constants:
+    - `NAVMODIFIER_AREA_CLASS_OFFSET`
+    - `BRUSH_COMPONENT_OFFSET`
+    - `BRUSH_BODY_SETUP_OFFSET`
+    - `BODYSETUP_AGGGEOM_OFFSET`
+    - `KAGGREGATEGEOM_BOXELEMS_OFFSET`
+    - `KBOXELEM_STRIDE`
+    - `KBOXELEM_CENTER_OFFSET`
+    - `KBOXELEM_ROTATION_OFFSET`
+    - `KBOXELEM_X_OFFSET`, `KBOXELEM_Y_OFFSET`, `KBOXELEM_Z_OFFSET`
+  - Added config toggle: `nav_collision_overlay_enabled` (default `True`).
+- `src/core/scanner.py`
+  - Added decode helpers:
+    - `_rotate_xy(...)`
+    - `_decode_nav_modifier_boxes(actor_ptr, actor_record)`
+  - Probe snapshot now includes `nav_collision_boxes` (world center, extents, yaw, area class, source, name, index).
+  - Added in-memory marker cache for UI feed:
+    - `_nav_collision_boxes`
+    - `get_nav_collision_markers()`
+  - Summary write improved:
+    - adds `collision_box_count`
+    - flags `is_transient` snapshots (empty zone / zero navmesh counts)
+    - preserves previous stable state in `last_stable` when latest tick is transient.
+- `src/gui/overlay.py`
+  - Added new layer: `LAYER_NAV_COLLISION`.
+  - Added marker state + pools and API setter: `set_nav_collision_markers(...)`.
+  - Added `_update_nav_collision(...)` renderer for rotated box outlines + area labels.
+- `src/gui/app.py`
+  - Overlay feed now pushes scanner nav-collision markers each tick when `nav_collision_overlay_enabled` is true.
+
+### Expected artifacts/behavior
+- Probe JSONL now contains per-tick `nav_collision_boxes` arrays.
+- `data/nav_collision_probe/summary.json` now includes `collision_box_count`, `is_transient`, and optional `last_stable`.
+- With overlay ON, decoded nav-collision rectangles render in-world (green outlines).
+
+### Next required test
+1. Attach + run a map with overlay ON for 20–30s.
+2. Upload latest:
+   - `logs/bot_*.log`
+   - `data/nav_collision_probe/nav_probe_*.jsonl`
+   - `data/nav_collision_probe/summary.json`
+3. Confirm whether rendered nav-collision boxes align with observed blocked geometry in at least two map regions.
+
+## v5.24.0 - NavModifier decode pointer-source fix + stage diagnostics
+
+### Summary
+- Fixed a root-cause candidate for `BOX=0`: decoder no longer re-maps NavModifier actors by name via a second GObjects pass.
+- Decode now uses the exact validated actor pointer captured during record collection (`_ptr`), preventing stale/duplicate-name pointer collisions.
+- Added decode-stage stats in snapshot + summary to identify which chain step fails at runtime.
+
+### Files changed
+- `src/core/scanner.py`
+  - `_collect_nav_actor_records(...)`
+    - stores validated pointer in each record (`_ptr`)
+    - guards class/outer/area-class name resolution with pointer sanity checks
+    - uses `NAVMODIFIER_AREA_CLASS_OFFSET` constant
+  - `_decode_nav_modifier_boxes(...)`
+    - now accepts optional `stats` dict
+    - adds stage counters:
+      - `actors_seen`
+      - `invalid_actor_ptr`
+      - `missing_brush_component`
+      - `missing_body_setup`
+      - `missing_box_array`
+      - `invalid_box_count`
+      - `box_bytes_read_failed`
+      - `actors_with_boxes`
+      - `boxes_total`
+  - `_run_nav_collision_probe_snapshot()`
+    - decodes using `rec["_ptr"]` directly
+    - includes `nav_collision_decode_stats` in JSONL payload
+    - debug log now prints decode stats per tick
+  - `_write_nav_probe_snapshot(...)`
+    - summary now mirrors `decode_stats` for quick diagnosis
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.23.0` → `v5.24.0`
+
+### Next required test
+1. Run one full map with overlay ON (same as prior test).
+2. Upload latest:
+   - `logs/bot_*.log`
+   - `data/nav_collision_probe/nav_probe_*.jsonl`
+   - `data/nav_collision_probe/summary.json`
+3. Check whether `decode_stats` indicates a dominant failing stage (especially `missing_brush_component` vs `missing_body_setup` vs `missing_box_array`) and whether `BOX` becomes non-zero.
+
+## v5.25.0 - Remove minimap image-recognition navigation pipeline and artifact generators
+
+### Summary
+- Removed abandoned minimap/capture/stitch image-recognition path used for navigation tooling and data generation.
+- Preserved all non-navigation CV flows (map selector, card/portal related runtime CV).
+- Purged generated minimap PNG/frame artifact directories from `data/`.
+
+### Files changed
+- `src/core/bot_engine.py`
+  - Removed `MinimapAtlasStore` / `MinimapAtlasLogger` imports and members.
+  - Simplified `_build_navigation_grid_for_map(...)` to runtime-only points.
+  - Removed `_start_minimap_atlas_logger(...)` and zone-watcher atlas logger lifecycle hooks.
+- `src/gui/tabs/settings_tab.py`
+  - Removed atlas/minimap utility buttons and related handlers (build/open/capture/analyze/stitch/presets).
+  - Removed atlas/minimap config fields from Settings UI.
+- `src/utils/constants.py`
+  - Removed atlas/minimap defaults (`geometry_source_mode`, `atlas_*`, `minimap_capture_*`, `minimap_atlas_logger_enabled`).
+  - Removed unused atlas/minimap path constants.
+  - `APP_VERSION` bumped `v5.24.0` → `v5.25.0`.
+- `config.json`
+  - Removed atlas/minimap runtime keys from persisted user config.
+
+### Deleted files
+- `src/core/minimap_atlas.py`
+- `scripts/build_minimap_atlas.py`
+- `scripts/capture_minimap_preview.py`
+- `scripts/analyze_minimap_captures.py`
+- `scripts/stitch_minimap_session.py`
+- `scripts/stitch_image_range.py`
+- `scripts/stitch_two_frames.py`
+
+### Deleted generated artifacts
+- `data/minimap_debug/` (all generated PNG/JSON debug outputs)
+- `data/minimap_atlas_logs/` (captured session frames/metadata)
+- `data/minimap_overlay_config.json`
+- `data/map_atlas_geometry.json`
+
+### Validation
+- Static diagnostics: no errors in modified files (`bot_engine.py`, `settings_tab.py`, `constants.py`).
+
+## v5.26.0 - Convex fallback for nav-collision decode + portal set-change exit detection
+
+### Summary
+- Fixed nav probe crash path from live test: `Snapshot error: name 'math' is not defined`.
+- Added `NavModifierVolume` convex-geometry fallback decode when `AggGeom.BoxElems` is empty (`missing_box_array` dominant in live logs).
+- Improved portal detector exit tracking so exit portal can be identified when portal set changes without a count increase, and filtered extreme off-map portal coordinates.
+
+### Files changed
+- `src/core/scanner.py`
+  - Added missing `import math`.
+  - Added convex decode import/constants support.
+  - `_decode_nav_modifier_boxes(...)` now:
+    - keeps existing BoxElems decode,
+    - falls back to `AggGeom.ConvexElems` (`KConvexElem`) using `ElemBox` + local transform translation,
+    - tags fallback markers with source `NavModifierVolume.AggGeom.ConvexElems`,
+    - extends decode stats (`missing_convex_array`, `convex_bytes_read_failed`, `invalid_convex_count`).
+- `src/utils/constants.py`
+  - Added convex offsets/constants:
+    - `KAGGREGATEGEOM_CONVEXELEMS_OFFSET`
+    - `KCONVEXELEM_STRIDE`
+    - `KCONVEXELEM_ELEMBOX_OFFSET`
+    - `KCONVEXELEM_ELEMBOX_MIN_OFFSET`
+    - `KCONVEXELEM_ELEMBOX_MAX_OFFSET`
+    - `KCONVEXELEM_TRANSFORM_OFFSET`
+    - `KCONVEXELEM_TRANSFORM_TRANSLATION_OFFSET`
+  - `APP_VERSION` bumped `v5.25.0` → `v5.26.0`.
+- `src/core/portal_detector.py`
+  - Added `_last_portal_entity_ptrs` tracking.
+  - Poll loop now updates exit portal when portal set changes (new entity pointers) even if count is unchanged.
+  - Clears stale exit pointer when tracked portal disappears.
+  - Tightened invalid portal coordinate rejection bounds (`x/y` > 120k, `z` > 80k filtered).
+
+### Live-test finding captured
+- v5.25.0 full-map log showed stable `missing_box_array` dominance (`actors_seen=594, missing_box_array=594`) with no decoded boxes; this motivated convex fallback path.
+
+### Next required test
+1. Run one full map with overlay ON on `v5.26.0`.
+2. Upload latest:
+   - `logs/bot_*.log`
+   - `data/nav_collision_probe/nav_probe_*.jsonl`
+   - `data/nav_collision_probe/summary.json`
+3. Confirm whether:
+   - `BOX` becomes non-zero and source includes `...ConvexElems`,
+   - exit portal marker appears reliably after boss death,
+   - off-map portal false marker is reduced/absent.
+
+## v5.27.0 - Overlay nav-collision feed restore + strict transient FightMgr
+
+### User report / validation input
+- User test on `v5.26.0` still reported:
+  - no green nav-collision overlay,
+  - portal markers occasionally misplaced in boss area.
+- Uploaded log (`bot_20260304_121605.log`) proved decode itself was active:
+  - repeated in-map snapshots with `BOX=957`,
+  - no nav-probe thread exception,
+  - occasional scanner line `FightMgr fallback (no transient match)` during transitions.
+
+### Root causes found
+1. `scanner.get_nav_collision_markers()` was accidentally nested inside `_read_actor_transform(...)` due indentation, so `BotApp` overlay feed call raised `AttributeError` and silently skipped markers.
+2. `_find_fightmgr()` fallback to first non-transient `FightMgr` object could select class definition during transition ticks, producing bogus map reads and misplaced portal markers.
+
+### Files changed
+- `src/core/scanner.py`
+  - Moved `get_nav_collision_markers()` to proper class scope (public method on `UE4Scanner`).
+  - Removed non-transient fallback in `_find_fightmgr()`; now returns `0` when transient live instance is unavailable.
+  - Hardened `get_fightmgr_ptr()` to validate cached pointer liveness before reuse and re-resolve when stale.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.26.0` → `v5.27.0`.
+
+### Expected behavior after patch
+- Green nav-collision polygons should render (marker accessor now reachable).
+- Portal marker misplacements caused by class-object FightMgr fallback should be reduced/eliminated.
+
+### Next required test
+1. Run one full map with overlay ON on `v5.27.0`.
+2. Upload latest:
+   - `logs/bot_*.log`
+   - `data/nav_collision_probe/nav_probe_*.jsonl`
+   - `data/nav_collision_probe/summary.json`
+3. Confirm:
+   - green nav-collision boxes are visible in-map,
+   - no `FightMgr fallback (no transient match)` lines,
+   - portal markers align with real portal locations.
+
+## v5.28.0 - Merge movement-control locks from tli-v3
+
+### Summary
+- Merged the high-value movement/event-control branch changes from `tli-v3` into current `tli-v3-navigation_v2` while keeping `v5.27.0` scanner/portal fixes intact.
+- Focused merge scope:
+  - `RTNavigator` hard-stall-gated interrupts/replans,
+  - Sandlord verified platform-lock loop,
+  - Carjack verified truck-lock loop,
+  - accidental Sandlord activation sensitivity in Carjack flow.
+
+### Files changed
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.27.0` → `v5.28.0`.
+  - Added hard-stall constants:
+    - `RT_NAV_HARD_STALL_FRAMES = 20`
+    - `RT_NAV_HARD_STALL_DIST = 100.0`
+- `src/core/rt_navigator.py`
+  - Added hard-stall state (`_stall_buf`, `_hard_stalled`).
+  - Progress-stall escape now requires hard-stall (`progress_stalled AND hard_stalled`).
+  - Drift replan accumulation now uses hard-stall gate.
+  - Periodic safety-net replans now run only under hard-stall.
+  - `kill_all` cluster mid-travel cancel now requires hard-stall.
+- `src/core/bot_engine.py`
+  - Added `math` import for lock verification calculations.
+  - `_detect_active_sandlord_event` default sensitivity `min_monsters: 6 → 3`.
+  - `Carjack`: added `_truck_lock()` with stop-cursor + short settle verification; applied by default when not actively chasing escaped guards, and after chase return.
+  - `Sandlord`: added `_platform_lock()` with stop-cursor + short settle verification before wave handling and whenever player drifts >500u from platform.
+
+### Validation
+- Static diagnostics clean for changed files:
+  - `src/core/rt_navigator.py`
+  - `src/core/bot_engine.py`
+  - `src/utils/constants.py`
+
+### Next required test
+1. Run one full map on `v5.28.0` with overlay ON.
+2. Verify behavior outcomes:
+   - fewer unnecessary movement interrupts/replans in normal traversal,
+   - Sandlord recovers to platform and stabilizes before wave handling,
+   - Carjack stays truck-locked unless chasing escaped guards.
+3. Upload latest `logs/bot_*.log` + nav-probe artifacts for combined review (portal/overlay + movement locks).
+
+## v5.29.0 - Use nav-collision boxes as blocked priors in A* grid
+
+### User validation insight
+- Live user feedback: green nav-collision tiles now match real walls very closely, with only small residual gaps.
+- User requested applying this finding into pathfinding before movement tests.
+
+### Implementation
+- `src/core/wall_scanner.py`
+  - Added `GridData.mark_rotated_box_blocked(...)` to rasterize rotated box priors into blocked cells.
+  - Extended `build_walkable_grid(...)` with optional `nav_collision_markers` + `nav_collision_inflate_u`.
+  - Nav-collision markers are now applied as blocked priors after walkable-circle carving.
+  - Added conservative area-class skip for portal-like classes to reduce over-blocking around portal interactions.
+  - Grid build log now reports applied nav-collision prior count.
+- `src/core/bot_engine.py`
+  - `_build_navigation_grid_for_map(...)` now fetches runtime nav-collision markers from scanner and passes them into `build_walkable_grid(...)`.
+  - Added config-driven controls for this composition.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.28.0` → `v5.29.0`.
+  - New defaults:
+    - `nav_collision_grid_blocking_enabled = True`
+    - `nav_collision_grid_inflate_u = 90.0`
+
+### Rationale
+- Visited-position walkable circles alone can leave wall seam leaks; runtime NavModifier geometry provides direct wall priors.
+- Small inflate helps close narrow extraction gaps where real walls still exist.
+
+### Validation
+- Static diagnostics clean for modified files (`wall_scanner.py`, `bot_engine.py`, `constants.py`).
+
+### Next required test (pre-navigation)
+1. Enter map with overlay ON and allow one grid rebuild.
+2. Confirm log line includes `+ <N> nav-collision priors` in `[WallScan] Walkable grid built ...`.
+3. Visually compare prior known gap areas; if over-blocking appears, lower `nav_collision_grid_inflate_u` (e.g. 90 → 60).
+
+## v5.30.0 - Overlay debug for gap-closing inflation (raw vs inflated)
+
+### Summary
+- Added visual debug overlay for gap-closing inflation so user can confirm whether seam gaps are being closed as intended.
+- Overlay now supports dual rendering:
+  - raw nav-collision boxes,
+  - inflated boxes (same inflate used by grid blocking).
+
+### Files changed
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.29.0` → `v5.30.0`.
+  - Added defaults:
+    - `nav_collision_overlay_inflate_debug = True`
+    - `nav_collision_overlay_show_raw = True`
+- `src/gui/app.py`
+  - Overlay feed now composes debug marker set:
+    - raw markers tagged `overlay_style=raw` (no labels),
+    - inflated markers tagged `overlay_style=inflated`, extents += `nav_collision_grid_inflate_u`, label `NAV+`.
+- `src/gui/overlay.py`
+  - Added `COLOR_NAV_COLLISION_INFLATED`.
+  - `_update_nav_collision(...)` now styles markers by `overlay_style`:
+    - raw = thin green,
+    - inflated = thicker amber.
+
+### Validation
+- Static diagnostics clean for modified files.
+
+### Next required test
+1. Run overlay in-map on `v5.30.0`.
+2. Verify amber inflated outlines cover the known green-gap seam areas.
+3. Tune `nav_collision_grid_inflate_u`:
+   - if remaining gaps: increase (`90 → 110`),
+   - if over-blocking: decrease (`90 → 60`).
+
+## v5.31.0 - Pairwise nav-box gap bridging (inflate de-emphasized)
+
+### User concern
+- Narrow corridors are common; global inflate can over-block valid paths.
+- Requested strategy: connect nearby nav boxes only when there is a small gap between at least two boxes, then tune visually.
+
+### Implementation
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.30.0` → `v5.31.0`.
+  - Defaults updated:
+    - `nav_collision_grid_inflate_u = 0.0` (global inflate off by default)
+    - `nav_collision_grid_gap_bridge_enabled = True`
+    - `nav_collision_grid_bridge_gap_u = 130.0`
+    - `nav_collision_grid_bridge_half_width_u = 45.0`
+    - `nav_collision_overlay_show_bridges = True`
+    - `nav_collision_overlay_inflate_debug = False`
+- `src/core/wall_scanner.py`
+  - Added `compose_nav_collision_blockers(...)` shared composition path.
+  - Added pairwise gap-bridge generation between nearby nav boxes:
+    - computes directional edge gap using oriented-box support extents,
+    - creates a blocked bridge rectangle only when `0 < gap <= bridge_gap_u`.
+  - `build_walkable_grid(...)` now accepts bridge params and applies composed raw+bridge blockers.
+  - Grid log now reports both raw nav priors and bridge prior counts.
+- `src/core/bot_engine.py`
+  - `_build_navigation_grid_for_map(...)` now passes bridge configs into grid build.
+- `src/gui/app.py`
+  - Overlay feed now composes/overlays bridge markers (`BR`) from the same blocker-composition logic used by grid building.
+- `src/gui/overlay.py`
+  - Added dedicated bridge marker style (blue) in nav-collision layer.
+
+### Validation
+- Static diagnostics clean for modified files (`constants.py`, `wall_scanner.py`, `bot_engine.py`, `app.py`, `overlay.py`).
+
+### Next required test
+1. Run overlay in-map on `v5.31.0`.
+2. Confirm visual semantics:
+   - green = raw nav boxes,
+   - blue `BR` = pairwise gap bridges,
+   - amber `NAV+` only if inflate debug is manually enabled.
+3. Tune bridge behavior first (keep inflate at 0):
+   - if seams remain open: raise `nav_collision_grid_bridge_gap_u` (`130 → 150`),
+   - if false walls appear: lower `nav_collision_grid_bridge_gap_u` (`130 → 100`) or `nav_collision_grid_bridge_half_width_u` (`45 → 30`).
+
+## v5.32.0 - Grid-first adaptive nav gating (map-dependent reliability)
+
+### User test finding
+- New run confirmed map-dependent behavior: nav collision is highly reliable on maps with many wall-side nav objects, but weak on open-view bridge maps where those objects are sparse.
+- Decision: keep grid as the primary source and use nav priors only when nav signal quality is strong.
+
+### Implementation
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.31.0` → `v5.32.0`.
+  - Added nav reliability defaults:
+    - `nav_collision_grid_min_raw_priors = 20`
+    - `nav_collision_grid_min_coverage_ratio = 0.02`
+- `src/core/wall_scanner.py`
+  - `build_walkable_grid(...)` now evaluates nav reliability before applying blockers:
+    - computes raw nav prior count,
+    - computes estimated raw coverage ratio (`sum box area / grid area`),
+    - applies nav+bridge blockers only if both thresholds pass.
+  - If thresholds fail, bot logs explicit skip reason and stays grid-only for that build.
+  - Grid build log now includes `raw_cov=...` for tuning.
+- `src/core/bot_engine.py`
+  - `_build_navigation_grid_for_map(...)` now passes reliability thresholds from config into `build_walkable_grid(...)`.
+
+### Validation
+- Static diagnostics clean for modified files (`constants.py`, `wall_scanner.py`, `bot_engine.py`).
+
+### Next required test
+1. Run one map with strong nav geometry and one open/bridge map.
+2. Verify logs show one of:
+   - nav applied: non-zero nav/bridge priors with adequate `raw_cov`,
+   - nav skipped: `[WallScan] Nav priors skipped (low reliability) ...`.
+3. Tune thresholds conservatively:
+   - if nav wrongly applies on weak maps: increase `min_raw_priors` or `min_coverage_ratio`,
+   - if nav is skipped on good maps: lower one threshold slightly.
+
+## v5.33.0 - Raw-nav truth policy (always apply, no expansion)
+
+### User decision
+- Nav collision is considered reliable truth for unwalkable zones.
+- Keep grid as base routing structure, but always apply raw nav blockers.
+- Do not over-extend nav via bridging or reliability-based skipping in production.
+
+### Implementation
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.32.0` → `v5.33.0`.
+  - `nav_collision_grid_gap_bridge_enabled` default set to `False`.
+  - `nav_collision_overlay_show_bridges` default set to `False`.
+  - `nav_collision_grid_inflate_u` remains `0.0`.
+- `src/core/wall_scanner.py`
+  - Production grid path now applies `nav_collision_markers` directly as raw blockers.
+  - Removed runtime skip behavior that could ignore nav priors due to reliability thresholds.
+  - Removed bridge-prior usage from production log path.
+- `src/core/bot_engine.py`
+  - Removed bridge/gating parameter wiring in `_build_navigation_grid_for_map(...)`.
+- `src/gui/app.py`
+  - Removed bridge-overlay composition from the live nav-collision feed.
+  - Overlay now shows raw markers (and optional inflate debug only if enabled).
+
+### Validation
+- Static diagnostics clean for modified files (`wall_scanner.py`, `bot_engine.py`, `app.py`, `constants.py`).
+
+### Next required test
+1. Run one map with sparse nav objects and one dense map.
+2. Confirm `[WallScan] Walkable grid built ... + <N> nav-collision priors` always reports nav priors when markers exist.
+3. Verify no bridge markers (`BR`) appear by default and navigation remains stable in narrow corridors.
+
+## v5.34.0 - Config policy lock for raw-nav routing
+
+### User request
+- Prevent accidental re-enable of bridge/inflate variants and keep raw-nav policy stable across sessions.
+
+### Implementation
+- `src/utils/config_manager.py`
+  - Added policy lock enforcement for routing-critical nav settings:
+    - `nav_collision_grid_inflate_u = 0.0`
+    - `nav_collision_grid_gap_bridge_enabled = False`
+    - `nav_collision_overlay_show_bridges = False`
+    - `nav_collision_overlay_inflate_debug = False`
+  - Policy is enforced on `load()`, `set()`, and `reset()`.
+  - If legacy/manual config attempts override, value is forced back and logged.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.33.0` → `v5.34.0`.
+
+### Validation
+- Static diagnostics clean for modified files (`config_manager.py`, `constants.py`).
+
+### Next required test
+1. Edit `config.json` manually to set bridge/inflate fields to non-policy values.
+2. Launch bot and verify startup logs include policy-lock enforcement.
+3. Confirm runtime behavior still uses raw nav blockers only.
+
+## v5.35.0 - RTNav reliability trio (anti-thrash + no-path recovery + KPI summary)
+
+### User request
+- Implement all three reliability changes discussed:
+  1) duplicate replan suppression,
+  2) no-path recovery step,
+  3) easy reliability reporting.
+
+### Implementation
+- `src/core/rt_navigator.py`
+  - Added duplicate replan suppression via coarse request signature (`100u` bins) and short cooldown.
+  - Added local no-path fallback nudge: when A* returns no path, RTNav arms a short escape move and then retries from a slightly shifted start position.
+  - Added run-scoped reliability counters and end-of-run summary log:
+    - replan requested/suppressed/success,
+    - no-path count,
+    - stuck-escape count,
+    - navigate timeout/no-progress abort counts.
+  - Hooked counters into `_request_replan`, `_do_replan`, `_handle_stuck`, and `_navigate_to` abort paths.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.34.0` → `v5.35.0`.
+  - Added defaults:
+    - `rt_nav_replan_duplicate_cooldown_s = 0.45`
+    - `rt_nav_nopath_escape_duration_s = 0.35`
+
+### Validation
+- Static diagnostics clean for modified files (`rt_navigator.py`, `constants.py`).
+
+### Next required test
+1. Run one full map and check for summary line:
+   - `[RTNav] Reliability summary: ...`
+2. Confirm fewer repeated back-to-back replans with unchanged start/goal.
+3. When no-path occurs, verify log still continues with short local recovery attempts instead of immediate repeated no-path loops.
+
+## v5.36.0 - Cycle-time-first reliability diagnostics
+
+### User requirement
+- Reliability summary and diagnostics must prioritize **average map cycle time** as the highest-priority KPI, while still keeping other debugging metrics available.
+
+### Implementation
+- `src/core/bot_engine.py`
+  - Added map-cycle diagnostics lifecycle:
+    - cycle start tracked on map entry (`_cycle_begin()`),
+    - cycle end tracked on success/error/stop (`_cycle_end(status)`).
+  - Added rolling cycle timing metrics:
+    - last cycle duration,
+    - rolling average cycle duration (last 50 successful cycles),
+    - best/worst cycle durations,
+    - success/fail/abort counts + success rate.
+  - Added compact high-priority KPI log line per cycle:
+    - `[CycleKPI] map='...' cycle=...s avg=...s best=...s worst=...s ...`
+  - Exposed cycle KPI fields through `stats` for GUI/overlay consumers:
+    - `avg_cycle_time_s`, `last_cycle_time_s`, `cycle_success_rate_pct`, `cycle_total`.
+  - Failure/abort handling integrated:
+    - cycle marked `failed` in `_handle_error` if active,
+    - cycle marked `aborted` in `stop()` if active.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.35.0` → `v5.36.0`.
+
+### Validation
+- Static diagnostics clean for modified files (`bot_engine.py`, `constants.py`).
+
+### Next required test
+1. Run at least 3 map cycles and verify one `[CycleKPI]` line per completed cycle.
+2. Confirm `avg` value updates each cycle and is visually prioritized in logs.
+3. Trigger one forced stop/error run to verify `status=aborted/failed` accounting.
+
+## v5.37.0 - Portal false-positive deep-debug instrumentation
+
+### User requirement
+- Investigate persistent false portal detections with deeper root-cause telemetry (not just portal count/status).
+
+### Implementation
+- `src/core/portal_detector.py`
+  - Added structured per-poll debug snapshots written to `data/portal_debug/portal_ticks.jsonl`.
+  - Added rolling summary output `data/portal_debug/summary.json` with cumulative accept/reject reason counters.
+  - Portal TMap diagnostics now include per-entry metadata (`logic_id`, `entity_ptr`, hash fields) and explicit decision reason.
+  - Position-read path now returns granular reasons, including:
+    - `invalid_entity_ptr`, `invalid_root_component`, `missing_relative_location`,
+    - `nan_position`, `out_of_range_position`.
+  - Added optional strict class sanity mode (`portal_debug_strict_class_check`) for diagnosis only (default off).
+  - Added periodic log line (`[PortalDebug] ... top=[reason:count,...]`) for fast in-run triage.
+- `src/core/bot_engine.py`
+  - Added `_create_portal_detector()` and wired all detector init paths to pass portal debug config.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.36.0` → `v5.37.0`.
+  - Added portal debug config defaults:
+    - `portal_debug_enabled = True`
+    - `portal_debug_summary_interval_s = 5.0`
+    - `portal_debug_strict_class_check = False`
+    - `portal_debug_max_entries_per_tick = 60`
+  - Added artifact path constants:
+    - `PORTAL_DEBUG_DIR`
+    - `PORTAL_DEBUG_TICKS_FILE`
+    - `PORTAL_DEBUG_SUMMARY_FILE`
+- `.github/copilot-instructions.md`
+  - Added architecture note for v5.37.0 portal deep-debug snapshots.
+  - Added post-update maintenance item #20 describing what to verify when portal telemetry degrades after a game patch.
+
+### Validation
+- Static diagnostics clean for modified files (`portal_detector.py`, `bot_engine.py`, `constants.py`).
+
+### Next required test
+1. Run one map and keep overlay visible until at least one known portal appears.
+2. Inspect `data/portal_debug/summary.json` for dominant reject reason(s).
+3. If false portals persist, compare suspicious entries in `data/portal_debug/portal_ticks.jsonl` against in-game observations (entity pointer + coordinates).
+4. Optional: temporarily set `portal_debug_strict_class_check=true` to test whether class-sanity filtering removes phantom markers without hiding real portals.
+
+## v5.38.0 - Portal missing overlay fix via stale-FightMgr auto-rebind
+
+### User report
+- In-map manual validation: none of the portals (including return portals and boss exit portal) were drawn on overlay.
+- New portal debug artifacts showed a hard signature:
+  - early ticks accepted 2 portals,
+  - then long-run collapse to `invalid_tmap_data_ptr` with garbage `data_ptr` and negative `array_num` for the same cached `fightmgr_ptr`.
+
+### Root cause
+- `PortalDetector` could remain pinned to a stale `FightMgr` pointer after runtime object churn/transition.
+- Existing flow kept reading `FightMgr+MapPortal` from that stale pointer and never escalated to reacquire a fresh transient instance.
+
+### Implementation
+- `src/core/portal_detector.py`
+  - Added `_is_portal_tmap_sane(fightmgr_ptr)` to validate `MapPortal` TMap metadata (count bounds + pointer sanity, with empty-TMap treated as valid).
+  - Added `_try_rebind_fightmgr(reason)`:
+    - clears scanner FightMgr cache,
+    - re-scans transient `FightMgr` candidates,
+    - selects candidate with sane `MapPortal` state (prefers non-empty sane map),
+    - logs pointer rebound when changed.
+  - `read_portals()` now tracks invalid TMap streak and auto-triggers rebind after repeated invalid states (`invalid_tmap_data_ptr` / invalid count / missing fightmgr).
+  - Added debug fields on rebind attempts (`fightmgr_rebind_attempted`, `fightmgr_rebind_ok`, `fightmgr_ptr_after`) for artifact-level confirmation.
+  - Added `empty_tmap` explicit state (valid no-portal case) to avoid false corruption classification.
+  - Reset invalid-streak/rebind timer on polling start.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.37.0` → `v5.38.0`.
+- `.github/copilot-instructions.md`
+  - Added architecture/update-maintenance notes for stale-FightMgr auto-rebind behavior.
+
+### Validation
+- Static diagnostics clean for modified files (`portal_detector.py`, `constants.py`).
+
+### Next required test
+1. Enter map with known portal network and keep overlay visible through portal transitions and boss-exit spawn.
+2. Confirm portal markers recover automatically after any temporary `invalid_tmap_data_ptr` burst.
+3. Verify logs contain `[PortalDetector] FightMgr rebound ...` when corruption happens and markers resume without restart.
+4. Upload fresh `data/portal_debug/summary.json` + tail of `portal_ticks.jsonl` if any portal still missing.
+
+## v5.39.0 - GUI freeze fix (overlay memory reads moved off Tk thread)
+
+### User report
+- GUI was laggy before and became fully frozen after recent changes.
+- Hotkeys/engine threads could still run, indicating Tk main thread starvation (not full process deadlock).
+
+### Root cause
+- `BotApp._start_overlay_feed()` executed heavy memory reads directly on the Tk thread every 16ms:
+  - `scanner.get_typed_events()`
+  - `scanner.get_carjack_guard_positions()`
+  - `scanner.get_nav_collision_markers()` (often very large marker lists)
+  - portal marker reads
+- Under heavy scanner/probe load this blocked the GUI event loop and caused full UI freeze.
+
+### Implementation
+- `src/gui/app.py`
+  - Added background `OverlayDataWorker` thread (5 Hz) that collects heavy overlay data from memory and stores it in a lock-protected cache.
+  - Tk thread now only applies cached marker lists to overlay widgets (cheap operations).
+  - Added worker lifecycle management (`_start_overlay_worker()`, `_stop_overlay_worker()`) on overlay toggle and app shutdown.
+  - Throttled map/calibration switch check in overlay feed to 0.5s cadence.
+  - Reduced feed scheduler from 16ms to 33ms for safer UI headroom.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.38.0` → `v5.39.0`.
+
+### Validation
+- Static diagnostics clean for modified files (`app.py`, `constants.py`).
+
+## v5.41.0 - RTNav portal-hop anti-bounce guard
+
+### User hypothesis
+- In portal-heavy layouts (e.g. Grimwind Woods), after hop teleport the planner might re-select a nearby return portal and bounce back instead of continuing to forward portals/goal.
+
+### Findings
+- Existing hop safety already excluded exit portals as intermediate hops.
+- However, non-exit return-portal bounce was still possible because successful hop transitions did not cooldown the just-used hop candidate.
+
+### Implementation
+- `src/core/rt_navigator.py`
+  - In loop hop-assist logic, captured active `hop_key` together with hop target.
+  - On verified transition (`moved >= 900u`), added short cooldown for that same `hop_key` (`+12s`) before clearing hop state.
+  - This prevents immediate reverse re-selection of the same portal and reduces ping-pong loops.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.40.0` → `v5.41.0`.
+
+### Validation
+- Static diagnostics clean for modified files (`rt_navigator.py`, `constants.py`).
+
+### Next required test
+1. Run one portal-heavy map with disconnected segments (Grimwind preferred).
+2. Confirm logs show portal hop transition confirmation and no immediate reverse hop to the same portal.
+3. If path still stalls, upload fresh `logs/bot_*.log` with the RTNav hop lines for next tuning.
+
+## v5.42.0 - Portal-hop arrival-side bounce fix
+
+### User review
+- User correctly identified a logic flaw in v5.41.0 using paired portal model:
+  - Portal A at X teleports to Y,
+  - Return Portal B at Y teleports back to X.
+- Cooling only departure key (A@X) does not block immediate re-selection of B@Y after teleport.
+
+### Root cause
+- v5.41.0 suppressed the just-used hop key, but post-hop bounce source is usually the nearby arrival-side non-exit portal.
+
+### Implementation
+- `src/core/rt_navigator.py`
+  - Added `_cooldown_arrival_return_portal(px, py, duration_s)`.
+  - On verified hop transition (`moved >= 900u`), RTNav now also cooldowns nearest non-exit portal around current post-hop position (<=900u).
+  - Existing departure-key cooldown kept as secondary safeguard.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.41.0` → `v5.42.0`.
+
+### Validation
+- Static diagnostics clean for modified files (`rt_navigator.py`, `constants.py`).
+
+### Next required test
+1. Run Grimwind portal map and inspect whether bot avoids immediate A↔B bounce after first hop.
+2. Upload `logs/bot_*.log`; verify transition line is followed by forward replan, not instant reverse hop.
+
+## v5.43.0 - Grimwind portal exit-tag + post-hop oscillation fixes
+
+### User report
+- In Grimwind run (`bot_20260304_194050.log`), first portal was marked as exit too early, blocking intermediate-hop usage for early map phase.
+- After later portal state changes and a successful hop, movement still showed back-and-forth behavior.
+
+### Root causes
+1. `PortalDetector` set-change fallback could promote a portal to exit even when total portals were only at initial baseline (first portal state).
+2. RTNav anti-bounce relied on key cooldowns but still allowed immediate nearby re-hop opportunities right after teleport in dense portal topology.
+
+### Implementation
+- `src/core/portal_detector.py`
+  - Exit update on set-change now requires established baseline: `new_ptrs` AND `last_portal_count>0` AND `current_count>1`.
+  - Prevents first portal from being mis-tagged as exit at map start.
+- `src/core/rt_navigator.py`
+  - Added `self._portal_hop_arrival_hold_until`.
+  - On verified transition, set short post-hop hold (`+3.5s`) and skip hop candidates within ~1200u during that window.
+  - Arrival-side cooldown helper now prefers nearest non-exit portal but falls back to nearest portal if non-exit marker is unavailable.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.42.0` → `v5.43.0`.
+
+### Validation
+- Static diagnostics clean for modified files (`portal_detector.py`, `rt_navigator.py`, `constants.py`).
+
+### Next required test
+1. Re-run Grimwind and check that first detected portal is not immediately treated as exit.
+2. After first hop, verify no immediate nearby portal re-hop for ~3–4s and no A↔B ping-pong.
+3. Upload new `logs/bot_*.log` for line-by-line confirmation of hop decisions.
+
+## v5.44.0 - Startup sparse-portal hop suppression
+
+### User report
+- New map run: when no portal is visible/detected at start, routing behavior can still drift toward portal-hop logic.
+
+### Findings from `bot_20260304_194712.log`
+- `PortalDetector` did not reject valid portal entries; it repeatedly observed `MapPortal` as genuinely empty (`empty_tmap`), ending with `accepted=0 rejected=43 top=[empty_tmap:43]`.
+- In this run there was no evidence of portal entities being available from start region for detector consumption.
+
+### Implementation
+- `src/core/rt_navigator.py`
+  - In `_find_portal_hop_path(...)`, added reliability gate for non-exit goals:
+    - require at least 2 non-exit portal markers; otherwise skip hop planning.
+  - Prevents no-path fallback from chasing lone early marker/sparse portal data.
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.43.0` → `v5.44.0`.
+
+### Validation
+- Static diagnostics clean for modified files (`rt_navigator.py`, `constants.py`).
+
+### Next required test
+1. Start Grimwind and watch first 20–30s when portal set is empty/sparse.
+2. Confirm RTNav no longer routes to portal-hop candidate unless at least 2 non-exit markers exist.
+3. Upload fresh `logs/bot_*.log` to verify transition from sparse → stable portal set.
+
+## v5.45.0 - Learned per-map portal priors fallback
+
+### User direction
+- User proposed manual-map portal recording because Grimwind startup can have no live portal markers from start position.
+
+### Findings
+- Recent run showed repeated `PortalDebug ... empty_tmap` at map start; detector had no portals to provide to hop planner.
+
+### Implementation
+- `src/core/rt_navigator.py`
+  - Added per-map portal priors support:
+    - auto-learn non-exit portal coordinates from live markers,
+    - persist priors to `data/portal_priors.json`,
+    - use priors as fallback when live startup markers are empty/sparse.
+  - Priors are merged with distance de-duplication and throttled writes.
+- `src/utils/constants.py`
+  - Added `PORTAL_PRIORS_FILE = "data/portal_priors.json"`.
+  - `APP_VERSION` bumped `v5.44.0` → `v5.45.0`.
+
+### Validation
+- Static diagnostics clean for modified files (`rt_navigator.py`, `constants.py`).
+
+### Next required test
+1. Run Grimwind once through a segment where portals are detected; ensure `data/portal_priors.json` gets entries for "Grimwind Woods".
+2. Start a new Grimwind run from problematic start area and verify planner can leverage priors when live portal list is empty/sparse.
+3. Upload fresh `logs/bot_*.log` for confirmation of prior-assisted hop selection.
+
+## v5.46.0 - Exact hardcoded Grimwind portal map (JSONL-derived)
+
+### User direction
+- Do not use image-estimated coordinates; use exact values from logs/portal JSONL.
+- Hardcode Grimwind portal chain + keep boss-entry safety portal for future death-recovery implementation.
+
+### Data source
+- Parsed `data/portal_debug/portal_ticks.jsonl` accepted-entry clusters (100u buckets) and used centroid coordinates.
+
+### Implementation
+- `src/utils/constants.py`
+  - Added `HARDCODED_MAP_PORTALS` with exact Grimwind coordinates:
+    - area1→2 `(468.5, 1728.6)`
+    - area2→3 `(1769.3, 652.0)`
+    - return→area1 `(10810.6, -41.8)`
+    - return→area2 `(-2675.1, -9809.4)`
+    - area3→4 `(1044.1, -1200.3)`
+    - return→area3 `(-1034.2, -459.5)`
+    - boss-gate `(3296.3, 3385.6)` (`use_for_hop=false`)
+    - boss-gate-return `(5997.0, 4942.0)` (`use_for_hop=false`)
+    - boss-exit `(-11612.6, 2786.0)` (`is_exit=true`)
+  - `APP_VERSION` bumped `v5.45.0` → `v5.46.0`.
+- `src/core/rt_navigator.py`
+  - Merges hardcoded markers into portal-hop candidate set.
+  - Respects `use_for_hop` flag so boss-gate pair is not used in normal hop routing.
+- `src/gui/app.py`
+  - Overlay worker merges hardcoded map portals into displayed portal markers.
+
+### Validation
+- Static diagnostics clean for modified files (`constants.py`, `rt_navigator.py`, `app.py`).
+
+### Next required test
+1. Start Grimwind from problematic start location and verify overlay shows hardcoded portal chain immediately.
+2. Confirm RTNav can select chain portals when live map portal list is sparse/late.
+3. Upload next `logs/bot_*.log` to confirm no regression in hop anti-bounce behavior.
+
+### Next required test
+1. Start bot, attach, enable overlay, and leave it running during active scanning/probe load.
+2. Verify GUI remains interactive (tab switching/buttons responsive) while overlay and logs continue updating.
+3. If any lag remains, capture fresh log and note whether freeze starts only after overlay is toggled on.
+
+## v5.40.0 - Nav-collision overlay disabled (debug layer retired)
+
+### User validation
+- User confirmed two wins after v5.39.0 test:
+  - GUI is much smoother and responsive,
+  - portal detection works correctly.
+
+### Request
+- Keep navigation logic active, but stop rendering nav-collision debug on overlay (no longer needed for active debugging).
+
+### Implementation
+- `src/utils/constants.py`
+  - `APP_VERSION` bumped `v5.39.0` → `v5.40.0`.
+  - default config `nav_collision_overlay_enabled` changed `True` → `False`.
+- `src/gui/app.py`
+  - overlay feed now treats missing config key as disabled (`get(..., False)`) for nav-collision rendering.
+- `config.json`
+  - runtime setting `nav_collision_overlay_enabled` set to `false`.
+
+### Scope note
+- Navigation/grid blocking from nav-collision markers remains unchanged (runtime pathfinding still uses nav priors).
+- Only the visual overlay layer is disabled.
+
+### Validation
+- Static diagnostics clean for modified files (`app.py`, `constants.py`).

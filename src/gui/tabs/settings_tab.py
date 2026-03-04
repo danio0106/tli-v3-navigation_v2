@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from src.gui.theme import COLORS, FONTS, create_card_frame, create_label, create_accent_button, create_entry
+from src.gui.theme import COLORS, create_card_frame, create_label, create_accent_button, create_entry
 from src.utils.constants import DEFAULT_SETTINGS
 
 
@@ -14,19 +14,19 @@ class SettingsTab(ctk.CTkFrame):
 
     def _build_ui(self):
         top = ctk.CTkFrame(self, fg_color="transparent")
-        top.pack(fill="x", padx=10, pady=(10, 8))
+        top.pack(fill="x", padx=10, pady=(10, 4))
         create_label(top, "Settings", "heading").pack(side="left")
 
-        btn_frame = ctk.CTkFrame(top, fg_color="transparent")
-        btn_frame.pack(side="right")
+        actions = ctk.CTkFrame(self, fg_color="transparent")
+        actions.pack(fill="x", padx=10, pady=(0, 8))
 
         create_accent_button(
-            btn_frame, "Save All", self._on_save, color="accent_green", width=100
-        ).pack(side="left", padx=4)
+            actions, "Save All", self._on_save, color="accent_green", width=100
+        ).pack(side="left", padx=4, pady=2)
 
         create_accent_button(
-            btn_frame, "Reset Defaults", self._on_reset, color="accent_orange", width=130
-        ).pack(side="left", padx=4)
+            actions, "Reset Defaults", self._on_reset, color="accent_orange", width=130
+        ).pack(side="left", padx=4, pady=2)
 
         scroll = ctk.CTkScrollableFrame(self, fg_color=COLORS["bg_dark"])
         scroll.pack(fill="both", expand=True, padx=10, pady=8)
@@ -75,16 +75,40 @@ class SettingsTab(ctk.CTkFrame):
                 create_label(label_frame, tooltip, "small", "text_muted").pack(anchor="w")
 
                 current = self._config.get(key, DEFAULT_SETTINGS.get(key, ""))
+                default_val = DEFAULT_SETTINGS.get(key, "")
 
-                entry = create_entry(row, width=120)
-                entry.pack(side="right", padx=4)
-                entry.insert(0, str(current))
-                self._entries[key] = entry
+                if isinstance(default_val, bool):
+                    switch = ctk.CTkSwitch(
+                        row,
+                        text="",
+                        fg_color=COLORS["border"],
+                        progress_color=COLORS["accent_blue"],
+                        button_color=COLORS["text_primary"],
+                    )
+                    switch.pack(side="right", padx=4)
+                    if bool(current):
+                        switch.select()
+                    else:
+                        switch.deselect()
+                    self._switches[key] = switch
+                else:
+                    entry = create_entry(row, width=120)
+                    entry.pack(side="right", padx=4)
+                    entry.insert(0, str(current))
+                    self._entries[key] = entry
 
             ctk.CTkFrame(card, fg_color="transparent", height=4).pack()
 
         self._status = create_label(scroll, "", "small", "text_muted")
         self._status.pack(pady=8)
+
+
+    def _set_entry_value(self, key: str, value):
+        widget = self._entries.get(key)
+        if widget is None:
+            return
+        widget.delete(0, "end")
+        widget.insert(0, str(value))
 
     def _on_save(self):
         for key, widget in self._entries.items():
@@ -101,6 +125,8 @@ class SettingsTab(ctk.CTkFrame):
                     self._config.set(key, float(val_str))
                 except ValueError:
                     self._config.set(key, default)
+            elif isinstance(default, bool):
+                self._config.set(key, val_str.lower() in {"1", "true", "yes", "on"})
             else:
                 self._config.set(key, val_str)
 
