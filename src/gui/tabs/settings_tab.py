@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from tkinter import messagebox
 from src.gui.theme import COLORS, create_card_frame, create_label, create_accent_button, create_entry
 from src.utils.constants import DEFAULT_SETTINGS
 
@@ -10,6 +11,7 @@ class SettingsTab(ctk.CTkFrame):
         self._config = bot_engine.config
         self._entries = {}
         self._switches = {}
+        self._on_calibrate_cb = None
         self._build_ui()
 
     def _build_ui(self):
@@ -44,15 +46,11 @@ class SettingsTab(ctk.CTkFrame):
                 ("map_clear_timeout", "Map Clear Timeout (sec)", "Max time in a map before giving up"),
                 ("loot_spam_interval_ms", "Loot Spam Interval (ms)", "How often to press E during navigation"),
                 ("stuck_timeout_sec", "Stuck Timeout (sec)", "Seconds before trying escape angles"),
-                ("waypoint_tolerance", "Waypoint Tolerance (units)", "Distance to consider waypoint reached"),
             ],
             "Hotkeys": [
                 ("hotkey_start", "Start Hotkey", "Global hotkey to start bot"),
                 ("hotkey_stop", "Stop Hotkey", "Global hotkey to stop bot"),
                 ("hotkey_pause", "Pause Hotkey", "Global hotkey to pause/resume"),
-            ],
-            "Performance": [
-                ("loop_delay_ms", "Main Loop Delay (ms)", "Delay between bot ticks"),
             ],
         }
 
@@ -98,6 +96,40 @@ class SettingsTab(ctk.CTkFrame):
                     self._entries[key] = entry
 
             ctk.CTkFrame(card, fg_color="transparent", height=4).pack()
+
+        calibrate_card = create_card_frame(scroll)
+        calibrate_card.pack(fill="x", pady=8)
+        create_label(calibrate_card, "Calibration", "subheading").pack(anchor="w", padx=10, pady=(12, 4))
+        create_label(
+            calibrate_card,
+            "Calibrates world axis and scale in current map",
+            "small",
+            "text_muted",
+        ).pack(anchor="w", padx=10, pady=(0, 8))
+        create_accent_button(
+            calibrate_card,
+            "Calibrate",
+            self._on_calibrate_clicked,
+            color="accent_orange",
+            width=120,
+        ).pack(anchor="w", padx=10, pady=(0, 10))
+
+        danger_card = create_card_frame(scroll)
+        danger_card.pack(fill="x", pady=8)
+        create_label(danger_card, "Data Management", "subheading").pack(anchor="w", padx=10, pady=(12, 4))
+        create_label(
+            danger_card,
+            "Deletes persisted walkable map coverage for all maps. This cannot be undone.",
+            "small",
+            "text_muted",
+        ).pack(anchor="w", padx=10, pady=(0, 8))
+        create_accent_button(
+            danger_card,
+            "Delete Map Coverage Data",
+            self._on_delete_map_coverage_data,
+            color="accent_red",
+            width=220,
+        ).pack(anchor="w", padx=10, pady=(0, 10))
 
         self._status = create_label(scroll, "", "small", "text_muted")
         self._status.pack(pady=8)
@@ -156,5 +188,54 @@ class SettingsTab(ctk.CTkFrame):
         self._status.configure(
             text="Settings reset to defaults",
             text_color=COLORS["accent_orange"]
+        )
+
+    def _on_delete_map_coverage_data(self):
+        first = messagebox.askyesno(
+            "Delete Map Coverage Data",
+            "This will delete persisted map coverage data for all maps. Continue?",
+            parent=self,
+        )
+        if not first:
+            return
+
+        second = messagebox.askyesno(
+            "Final Confirmation",
+            "Are you absolutely sure? This operation cannot be undone.",
+            parent=self,
+        )
+        if not second:
+            return
+
+        removed = int(self._engine.delete_all_map_coverage_data() or 0)
+        self._status.configure(
+            text=f"Deleted map coverage data for {removed} maps",
+            text_color=COLORS["accent_orange"],
+        )
+
+    def set_calibrate_callback(self, callback):
+        self._on_calibrate_cb = callback
+
+    def _on_calibrate_clicked(self):
+        proceed = messagebox.askyesno(
+            "Start Calibration",
+            "Calibration will move and click your character in the current map.\n"
+            "Use only when the area is safe. Continue?",
+            parent=self,
+        )
+        if not proceed:
+            return
+
+        if callable(self._on_calibrate_cb):
+            started, msg = self._on_calibrate_cb()
+            self._status.configure(
+                text=msg,
+                text_color=COLORS["accent_green"] if started else COLORS["accent_orange"],
+            )
+            return
+
+        self._status.configure(
+            text="Calibration callback unavailable",
+            text_color=COLORS["accent_orange"],
         )
 

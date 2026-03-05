@@ -199,17 +199,6 @@ class PathsTab(ctk.CTkFrame):
         self._wall_status_label = create_label(wall_row, "—", "small", "text_muted")
         self._wall_status_label.pack(side="left", fill="x", expand=True)
 
-        wall_btns = ctk.CTkFrame(self._auto_card, fg_color="transparent")
-        wall_btns.pack(fill="x", padx=10, pady=(2, 6))
-        self._wall_scan_btn = create_accent_button(
-            wall_btns, "Scan Walkable Area", self._on_scan_walls, color="accent_blue"
-        )
-        self._wall_scan_btn.pack(side="left", fill="x", expand=True, padx=(0, 2))
-        self._wall_delete_btn = create_accent_button(
-            wall_btns, "Delete Cache", self._on_delete_wall_data, color="accent_red", width=90
-        )
-        self._wall_delete_btn.pack(side="left")
-
         # ── Coverage overview ──────────────────────────────────────────
         cov_sep = ctk.CTkFrame(self._auto_card, fg_color=COLORS["border"], height=1)
         cov_sep.pack(fill="x", padx=10, pady=(6, 6))
@@ -445,34 +434,6 @@ class PathsTab(ctk.CTkFrame):
             if self._actions_card.winfo_manager():
                 self._actions_card.pack_forget()
 
-    def _on_scan_walls(self):
-        """Trigger a walkable-area scan for the selected map in a background thread."""
-        map_name = self._get_active_map()
-        if not map_name:
-            return
-        self._wall_scan_btn.configure(state="disabled", text="Scanning…")
-
-        def _run():
-            self._engine.scan_walls_now(map_name)
-            status = self._engine.get_wall_data_status(map_name)
-            self._wall_status_label.after(0, lambda: (
-                self._wall_status_label.configure(text=status),
-                self._wall_scan_btn.configure(state="normal", text="Scan Walkable Area"),
-                self._refresh_coverage_overview(),
-            ))
-
-        import threading as _t
-        _t.Thread(target=_run, daemon=True, name="WallScanUI").start()
-
-    def _on_delete_wall_data(self):
-        """Delete cached walkable-area data for the current map."""
-        map_name = self._get_active_map()
-        if not map_name:
-            return
-        self._engine.delete_wall_data(map_name)
-        self._refresh_wall_status()
-        self._refresh_coverage_overview()
-
     def _refresh_wall_status(self):
         """Update walkable-area cache status label for the current map."""
         map_name = self._get_active_map()
@@ -523,6 +484,29 @@ class PathsTab(ctk.CTkFrame):
 
     # ── Map Explorer helpers ───────────────────────────────────────────
 
+    def _switch_to_dashboard_for_activity(self):
+        try:
+            app = self.winfo_toplevel()
+            if hasattr(app, "_switch_tab"):
+                app._switch_tab("dashboard")
+        except Exception:
+            pass
+
+    def _push_dashboard_explore_status(self, text: str, active: bool):
+        def _apply():
+            try:
+                app = self.winfo_toplevel()
+                dashboard = getattr(app, "_tabs", {}).get("dashboard") if app else None
+                if dashboard and hasattr(dashboard, "set_explorer_progress"):
+                    dashboard.set_explorer_progress(text, active)
+            except Exception:
+                pass
+
+        try:
+            self.after(0, _apply)
+        except Exception:
+            _apply()
+
     def _on_explore_start(self):
         """Start MapExplorer session."""
 
@@ -542,6 +526,7 @@ class PathsTab(ctk.CTkFrame):
                 self._explore_progress_label.after(0, lambda t=txt: self._explore_progress_label.configure(text=t))
             except Exception:
                 pass
+            self._push_dashboard_explore_status(txt, True)
             # Re-enable buttons and refresh wall status when done
             if force or not self._engine.explorer_running:
                 try:
@@ -551,9 +536,11 @@ class PathsTab(ctk.CTkFrame):
 
         ok = self._engine.start_map_explorer(duration_s=None, progress_cb=_progress)
         if ok:
+            self._switch_to_dashboard_for_activity()
             self._explore_start_btn.configure(state="disabled")
             self._explore_stop_btn.configure(state="normal")
             self._explore_progress_label.configure(text="🧭 Running until complete")
+            self._push_dashboard_explore_status("🧭 Running until complete", True)
             # Poll every 2 s to refresh wall status label while running
             self._explore_poll_id = self._explore_progress_label.after(
                 2000, self._explore_poll
@@ -574,6 +561,7 @@ class PathsTab(ctk.CTkFrame):
         """Reset UI after exploration finishes."""
         self._explore_start_btn.configure(state="normal")
         self._explore_stop_btn.configure(state="disabled")
+        self._push_dashboard_explore_status("", False)
         if self._explore_poll_id:
             try:
                 self._explore_progress_label.after_cancel(self._explore_poll_id)

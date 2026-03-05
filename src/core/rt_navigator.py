@@ -243,6 +243,7 @@ class RTNavigator:
 
         # Background loop thread
         self._loop_thread     : Optional[threading.Thread] = None
+        self._last_activity_goal_key: Optional[Tuple[str, int, int, int]] = None
 
     # ────────────────────────────────────────────────────────────────────────
     # Public API
@@ -288,6 +289,8 @@ class RTNavigator:
             f"no_prog={metrics['navigate_no_progress_abort']}"
         )
         log.info("[RTNav] Loop stopped")
+        with self._lock:
+            self._last_activity_goal_key = None
 
     def set_overlay(self, overlay) -> None:
         """Set the overlay reference so A* paths can be drawn."""
@@ -337,6 +340,7 @@ class RTNavigator:
             suppress_arbiter=True,
             no_progress_timeout=no_progress_timeout,
             no_progress_dist=no_progress_dist,
+            goal_label="target",
         )
 
     def execute_navigation_task(self, task: NavigationTask,
@@ -360,6 +364,7 @@ class RTNavigator:
             suppress_arbiter=task.suppress_arbiter,
             no_progress_timeout=task.no_progress_timeout_s,
             no_progress_dist=task.no_progress_dist,
+            goal_label=task.kind,
         )
 
     def _build_navigation_task(
@@ -1339,7 +1344,8 @@ class RTNavigator:
                      timeout: float, cancel_fn: Callable,
                      suppress_arbiter: bool = False,
                      no_progress_timeout: Optional[float] = None,
-                     no_progress_dist: float = 0.0) -> bool:
+                     no_progress_dist: float = 0.0,
+                     goal_label: str = "goal") -> bool:
         """Set the phase goal and block until arrived, timed out, or cancelled.
 
         The 60 Hz loop thread handles the actual steering.  This method simply
@@ -1364,6 +1370,12 @@ class RTNavigator:
             # Clear any active monster detour so the phase goal takes priority
             self._override_goal      = None
             self._arbiter_suppressed = suppress_arbiter
+            self._last_activity_goal_key = None
+
+        log.info(
+            f"[RTNav] Activity: pathing to {goal_label} "
+            f"({gx:.0f},{gy:.0f}) tol={tolerance:.0f}"
+        )
 
         try:
             deadline = time.time() + timeout
@@ -1493,7 +1505,7 @@ class RTNavigator:
                     self._progress_best_dist = math.hypot(px - esc_gx, py - esc_gy)
                     self._progress_t         = time.time()
                     self._stuck_frames       = 0
-                self._request_replan(px, py, esc_gx, esc_gy)
+                self._request_replan(px, py, esc_gx, esc_gy, reason="escape_complete")
             else:
                 self._steer_direct(px, py, esc_target[0], esc_target[1])
             self._spam_loot()
@@ -1516,6 +1528,22 @@ class RTNavigator:
             return  # nothing to navigate to — stay still
 
         gx, gy = goal
+
+        # User-facing activity timeline: emit goal only when it changes.
+        goal_mode = "monster" if is_over else "phase"
+        goal_key = (goal_mode, int(round(gx / 50.0)), int(round(gy / 50.0)), int(round(tol)))
+        with self._lock:
+            last_goal_key = self._last_activity_goal_key
+            if goal_key != last_goal_key:
+                self._last_activity_goal_key = goal_key
+                changed = True
+            else:
+                changed = False
+        if changed:
+            if is_over:
+                log.info(f"[RTNav] Activity: now pathing to monster cluster at ({gx:.0f},{gy:.0f})")
+            else:
+                log.info(f"[RTNav] Activity: current goal -> ({gx:.0f},{gy:.0f})")
 
         # 3. Check if active goal already reached
         dist_goal = math.hypot(px - gx, py - gy)
@@ -1567,7 +1595,7 @@ class RTNavigator:
                     # not the departure portal key above.
                     self._cooldown_arrival_return_portal(px, py, duration_s=12.0)
                     log.info(f"[RTNav] Portal transition confirmed (moved {hop_moved:.0f}u) — replanning to original goal")
-                    self._request_replan(px, py, gx, gy)
+                    self._request_replan(px, py, gx, gy, reason="portal_transition")
 
             dh = math.hypot(px - hop_target[0], py - hop_target[1])
             if dh <= 260.0 and now_hop >= hop_next_try_t:
@@ -1581,7 +1609,7 @@ class RTNavigator:
                     self._portal_hop_last_interact_pos = (px, py)
                     self._path = []
                     self._path_idx = 0
-                self._request_replan(px, py, gx, gy)
+                self._request_replan(px, py, gx, gy, reason="portal_interact")
 
         # 3b. Goal-progress stuck detection.
         # Catches wall-sliding (character moves at full speed but sideways) which
@@ -1597,6 +1625,10 @@ class RTNavigator:
         if progress_stalled and hard_stalled:
             log.debug(f"[RTNav] Progress stalled at ({px:.0f},{py:.0f}) dist={dist_goal:.0f} "
                       f"— no improvement in {RT_NAV_PROGRESS_TIMEOUT:.0f}s, escaping")
+            log.info(
+                f"[RTNav] Pathfinder stuck: no goal progress for {RT_NAV_PROGRESS_TIMEOUT:.0f}s "
+                f"at ({px:.0f},{py:.0f})"
+            )
             self._handle_stuck(px, py, gx, gy)
             return
 
@@ -1611,6 +1643,7 @@ class RTNavigator:
                 stuck = False
 
         if stuck:
+            log.info(f"[RTNav] Pathfinder stuck: movement stalled at ({px:.0f},{py:.0f})")
             self._handle_stuck(px, py, gx, gy)
             return
 
@@ -1672,7 +1705,12 @@ class RTNavigator:
         # Periodic safety-net replan (8 s) — catches all other stale-path cases.
         interval_hit = hard_stalled and (time.time() - last_replan > RT_NAV_REPLAN_INTERVAL)
         if goal_changed or drift_replan or interval_hit:
-            self._request_replan(px, py, gx, gy)
+            reason = "goal_changed"
+            if drift_replan:
+                reason = "path_drift"
+            elif interval_hit:
+                reason = "safety_replan"
+            self._request_replan(px, py, gx, gy, reason=reason)
 
         # 7. Steer toward best lookahead waypoint
         self._steer(px, py, gx, gy)
@@ -1695,7 +1733,7 @@ class RTNavigator:
         )
 
     def _request_replan(self, px: float, py: float, gx: float, gy: float,
-                        force: bool = False):
+                        force: bool = False, reason: str = "unknown"):
         """Submit an A* replan request to the background worker thread.
 
         Non-blocking — the 60 Hz loop continues steering the existing path
@@ -1717,6 +1755,11 @@ class RTNavigator:
             self._replan_request = (px, py, gx, gy)
             self._last_replan_t  = now  # prevent re-queueing
             self._last_replan_sig = sig
+
+            log.info(
+                f"[RTNav] Pathfinder replan: reason={reason} "
+                f"from ({px:.0f},{py:.0f}) to ({gx:.0f},{gy:.0f})"
+            )
 
             if not self._replan_pending:
                 self._replan_pending = True
@@ -1826,7 +1869,10 @@ class RTNavigator:
                 self._escape_deadline = time.time() + nudge_s
                 self._escape_gx = gx
                 self._escape_gy = gy
-            log.warning(f"[RTNav] A* found no path to ({gx:.0f},{gy:.0f})")
+            log.warning(
+                f"[RTNav] Pathfinder: current route looks blocked (no path) "
+                f"to ({gx:.0f},{gy:.0f})"
+            )
 
     def _find_portal_hop_path(self, px: float, py: float,
                               gx: float, gy: float
@@ -2494,8 +2540,10 @@ class RTNavigator:
             self._escape_gx = gx
             self._escape_gy = gy
 
-        log.debug(f"[RTNav] Stuck at ({px:.0f},{py:.0f}) — escaping toward "
-                  f"({escape_wx:.0f},{escape_wy:.0f}) for {RT_NAV_ESCAPE_DURATION_S}s")
+        log.info(
+            f"[RTNav] Pathfinder recovery: escape move toward "
+            f"({escape_wx:.0f},{escape_wy:.0f})"
+        )
 
     def _ray_walkable_score(self, px: float, py: float,
                             dx: float, dy: float,
@@ -2653,6 +2701,7 @@ class RTNavigator:
             self._path      = []
             self._path_idx  = 0
             self._path_goal = None
+            self._last_activity_goal_key = None
 
     # ────────────────────────────────────────────────────────────────────────
     # Loot

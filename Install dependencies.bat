@@ -6,7 +6,10 @@ echo.
 
 REM Check if Python is installed
 echo Checking for Python installation...
-python --version >nul 2>&1
+set "PYTHON_EXE=%cd%\.venv\Scripts\python.exe"
+if not exist "%PYTHON_EXE%" set "PYTHON_EXE=python"
+
+"%PYTHON_EXE%" --version >nul 2>&1
 if errorlevel 1 (
     echo ERROR: Python is not installed or not in your PATH!
     echo Please install Python from https://www.python.org/
@@ -16,7 +19,7 @@ if errorlevel 1 (
 )
 
 echo Python found:
-python --version
+"%PYTHON_EXE%" --version
 echo.
 
 REM Install required packages
@@ -24,42 +27,49 @@ echo Installing required packages...
 echo.
 
 echo Installing customtkinter...
-pip install customtkinter
+"%PYTHON_EXE%" -m pip install customtkinter
 if errorlevel 1 (
     echo WARNING: Failed to install customtkinter
 )
 echo.
 
+echo Installing PySide6...
+"%PYTHON_EXE%" -m pip install PySide6
+if errorlevel 1 (
+    echo WARNING: Failed to install PySide6
+)
+echo.
+
 echo Installing pymem...
-pip install pymem
+"%PYTHON_EXE%" -m pip install pymem
 if errorlevel 1 (
     echo WARNING: Failed to install pymem
 )
 echo.
 
 echo Installing psutil...
-pip install psutil
+"%PYTHON_EXE%" -m pip install psutil
 if errorlevel 1 (
     echo WARNING: Failed to install psutil
 )
 echo.
 
 echo Installing opencv-python-headless...
-pip install opencv-python-headless
+"%PYTHON_EXE%" -m pip install opencv-python-headless
 if errorlevel 1 (
     echo WARNING: Failed to install opencv-python-headless
 )
 echo.
 
 echo Installing numpy...
-pip install numpy
+"%PYTHON_EXE%" -m pip install numpy
 if errorlevel 1 (
     echo WARNING: Failed to install numpy
 )
 echo.
 
 echo Installing mss...
-pip install mss
+"%PYTHON_EXE%" -m pip install mss
 if errorlevel 1 (
     echo WARNING: Failed to install mss
 )

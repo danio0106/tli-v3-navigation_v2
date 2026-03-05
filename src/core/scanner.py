@@ -957,7 +957,8 @@ class UE4Scanner:
 
         fnamepool = getattr(self, '_fnamepool_addr', 0)
         if not fnamepool:
-            self._log("Cannot read zone name - FNamePool not resolved yet")
+            # Startup transient: FNamePool often resolves moments after scanner
+            # creation. Keep this path silent to avoid activity-log noise.
             return ""
 
         gworld_ptr = self._read_ptr(self._cached_gworld_static)

@@ -3,7 +3,7 @@
 net session >nul 2>&1
 if %errorlevel% neq 0 (
     echo Requesting administrator privileges...
-    powershell -Command "Start-Process '%~f0' -Verb RunAs"
+    powershell -NoProfile -Command "Start-Process -FilePath '%~f0' -WorkingDirectory '%~dp0' -Verb RunAs"
     exit /b
 )
 
@@ -20,7 +20,10 @@ echo.
 echo Attempting to launch the bot...
 echo.
 
-python main.py
+set "PYTHON_EXE=%cd%\.venv\Scripts\python.exe"
+if not exist "%PYTHON_EXE%" set "PYTHON_EXE=python"
+
+"%PYTHON_EXE%" scripts\fast_launcher.py
 if errorlevel 1 (
     echo.
     echo ERROR: Failed to launch the bot!

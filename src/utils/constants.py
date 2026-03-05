@@ -2,7 +2,7 @@ from enum import Enum, auto
 
 
 APP_NAME = "Torchlight Infinite Bot V2"
-APP_VERSION = 'v5.62.0'
+APP_VERSION = 'v5.69.0'
 GAME_PROCESS_NAME = "torchlight_infinite.exe"
 GAME_WINDOW_TITLE = "Torchlight Infinite"
 
@@ -590,10 +590,8 @@ DEFAULT_SETTINGS = {
     "hotkey_start": "F9",
     "hotkey_stop": "F10",
     "hotkey_pause": "F11",
-    "loop_delay_ms": 50,
     "loot_spam_interval_ms": 150,
     "stuck_timeout_sec": 5,
-    "waypoint_tolerance": 200,
     # Lightweight runtime defaults (production map-cycle mode).
     # When False, heavy diagnostic subsystems are gated off unless explicitly
     # enabled for troubleshooting sessions.
@@ -602,6 +600,13 @@ DEFAULT_SETTINGS = {
     "input_debug_logging": False,
     # UI debug tooling visibility (Address Probe Events + Entity Scanner tab).
     "debug_ui_enabled": False,
+    # Native runtime toggles (v5.69.0 foundation).
+    # All native paths are opt-in and fail-open to Python.
+    "native_runtime_enabled": False,
+    "native_scanner_enabled": False,
+    "native_overlay_worker_enabled": False,
+    "native_preferred_module": "tli_native",
+    "native_strict_mode": False,
     "nav_mode": "manual",  # "manual" (recorded path) or "auto" (A* autonomous)
     "auto_behavior": "rush_events",  # rush_events | kill_all | boss_rush
     # Wall model mode: "legacy" = current binary grid only, "hybrid" =

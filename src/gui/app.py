@@ -132,9 +132,6 @@ class BotApp(ctk.CTk):
         self._overlay_btn = create_accent_button(sidebar_bottom, "Overlay: OFF", self._toggle_overlay, color="accent_purple")
         self._overlay_btn.pack(fill="x", pady=(0, 4))
 
-        self._calibrate_btn = create_accent_button(sidebar_bottom, "Calibrate Scale", self._calibrate_scale, color="accent_purple")
-        self._calibrate_btn.pack(fill="x", pady=(0, 8))
-
         hotkey_info = (
             "Global Hotkeys:\n"
             "F5  - Record\n"
@@ -160,6 +157,8 @@ class BotApp(ctk.CTk):
             self._tabs["entities"] = EntityScannerTab(self._content, self._engine)
         self._tabs["cards"] = CardPriorityTab(self._content, self._engine)
         self._tabs["settings"] = SettingsTab(self._content, self._engine)
+        if hasattr(self._tabs["settings"], "set_calibrate_callback"):
+            self._tabs["settings"].set_calibrate_callback(self._on_manual_calibrate_requested)
 
         self._switch_tab("dashboard")
 
@@ -275,7 +274,7 @@ class BotApp(ctk.CTk):
 
         if not HAS_HOTKEY_API:
             log.warning("[Hotkeys] Windows API not available, falling back to tkinter binds (won't work when game is focused)")
-            self.bind("<F9>", lambda e: self._engine.start())
+            self.bind("<F9>", lambda e: self._start_bot_and_focus_dashboard())
             self.bind("<F10>", lambda e: self._on_stop_hotkey())
             self.bind("<F11>", lambda e: self._engine.pause())
             self.bind("<F5>", lambda e: self._on_record_hotkey())
@@ -300,30 +299,92 @@ class BotApp(ctk.CTk):
         WM_HOTKEY = 0x0312
 
         def _hotkey_thread():
+            r1 = r2 = r3 = r4 = r5 = 0
             try:
-                r1 = ctypes.windll.user32.RegisterHotKey(None, HOTKEY_START, MOD_NOREPEAT, VK_F9)
-                r2 = ctypes.windll.user32.RegisterHotKey(None, HOTKEY_STOP, MOD_NOREPEAT, VK_F10)
-                r3 = ctypes.windll.user32.RegisterHotKey(None, HOTKEY_PAUSE, MOD_NOREPEAT, VK_F11)
-                r4 = ctypes.windll.user32.RegisterHotKey(None, HOTKEY_RECORD, MOD_NOREPEAT, VK_F5)
-                r5 = ctypes.windll.user32.RegisterHotKey(None, HOTKEY_RECORD_PAUSE, MOD_NOREPEAT, VK_F6)
+                import time
 
-                registered = []
-                if r1: registered.append("F9=Start")
-                if r2: registered.append("F10=Stop")
-                if r3: registered.append("F11=Pause")
-                if r4: registered.append("F5=Record")
-                if r5: registered.append("F6=PauseRec")
-                log.info(f"[Hotkeys] Global hotkeys registered: {', '.join(registered)}")
+                # Do not use RegisterHotKey here: it hijacks keys globally and
+                # breaks normal app behavior (e.g. browser F5 refresh).
+                log.info("[Hotkeys] Using foreground-gated polling mode (no global key hijack)")
 
-                all_ok = r1 and r2 and r3 and r4 and r5
-                if not all_ok:
-                    failed = []
-                    if not r1: failed.append("F9")
-                    if not r2: failed.append("F10")
-                    if not r3: failed.append("F11")
-                    if not r4: failed.append("F5")
-                    if not r5: failed.append("F6")
-                    log.warning(f"[Hotkeys] Failed to register: {', '.join(failed)} (may be in use by another app)")
+                # Polling safety: always poll key state so hotkeys still work
+                # even if WM_HOTKEY delivery is blocked by other software.
+                prev_down = {
+                    "F5": False,
+                    "F6": False,
+                    "F9": False,
+                    "F10": False,
+                    "F11": False,
+                }
+
+                last_trigger = {
+                    "F5": 0.0,
+                    "F6": 0.0,
+                    "F9": 0.0,
+                    "F10": 0.0,
+                    "F11": 0.0,
+                }
+                trigger_cooldown_s = 0.35
+
+                def _is_game_foreground_for_hotkeys() -> bool:
+                    wm = getattr(self._engine, "window", None)
+                    if wm and getattr(wm, "hwnd", None):
+                        try:
+                            if wm.is_foreground():
+                                return True
+                        except Exception:
+                            pass
+
+                    # Process-based check is more robust than strict HWND equality
+                    # (some setups focus child/related windows while in game).
+                    try:
+                        import psutil
+
+                        fg = ctypes.windll.user32.GetForegroundWindow()
+                        if not fg:
+                            return False
+                        pid = wintypes.DWORD()
+                        ctypes.windll.user32.GetWindowThreadProcessId(fg, ctypes.byref(pid))
+                        if not pid.value:
+                            return False
+                        proc_name = (psutil.Process(pid.value).name() or "").lower()
+                        game_proc = (self._engine.config.get("game_process", "torchlight_infinite.exe") or "").lower()
+                        return proc_name == game_proc
+                    except Exception:
+                        return False
+
+                def _dispatch_hotkey(key_name: str, callback, action_name: str, source: str):
+                    emergency_stop = (
+                        key_name == "F10"
+                        and (self._engine.is_running or self._engine.explorer_running)
+                    )
+                    if not emergency_stop and not _is_game_foreground_for_hotkeys():
+                        return
+                    if key_name == "F10" and getattr(self, "_stop_hotkey_in_progress", False):
+                        return
+                    now = time.monotonic()
+                    if now - last_trigger[key_name] < trigger_cooldown_s:
+                        return
+                    last_trigger[key_name] = now
+                    log.info(f"[Hotkeys] {key_name} via {source} - {action_name}")
+                    self.after(0, callback)
+
+                def _poll_hotkeys():
+                    checks = [
+                        ("F5", VK_F5, self._on_record_hotkey, "Record"),
+                        ("F6", VK_F6, self._on_pause_record_hotkey, "Pause Recording"),
+                        ("F9", VK_F9, self._start_bot_and_focus_dashboard, "Start"),
+                        ("F10", VK_F10, self._on_stop_hotkey, "Stop"),
+                        ("F11", VK_F11, self._engine.pause, "Pause/Resume"),
+                    ]
+                    for key_name, vk, callback, action_name in checks:
+                        try:
+                            is_down = bool(ctypes.windll.user32.GetAsyncKeyState(vk) & 0x8000)
+                        except Exception:
+                            is_down = False
+                        if is_down and not prev_down[key_name]:
+                            _dispatch_hotkey(key_name, callback, action_name, "poll")
+                        prev_down[key_name] = is_down
 
                 msg = wintypes.MSG()
                 while self._hotkey_thread_running:
@@ -333,32 +394,33 @@ class BotApp(ctk.CTk):
                     if result:
                         hotkey_id = msg.wParam
                         if hotkey_id == HOTKEY_START:
-                            log.info("[Hotkeys] F9 pressed - Start")
-                            self.after(0, self._engine.start)
+                            _dispatch_hotkey("F9", self._start_bot_and_focus_dashboard, "Start", "WM_HOTKEY")
                         elif hotkey_id == HOTKEY_STOP:
-                            log.info("[Hotkeys] F10 pressed - Stop")
-                            self.after(0, self._on_stop_hotkey)
+                            _dispatch_hotkey("F10", self._on_stop_hotkey, "Stop", "WM_HOTKEY")
                         elif hotkey_id == HOTKEY_PAUSE:
-                            log.info("[Hotkeys] F11 pressed - Pause/Resume")
-                            self.after(0, self._engine.pause)
+                            _dispatch_hotkey("F11", self._engine.pause, "Pause/Resume", "WM_HOTKEY")
                         elif hotkey_id == HOTKEY_RECORD:
-                            log.info("[Hotkeys] F5 pressed - Record")
-                            self.after(0, self._on_record_hotkey)
+                            _dispatch_hotkey("F5", self._on_record_hotkey, "Record", "WM_HOTKEY")
                         elif hotkey_id == HOTKEY_RECORD_PAUSE:
-                            log.info("[Hotkeys] F6 pressed - Pause Recording")
-                            self.after(0, self._on_pause_record_hotkey)
-                    else:
-                        import time
+                            _dispatch_hotkey("F6", self._on_pause_record_hotkey, "Pause Recording", "WM_HOTKEY")
+                    _poll_hotkeys()
+
+                    if not result:
                         time.sleep(0.05)
             except Exception as e:
                 log.error(f"[Hotkeys] Thread error: {e}")
             finally:
-                ctypes.windll.user32.UnregisterHotKey(None, HOTKEY_START)
-                ctypes.windll.user32.UnregisterHotKey(None, HOTKEY_STOP)
-                ctypes.windll.user32.UnregisterHotKey(None, HOTKEY_PAUSE)
-                ctypes.windll.user32.UnregisterHotKey(None, HOTKEY_RECORD)
-                ctypes.windll.user32.UnregisterHotKey(None, HOTKEY_RECORD_PAUSE)
-                log.info("[Hotkeys] Global hotkeys unregistered")
+                if r1:
+                    ctypes.windll.user32.UnregisterHotKey(None, HOTKEY_START)
+                if r2:
+                    ctypes.windll.user32.UnregisterHotKey(None, HOTKEY_STOP)
+                if r3:
+                    ctypes.windll.user32.UnregisterHotKey(None, HOTKEY_PAUSE)
+                if r4:
+                    ctypes.windll.user32.UnregisterHotKey(None, HOTKEY_RECORD)
+                if r5:
+                    ctypes.windll.user32.UnregisterHotKey(None, HOTKEY_RECORD_PAUSE)
+                log.info("[Hotkeys] Hotkey thread stopped")
 
         self._hotkey_thread = threading.Thread(target=_hotkey_thread, daemon=True, name="GlobalHotkeys")
         self._hotkey_thread.start()
@@ -367,6 +429,11 @@ class BotApp(ctk.CTk):
         paths_tab = self._tabs.get("paths")
         if paths_tab:
             paths_tab._on_record()
+
+    def _start_bot_and_focus_dashboard(self):
+        started = self._engine.start()
+        if started:
+            self._switch_tab("dashboard")
 
     def _on_pause_record_hotkey(self):
         paths_tab = self._tabs.get("paths")
@@ -377,15 +444,25 @@ class BotApp(ctk.CTk):
         """Global stop action: stop bot and force-stop map explorer."""
         with self._stop_hotkey_lock:
             if self._stop_hotkey_in_progress:
-                log.info("[Hotkeys] Stop already running — ignoring duplicate F10")
                 return
             self._stop_hotkey_in_progress = True
 
+        log.info("[Control] STOP requested")
+
         def _run_stop_sequence():
             try:
-                self._engine.stop()
-                self._engine.stop_map_explorer()
+                # Run both steps independently so one failure cannot block the other.
+                try:
+                    self._engine.stop_map_explorer()
+                except Exception as e:
+                    log.error(f"[Hotkeys] Explorer stop failed: {e}")
+
+                try:
+                    self._engine.stop()
+                except Exception as e:
+                    log.error(f"[Hotkeys] Bot stop failed: {e}")
             finally:
+                log.info("[Control] STOP completed")
                 def _clear_flag():
                     with self._stop_hotkey_lock:
                         self._stop_hotkey_in_progress = False
@@ -451,7 +528,7 @@ class BotApp(ctk.CTk):
                     self._overlay.set_calibration(cal, current_map)
                     log.info(f"[Overlay] Loaded calibration for map: {current_map}")
                 else:
-                    log.info(f"[Overlay] No calibration for map: {current_map} — use 'Calibrate Scale' button")
+                    log.info(f"[Overlay] No calibration for map: {current_map} — use Settings > Calibrate")
             self._overlay.start()
             self._overlay_btn.configure(text="Overlay: ON")
             self._engine.set_debug_overlay(self._overlay)
@@ -667,45 +744,48 @@ class BotApp(ctk.CTk):
                 pass
         return self._engine.config.get("current_map", "hideout")
 
-    def _calibrate_scale(self):
+    def _on_manual_calibrate_requested(self):
+        return self._start_calibration(reason="manual")
+
+    def _start_calibration(self, map_name: Optional[str] = None, reason: str = "manual"):
         if not self._engine.memory.is_attached:
-            log.warning("[ScaleCalibrator] Not attached to game - attach first")
-            return
+            return False, "Attach to game first"
 
         calibrator = self._engine.scale_calibrator
         if not calibrator:
-            return
+            return False, "Calibrator unavailable"
 
         if calibrator.is_calibrating:
-            log.info("[ScaleCalibrator] Already calibrating...")
-            return
+            return False, "Calibration already running"
 
-        self._calibrate_btn.configure(text="Calibrating...", state="disabled")
+        if self._engine.is_running or self._engine.explorer_running:
+            return False, "Stop bot/explorer before calibration"
 
-        current_map = self._resolve_current_map()
-        log.info(f"[ScaleCalibrator] Starting calibration for map: {current_map} - keep game focused!")
+        wm = getattr(self._engine, 'window', None)
+        if wm and not wm.is_foreground():
+            return False, "Focus Torchlight window first"
+
+        current_map = map_name or self._resolve_current_map()
+        if not current_map or str(current_map).lower() == "hideout":
+            return False, "Enter a map first"
+        log.info(f"[ScaleCalibrator] Starting calibration ({reason}) for map: {current_map} - keep game focused!")
         calibrator.set_current_map(current_map)
 
         def run_calibration():
             try:
                 cal = calibrator.calibrate(self._engine.game_state, map_name=current_map)
                 if cal:
-                    log.info(f"[ScaleCalibrator] Calibration saved for '{current_map}'")
+                    log.info(f"[ScaleCalibrator] Calibration saved ({reason}) for '{current_map}'")
                     if self._overlay and self._overlay._running:
                         self._overlay.set_calibration(cal, current_map)
-                    self.after(0, lambda: self._calibrate_btn.configure(
-                        text=f"Calibrated: {current_map}", state="normal"))
                 else:
-                    log.error("[ScaleCalibrator] Calibration failed")
-                    self.after(0, lambda: self._calibrate_btn.configure(
-                        text="Calibrate Scale", state="normal"))
+                    log.error(f"[ScaleCalibrator] Calibration failed ({reason})")
             except Exception as e:
-                log.error(f"[ScaleCalibrator] Error: {e}")
-                self.after(0, lambda: self._calibrate_btn.configure(
-                    text="Calibrate Scale", state="normal"))
+                log.error(f"[ScaleCalibrator] Error ({reason}): {e}")
 
         t = threading.Thread(target=run_calibration, daemon=True)
         t.start()
+        return True, f"Calibration started for {current_map}"
 
     def _on_overlay_waypoints_update(self, waypoints):
         if self._overlay and self._overlay._running:

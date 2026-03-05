@@ -102,6 +102,7 @@ class DashboardTab(ctk.CTkFrame):
             ("Zone", "map_info", 0, 2),
             ("Map Select", "map_select", 1, 0),
             ("Portals", "portal_info", 1, 1),
+            ("Native", "native_info", 2, 0),
         ]
 
         for name, key, row, col in player_info:
@@ -114,7 +115,22 @@ class DashboardTab(ctk.CTkFrame):
             lbl.pack(pady=(0, 6))
             self._player_labels[key] = lbl
 
+        self._explore_card = create_card_frame(self)
+        self._explore_card.pack(fill="x", padx=10, pady=(0, 8))
+        self._explore_card.pack_forget()
+        create_label(self._explore_card, "Explorer Coverage", "subheading").pack(
+            anchor="w", padx=10, pady=(10, 2)
+        )
+        self._explore_progress_label = create_label(
+            self._explore_card,
+            "Idle",
+            "small",
+            "text_secondary",
+        )
+        self._explore_progress_label.pack(anchor="w", padx=10, pady=(0, 10))
+
         log_card = create_card_frame(self)
+        self._log_card = log_card
         log_card.pack(fill="both", expand=True, padx=10, pady=(8, 10))
 
         log_header = ctk.CTkFrame(log_card, fg_color="transparent")
@@ -138,6 +154,8 @@ class DashboardTab(ctk.CTkFrame):
             corner_radius=6,
             height=150,
         )
+        self._log_default_height = 150
+        self._log_compact_height = 110
         self._log_text.pack(fill="both", expand=True, padx=10, pady=(0, 12))
         self._log_text.configure(state="disabled")
 
@@ -168,10 +186,27 @@ class DashboardTab(ctk.CTkFrame):
 
     def _on_stop(self):
         self._engine.stop()
+        self.set_explorer_progress("", active=False)
         self._start_btn.configure(state="normal")
         self._demo_btn.configure(state="normal")
         self._pause_btn.configure(state="disabled", text="Pause")
         self._stop_btn.configure(state="disabled")
+
+    def set_log_compact(self, compact: bool):
+        h = self._log_compact_height if compact else self._log_default_height
+        self._log_text.configure(height=h)
+
+    def set_explorer_progress(self, text: str, active: bool):
+        if active:
+            if not self._explore_card.winfo_manager():
+                self._explore_card.pack(fill="x", padx=10, pady=(0, 8), before=self._log_card)
+            self._explore_progress_label.configure(text=text or "Running...")
+            self.set_log_compact(True)
+            return
+
+        if self._explore_card.winfo_manager():
+            self._explore_card.pack_forget()
+        self.set_log_compact(False)
 
     def _on_save_log(self):
         log.flush()
@@ -323,8 +358,17 @@ class DashboardTab(ctk.CTkFrame):
                 else:
                     self._player_labels["portal_info"].configure(text="---")
 
+                native_text = stats.get("native_status_label", "python")
+                native_error = stats.get("native_error", "")
+                if native_error:
+                    native_text = f"{native_text} | {native_error}"
+                self._player_labels["native_info"].configure(text=native_text)
+
         except Exception as e:
             log.warning(f"Dashboard stats update failed: {e}")
+
+        if not self._engine.explorer_running and self._explore_card.winfo_manager():
+            self.set_explorer_progress("", active=False)
 
         self._update_id = self.after(500, self._update_stats)
 

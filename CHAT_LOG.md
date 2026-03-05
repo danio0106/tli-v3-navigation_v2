@@ -1,3 +1,143 @@
+### Mar 05, 2026 — v5.69.0 (Native runtime foundation + fail-open scanner wiring)
+- Implemented first migration milestone from `plan.md` without changing gameplay behavior paths.
+- Added optional native scaffold:
+  - new runtime loader `src/core/native_runtime.py` (`NativeRuntimeManager`),
+  - new native package skeleton `src/native/` + `src/native/cpp/` (`CMakeLists.txt`, `module.cpp` stub),
+  - helper script `scripts/build_native.ps1` for local CMake build bootstrap.
+- `BotEngine` scanner creation is now centralized through `_create_scanner(...)` which delegates to `NativeRuntimeManager.create_scanner(...)`.
+- Safety policy implemented: if native module is disabled, missing, or throws on scanner init, engine automatically falls back to Python `UE4Scanner` (no hard failure).
+- Added new config toggles in `DEFAULT_SETTINGS` (all off by default):
+  - `native_runtime_enabled`, `native_scanner_enabled`, `native_overlay_worker_enabled`, `native_preferred_module`, `native_strict_mode`.
+- Added diagnostics surfacing for runtime visibility:
+  - `BotEngine.stats` now includes `native_*` status/error fields,
+  - Dashboard (Qt + tkinter) now displays a `Native` status line for quick backend/fallback visibility.
+- Added native-build workflow metadata to `pyproject.toml` (`native-build` optional deps + `tool.tli.native` paths) while preserving Python-first runtime.
+- Updated technical memory docs (`.github/copilot-instructions.md`) with v5.69.0 architecture bullet and maintenance checklist item for native fallback path.
+- Version bump: `APP_VERSION` -> `v5.69.0`.
+
+### Mar 05, 2026 — v5.68.0 (Qt parity completion + launcher reliability + UI polish)
+- Qt parity fixes completed for previously identified regressions:
+  - restored global hotkeys (`F5/F6/F9/F10/F11`) in Qt shell with focused-window fallback keys,
+  - restored startup auto-attach behavior in Qt,
+  - reintroduced debug-gated Entity Scanner in Qt (new page + dynamic nav show/hide via `debug_ui_enabled`),
+  - restored Paths Manual Explore flow in Qt,
+  - fixed Qt dashboard log callback thread marshaling,
+  - restored waypoint-recorder sync parity in Qt Paths editing flow.
+- Added `src/gui_qt/pages/entity_scanner_page.py` and wired exports/creation paths.
+- Qt Address Setup reliability fixes:
+  - worker-thread -> UI-thread callback posting standardized,
+  - attach/rescan/probe callbacks no longer leave `Connecting...`/`Attaching...` stuck,
+  - restored deferred scanner callback path for automatic FNamePool field fill when scanner data arrives late.
+- Launcher reliability improvements (Windows/admin-safe interpreter consistency):
+  - `Launch bot.bat` now prefers `.venv\Scripts\python.exe` before PATH `python`,
+  - `Install dependencies.bat` now uses the same interpreter and installs missing `PySide6` explicitly.
+- Added fast smart launcher `scripts/fast_launcher.py`:
+  - quick import-based presence checks,
+  - installs only missing dependencies before startup,
+  - post-run periodic outdated-package update pass (startup speed prioritized),
+  - launch state persisted in `data/launcher_state.json`.
+- Qt visual polish pass:
+  - upgraded stylesheet system in `src/gui_qt/theme.py` (semantic button variants, improved cards/controls/tables/log blend),
+  - applied semantic button variants across Dashboard/Address/Paths/Cards/Settings/Entity Scanner.
+- Card Priority UX update:
+  - added drag-and-drop row reordering in Qt card table (`DragDropCardTable`),
+  - keeps rank-cell edit fallback,
+  - drag reorder intentionally disabled while filters are active (to avoid ambiguous reorder semantics).
+- Qt window usability refinements for side-by-side play on 2k desktop:
+  - default left-docked geometry with safer top/bottom frame margins,
+  - reduced min width and sidebar width for more usable content area.
+- Console visibility behavior:
+  - console now hidden by default on Windows (`TLI_HIDE_CONSOLE=1` default),
+  - opt-out debug mode: set `TLI_HIDE_CONSOLE=0` to show console.
+- Validation performed:
+  - diagnostics on modified Qt/main files: no errors,
+  - offscreen Qt smoke runs: app/page startup + shutdown OK,
+  - launcher test: Qt path starts and dependency checks execute successfully.
+- Version bump: `APP_VERSION` -> `v5.68.0`.
+
+### Mar 04, 2026 — v5.67.0 (Qt Phase 5: default backend cutover)
+- Startup backend default switched from tkinter to Qt in `main.py`:
+  - `TLI_GUI_BACKEND` now defaults to `qt`.
+  - explicit tkinter override remains supported (`TLI_GUI_BACKEND=tk`).
+  - existing hard fallback remains: if Qt import/runtime launch fails, startup falls back to tkinter automatically.
+- Updated Qt shell labeling for cutover status:
+  - window title changed from `[Qt Preview]` to `[Qt]` in `src/gui_qt/app.py`.
+- Updated migration memory/docs to reflect completed default-backend phase:
+  - `QT_PHASE1_PLAN.md` (v5.67.0) run instructions + completed Phase 5 notes,
+  - `.github/copilot-instructions.md` added Qt Phase-5 technical bullet.
+- Version bump: `APP_VERSION` -> `v5.67.0`.
+
+### Mar 04, 2026 — v5.66.0 (Qt Phase 4: shell helper controls + overlay wiring)
+- Added Qt sidebar helper controls to `src/gui_qt/app.py`:
+  - `Overlay: ON/OFF` toggle,
+  - `Calibrate Scale` action.
+- Implemented `DebugOverlay` lifecycle management in Qt shell (same backend overlay system as tkinter):
+  - overlay start/stop,
+  - dedicated position poll loop (`engine._pos_poller` feed),
+  - background overlay marker worker (portals/events/guards/nav-collision),
+  - periodic UI-thread overlay feed tick + calibration map-switch updates,
+  - safe shutdown in `closeEvent` (timers + worker + overlay stop + engine overlay detach).
+- Wired Qt `Map Paths` overlay callbacks in `src/gui_qt/pages/paths_page.py`:
+  - `set_overlay_callback` + waypoint-change notifications,
+  - `set_grid_overlay_callback` + walkable-grid push after scan/delete cache actions.
+- Validation:
+  - diagnostics: no errors in `src/gui_qt/app.py` and `src/gui_qt/pages/paths_page.py`,
+  - import smoke passed (`qt_phase4_import_ok`),
+  - offscreen helper smoke passed (`overlay_started True`, `phase4_smoke_ok`).
+- Version bump: `APP_VERSION` -> `v5.66.0`.
+
+### Mar 04, 2026 — v5.65.0 (Qt Phase 3: Address Setup + Map Paths parity)
+- Ported Qt `Address Setup` page from placeholder to functional parity (`src/gui_qt/pages/addresses_page.py`):
+  - Attach-to-game flow with async completion handling,
+  - dump-chain `Re-scan` flow and chain/global status updates,
+  - `Debug UI` toggle persistence (`debug_ui_enabled`) and `Probe Events` visibility gating,
+  - manual `FNamePool` set/validation path with diagnostics and log output,
+  - outdated-version warning popup on failed scan.
+- Ported Qt `Map Paths` page from placeholder to functional parity (`src/gui_qt/pages/paths_page.py`):
+  - mode toggle (`Recording` vs `Auto Navigation`) with config sync,
+  - recording controls (start/stop/pause/resume/mark portal/save),
+  - auto controls (behavior selection, walkable cache scan/delete, explorer start/stop + progress),
+  - coverage overview table refresh,
+  - waypoint editor/actions (load by map, select/delete/reorder/type/portal/apply/add/delete path).
+- Updated Qt shell wiring in `src/gui_qt/app.py` to pass `EngineBridge` into Address/Paths pages.
+- Validation:
+  - diagnostics: no file errors in new Qt pages/app,
+  - import smoke test passed (`phase3_import_ok`),
+  - offscreen Qt smoke run passed (`phase3_smoke_ok`).
+- Version bump: `APP_VERSION` -> `v5.65.0`.
+
+### Mar 04, 2026 — v5.64.0 (Qt Phase 2: Dashboard + Settings + Card Priority parity)
+- Ported Dashboard behavior from tkinter to Qt (`src/gui_qt/pages/dashboard_page.py`):
+  - Start/Demo/Pause/Stop controls wired to existing `BotEngine` methods,
+  - periodic status polling (state/attached/maps/runtime/player state),
+  - zone-name translation path parity (`data/zone_name_mapping.json`),
+  - activity log view + save-log action.
+- Ported Settings behavior to Qt (`src/gui_qt/pages/settings_page.py`) with same grouped fields and save/reset semantics against existing `ConfigManager` + `DEFAULT_SETTINGS` typing.
+- Ported Card Priority behavior to Qt (`src/gui_qt/pages/cards_page.py`):
+  - rarity/category filters, save/reset/default actions,
+  - inline rank edit via rank-cell editing + Enter commit,
+  - filtered/unfiltered reordering rules aligned with tkinter implementation,
+  - card scan action + texture mapping panel toggle/refresh.
+- `BotAppQt` now wires real Qt pages for Dashboard/Settings/Card Priority (Address/Paths remain placeholders for later phases).
+- Offscreen parity smoke checks executed in venv (`PySide6`):
+  - rank move mutates priority order,
+  - settings save/reset changes `loop_delay_ms` as expected,
+  - dashboard status update path returns `IDLE` and renders without exceptions.
+- Version bump: `APP_VERSION` -> `v5.64.0`.
+
+### Mar 04, 2026 — v5.63.0 (Qt Phase 1 shell + card-rank editor stability)
+- Added a safe Qt migration entrypoint with backend switch in `main.py`:
+  - default remains tkinter (`TLI_GUI_BACKEND=tk` implicit),
+  - opt-in Qt preview via `TLI_GUI_BACKEND=qt`,
+  - hard fallback to tkinter if Qt import/runtime fails.
+- Introduced `src/gui_qt/` Phase-1 scaffold (no map-cycle logic rewrite):
+  - `BotAppQt` shell with sidebar + stacked pages,
+  - placeholder pages for Dashboard / Address Setup / Map Paths / Card Priority / Settings,
+  - read-only `EngineBridge` status feed from existing `BotEngine`.
+- Added migration runbook `QT_PHASE1_PLAN.md` and `PySide6` dependency in `pyproject.toml`.
+- Card Priority rank click regression fixed in `card_priority_tab.py` by replacing fragile `pack(before=winfo_children()[1])` usage with a safe non-rank anchor lookup; rank input/button now restore reliably after edit/cancel.
+- Version bump: `APP_VERSION` -> `v5.63.0`.
+
 ### Mar 04, 2026 — v5.62.0 (Recording-mode panel visibility refinement)
 - Adjusted Paths tab legacy-panel visibility rule after UX feedback: Waypoints and Actions are now visible whenever `Recording` mode is selected, not only when active recorder ticking is in progress.
 - Active recording still keeps the same panels visible; switching back to Auto mode hides them.

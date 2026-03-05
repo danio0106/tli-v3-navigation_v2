@@ -174,6 +174,17 @@ The bot is structured around a `main.py` entry point, with core logic in `src/co
 - **Paths Boss-Area UI Removal + Final-Goal Scaffold (v5.60.0):** `PathsTab` no longer exposes Boss Area recording/deletion controls. `BotEngine` no longer persists/loads `data/boss_areas.json`; instead, per-map placeholders are defined in `HARDCODED_MAP_FINAL_DESTINATIONS` and should be filled with measured exit-portal anchors over time. Return-phase goal resolution now prioritizes hardcoded final-goal coordinates and falls back to `MapBossRoom` memory scan only when hardcoded values are missing.
 - **Paths Default Auto Mode + Recording-Gated Legacy Panels (v5.61.0):** Paths tab now defaults to Auto mode on startup. Waypoints and Actions cards are treated as legacy recording-edit tools and are only visible while recording is actively running. Actions currently contains only `Delete Path` (delete saved waypoint path for current map).
 - **Recording-Mode Visibility Correction (v5.62.0):** legacy Waypoints + Actions panels are visible whenever `Recording` mode is selected (even before pressing Start Recording), and hidden when switching back to Auto mode.
+- **Qt GUI Phase-1 Safe Scaffold (v5.63.0):** added opt-in `PySide6` shell under `src/gui_qt/` with sidebar + stacked placeholder pages and read-only `EngineBridge` status polling from existing `BotEngine`. Startup backend selection now supports `TLI_GUI_BACKEND=qt` with hard fallback to legacy tkinter path on any Qt failure. Runtime map-cycle/core logic remains unchanged in this phase.
+- **Qt GUI Phase-2 Parity Ports (v5.64.0):** Qt pages for `Dashboard`, `Settings`, and `Card Priority` now implement production behaviors (bot control actions, status polling, settings save/reset typing parity, card filters/rank editing/scan/mapping panel) while preserving existing `BotEngine` and `CardDatabase` backends. `Address Setup` and `Map Paths` Qt pages remain placeholders for next migration phase.
+- **Qt GUI Phase-3 Parity Ports (v5.65.0):** Qt `Address Setup` now supports attach/rescan/FNamePool/probe and debug-ui gating parity; Qt `Map Paths` now supports recording/auto mode controls, walkable cache actions, explorer controls, and waypoint editing/actions. `BotAppQt` now wires all five production pages via existing backend components.
+- **Qt GUI Phase-4 Helper Controls (v5.66.0):** Qt sidebar now includes production helper actions `Overlay: ON/OFF` and `Calibrate Scale`. `BotAppQt` now manages `DebugOverlay` lifecycle (start/stop, position poll, background marker feed, calibration map-switch updates) and wires Qt `Map Paths` callbacks into overlay waypoints/grid updates.
+- **Qt GUI Phase-5 Default Backend Cutover (v5.67.0):** application startup now defaults to Qt backend (`main.py`: `TLI_GUI_BACKEND` default=`qt`). Tkinter remains supported via explicit override (`TLI_GUI_BACKEND=tk`) and automatic fallback when Qt launch/import fails.
+- **Qt Parity Completion + UI Reliability (v5.68.0):** Qt shell now includes global hotkeys parity (`F5/F6/F9/F10/F11` + focused fallback keys), startup auto-attach parity, dynamic debug-gated Entity Scanner page visibility, Paths Manual Explore parity, and thread-safe dashboard/address callback marshaling.
+- **Qt Address Deferred FNamePool Autofill (v5.68.0):** Address Setup now mirrors tkinter deferred scanner callback behavior so `FNamePool` field/status auto-populate when scanner data becomes available after attach.
+- **Fast Dependency Smart Launcher (v5.68.0):** new `scripts/fast_launcher.py` performs very fast import-based dependency presence checks, installs only missing packages pre-launch, and runs periodic outdated-package upgrades post-run (startup speed first). `Launch bot.bat` and `Install dependencies.bat` now prefer project venv interpreter and include `PySide6` handling.
+- **Qt Professional Theme + DnD Card Reorder (v5.68.0):** `src/gui_qt/theme.py` upgraded with semantic button variants and improved card/control/table styling; Qt Card Priority supports drag-and-drop row reordering (rank edit retained).
+- **Qt Side-by-Side Placement + Hidden Console Default (v5.68.0):** Qt window default geometry now left-docks with safe frame margins for 2k side-by-side usage; console is hidden by default on Windows (`TLI_HIDE_CONSOLE=1`, set `0` to show).
+- **Native Runtime Foundation (v5.69.0):** added opt-in native runtime scaffold (`src/native/` + `src/native/cpp/`), `NativeRuntimeManager` fail-open loader in `src/core/native_runtime.py`, and centralized scanner creation in `BotEngine` via native manager with automatic Python fallback. New config keys: `native_runtime_enabled`, `native_scanner_enabled`, `native_overlay_worker_enabled`, `native_preferred_module`, `native_strict_mode`. Dashboard now shows native backend/error diagnostics.
 - **Input & Control:** Simulates Windows input and manages the game window.
 - **Map Interaction:** Detects and selects map cards, identifies portals, and manages UI-open detection with retry logic.
 - **Computer Vision:** Used for fast screen capturing, vertex-based active card detection, RGB glow rarity classification, and hexagon position calibration.
@@ -905,6 +916,32 @@ ESkeletalMeshComponent + 0x758  → UClass* AnimClass (fallback)
 2. Ensure transition verification remains enabled (`portal_transition_verify`) so runtime link learning only records real hops.
 3. Validate logs on problematic maps: unknown-destination live markers should be skipped for non-exit goals; accepted hops should show measurable destination improvement and destination-side A* feasibility.
 4. If new map portal topology is added, populate `HARDCODED_MAP_PORTALS` first; runtime-learned links are in-session support, not a replacement for deterministic presets.
+
+---
+
+#### 25. Native runtime loader + scanner fallback wiring (v5.69.0)
+
+**What breaks:** native module builds/imports can fail after Python or toolchain updates; if fallback wiring regresses, scanner initialization may fail instead of gracefully returning to Python `UE4Scanner`.
+
+**Where in code:**
+- `src/core/native_runtime.py`
+  - `NativeRuntimeManager.initialize()` (module import candidates)
+  - `NativeRuntimeManager.create_scanner(...)` (native scanner handoff + Python fallback)
+- `src/core/bot_engine.py`
+  - `_create_scanner(...)` centralized scanner creation path
+  - `stats` native diagnostics fields (`native_*`)
+- `src/utils/constants.py`
+  - native feature toggles in `DEFAULT_SETTINGS`
+- `src/native/cpp/CMakeLists.txt` and `src/native/cpp/module.cpp`
+  - optional native extension scaffold (`tli_native`)
+
+**How originally found (Mar 2026):** roadmap migration kickoff required a safe native foundation with strict no-regression behavior for existing scanner-dependent map-cycle logic.
+
+**How to fix after update / verify:**
+1. Keep native runtime toggles off by default (`native_runtime_enabled=false`, `native_scanner_enabled=false`) unless explicitly testing native mode.
+2. If native mode is enabled and import fails, verify bot logs show fallback warning and scanner still initializes via Python.
+3. If native build stops working, re-check local build prerequisites (`cmake`, `ninja`, `pybind11`) and regenerate build in `build/native`.
+4. Confirm dashboard native diagnostics remain populated (`native_status_label`, `native_error`) so failures are visible without digging through raw logs.
 
 ---
 

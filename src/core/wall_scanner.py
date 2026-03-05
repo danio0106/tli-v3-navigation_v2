@@ -558,7 +558,8 @@ class WallScanner:
                              nav_collision_bridge_gap_u: float = 0.0,
                              nav_collision_bridge_half_width_u: float = 0.0,
                              nav_collision_min_raw_priors: int = 20,
-                             nav_collision_min_coverage_ratio: float = 0.02) -> GridData:
+                             nav_collision_min_coverage_ratio: float = 0.02,
+                             log_summary: bool = True) -> GridData:
         """Build an INVERTED walkability grid from visited-position points.
 
         Starts with all cells BLOCKED.  Each visited position marks a circle of
@@ -634,13 +635,14 @@ class WallScanner:
             except Exception:
                 continue
 
-        elapsed = time.monotonic() - t0
-        log.info(
-            f"[WallScan] Walkable grid built from {len(walkable_pts)} Walkable, "
-            f"{len(blocked_pts)} Blocked points ({'applied' if apply_blocked_points else 'ignored'}) "
-            f"+ {nav_raw_count} nav-collision priors "
-            f"in {elapsed:.3f}s: {grid}"
-        )
+        if log_summary:
+            elapsed = time.monotonic() - t0
+            log.info(
+                f"[WallScan] Walkable grid built from {len(walkable_pts)} Walkable, "
+                f"{len(blocked_pts)} Blocked points ({'applied' if apply_blocked_points else 'ignored'}) "
+                f"+ {nav_raw_count} nav-collision priors "
+                f"in {elapsed:.3f}s: {grid}"
+            )
         return grid
 
     # ── Legacy: EMapTaleCollisionPoint GObjects scan ─────────────────────────

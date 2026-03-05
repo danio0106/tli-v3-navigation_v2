@@ -28,6 +28,7 @@ class CardPriorityTab(ctk.CTkFrame):
     def __init__(self, parent, bot_engine):
         super().__init__(parent, fg_color=COLORS["bg_dark"])
         self._engine = bot_engine
+        self._debug_ui_enabled = bool(self._engine.config.get("debug_ui_enabled", False))
         # Share the same CardDatabase instance as BotEngine (priority changes propagate immediately)
         self._db = getattr(bot_engine, '_card_database', None) or CardDatabase()
 
@@ -47,7 +48,6 @@ class CardPriorityTab(ctk.CTkFrame):
     # ── UI skeleton ────────────────────────────────────────────────────────
 
     def _build_ui(self):
-        # Header
         top = ctk.CTkFrame(self, fg_color="transparent")
         top.pack(fill="x", padx=10, pady=(10, 4))
         create_label(top, "Card Priority", "heading").pack(side="left")
@@ -60,18 +60,18 @@ class CardPriorityTab(ctk.CTkFrame):
             color="accent_orange", width=110,
         ).pack(side="left", padx=3)
 
-        self._scan_btn = create_accent_button(
-            btn_frame, "Scan Cards", self._on_scan_cards,
-            color="accent_green", width=100,
-        )
-        self._scan_btn.pack(side="left", padx=3)
+        if self._debug_ui_enabled:
+            self._scan_btn = create_accent_button(
+                btn_frame, "Scan Cards (Diag)", self._on_scan_cards,
+                color="accent_green", width=130,
+            )
+            self._scan_btn.pack(side="left", padx=3)
 
         create_accent_button(
             btn_frame, "Save", self._on_save,
             color="accent_blue", width=70,
         ).pack(side="left", padx=3)
 
-        # Info line
         info = ctk.CTkFrame(self, fg_color="transparent")
         info.pack(fill="x", padx=10, pady=(0, 3))
         self._info_label = create_label(
@@ -83,7 +83,6 @@ class CardPriorityTab(ctk.CTkFrame):
         self._count_label = create_label(info, "", "small", "text_secondary")
         self._count_label.pack(side="right")
 
-        # Filter bar
         fbar = ctk.CTkFrame(self, fg_color=COLORS["bg_medium"], height=34, corner_radius=6)
         fbar.pack(fill="x", padx=10, pady=(0, 5))
 
@@ -117,14 +116,12 @@ class CardPriorityTab(ctk.CTkFrame):
         self._status_label = create_label(fbar, "", "small", "accent_green")
         self._status_label.pack(side="right", padx=8)
 
-        # Scrollable card list
         self._scroll = ctk.CTkScrollableFrame(
             self, fg_color=COLORS["bg_dark"],
             scrollbar_button_color=COLORS["scrollbar"],
         )
         self._scroll.pack(fill="both", expand=True, padx=10, pady=(0, 6))
 
-        # Column header inside scroll area
         hdr = ctk.CTkFrame(self._scroll, fg_color=COLORS["bg_medium"], height=24, corner_radius=4)
         hdr.pack(fill="x", pady=(0, 3), padx=2)
         hdr.pack_propagate(False)
@@ -133,30 +130,28 @@ class CardPriorityTab(ctk.CTkFrame):
         ctk.CTkLabel(hdr, text="Category", font=FONTS["small"], text_color=COLORS["text_muted"], width=100).pack(side="left", padx=(30, 0))
         ctk.CTkLabel(hdr, text="Rarity", font=FONTS["small"], text_color=COLORS["text_muted"], width=50).pack(side="left", padx=(10, 0))
 
-        # Texture mapping section (collapsed by default)
-        self._mapping_visible = False
-        toggle_frame = ctk.CTkFrame(self, fg_color="transparent")
-        toggle_frame.pack(fill="x", padx=10, pady=(0, 2))
-        self._mapping_toggle = ctk.CTkButton(
-            toggle_frame, text="\u25b6 Texture Mappings", width=160, height=22,
-            fg_color="transparent", hover_color=COLORS["bg_light"],
-            text_color=COLORS["text_muted"], font=FONTS["small"],
-            anchor="w", corner_radius=4,
-            command=self._toggle_mappings,
-        )
-        self._mapping_toggle.pack(side="left")
+        if self._debug_ui_enabled:
+            self._mapping_visible = False
+            toggle_frame = ctk.CTkFrame(self, fg_color="transparent")
+            toggle_frame.pack(fill="x", padx=10, pady=(0, 2))
+            self._mapping_toggle = ctk.CTkButton(
+                toggle_frame, text="\u25b6 Texture Mappings", width=160, height=22,
+                fg_color="transparent", hover_color=COLORS["bg_light"],
+                text_color=COLORS["text_muted"], font=FONTS["small"],
+                anchor="w", corner_radius=4,
+                command=self._toggle_mappings,
+            )
+            self._mapping_toggle.pack(side="left")
 
-        self._mapping_frame = create_card_frame(self)
-        # starts hidden
-
-        self._mapping_text = ctk.CTkTextbox(
-            self._mapping_frame, fg_color=COLORS["bg_dark"],
-            text_color=COLORS["text_secondary"],
-            font=FONTS["mono_small"], height=80, corner_radius=4,
-            border_width=1, border_color=COLORS["border"],
-        )
-        self._mapping_text.pack(fill="x", padx=8, pady=6)
-        self._mapping_text.configure(state="disabled")
+            self._mapping_frame = create_card_frame(self)
+            self._mapping_text = ctk.CTkTextbox(
+                self._mapping_frame, fg_color=COLORS["bg_dark"],
+                text_color=COLORS["text_secondary"],
+                font=FONTS["mono_small"], height=80, corner_radius=4,
+                border_width=1, border_color=COLORS["border"],
+            )
+            self._mapping_text.pack(fill="x", padx=8, pady=6)
+            self._mapping_text.configure(state="disabled")
 
     # ── Widget pool ────────────────────────────────────────────────────────
 
@@ -294,6 +289,15 @@ class CardPriorityTab(ctk.CTkFrame):
 
     # ── Inline rank editor ─────────────────────────────────────────────────
 
+    def _rank_insert_anchor(self, row: "_CardRow"):
+        """Return first mapped non-rank widget to insert before, if any."""
+        for child in row.frame.winfo_children():
+            if child in (row.rank_btn, row.rank_entry):
+                continue
+            if child.winfo_manager():
+                return child
+        return None
+
     def _start_rank_edit(self, card_id: int):
         """Show an entry widget over the rank button for the clicked card."""
         self._cancel_rank_edit()
@@ -310,7 +314,11 @@ class CardPriorityTab(ctk.CTkFrame):
                 break
 
         row.rank_btn.pack_forget()
-        row.rank_entry.pack(side="left", padx=(4, 2), before=row.frame.winfo_children()[1])
+        anchor = self._rank_insert_anchor(row)
+        if anchor is not None:
+            row.rank_entry.pack(side="left", padx=(4, 2), before=anchor)
+        else:
+            row.rank_entry.pack(side="left", padx=(4, 2))
         row.rank_entry.delete(0, "end")
         row.rank_entry.insert(0, str(current_rank))
         row.rank_entry.select_range(0, "end")
@@ -368,7 +376,11 @@ class CardPriorityTab(ctk.CTkFrame):
 
         # Restore button (entry gets unpacked by repack anyway)
         row.rank_entry.pack_forget()
-        row.rank_btn.pack(side="left", padx=(4, 2), before=row.frame.winfo_children()[1])
+        anchor = self._rank_insert_anchor(row)
+        if anchor is not None:
+            row.rank_btn.pack(side="left", padx=(4, 2), before=anchor)
+        else:
+            row.rank_btn.pack(side="left", padx=(4, 2))
 
         self._repack()
         self._status_label.configure(
@@ -385,10 +397,11 @@ class CardPriorityTab(ctk.CTkFrame):
             row.rank_entry.pack_forget()
             # Re-show button if not already visible
             if not row.rank_btn.winfo_ismapped():
-                row.rank_btn.pack(
-                    side="left", padx=(4, 2),
-                    before=row.frame.winfo_children()[1],
-                )
+                anchor = self._rank_insert_anchor(row)
+                if anchor is not None:
+                    row.rank_btn.pack(side="left", padx=(4, 2), before=anchor)
+                else:
+                    row.rank_btn.pack(side="left", padx=(4, 2))
         except Exception:
             pass
 
@@ -430,6 +443,8 @@ class CardPriorityTab(ctk.CTkFrame):
         self._status_label.configure(text="Reset to default", text_color=COLORS["accent_orange"])
 
     def _on_scan_cards(self):
+        if not self._debug_ui_enabled:
+            return
         if not self._engine.memory.is_attached:
             self._status_label.configure(text="Not attached", text_color=COLORS["accent_red"])
             return
@@ -480,7 +495,7 @@ class CardPriorityTab(ctk.CTkFrame):
                     text=f"Error: {e}", text_color=COLORS["accent_red"],
                 ))
             finally:
-                self.after(0, lambda: self._scan_btn.configure(state="normal", text="Scan Cards"))
+                self.after(0, lambda: self._scan_btn.configure(state="normal", text="Scan Cards (Diag)"))
 
         threading.Thread(target=_run, daemon=True).start()
 
@@ -502,6 +517,8 @@ class CardPriorityTab(ctk.CTkFrame):
     # ── Texture mappings (collapsible) ─────────────────────────────────────
 
     def _toggle_mappings(self):
+        if not self._debug_ui_enabled:
+            return
         if self._mapping_visible:
             self._mapping_frame.pack_forget()
             self._mapping_toggle.configure(text="\u25b6 Texture Mappings")
@@ -513,6 +530,8 @@ class CardPriorityTab(ctk.CTkFrame):
             self._refresh_mappings()
 
     def _refresh_mappings(self):
+        if not self._debug_ui_enabled:
+            return
         if not self._mapping_visible:
             return
         self._mapping_text.configure(state="normal")

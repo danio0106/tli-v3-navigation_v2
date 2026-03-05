@@ -25,12 +25,14 @@ from src.core.rt_navigator import RTNavigator
 from src.core.position_poller import PositionPoller
 from src.core.card_database import CardDatabase
 from src.core.memory_card_selector import MemoryCardSelector
+from src.core.native_runtime import NativeRuntimeManager
 from src.utils.constants import (
     BotState, GAME_PROCESS_NAME, CARD_SLOTS, EVENT_PROXIMITY_TRIGGER_UNITS,
     WALL_GRID_CELL_SIZE, WALL_GRID_HALF_SIZE,
     ZONE_WATCHER_EXIT_THRESHOLD, MINIMAP_SCAN_SKIP_THRESHOLD,
     MAP_EXPLORER_POSITION_SAMPLE_DIST, MAP_EXPLORER_POSITION_POLL_S,
     MAP_EXPLORER_POSITION_FLUSH_EVERY, MAP_EXPLORER_POSITION_FLUSH_S,
+    MAP_EXPLORER_FRONTIER_ESTIMATE_MULTIPLIER,
     VISITED_CELL_WALKABLE_RADIUS,
     CARJACK_STRONGBOX_SEARCH_RADIUS_SQ,
     CARJACK_BOUNTY_UI_TEMPLATE_PATH,
@@ -42,6 +44,9 @@ from src.utils.constants import (
     EXIT_PORTAL_SEARCH_REGION,
     HARDCODED_MAP_FINAL_DESTINATIONS,
 )
+
+# Bot-controlled runtime tick cadence (not user-configurable in UI).
+BOT_MAIN_LOOP_DELAY_S = 0.050
 from src.utils.config_manager import ConfigManager
 from src.utils.logger import log
 
@@ -49,6 +54,8 @@ from src.utils.logger import log
 class BotEngine:
     def __init__(self):
         self.config = ConfigManager()
+        self._native_runtime = NativeRuntimeManager(self.config)
+        self._native_runtime.initialize()
         self.memory = MemoryReader()
         self.addresses = AddressManager()
         self.game_state = GameState(self.memory, self.addresses)
@@ -247,6 +254,11 @@ class BotEngine:
             maps = self._maps_completed
             avg_cycle = (sum(self._cycle_durations_s) / len(self._cycle_durations_s)) if self._cycle_durations_s else 0.0
             success_rate = (self._cycle_success_count / self._cycle_total_count * 100.0) if self._cycle_total_count else 0.0
+        native_status = self._native_runtime.get_status_snapshot()
+        native_label = native_status.get("scanner_backend", "python")
+        native_error = str(native_status.get("last_error", "") or "").strip()
+        if native_error:
+            native_label = f"{native_label} (fallback)"
         return {
             "state": state_name,
             "maps_completed": maps,
@@ -259,7 +271,22 @@ class BotEngine:
             "last_cycle_time_s": self._last_cycle_duration_s,
             "cycle_success_rate_pct": success_rate,
             "cycle_total": self._cycle_total_count,
+            "native_runtime_enabled": bool(native_status.get("runtime_enabled", False)),
+            "native_module_loaded": bool(native_status.get("module_loaded", False)),
+            "native_module_name": native_status.get("module_name", ""),
+            "native_scanner_backend": native_status.get("scanner_backend", "python"),
+            "native_overlay_backend": native_status.get("overlay_backend", "python"),
+            "native_overlay_worker_alive": bool(native_status.get("overlay_worker_alive", False)),
+            "native_error": native_error,
+            "native_status_label": native_label,
         }
+
+    def _create_scanner(self, log_prefix: str = "[Scanner]"):
+        return self._native_runtime.create_scanner(
+            self.memory,
+            self.addresses,
+            lambda msg_s: log.info(f"{log_prefix} {msg_s}"),
+        )
 
     def _cycle_begin(self):
         """Mark start of a map cycle (highest-priority KPI: cycle time)."""
@@ -390,7 +417,7 @@ class BotEngine:
             if valid:
                 log.info(f"Saved addresses valid - skipping scan: {msg}")
                 if not self._scanner:
-                    self._scanner = UE4Scanner(self.memory, self.addresses, lambda msg_s: log.info(f"[Scanner] {msg_s}"))
+                    self._scanner = self._create_scanner("[Scanner]")
                     saved_addr = self.addresses.get_address("player_x")
                     if saved_addr and saved_addr.get("base_offset", 0) != 0:
                         modules = self.memory.list_modules()
@@ -416,7 +443,7 @@ class BotEngine:
                 self._configure_scanner_probes(self._scanner)
             else:
                 log.info("Saved addresses invalid - running dump chain scan...")
-                scanner = UE4Scanner(self.memory, self.addresses, lambda msg: log.info(f"[Scanner] {msg}"))
+                scanner = self._create_scanner("[Scanner]")
                 result = scanner.scan_dump_chain(use_cache=False)
                 if result.success:
                     log.info(f"Dump chain resolved: ({result.player_x:.1f}, {result.player_y:.1f}, {result.player_z:.1f})")
@@ -470,6 +497,12 @@ class BotEngine:
     def stop(self):
         with self._state_lock:
             if self._stop_in_progress:
+                # Even during duplicate stop requests, keep explorer cancel as a
+                # best-effort safety path so autonomous movement is not left alive.
+                try:
+                    self.stop_map_explorer()
+                except Exception:
+                    pass
                 log.info("Stop already in progress — ignoring duplicate stop request")
                 return
             self._stop_in_progress = True
@@ -482,6 +515,9 @@ class BotEngine:
             self._cycle_end("aborted")
 
         try:
+            # Always stop explorer first; it can run independently of main bot loop.
+            self.stop_map_explorer()
+
             if self._helper_rt_nav:
                 self._helper_rt_nav.cancel()
             if self._rt_navigator:
@@ -529,7 +565,7 @@ class BotEngine:
         return self.start()
 
     def _main_loop(self):
-        loop_delay = self.config.get("loop_delay_ms", 50) / 1000.0
+        loop_delay = BOT_MAIN_LOOP_DELAY_S
 
         while self._running:
             if self._paused:
@@ -592,7 +628,7 @@ class BotEngine:
                 time.sleep(0.5)
 
             if not self._scanner:
-                self._scanner = UE4Scanner(self.memory, self.addresses, lambda msg: log.info(f"[Re-scan] {msg}"))
+                self._scanner = self._create_scanner("[Re-scan]")
 
             result = self._scanner.scan_dump_chain(use_cache=True)
 
@@ -658,7 +694,7 @@ class BotEngine:
             self.input.set_target_window(self.window.hwnd)
 
         if not self._scanner:
-            self._scanner = UE4Scanner(self.memory, self.addresses, lambda msg_s: log.info(f"[Scanner] {msg_s}"))
+            self._scanner = self._create_scanner("[Scanner]")
 
         # Ensure scanner-backed runtime services are available even when the app
         # is restarted while already inside a map (attach -> start in-map path).
@@ -799,7 +835,7 @@ class BotEngine:
             return
 
         if not self._scanner:
-            self._scanner = UE4Scanner(self.memory, self.addresses, lambda msg: log.info(f"[Scanner] {msg}"))
+            self._scanner = self._create_scanner("[Scanner]")
 
         if not self._entering_phase:
             self._entering_gworld_before = self._scanner.get_gworld_ptr()
@@ -1562,6 +1598,8 @@ class BotEngine:
         if not scanner:
             return
 
+        log.info("[Activity] Carjack event started")
+
         # Activation: press F quickly to trigger the event flow.
         log.info(f"[Events] Carjack: pressing {interact_key.upper()} ×3 to activate")
         for _ in range(3):
@@ -1576,6 +1614,8 @@ class BotEngine:
         hard_deadline = start_t + 26.0  # 24s event + ~2s activation animation buffer
         no_monster_streak = 0
         no_monster_required = 5   # 5 * 0.5s = 2.5s stable empty window
+        carjack_mode = ""
+        end_reason = "cancelled"
 
         _TRUCK_STAND_RADIUS = 900.0
         _ESCAPE_DIST_TRUCK = 1800.0
@@ -1631,6 +1671,7 @@ class BotEngine:
             now = time.time()
             if now >= hard_deadline:
                 log.info("[Events] Carjack fallback timeout (26s) — finishing event flow")
+                end_reason = "timeout"
                 break
 
             current_events = scanner.get_typed_events() if scanner else []
@@ -1661,6 +1702,7 @@ class BotEngine:
             # Completion signal 1: no active Carjack event visible anymore.
             if not carjack_events and now - start_t > 2.0:
                 log.info("[Events] Carjack event no longer visible — considered complete")
+                end_reason = "event_hidden"
                 break
 
             tx, ty = truck_pos
@@ -1673,6 +1715,7 @@ class BotEngine:
             # Completion signal 2: stable no-monster window around truck.
             if no_monster_streak >= no_monster_required:
                 log.info("[Events] Carjack near-truck monsters stable at 0 — considered complete")
+                end_reason = "monsters_cleared"
                 break
 
             guard_positions = scanner.get_carjack_guard_positions() if scanner else []
@@ -1686,10 +1729,16 @@ class BotEngine:
             # Default Carjack posture: stay on truck and hard-stop drift.
             # Skip this only when actively chasing escaped guards.
             if not escaped:
+                if carjack_mode != "truck_stand":
+                    carjack_mode = "truck_stand"
+                    log.info("[Activity] Carjack: guarding truck")
                 _truck_lock()
 
             # Chase only escaped guard candidates, then return immediately.
             if escaped:
+                if carjack_mode != "chase":
+                    carjack_mode = "chase"
+                    log.info("[Activity] Carjack: chasing guard")
                 escaped.sort(key=lambda g: (g["x"] - px) ** 2 + (g["y"] - py) ** 2)
                 tgt = escaped[0]
                 tgt_addr = int(tgt.get("addr", 0) or 0)
@@ -1703,6 +1752,7 @@ class BotEngine:
                     still_alive = any(int(a.get("addr", 0) or 0) == tgt_addr for a in alive_after)
                     if not still_alive:
                         log.info(f"[Events] Carjack chase target down/disappeared: 0x{tgt_addr:X}")
+                log.info("[Activity] Carjack: going back to truck")
                 self._get_helper_rt_nav().navigate_to_target(tx, ty, tolerance=450.0, timeout=2.2)
                 _truck_lock()
 
@@ -1710,6 +1760,7 @@ class BotEngine:
 
         if bounty_seen:
             self._collect_carjack_strongboxes(interact_key)
+        log.info(f"[Activity] Carjack event finished ({end_reason})")
 
     def _handle_sandlord_event(self, event, _interact_key: str) -> None:
         """Efficient Sandlord handler driven by monster-count transitions.
@@ -1735,8 +1786,10 @@ class BotEngine:
         scanner = self._scanner
         if not scanner:
             return
+        log.info("[Activity] Sandlord event started")
         ex, ey, _ = event.position
         loot_key = self.config.get("loot_key", "e")
+        sandlord_done_reason = "cancelled"
 
         def _platform_lock() -> bool:
             """Ensure character is on platform and fully stopped before handling waves.
@@ -1795,13 +1848,16 @@ class BotEngine:
             return scanner.count_nearby_monsters(ex, ey, radius=3000.0)
 
         def _gone_or_invalid() -> bool:
+            nonlocal sandlord_done_reason
             ev = next((e for e in scanner.get_typed_events()
                        if e.address == event.address), None)
             if ev is None:
                 log.info("[Events] Sandlord: actor gone — event complete")
+                sandlord_done_reason = "actor_gone"
                 return True
             if ev.bvalid == 0:
                 log.info("[Events] Sandlord: bValid=0 — event complete")
+                sandlord_done_reason = "bvalid_zero"
                 return True
             return False
 
@@ -1844,6 +1900,7 @@ class BotEngine:
         while self._running and not self._paused:
             if time.time() - wave_start > TOTAL_TIMEOUT:
                 log.info("[Events] Sandlord: 90s hard cap — resuming navigation")
+                sandlord_done_reason = "timeout"
                 break
             pxy = scanner._read_player_xy() if scanner else None
             if pxy is not None:
@@ -1877,9 +1934,12 @@ class BotEngine:
                             log.info(f"[Events] Sandlord: {wave_num} wave(s) "
                                      f"complete, {since_clear:.1f}s clear — "
                                      f"event done")
+                            sandlord_done_reason = "waves_cleared"
                             break
 
             time.sleep(POLL_S)
+
+        log.info(f"[Activity] Sandlord event finished ({sandlord_done_reason})")
 
     def _detect_carjack_bounty_ui(self) -> bool:
         """Template-matching detector for optional Carjack bounty UI popup."""
@@ -2139,6 +2199,8 @@ class BotEngine:
             time.sleep(2.0)
             return
 
+        log.info("[Activity] Now leaving map")
+
         # Scan walkable area before exiting — captures every position walked
         # during this run so the MinimapSaveObject data is as complete as possible.
         # Runs on a background thread; _navigate_to_boss() gives it time to finish.
@@ -2224,7 +2286,7 @@ class BotEngine:
         raw = data.get(map_name)
         if raw:
             return f"Cached ({len(raw)} visited-position points)"
-        return "Not yet scanned — enter the map and press 'Scan Walkable Area'"
+        return "No map coverage data yet — enter/explore the map to build coverage automatically"
 
     def get_all_coverage(self) -> dict:
         """Return a dict mapping each map name (from MAP_NAMES) to its cached point count.
@@ -2236,51 +2298,71 @@ class BotEngine:
         data = _WS._load_json()
         return {name: len(data[name]) if name in data else 0 for name in MAP_NAMES}
 
-    def scan_walls_now(self, map_name: str):
-        """Force an immediate (foreground) walkable-area scan for the given map.
+    def get_all_coverage_metrics(self) -> dict:
+        """Return per-map coverage metrics using explorer-style frontier estimation.
 
-        Reads MinimapSaveObject.Records.Pos for the map matching `map_name`.
-        The raw zone name (internal FName) is taken from _current_zone_name so
-        that the TMap FString key lookup matches correctly.
+        Output format:
+          {
+            map_name: {
+              "covered": int,
+              "estimated_total": int,
+              "frontier": int,
+              "pct": float,
+            }
+          }
 
-        This is called from the Paths tab button and runs on a background thread
-        in the GUI — it blocks that thread (not the main/bot thread).
+        This mirrors MapExplorer's `_compute_coverage_estimate` idea:
+          estimated_total = covered + frontier * MAP_EXPLORER_FRONTIER_ESTIMATE_MULTIPLIER
+          pct = covered / estimated_total
         """
-        if not self._scanner:
-            log.warning("[WallScan] Scanner not attached — cannot scan walkable area")
-            return
-        if self._wall_scanner is None:
-            self._wall_scanner = WallScanner(self._scanner)
-        ws = self._wall_scanner
-        raw_zone = self._current_zone_name  # e.g. 'YJ_XieDuYuZuo200'
-        # Bot may be idle (not running) — _current_zone_name only updated inside bot loop.
-        # Fall back to a live read so the manual "Scan Walkable Area" button always works.
-        if not raw_zone:
-            raw_zone = self._scanner.read_real_zone_name()
-        log.info(f"[WallScan] Manual scan requested for '{map_name}' (zone='{raw_zone}')")
+        from src.core.wall_scanner import WallScanner as _WS, WallPoint as _WP
+        from src.utils.constants import MAP_NAMES
 
-        t0 = time.time()
-        points = ws.scan_from_minimap_records(map_name, raw_zone)
-        elapsed = time.time() - t0
+        out = {}
+        data = _WS._load_json()
 
-        if points:
-            ws.save_wall_data(map_name, points)
-            if self._pathfinder:
-                cx = self.game_state.read_chain("player_x") or 0.0
-                cy = self.game_state.read_chain("player_y") or 0.0
-                grid = ws.build_walkable_grid(points, cx, cy)
-                self._pathfinder.set_grid(grid)
-            log.info(
-                f"[WallScan] Manual scan complete: {len(points)} visited-position points "
-                f"saved for '{map_name}' in {elapsed:.2f}s"
-            )
-        else:
-            log.info(
-                f"[WallScan] Manual scan returned 0 positions for '{map_name}' in {elapsed:.2f}s "
-                f"— ensure you are inside the map AND MinimapSaveObject has data "
-                f"(zone='{raw_zone}', GObjects resolved={bool(self._scanner._gobjects_addr if self._scanner else 0)})"
-            )
-        log.flush()
+        for name in MAP_NAMES:
+            raw = data.get(name, [])
+            covered = len(raw) if isinstance(raw, list) else 0
+            frontier_n = 0
+            est_total = max(covered, 1)
+            pct = 0.0
+
+            if covered > 0:
+                try:
+                    points = [_WP.from_dict(p) for p in raw if isinstance(p, dict)]
+                    if points:
+                        # For per-map summary (not active run), center grid on point centroid.
+                        cx = sum(p.x for p in points) / len(points)
+                        cy = sum(p.y for p in points) / len(points)
+                        ws = _WS.__new__(_WS)
+                        grid = ws.build_walkable_grid(
+                            points,
+                            cx,
+                            cy,
+                            half_size=WALL_GRID_HALF_SIZE,
+                            cell_size=WALL_GRID_CELL_SIZE,
+                            log_summary=False,
+                        )
+                        frontier_n = len(grid.get_frontier_world_positions(max_samples=500))
+                except Exception:
+                    frontier_n = 0
+
+                est_total = max(
+                    covered,
+                    covered + int(frontier_n * MAP_EXPLORER_FRONTIER_ESTIMATE_MULTIPLIER),
+                    1,
+                )
+                pct = min(100.0, max(0.0, (covered / est_total) * 100.0))
+
+            out[name] = {
+                "covered": int(covered),
+                "estimated_total": int(est_total),
+                "frontier": int(frontier_n),
+                "pct": float(pct),
+            }
+
+        return out
 
     def delete_wall_data(self, map_name: str):
         """Delete cached wall data for map_name (forces re-scan on next entry)."""
@@ -2290,6 +2372,23 @@ class BotEngine:
             self._wall_scanner = WallScanner(self._scanner) if self._scanner else None
         if self._wall_scanner:
             self._wall_scanner.delete_wall_data(map_name)
+
+    def delete_all_map_coverage_data(self) -> int:
+        """Delete all persisted map coverage (walkable cache) and return removed map count."""
+        from src.core.wall_scanner import WallScanner as _WS
+
+        existing = _WS._load_json()
+        removed = len(existing) if isinstance(existing, dict) else 0
+        if not _WS._save_json({}):
+            return 0
+
+        # Clear runtime cache so UI/status reflects clean state immediately.
+        self._wall_cache.clear()
+        if self._wall_scanner is None:
+            self._wall_scanner = WallScanner(self._scanner) if self._scanner else None
+        log.info(f"[WallScan] Deleted map coverage data for {removed} maps")
+        log.flush()
+        return removed
 
     # ── Map Explorer (automatic walkable-area data collection) ─────────────────
 
