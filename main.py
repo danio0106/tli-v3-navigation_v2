@@ -60,7 +60,7 @@ def main():
         position_console_window()
 
     from src.utils.constants import APP_NAME, APP_VERSION
-    log.info(f"=== {APP_NAME} v{APP_VERSION} starting ===")
+    log.info(f"=== {APP_NAME} {APP_VERSION} starting ===")
     backend = os.environ.get("TLI_GUI_BACKEND", "qt").strip().lower()
     allow_legacy_tk = os.environ.get("TLI_ALLOW_LEGACY_TK", "0").strip().lower() in {
         "1", "true", "yes", "on"

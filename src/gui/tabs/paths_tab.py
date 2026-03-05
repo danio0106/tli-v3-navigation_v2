@@ -399,6 +399,10 @@ class PathsTab(ctk.CTkFrame):
 
     def _update_mode_ui(self):
         """Show recording or auto-navigation section based on current mode."""
+        recorder = self._engine.path_recorder
+        if recorder:
+            recorder.set_logging_enabled(self._nav_mode == "record")
+
         if self._nav_mode == "record":
             self._rec_card.pack(fill="x", padx=10, pady=(0, 8))
             self._auto_card.pack_forget()

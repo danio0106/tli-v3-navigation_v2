@@ -461,6 +461,10 @@ class PathsPage(QFrame):
 
     def _update_mode_ui(self):
         in_record = self._nav_mode == "record"
+        recorder = self._engine.path_recorder
+        if recorder:
+            recorder.set_logging_enabled(in_record)
+
         self._mode_record_btn.setChecked(in_record)
         self._mode_auto_btn.setChecked(not in_record)
         self._refresh_mode_toggle_styles(in_record)

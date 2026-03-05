@@ -23,24 +23,51 @@ Hard pivot: native runtime becomes the only runtime path. No Python fallback, no
 5. `v5.77.0` - Qt Quick native renderer pilot for core overlay layers (player/path/portal/event/guard) consuming engine snapshots directly.
 6. `v5.78.0` - Qt Quick full-layer completion (grid/nav-collision/debug layers + overlay LOD controls; Qt Quick is now the primary overlay runtime path).
 
-## Next Versioned Steps (from v5.82.0)
-1. `v5.83.0` - Native profiling implementation kickoff.
-2. Deliverables:
-3. Instrument top runtime hotspots selected in v5.81 backlog.
-4. Collect baseline timings from real map-cycle runs.
-5. Produce implementation-priority migration queue from measured bottlenecks.
-6. Gate criteria:
-7. Profiling artifacts are reproducible from one-click run instructions.
-8. Next native module target is chosen from measured top bottleneck.
+## Active Delivery Track
+1. `v5.83.0` - Native scanner slice-1 is complete (native scanner object + native-owned `read_player_xy`).
+2. `v5.84.0` - Compatibility parity stabilization pack (cloud-delegated now).
+3. `v5.85.0` - Native scanner slice-2 migration completed (local):
+- native fast paths implemented for `get_typed_events`, `get_monster_entities`, `count_nearby_monsters`, `get_nearby_interactive_items`, and `get_carjack_truck_position`.
+- compatibility surfaces preserved (`kwargs`, private aliases, minimap signature parity).
+- parity smoke harness added: `scripts/native_scanner_parity_smoke.py`.
+4. `v5.86.0` - Native overlay worker implementation completed and user-confirmed in-game.
 
-9. `v5.84.0` - Native overlay worker implementation.
-11. Deliverables:
-12. Add C++ overlay worker implementation (threaded) in native module path.
-13. Move heavy overlay marker aggregation into native worker-backed feed.
-14. Keep Qt feed contract (`get_overlay_snapshot()` shape) stable.
-15. Gate criteria:
-16. Runtime status reports overlay worker as implemented.
-17. High-load overlays remain responsive without Python heavy-read worker.
+## Cloud Delegation In Progress (`v5.84.0`)
+1. Add `set_nav_collision_probe(enabled, interval_s=2.0)` forwarding in native scanner binding.
+2. Fix `count_nearby_monsters` pybind args to support keyword calls (`radius`).
+3. Fix `get_nearby_interactive_items` signature parity to `(x, y, radius=3000.0, require_valid=True)` with keyword args.
+4. Fix `_read_truck_guard_roster(truck_addr, fnamepool)` signature parity.
+5. Add private compatibility aliases: `_fnamepool_addr`, `_gobjects_addr`, `_memory`.
+6. Add `_scanner` compatibility alias for legacy fallback UI code paths.
+7. Build + smoke checks required before merge:
+- `scripts/build_native.ps1`
+- `hasattr(scanner, "set_nav_collision_probe") == True`
+- kwargs path works for `count_nearby_monsters(..., radius=...)`
+- kwargs path works for `get_nearby_interactive_items(..., radius=..., require_valid=True)`
+- `_read_truck_guard_roster(veh, fnp)` accepts 2 args
+- scanner exposes `_memory`, `_fnamepool_addr`, `_gobjects_addr`, `_scanner`
+
+## Next Local Phase After Cloud Merge (`v5.85.0`)
+1. Implement scanner slice-2 migration based on runtime hotspot and stability risk:
+- native-own `get_typed_events`
+- native-own `count_nearby_monsters`
+- native-own `get_nearby_interactive_items`
+2. Keep public API shape unchanged so `BotEngine` and Qt pages remain untouched.
+3. Add behavior checks (not only method-exists checks) for event typing + interactive filtering + radius semantics.
+4. Gate criteria:
+- no bot-loop regressions in attach -> map -> return cycle
+- no keyword/signature regressions in UI debug flows
+- parity checks pass on representative logs/maps
+
+## Next Versioned Steps (post `v5.86.0`)
+1. `v5.87.0` - Phase E parity/reliability harness + gate criteria enforcement.
+2. Deliverables:
+3. Add C++ overlay worker implementation (threaded) in native module path.
+4. Move heavy overlay marker aggregation into native worker-backed feed.
+5. Keep Qt feed contract (`get_overlay_snapshot()` shape) stable.
+6. Gate criteria:
+7. Runtime status reports overlay worker as implemented.
+8. High-load overlays remain responsive without Python heavy-read worker.
 
 ## Newly Completed (Earlier)
 1. `v5.81.0` - Phase A immediate stability fix.
@@ -128,6 +155,22 @@ Goal in plain terms:
 4. Exit criteria:
 - `create_scanner(...)` no longer imports Python scanner,
 - runtime map-cycle works with native scanner implementation only.
+
+### Phase B1 - Compatibility Parity Stabilization (`v5.84.0`, cloud)
+1. Keep scanner API and attribute compatibility with existing Python call sites while native ownership expands.
+2. Complete six concrete parity fixes listed in "Cloud Delegation In Progress".
+3. Rebuild native module and run smoke checks before merge.
+4. Exit criteria:
+- no signature/property regressions in attach, runtime loop, and address debug pages,
+- `WallScanner` constructor compatibility preserved (`scanner._memory` available).
+
+### Phase B2 - Native Scanner Slice-2 Expansion (`v5.85.0`, local)
+1. Move selected read-heavy methods from backend delegation to native ownership.
+2. Preserve exact method signatures and keyword behavior at binding level.
+3. Add focused parity assertions for typed events and interactive-item reads.
+4. Exit criteria:
+- map cycle remains stable in strict-native runtime,
+- no new cloud-blocking compatibility regressions.
 
 ### Phase C - Implement Real Native Overlay Worker (Issues #3 and #4)
 1. Add C++ overlay worker implementation (threaded) in native module path.

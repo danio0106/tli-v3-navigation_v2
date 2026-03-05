@@ -19,6 +19,7 @@ class PathRecorder:
         self._min_distance: float = 50.0
         self._current_map: str = ""
         self._step_callback: Optional[Callable] = None
+        self._logging_enabled: bool = True
 
         os.makedirs(PATHS_DIR, exist_ok=True)
 
@@ -26,9 +27,13 @@ class PathRecorder:
         self._step_callback = callback
 
     def _log(self, msg: str):
-        log.info(f"[PathRecorder] {msg}")
+        if self._logging_enabled:
+            log.info(f"[PathRecorder] {msg}")
         if self._step_callback:
             self._step_callback(msg)
+
+    def set_logging_enabled(self, enabled: bool):
+        self._logging_enabled = bool(enabled)
 
     @property
     def is_recording(self) -> bool:

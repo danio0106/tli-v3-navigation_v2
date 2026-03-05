@@ -4,7 +4,7 @@ import math
 import time
 import threading
 from collections import deque
-from typing import Optional, Callable, Dict, Any
+from typing import Optional, Callable, Dict, Any, List, Tuple
 
 from src.core.memory_reader import MemoryReader
 from src.core.game_state import GameState
@@ -17,7 +17,6 @@ from src.core.map_selector import MapSelector
 from src.core.scanner import UE4Scanner
 from src.core.portal_detector import PortalDetector
 from src.core.screen_capture import ScreenCapture
-from src.core.hex_calibrator import HexCalibrator
 from src.core.scale_calibrator import ScaleCalibrator
 from src.core.wall_scanner import WallScanner, WallPoint
 from src.core.pathfinder import Pathfinder
@@ -67,12 +66,13 @@ class BotEngine:
         self.input.debug_input = bool(self.config.get("input_debug_logging", False))
 
         self._screen_capture = ScreenCapture(self.window)
-        self._hex_calibrator = HexCalibrator(self._screen_capture)
         self._scale_calibrator = ScaleCalibrator(self.window, self.input)
 
         self._path_recorder = PathRecorder(self.game_state)
         self._card_database = CardDatabase()  # reads data/card_database.json (priority + texture mappings)
-        self._map_selector = MapSelector(self.input, self.game_state, self.config, self._screen_capture, self._hex_calibrator)
+        # Hex CV calibration is retired from runtime map selection; selector uses
+        # deterministic slot centers.
+        self._map_selector = MapSelector(self.input, self.game_state, self.config, self._screen_capture)
         self._helper_rt_nav: Optional[RTNavigator] = None  # lazy; for manual nav + helpers
         self._manual_waypoints: Optional[list] = None
         self._manual_event_checker = None
@@ -136,6 +136,9 @@ class BotEngine:
         self._debug_overlay = None
         self._current_map_name = self.config.get("current_map", "")
         self._zone_watcher_active = False  # set True when zone-watcher thread is running
+        self._auto_nav_probe_active = False
+        self._auto_nav_probe_map = ""
+        self._auto_nav_probe_stable_checks = 0
         self._overlay_zone_fname = ""
         self._overlay_zone_english = ""
         self._overlay_snapshot_lock = threading.Lock()
@@ -269,7 +272,7 @@ class BotEngine:
         return self.config.get("current_map", "hideout")
 
     def _collect_overlay_snapshot_data(self) -> Dict[str, Any]:
-        portal_positions = []
+        portal_positions = self._collect_overlay_portal_positions()
         event_markers = []
         guard_markers = []
         entity_markers = []
@@ -286,55 +289,6 @@ class BotEngine:
             if not (math.isfinite(xf) and math.isfinite(yf)):
                 return False
             return abs(xf) <= 120000.0 and abs(yf) <= 120000.0
-
-        portal_det = self._portal_detector
-        if portal_det:
-            try:
-                if hasattr(portal_det, "get_portal_markers"):
-                    portal_positions = portal_det.get_portal_markers() or []
-                elif hasattr(portal_det, "get_portal_positions"):
-                    portal_positions = portal_det.get_portal_positions() or []
-            except Exception:
-                portal_positions = []
-
-        try:
-            current_map = self._resolve_overlay_current_map()
-            hardcoded = HARDCODED_MAP_PORTALS.get(current_map, []) or []
-            existing = {
-                (int(round(float(p.get("x", 0.0)))), int(round(float(p.get("y", 0.0)))))
-                for p in portal_positions if isinstance(p, dict)
-            }
-            for hp in hardcoded:
-                key = (int(round(float(hp.get("x", 0.0)))), int(round(float(hp.get("y", 0.0)))))
-                if key in existing:
-                    continue
-                portal_positions.append({
-                    "x": float(hp.get("x", 0.0)),
-                    "y": float(hp.get("y", 0.0)),
-                    "is_exit": bool(hp.get("is_exit", False)),
-                })
-                existing.add(key)
-        except Exception:
-            pass
-
-        # Keep one portal marker per rounded (x,y), preferring exit semantics.
-        try:
-            dedup = {}
-            for p in portal_positions:
-                if not isinstance(p, dict):
-                    continue
-                x = float(p.get("x", 0.0))
-                y = float(p.get("y", 0.0))
-                key = (int(round(x)), int(round(y)))
-                prev = dedup.get(key)
-                if prev is None:
-                    dedup[key] = dict(p)
-                    continue
-                if (not bool(prev.get("is_exit", False))) and bool(p.get("is_exit", False)):
-                    dedup[key] = dict(p)
-            portal_positions = list(dedup.values())
-        except Exception:
-            pass
 
         scanner = self._scanner
         if scanner:
@@ -450,7 +404,71 @@ class BotEngine:
             "updated_at": time.monotonic(),
         }
 
+    def _collect_overlay_portal_positions(self) -> List[Dict[str, Any]]:
+        portal_positions: List[Dict[str, Any]] = []
+
+        portal_det = self._portal_detector
+        if portal_det:
+            try:
+                if hasattr(portal_det, "get_portal_markers"):
+                    portal_positions = portal_det.get_portal_markers() or []
+                elif hasattr(portal_det, "get_portal_positions"):
+                    portal_positions = portal_det.get_portal_positions() or []
+            except Exception:
+                portal_positions = []
+
+        try:
+            current_map = self._resolve_overlay_current_map()
+            hardcoded = HARDCODED_MAP_PORTALS.get(current_map, []) or []
+            existing = {
+                (int(round(float(p.get("x", 0.0)))), int(round(float(p.get("y", 0.0)))))
+                for p in portal_positions if isinstance(p, dict)
+            }
+            for hp in hardcoded:
+                key = (int(round(float(hp.get("x", 0.0)))), int(round(float(hp.get("y", 0.0)))))
+                if key in existing:
+                    continue
+                portal_positions.append({
+                    "x": float(hp.get("x", 0.0)),
+                    "y": float(hp.get("y", 0.0)),
+                    "is_exit": bool(hp.get("is_exit", False)),
+                })
+                existing.add(key)
+        except Exception:
+            pass
+
+        # Keep one portal marker per rounded (x,y), preferring exit semantics.
+        try:
+            dedup = {}
+            for p in portal_positions:
+                if not isinstance(p, dict):
+                    continue
+                x = float(p.get("x", 0.0))
+                y = float(p.get("y", 0.0))
+                key = (int(round(x)), int(round(y)))
+                prev = dedup.get(key)
+                if prev is None:
+                    dedup[key] = dict(p)
+                    continue
+                if (not bool(prev.get("is_exit", False))) and bool(p.get("is_exit", False)):
+                    dedup[key] = dict(p)
+            portal_positions = list(dedup.values())
+        except Exception:
+            pass
+
+        return portal_positions
+
     def _start_overlay_snapshot_worker(self):
+        # Prefer native-side overlay worker when available on scanner.
+        scanner = self._scanner
+        if scanner and hasattr(scanner, "start_overlay_worker") and hasattr(scanner, "get_overlay_snapshot"):
+            try:
+                scanner.start_overlay_worker(0.20)
+                self._native_runtime.set_overlay_worker_state("native:cpp-overlay-worker", True)
+                return
+            except Exception:
+                pass
+
         if self._overlay_worker_thread and self._overlay_worker_thread.is_alive():
             self._native_runtime.set_overlay_worker_state("native:engine-overlay-snapshot", True)
             return
@@ -482,14 +500,40 @@ class BotEngine:
         self._native_runtime.set_overlay_worker_state("native:engine-overlay-snapshot", True)
 
     def _stop_overlay_snapshot_worker(self):
+        scanner = self._scanner
+        if scanner and hasattr(scanner, "stop_overlay_worker"):
+            try:
+                scanner.stop_overlay_worker()
+                self._native_runtime.set_overlay_worker_state("native:cpp-overlay-worker", False)
+            except Exception:
+                pass
+
         self._overlay_worker_stop.set()
         t = self._overlay_worker_thread
         if t and t.is_alive():
             t.join(timeout=0.5)
         self._overlay_worker_thread = None
-        self._native_runtime.set_overlay_worker_state("native:engine-overlay-snapshot", False)
+        if not scanner or not hasattr(scanner, "stop_overlay_worker"):
+            self._native_runtime.set_overlay_worker_state("native:engine-overlay-snapshot", False)
 
     def get_overlay_snapshot(self) -> Dict[str, Any]:
+        scanner = self._scanner
+        if scanner and hasattr(scanner, "get_overlay_snapshot"):
+            try:
+                native_snap = scanner.get_overlay_snapshot() or {}
+                return {
+                    "portal_positions": self._collect_overlay_portal_positions(),
+                    "event_markers": list(native_snap.get("event_markers", [])),
+                    "guard_markers": list(native_snap.get("guard_markers", [])),
+                    "entity_markers": list(native_snap.get("entity_markers", [])),
+                    "nav_collision_markers": list(native_snap.get("nav_collision_markers", [])),
+                    "dropped_event_markers": int(native_snap.get("dropped_event_markers", 0) or 0),
+                    "dropped_guard_markers": int(native_snap.get("dropped_guard_markers", 0) or 0),
+                    "updated_at": float(native_snap.get("updated_at", 0.0) or 0.0),
+                }
+            except Exception:
+                pass
+
         with self._overlay_snapshot_lock:
             return {
                 "portal_positions": list(self._overlay_snapshot.get("portal_positions", [])),
@@ -513,10 +557,6 @@ class BotEngine:
     @property
     def screen_capture(self) -> ScreenCapture:
         return self._screen_capture
-
-    @property
-    def hex_calibrator(self) -> HexCalibrator:
-        return self._hex_calibrator
 
     @property
     def stats(self) -> dict:
@@ -647,13 +687,118 @@ class BotEngine:
     def _configure_scanner_probes(self, scanner: Optional[UE4Scanner]) -> None:
         if not scanner:
             return
-        heavy_debug = bool(self.config.get("runtime_debug_heavy_enabled", False))
-        enabled = heavy_debug and bool(self.config.get("nav_collision_probe_enabled", False))
+        enabled = self._is_config_nav_probe_enabled()
         try:
             interval_s = float(self.config.get("nav_collision_probe_interval_s", 2.0) or 2.0)
         except Exception:
             interval_s = 2.0
         scanner.set_nav_collision_probe(enabled, interval_s)
+
+    def _is_config_nav_probe_enabled(self) -> bool:
+        heavy_debug = bool(self.config.get("runtime_debug_heavy_enabled", False))
+        return heavy_debug and bool(self.config.get("nav_collision_probe_enabled", False))
+
+    def _set_nav_probe_runtime(self, enabled: bool, reason: str = "") -> None:
+        if not self._scanner:
+            return
+        try:
+            interval_s = float(self.config.get("nav_collision_probe_interval_s", 2.0) or 2.0)
+        except Exception:
+            interval_s = 2.0
+        self._scanner.set_nav_collision_probe(bool(enabled), interval_s)
+        state = "enabled" if enabled else "disabled"
+        suffix = f" ({reason})" if reason else ""
+        log.info(f"[NavProbe][Auto] {state}{suffix}")
+
+    def _maybe_start_auto_nav_probe(self, map_name: str) -> None:
+        if not self._scanner:
+            return
+        if not bool(self.config.get("nav_collision_autoprobe_enabled", True)):
+            return
+        if self._is_config_nav_probe_enabled():
+            # Explicit debug/probe mode is already active; do not override it.
+            return
+
+        cached_count = 0
+        try:
+            data = WallScanner._load_json()
+            cached_count = len(data.get(map_name, []))
+        except Exception:
+            cached_count = 0
+
+        try:
+            min_cache = int(self.config.get("nav_collision_autoprobe_min_cache_points", MINIMAP_SCAN_SKIP_THRESHOLD) or MINIMAP_SCAN_SKIP_THRESHOLD)
+        except Exception:
+            min_cache = MINIMAP_SCAN_SKIP_THRESHOLD
+
+        if cached_count >= max(0, min_cache):
+            return
+
+        self._auto_nav_probe_active = True
+        self._auto_nav_probe_map = map_name
+        self._auto_nav_probe_stable_checks = 0
+        self._set_nav_probe_runtime(True, f"low cache confidence for '{map_name}' ({cached_count}<{min_cache})")
+
+    def _maybe_finish_auto_nav_probe(self, map_name: str) -> None:
+        if not self._auto_nav_probe_active or map_name != self._auto_nav_probe_map:
+            return
+        if not self._scanner:
+            return
+
+        try:
+            min_markers = int(self.config.get("nav_collision_autoprobe_min_markers", 20) or 20)
+        except Exception:
+            min_markers = 20
+        try:
+            stable_checks_needed = int(self.config.get("nav_collision_autoprobe_stable_checks", 2) or 2)
+        except Exception:
+            stable_checks_needed = 2
+
+        try:
+            markers = self._scanner.get_nav_collision_markers() or []
+        except Exception:
+            markers = []
+
+        count = len(markers)
+        if count >= max(1, min_markers):
+            self._auto_nav_probe_stable_checks += 1
+            log.info(
+                f"[NavProbe][Auto] stable check {self._auto_nav_probe_stable_checks}/{stable_checks_needed} "
+                f"for '{map_name}' (markers={count})"
+            )
+        else:
+            if self._auto_nav_probe_stable_checks != 0:
+                log.info(
+                    f"[NavProbe][Auto] marker count dropped for '{map_name}' "
+                    f"({count}<{min_markers}) — resetting stable counter"
+                )
+            self._auto_nav_probe_stable_checks = 0
+
+        if self._auto_nav_probe_stable_checks < max(1, stable_checks_needed):
+            return
+
+        # Priors are now available; rebuild active grid immediately so pathfinder
+        # consumes nav blockers in this same map run.
+        self._rebuild_navigation_grid_from_cache(map_name)
+        self._auto_nav_probe_active = False
+        self._auto_nav_probe_map = ""
+        self._auto_nav_probe_stable_checks = 0
+        self._set_nav_probe_runtime(self._is_config_nav_probe_enabled(), f"stable priors collected for '{map_name}'")
+
+    def _rebuild_navigation_grid_from_cache(self, map_name: str) -> None:
+        if not map_name:
+            return
+        if self._wall_scanner is None:
+            self._wall_scanner = WallScanner(self._scanner)
+        ws = self._wall_scanner
+        cached = ws.load_wall_data(map_name) or []
+        if not cached:
+            return
+        cx, cy = self._read_player_xy_runtime()
+        grid = self._build_navigation_grid_for_map(ws, map_name, cx, cy, cached)
+        if grid is not None:
+            self._pathfinder.set_grid(grid)
+            log.info(f"[WallScan] A* grid refreshed from cache with latest nav priors: {grid}")
 
     def _create_portal_detector(self, scanner: UE4Scanner) -> PortalDetector:
         heavy_debug = bool(self.config.get("runtime_debug_heavy_enabled", False))
@@ -747,10 +892,12 @@ class BotEngine:
                 log.info("Saved addresses invalid - running dump chain scan...")
                 scanner = self._create_scanner("[Scanner]")
                 result = scanner.scan_dump_chain(use_cache=False)
+                # Keep scanner available even when chain fails so FNamePool/GObjects
+                # can still be resolved independently in the background.
+                self._scanner = scanner
+                self._configure_scanner_probes(self._scanner)
                 if result.success:
                     log.info(f"Dump chain resolved: ({result.player_x:.1f}, {result.player_y:.1f}, {result.player_z:.1f})")
-                    self._scanner = scanner
-                    self._configure_scanner_probes(self._scanner)
                     self.last_scan_failed = False
                     if result.fnamepool_addr and result.gobjects_addr:
                         self._portal_detector = self._create_portal_detector(scanner)
@@ -759,6 +906,39 @@ class BotEngine:
                 else:
                     log.warning("Dump chain scan failed - addresses may need manual configuration")
                     self.last_scan_failed = True
+                    # Chain can be transiently invalid during load/login, but
+                    # FNamePool/GObjects may still be discoverable for diagnostics.
+                    modules = self.memory.list_modules()
+                    if modules:
+                        module_base, module_size = modules[0][1], modules[0][2]
+
+                        def _deferred_extras_on_fail():
+                            try:
+                                if not self.memory.is_attached or not self._scanner:
+                                    return
+                                self._scanner.scan_fnamepool(module_base, module_size)
+                                self._scanner.scan_gobjects(module_base, module_size)
+                                fnamepool_addr = getattr(self._scanner, "fnamepool_addr", 0)
+                                gobjects_addr = getattr(self._scanner, "gobjects_addr", 0)
+                                if fnamepool_addr and gobjects_addr and not self._portal_detector:
+                                    self._portal_detector = self._create_portal_detector(self._scanner)
+                                    log.info("Portal detector initialized (deferred after chain fail)")
+                                    self._init_memory_card_selector()
+                            except Exception as exc:
+                                log.warning(f"[Attach] Deferred scanner extras after chain fail failed: {exc}")
+                            finally:
+                                for cb in getattr(self, '_deferred_scan_callbacks', []):
+                                    try:
+                                        cb()
+                                    except Exception:
+                                        pass
+
+                        import threading
+                        threading.Thread(
+                            target=_deferred_extras_on_fail,
+                            daemon=True,
+                            name="DeferredExtrasOnFail",
+                        ).start()
 
             try:
                 self.game_state.update()
@@ -833,7 +1013,7 @@ class BotEngine:
                 self._scanner.cancel()  # flushes + closes MovData CSV writer thread
             self._set_state(BotState.STOPPING)
 
-            if self._thread and self._thread.is_alive():
+            if self._thread and self._thread.is_alive() and threading.current_thread() is not self._thread:
                 self._thread.join(timeout=5.0)
 
             self.game_state.reset()
@@ -1105,9 +1285,6 @@ class BotEngine:
             return
 
         self._map_selector.set_step_callback(None)
-        if not self._map_selector.is_calibrated:
-            log.info("Calibrating hexagon positions...")
-            self._map_selector.calibrate(debug=True)
         result = self._map_selector.execute_map_selection()
         if result:
             selected_idx = self._map_selector._last_selected
@@ -1504,6 +1681,13 @@ class BotEngine:
                         f"[WallScan] Re-scan: {new_count} positions "
                         f"(cache already has {old_count}) — no update needed for '{map_name}'"
                     )
+                    # Position cache did not grow, but nav-collision priors may have
+                    # changed (e.g., auto probe just populated markers). Rebuild grid.
+                    cx, cy = self._read_player_xy_runtime()
+                    grid = self._build_navigation_grid_for_map(ws, map_name, cx, cy, cached)
+                    if grid is not None:
+                        self._pathfinder.set_grid(grid)
+                        log.info(f"[WallScan] A* grid refreshed without cache growth: {grid}")
                     log.flush()
                     return
 
@@ -1684,6 +1868,11 @@ class BotEngine:
                             # instance is no longer valid in the hideout / loading screen.
                             if self._scanner:
                                 self._scanner.clear_fightmgr_cache()
+                            if self._auto_nav_probe_active:
+                                self._auto_nav_probe_active = False
+                                self._auto_nav_probe_map = ""
+                                self._auto_nav_probe_stable_checks = 0
+                                self._set_nav_probe_runtime(self._is_config_nav_probe_enabled(), "zone exit")
                             continue
 
                         # Back in a map zone — reset non-map counter
@@ -1713,6 +1902,7 @@ class BotEngine:
                             # via GObjects instead of reading the previous map's instance.
                             if self._scanner:
                                 self._scanner.clear_fightmgr_cache()
+                            self._maybe_start_auto_nav_probe(map_name)
                             self._start_wall_scan_background(map_name)
                             last_scan_at = now
                             # Start direct position sampler for this map
@@ -1766,11 +1956,18 @@ class BotEngine:
                             log.flush()
                             retry_count += 1  # prevent repeated logging
 
+                        self._maybe_finish_auto_nav_probe(map_name)
+
                     except Exception:
                         pass
             finally:
                 if pos_sampler_stop:
                     pos_sampler_stop.set()
+                if self._auto_nav_probe_active:
+                    self._auto_nav_probe_active = False
+                    self._auto_nav_probe_map = ""
+                    self._auto_nav_probe_stable_checks = 0
+                    self._set_nav_probe_runtime(self._is_config_nav_probe_enabled(), "zone watcher stop")
                 self._zone_watcher_active = False
 
         threading.Thread(target=_run, daemon=True, name="ZoneWatcher").start()

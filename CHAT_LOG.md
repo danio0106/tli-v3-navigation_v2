@@ -1,3 +1,14 @@
+### Mar 05, 2026 — v5.86.0 (Native overlay worker live validation confirmed)
+- User completed in-game validation and explicitly confirmed: overlay works correctly on `v5.86.0`.
+- Native overlay worker path is now treated as validated production baseline for ongoing native-only runtime migration.
+- Metadata alignment completed in active branch:
+  - `APP_VERSION` set to `v5.86.0` in `src/utils/constants.py`.
+  - Native runtime info now reports overlay phase (`status=native_scanner_overlay`, `phase_b=slice_2_overlay`).
+- Validation status:
+  - Native parity smoke passes with overlay worker checks (`15/15`).
+- Next required action:
+  - proceed to next versioned phase (`v5.87.0`) focused on parity/reliability harness and stricter runtime gate criteria.
+
 ### Mar 05, 2026 — v5.83.0 (Phase B first native scanner runtime slice kickoff)
 - Started Phase B per user request after overlay parity acceptance; focus shifted from UI parity to native scanner migration.
 - Replaced native module scanner construction model in `src/native/cpp/module.cpp`:

@@ -1,6 +1,7 @@
 import json
 import os
 import time
+import traceback
 from enum import Enum, auto
 from typing import Optional, List, Tuple, Callable
 from dataclasses import dataclass, field
@@ -8,7 +9,6 @@ from dataclasses import dataclass, field
 from src.core.input_controller import InputController
 from src.core.game_state import GameState
 from src.core.screen_capture import ScreenCapture
-from src.core.hex_calibrator import HexCalibrator
 from src.core.card_detector import CardDetector
 from src.utils.constants import (
     CHARACTER_CENTER, MAP_NAMES, HIDEOUT_POSITION,
@@ -77,17 +77,15 @@ class MapSelector:
     def __init__(self, input_ctrl: InputController, game_state: GameState,
                  config: ConfigManager,
                  screen_capture: Optional[ScreenCapture] = None,
-                 hex_calibrator: Optional[HexCalibrator] = None,
                  memory_card_selector=None):
         self._input = input_ctrl
         self._game_state = game_state
         self._config = config
         self._screen_capture = screen_capture
-        self._hex_calibrator = hex_calibrator
         self._mem_selector = memory_card_selector  # MemoryCardSelector (primary)
         self._card_detector = None
         if screen_capture:
-            self._card_detector = CardDetector(screen_capture, hex_calibrator)
+            self._card_detector = CardDetector(screen_capture)
         self._calibrated = False
         self._cards: List[MapCard] = []
         self._active_positions: List[int] = []
@@ -99,6 +97,14 @@ class MapSelector:
         self._max_retries: int = 3
 
         self._load_card_state()
+
+    def _get_runtime_hexagons(self) -> dict:
+        """Return active hex center mapping.
+
+        Runtime now defaults to deterministic hardcoded slot centers; calibrated
+        data is used only if explicitly available.
+        """
+        return {idx: {"center": center} for idx, center in HEX_POSITIONS.items()}
 
     def set_step_callback(self, callback: Callable):
         self._step_callback = callback
@@ -128,19 +134,11 @@ class MapSelector:
 
     @property
     def is_calibrated(self) -> bool:
-        if self._hex_calibrator and self._hex_calibrator.is_calibrated():
-            self._calibrated = True
-        return self._calibrated
+        return True
 
     def calibrate(self, debug: bool = True) -> bool:
-        if self._hex_calibrator is None:
-            log.warning("[MapSelector] No calibrator available")
-            return False
-        result = self._hex_calibrator.calibrate(debug=debug)
-        if result is not None:
-            self._calibrated = True
-            return True
-        return False
+        # Retired compatibility shim: runtime no longer calibrates card hexes via CV.
+        return True
 
     @property
     def cards(self) -> List[MapCard]:
@@ -207,21 +205,26 @@ class MapSelector:
     def execute_map_selection(self) -> bool:
         self._cancelled = False
         start_time = time.time()
+        self._log("Starting map selection pipeline")
 
         self._set_step(SelectionStep.OPEN_DEVICE)
         if not self._open_map_device():
+            self._log("Map selection failed at step OPEN_DEVICE")
             return False
 
         self._set_step(SelectionStep.SELECT_ZONE)
         if not self._select_zone():
+            self._log("Map selection failed at step SELECT_ZONE")
             return False
 
         self._set_step(SelectionStep.SELECT_CARD)
         if not self._select_card():
+            self._log("Map selection failed at step SELECT_CARD")
             return False
 
         self._set_step(SelectionStep.OPEN_PORTAL)
         if not self._open_portal_sequence():
+            self._log("Map selection failed at step OPEN_PORTAL")
             return False
 
         elapsed = time.time() - start_time
@@ -460,11 +463,7 @@ class MapSelector:
                 target_name = f"{best.clean_texture} -> {best.card_name}" if best.card_name else best.clean_texture
                 self._log(f"  Target: {target_name} ({best.rarity_name}, rank={best.priority_rank})")
 
-                hex_data = self._hex_calibrator.get_hex_data()
-                if hex_data is None:
-                    self._log("  No calibration data — cannot click hexes")
-                    return None  # Signal fallback to CV
-                hexagons = hex_data.get("hexagons", {})
+                hexagons = self._get_runtime_hexagons()
 
                 # Check for any unknown cards and snap screenshots for database updates
                 self._screenshot_unknown_cards(all_cards, hexagons)
@@ -473,7 +472,7 @@ class MapSelector:
                 resolved_hex = best.hex_slot_index
 
                 if resolved_hex >= 0 and resolved_hex in hexagons:
-                    center = hexagons[resolved_hex]["center"]
+                    center = tuple(hexagons[resolved_hex]["center"])
                     self._input.click(*center)
                     time.sleep(0.3)
                     if self._verify_card_selected():
@@ -487,7 +486,7 @@ class MapSelector:
                     if self._cancelled: return False
                     h_idx = fb_card.hex_slot_index
                     if h_idx < 0 or h_idx not in hexagons: continue
-                    center = hexagons[h_idx]["center"]
+                    center = tuple(hexagons[h_idx]["center"])
                     self._input.click(*center)
                     time.sleep(0.3)
                     if self._verify_card_selected():
@@ -504,6 +503,7 @@ class MapSelector:
 
             except Exception as e:
                 self._log(f"  Memory card selection error: {e} — pressing ESC")
+                self._log(f"  Memory selection traceback: {traceback.format_exc(limit=2).strip()}")
                 self._input.press_key("escape")
                 time.sleep(0.4)
 
@@ -549,13 +549,35 @@ class MapSelector:
         return True
 
     def _screenshot_unknown_cards(self, all_cards, hexagons) -> None:
-        """Click and screenshot any unknown cards for DB updates."""
+        """Click unknown cards, capture details screenshot, and save memory metadata."""
         unknowns = [c for c in all_cards if c.priority_rank >= 9999]
         if not unknowns:
             return
 
+        if self._screen_capture is None:
+            self._log("  [Unknown Card] Screen capture unavailable — skipping unknown-card snapshots")
+            return
+
         import os, time, cv2
         os.makedirs("debug", exist_ok=True)
+
+        # Capture only the card details UI area to keep debug artifacts small.
+        # User provided screen coords; convert to client coords by subtracting
+        # title-bar offset (1,31):
+        #   screen (1246,242)-(1540,818) -> client (1245,211)-(1539,787)
+        crop_left = 1245
+        crop_top = 211
+        crop_right = 1539
+        crop_bottom = 787
+
+        def _safe_name(value: str) -> str:
+            keep = []
+            for ch in str(value or "unknown"):
+                if ch.isalnum() or ch in ("-", "_"):
+                    keep.append(ch)
+                else:
+                    keep.append("_")
+            return "".join(keep).strip("_") or "unknown"
         
         for c in unknowns:
             if self._cancelled:
@@ -575,10 +597,78 @@ class MapSelector:
             time.sleep(0.5)
             
             # screenshot
-            shot = self._screen.get_screen()
-            fname = f"debug/unknown_card_{c.clean_texture}_{c.rarity_name}_{int(time.time())}.png"
-            cv2.imwrite(fname, cv2.cvtColor(shot, cv2.COLOR_RGB2BGR))
-            self._log(f"  Saved details screenshot: {fname}")
+            shot = self._screen_capture.capture_window()
+            if shot is None:
+                self._log("  [Unknown Card] Capture failed — skipping this card snapshot")
+                self._input.press_key('escape')
+                time.sleep(0.5)
+                continue
+
+            shot_h, shot_w = shot.shape[:2]
+            l = max(0, min(crop_left, shot_w))
+            r = max(0, min(crop_right, shot_w))
+            t = max(0, min(crop_top, shot_h))
+            b = max(0, min(crop_bottom, shot_h))
+            if r > l and b > t:
+                shot = shot[t:b, l:r]
+            else:
+                l, t, r, b = 0, 0, shot_w, shot_h
+
+            ts = int(time.time())
+            safe_texture = _safe_name(getattr(c, "clean_texture", "unknown"))
+            safe_rarity = _safe_name(getattr(c, "rarity_name", "unknown"))
+            base = f"unknown_card_{safe_texture}_{safe_rarity}_{ts}"
+            fname = f"debug/{base}.png"
+            cv2.imwrite(fname, shot)
+            self._log(
+                f"  Saved details screenshot: {fname} "
+                f"(crop client {l},{t},{r},{b} size={shot.shape[1]}x{shot.shape[0]})"
+            )
+
+            # Save paired memory metadata to speed up card-database extensions.
+            mem_selector = self._mem_selector
+            scanner = getattr(mem_selector, "_scanner", None) if mem_selector is not None else None
+            meta = {
+                "timestamp": ts,
+                "screenshot": fname,
+                "card": {
+                    "clean_texture": getattr(c, "clean_texture", ""),
+                    "texture_name": getattr(c, "texture_name", ""),
+                    "rarity_name": getattr(c, "rarity_name", ""),
+                    "rarity_index": getattr(c, "rarity_index", -1),
+                    "priority_rank": getattr(c, "priority_rank", 9999),
+                    "card_name": getattr(c, "card_name", ""),
+                    "map_key": getattr(c, "map_key", ""),
+                    "hex_slot_index": getattr(c, "hex_slot_index", -1),
+                    "widget_index": getattr(c, "widget_index", -1),
+                    "widget_address": hex(int(getattr(c, "widget_address", 0) or 0)),
+                    "card_view_address": hex(int(getattr(c, "card_view_address", 0) or 0)),
+                },
+                "ui": {
+                    "hex_center": [int(cx), int(cy)],
+                    "cancelled": bool(self._cancelled),
+                    "screenshot_crop_client": {
+                        "left": int(l),
+                        "top": int(t),
+                        "right": int(r),
+                        "bottom": int(b),
+                        "width": int(max(0, r - l)),
+                        "height": int(max(0, b - t)),
+                    },
+                },
+                "memory_context": {
+                    "scanner_type": type(scanner).__name__ if scanner is not None else "",
+                    "fnamepool_addr": hex(int(getattr(scanner, "fnamepool_addr", 0) or 0)) if scanner is not None else "0x0",
+                    "gobjects_addr": hex(int(getattr(scanner, "gobjects_addr", 0) or 0)) if scanner is not None else "0x0",
+                },
+            }
+            meta_path = f"debug/{base}.json"
+            try:
+                with open(meta_path, "w", encoding="utf-8") as f:
+                    json.dump(meta, f, indent=2)
+                self._log(f"  Saved unknown-card memory metadata: {meta_path}")
+            except Exception as exc:
+                self._log(f"  [Unknown Card] Failed to save memory metadata JSON: {exc}")
             
             # Press Esc to close the modal/tooltip
             self._input.press_key('escape')
@@ -644,8 +734,11 @@ class MapSelector:
                     if best_pos is None:
                         best_pos = candidates[0]
 
-                hex_data = self._hex_calibrator.get_hex_data()["hexagons"][best_pos]
-                self._input.click(*hex_data["center"])
+                hexagons = self._get_runtime_hexagons()
+                if best_pos not in hexagons:
+                    self._log(f"  Missing hex center for slot {best_pos} — aborting")
+                    return False
+                self._input.click(*tuple(hexagons[best_pos]["center"]))
                 time.sleep(0.3)
 
                 source_label = "UNKNOWN fallback" if is_unknown_fallback else "ACTIVE"
@@ -666,8 +759,9 @@ class MapSelector:
                     for fallback_pos in remaining_unknown:
                         if self._cancelled:
                             return False
-                        hex_data = self._hex_calibrator.get_hex_data()["hexagons"][fallback_pos]
-                        self._input.click(*hex_data["center"])
+                        if fallback_pos not in hexagons:
+                            continue
+                        self._input.click(*tuple(hexagons[fallback_pos]["center"]))
                         time.sleep(0.3)
                         self._log(f"  Trying next UNKNOWN card: hex {fallback_pos}")
                         if self._card_detector.verify_active_card_selected():

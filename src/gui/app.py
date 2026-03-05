@@ -36,7 +36,7 @@ class BotApp(ctk.CTk):
         apply_theme()
         super().__init__()
 
-        self.title(f"{APP_NAME} v{APP_VERSION}")
+        self.title(f"{APP_NAME} {APP_VERSION}")
         self.geometry("580x900+10+10")
         self.minsize(520, 700)
         self.configure(fg_color=COLORS["bg_dark"])
@@ -71,7 +71,7 @@ class BotApp(ctk.CTk):
         self._setup_hotkeys()
         self._setup_overlay_connection()
 
-        log.info(f"{APP_NAME} v{APP_VERSION} started")
+        log.info(f"{APP_NAME} {APP_VERSION} started")
         # Auto-attach if the game process is already running when the bot opens.
         self.after(800, self._auto_attach_if_game_running)
 
@@ -109,7 +109,7 @@ class BotApp(ctk.CTk):
         logo_frame.pack(fill="x", padx=16, pady=(20, 8))
 
         create_label(logo_frame, "TL Bot", "heading", "accent_cyan").pack(anchor="w")
-        create_label(logo_frame, f"v{APP_VERSION} | Memory Edition", "small", "text_muted").pack(anchor="w")
+        create_label(logo_frame, f"{APP_VERSION} | Memory Edition", "small", "text_muted").pack(anchor="w")
 
         separator = ctk.CTkFrame(sidebar, fg_color=COLORS["border"], height=1)
         separator.pack(fill="x", padx=16, pady=12)

@@ -54,7 +54,7 @@ class BotAppQt(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle(f"{APP_NAME} v{APP_VERSION} [Qt]")
+        self.setWindowTitle(f"{APP_NAME} {APP_VERSION} [Qt]")
         self._apply_default_window_placement()
         self.setMinimumSize(620, 620)
 
@@ -91,7 +91,7 @@ class BotAppQt(QMainWindow):
 
         QTimer.singleShot(800, self._auto_attach_if_game_running)
 
-        log.info(f"{APP_NAME} v{APP_VERSION} Qt shell started")
+        log.info(f"{APP_NAME} {APP_VERSION} Qt shell started")
 
     def _apply_default_window_placement(self):
         """Place the bot on the left by default and size it for side-by-side play.
@@ -136,7 +136,7 @@ class BotAppQt(QMainWindow):
 
         title = QLabel("TL Bot")
         title.setObjectName("Title")
-        subtitle = QLabel(f"v{APP_VERSION} | Qt Quick")
+        subtitle = QLabel(f"{APP_VERSION} | Qt Quick")
         subtitle.setObjectName("Subtitle")
         side_layout.addWidget(title)
         side_layout.addWidget(subtitle)

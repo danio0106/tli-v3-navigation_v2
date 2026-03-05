@@ -37,9 +37,8 @@ CAPTURE_DELAY_MS = 60
 
 
 class CardDetector:
-    def __init__(self, screen_capture=None, hex_calibrator=None):
+    def __init__(self, screen_capture=None):
         self._screen_capture = screen_capture
-        self._hex_calibrator = hex_calibrator
         self._last_result = None
 
     def detect_cards(self, frame, debug=True) -> dict:

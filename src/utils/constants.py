@@ -2,7 +2,7 @@ from enum import Enum, auto
 
 
 APP_NAME = "Torchlight Infinite Bot V2"
-APP_VERSION = 'v5.83.0'
+APP_VERSION = 'v5.86.0'
 GAME_PROCESS_NAME = "torchlight_infinite.exe"
 GAME_WINDOW_TITLE = "Torchlight Infinite"
 
@@ -611,6 +611,12 @@ DEFAULT_SETTINGS = {
     # Runtime NavModifierVolume/Recast/NavBounds probe logger.
     "nav_collision_probe_enabled": False,
     "nav_collision_probe_interval_s": 2.0,
+    # Auto-policy: temporarily enable nav probe on low/no-confidence maps,
+    # then disable as soon as stable nav priors are collected.
+    "nav_collision_autoprobe_enabled": True,
+    "nav_collision_autoprobe_min_cache_points": 200,
+    "nav_collision_autoprobe_min_markers": 20,
+    "nav_collision_autoprobe_stable_checks": 2,
     "nav_collision_overlay_enabled": False,
     # Overlay debug: draw inflated boxes alongside raw markers.
     "nav_collision_overlay_inflate_debug": False,
