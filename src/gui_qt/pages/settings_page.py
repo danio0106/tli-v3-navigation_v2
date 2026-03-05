@@ -70,6 +70,16 @@ class SettingsPage(QFrame):
                 ("loot_spam_interval_ms", "Loot Spam Interval (ms)", "How often to press E during navigation"),
                 ("stuck_timeout_sec", "Stuck Timeout (sec)", "Seconds before trying escape angles"),
             ],
+            "Overlay Performance": [
+                ("overlay_lod_enabled", "Overlay LOD Enabled", "Reduce marker density in heavy debug scenes"),
+                ("overlay_lod_max_portals", "Max Portals", "Maximum portal markers rendered per frame"),
+                ("overlay_lod_max_events", "Max Events", "Maximum event markers rendered per frame"),
+                ("overlay_lod_max_guards", "Max Guards", "Maximum guard markers rendered per frame"),
+                ("overlay_lod_max_entities", "Max Entities", "Maximum entity markers rendered per frame"),
+                ("overlay_lod_max_nav_collision", "Max Nav Boxes", "Maximum nav-collision boxes rendered per frame"),
+                ("overlay_lod_max_grid_walkable", "Max Grid Walkable", "Maximum walkable grid points rendered"),
+                ("overlay_lod_max_grid_frontier", "Max Grid Frontier", "Maximum frontier grid points rendered"),
+            ],
             "Hotkeys": [
                 ("hotkey_start", "Start Hotkey", "Global hotkey to start bot"),
                 ("hotkey_stop", "Stop Hotkey", "Global hotkey to stop bot"),

@@ -246,12 +246,21 @@ class AddressManagerTab(ctk.CTkFrame):
         self._active_scanner = None
 
         if success:
+            self._engine.last_scan_failed = False
             self._chain_status.configure(text="Chain: OK", text_color=COLORS["accent_green"])
             self._global_status.configure(text="Scan complete", text_color=COLORS["accent_green"])
         else:
             self._chain_status.configure(text="Chain: Failed", text_color=COLORS["accent_red"])
             self._global_status.configure(text="Scan failed - see log above", text_color=COLORS["accent_red"])
             self._engine.last_scan_failed = True
+            self._attach_btn.configure(text="Attach to Game", state="normal")
+            self._attach_status.configure(text="Failed", text_color=COLORS["accent_red"])
+            try:
+                self._engine.memory.detach()
+            except Exception:
+                pass
+            if hasattr(self._engine, "_scanner"):
+                self._engine._scanner = None
             self._show_outdated_popup()
 
     def _show_outdated_popup(self):
@@ -291,6 +300,7 @@ class AddressManagerTab(ctk.CTkFrame):
         ).pack(pady=(0, 16))
 
     def _on_attach(self):
+        self._engine.last_scan_failed = False
         self._attach_btn.configure(state="disabled", text="Attaching...")
         self._attach_status.configure(text="Connecting...", text_color=COLORS["accent_orange"])
 
@@ -303,6 +313,10 @@ class AddressManagerTab(ctk.CTkFrame):
         threading.Thread(target=_do_attach, daemon=True).start()
 
     def _finish_attach(self, success: bool, message: str):
+        if success and getattr(self._engine, "last_scan_failed", False):
+            success = False
+            message = "Dump chain scan failed - address chain could not be resolved"
+
         if success:
             self._attach_btn.configure(text="Attached", state="disabled", fg_color=COLORS["accent_green"])
             self._attach_status.configure(text="Connected", text_color=COLORS["accent_green"])
@@ -371,7 +385,12 @@ class AddressManagerTab(ctk.CTkFrame):
             for test_idx in [1, 2, 3, 5, 10]:
                 test_name = self._engine.memory.read_fname(candidate, test_idx)
                 if test_name and len(test_name) > 1 and test_name.isprintable():
-                    scanner._fnamepool_addr = candidate
+                    if hasattr(scanner, "set_fnamepool_addr"):
+                        scanner.set_fnamepool_addr(candidate)
+                    elif hasattr(scanner, "_scanner") and hasattr(scanner._scanner, "set_fnamepool_addr"):
+                        scanner._scanner.set_fnamepool_addr(candidate)
+                    else:
+                        scanner._fnamepool_addr = candidate
                     if candidate != addr:
                         offset_diff = candidate - addr
                         self._append_scan_log(

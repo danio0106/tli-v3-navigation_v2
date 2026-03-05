@@ -1,3 +1,260 @@
+### Mar 05, 2026 — v5.83.0 (Phase B first native scanner runtime slice kickoff)
+- Started Phase B per user request after overlay parity acceptance; focus shifted from UI parity to native scanner migration.
+- Replaced native module scanner construction model in `src/native/cpp/module.cpp`:
+  - added concrete `NativeScanner` pybind class exposing the strict runtime scanner API surface,
+  - `create_scanner(...)` now returns this native scanner object and no longer imports `src.core.scanner` inside C++.
+- Implemented first native-owned hot-path method:
+  - `NativeScanner.read_player_xy()` now reads `player_x/player_y` via `AddressManager.get_chain(...)` + `MemoryReader.read_pointer_chain(...)` directly in native module path.
+  - Falls back to backend scanner path only when chain values are unavailable/invalid.
+- Preserved runtime behavior during transition by inverting bridge ownership:
+  - `NativeRuntimeManager.create_scanner(...)` now constructs Python `UE4Scanner` backend and passes it into native `create_scanner(...)`.
+  - Native scanner methods delegate to backend for not-yet-ported APIs, keeping strict runtime contract satisfied while Phase B porting continues.
+- Native runtime metadata updated:
+  - `get_runtime_info()` now reports `status=native_scanner_slice`, `scanner=native_scanner_object`, `phase_b=slice_1`.
+- Version bump: `APP_VERSION` -> `v5.83.0`.
+- Next required test:
+  - startup/attach smoke with strict-native path,
+  - confirm coordinates still update and overlay remains stable,
+  - run one full map cycle to verify no regression while remaining scanner APIs are still delegated.
+
+### Mar 05, 2026 — v5.82.0 (Qt overlay parity/visibility restoration pass)
+- User in-game validation after v5.81.0 confirmed click-through works, but readability/parity regressed versus legacy overlay.
+- Implemented Qt overlay visibility and parity fixes:
+  - Player coordinate label enlarged and recolored for high-contrast readability (`bold 16px`, green text with dark halo).
+  - Restored marker labels in Qt Quick renderer: portals (`Portal N`/`Exit N`), events (`CARJACK`/`SANDLORD`), guard tags (`G1..`), waypoint indices, entity names.
+  - Added minimap/radar panel to Qt Quick overlay (bottom-right) with player center + waypoints + portals + events.
+  - Nav line anchoring corrected to player center in Qt payload so guidance line remains visually attached while moving.
+- Restored missing overlay data channel on Qt path:
+  - `BotEngine` snapshot now includes `entity_markers` (alive nearby monsters, bounded list),
+  - `BotAppQt` feed now forwards `entity_markers` into overlay.
+- Version bump: `APP_VERSION` -> `v5.82.0`.
+- Next required test:
+  - user run with overlay ON to confirm text readability, portal/event labels visibility, radar usability, and nav-line movement attachment in active map traversal.
+
+### Mar 05, 2026 — v5.81.0 (Phase A immediate stability fix)
+- Started next remediation phase immediately after plan approval.
+- Fixed critical malformed code in overlay snapshot worker startup:
+  - `src/core/bot_engine.py` `_start_overlay_snapshot_worker()` no longer contains stray invalid statements inside `_worker_loop()`.
+- Restored dropped-marker counters in overlay snapshot payload:
+  - `_collect_overlay_snapshot_data()` now returns `dropped_event_markers` and `dropped_guard_markers` so UI diagnostics stay accurate.
+- Validation:
+  - `get_errors` reports no errors for `bot_engine.py`.
+  - Pylance syntax check reports no syntax errors in `bot_engine.py`.
+- Version bump: `APP_VERSION` -> `v5.81.0`.
+- Outcome:
+  - critical load-time/parser risk removed,
+  - engine overlay snapshot worker is syntactically stable again,
+  - next work can proceed to native profiling + implementation phases.
+
+### Mar 05, 2026 — v5.80.0 (Python runtime scanner retirement)
+- Re-read `src/core/scanner.py` in full (again) and validated runtime scanner usage before making retirement edits.
+- Removed remaining runtime fallback hooks that could reintroduce Python scanner data flow:
+  - `src/core/bot_engine.py` `_read_player_xy_runtime()` now reads runtime scanner API only (no `game_state.read_chain(...)` fallback).
+  - `src/core/native_scanner_adapter.py` removed private `_read_player_xy` compatibility fallback in both sampler loop and hot-path accessor.
+- Removed dual-path native toggle controls from config surface:
+  - `src/utils/constants.py` dropped `native_runtime_enabled`, `native_scanner_enabled`, `native_overlay_worker_enabled`, `native_strict_mode` defaults.
+  - `src/utils/config_manager.py` removed forced-policy locks for these keys and added deprecated-key pruning so stale entries are auto-removed from persisted `config.json`.
+  - `src/core/native_runtime.py` removed config-gated runtime/scanner disable checks; strict-native behavior is now unconditional.
+- Updated persisted `config.json` to remove deprecated native fallback-control keys.
+- Version bump: `APP_VERSION` -> `v5.80.0`.
+- Outcome:
+  - runtime scanner path remains native-only,
+  - startup/runtime config no longer exposes Python scanner fallback toggles,
+  - diagnostics/tooling Python code remains available without affecting production runtime data flow.
+
+### Mar 05, 2026 — v5.79.0 (Native scanner parity contract hardening, non-redundant API policy)
+- Completed full `src/core/scanner.py` audit and cross-referenced scanner usage across runtime map-cycle + active Qt/tk address flows.
+- Implemented public scanner setter for manual FNamePool override:
+  - `UE4Scanner.set_fnamepool_addr(...)` added in `src/core/scanner.py`.
+- Removed fragile adapter-host private-field writes from Address Setup pages:
+  - `src/gui_qt/pages/addresses_page.py` now uses `set_fnamepool_addr(...)` with wrapped-scanner fallback,
+  - `src/gui/tabs/address_manager_tab.py` same hardening for legacy/fallback path.
+- Refined native strict API validation in `src/core/native_runtime.py`:
+  - strict required API list now covers full runtime map-cycle critical scanner surface,
+  - diagnostics/UI helpers are optional (warn-only), preventing unnecessary native feature port pressure.
+- Version bump: `APP_VERSION` -> `v5.79.0`.
+- Outcome:
+  - runtime-native contract is now explicit and necessity-based,
+  - map-cycle safety checks remain strict,
+  - debug-only scanner features no longer force hard startup failure.
+
+### Mar 05, 2026 — v5.78.0 (Qt Quick overlay full-layer completion + LOD controls)
+- Completed roadmap step after v5.77 pilot: Qt Quick overlay now supports full debug-layer payloads on active Qt runtime path.
+- `src/gui_qt/quick_overlay.py` extended with parity methods/layers:
+  - nav-collision marker rendering payload (`set_nav_collision_markers`),
+  - grid payload (`set_grid_data` walkable/frontier + cell size),
+  - entity markers (`set_entity_positions`),
+  - stuck indicator (`set_stuck`),
+  - layer visibility toggles (`set_layer_visible`) matching legacy layer keys.
+- Added marker LOD/decimation controls for heavy scenes (configured from persisted settings):
+  - portals/events/guards/entities/nav-collision/grid walkable/grid frontier caps.
+- `src/gui_qt/qml/overlay.qml` now renders additional layers:
+  - nav-collision rotated polygons (raw/inflated/bridge styles),
+  - grid walkable/frontier point clouds,
+  - entity markers,
+  - stuck banner, while preserving existing player/path/portal/event/guard semantics.
+- Qt app overlay runtime path tightened (`src/gui_qt/app.py`):
+  - Qt Quick renderer is primary production path,
+  - legacy tkinter overlay can still be invoked only via explicit env override (`TLI_QT_LEGACY_OVERLAY=1`),
+  - no automatic fallback in default path.
+- Added persistent config defaults and UI controls for overlay LOD in:
+  - `src/utils/constants.py` (`overlay_lod_*` keys),
+  - `src/gui_qt/pages/settings_page.py` (new "Overlay Performance" section).
+- Version bump: `APP_VERSION` -> `v5.78.0`.
+- Next required validation:
+  - user in-game run with `Overlay: ON` to verify full-layer readability under load,
+  - tune `overlay_lod_*` values if scene density still impacts frame-time p99,
+  - proceed to `v5.79.0` Python runtime scanner retirement.
+
+### Mar 05, 2026 — v5.77.0 (Qt Quick native renderer pilot for overlay core layers)
+- Implemented the roadmap next step after v5.76.0: Qt Quick pilot overlay path on active Qt backend.
+- Added new renderer module:
+  - `src/gui_qt/quick_overlay.py` (`QtQuickOverlay`) — transparent click-through topmost Qt Quick window, fed by engine snapshots.
+  - `src/gui_qt/qml/overlay.qml` — Canvas renderer for pilot layers.
+- Qt app overlay integration (`src/gui_qt/app.py`):
+  - `Overlay: ON/OFF` now prefers Qt Quick overlay by default (`TLI_QT_QUICK_OVERLAY=1`).
+  - Legacy tkinter `DebugOverlay` remains temporary fallback only if Qt Quick init fails (or env disables pilot).
+  - Overlay tick now calls `overlay.flush()` (when supported) so frame push happens once per tick after all marker updates.
+- Ported pilot layers from existing engine snapshot feed:
+  - player marker
+  - waypoint/path polyline + nav line + RTNav auto-path
+  - portal markers (exit semantic color)
+  - event markers (Carjack/Sandlord coloring)
+  - guard markers
+- Preserved existing feature safety:
+  - core engine/state machine/map cycle logic unchanged,
+  - no new runtime fallback paths in scanner/native runtime,
+  - map-selection/event handling behavior untouched.
+- Version bump: `APP_VERSION` -> `v5.77.0`.
+- Next required validation:
+  - confirm Qt Quick overlay appears and tracks markers in-map,
+  - verify click-through and focus-hide behavior on Windows,
+  - confirm visual parity of player/path/portal/event/guard semantics before v5.78 full-layer port.
+
+### Mar 05, 2026 — v5.76.0 (Native guard/event feed hardening + scanner API strictness)
+- Continued native-only runtime hardening with focus on event/guard feed reliability and scanner API contract enforcement.
+- Removed remaining `BotEngine` private scanner position reads in Carjack/Sandlord/strongbox loops:
+  - replaced `scanner._read_player_xy()` with public `scanner.read_player_xy()` everywhere in runtime control paths.
+- Strengthened native scanner initialization contract in `src/core/native_runtime.py`:
+  - after `create_scanner(...)`, runtime now validates required scanner APIs before activation:
+    - `read_player_xy`
+    - `get_typed_events`
+    - `get_carjack_guard_positions`
+    - `clear_fightmgr_cache`
+    - `set_cached_gworld_static`
+  - startup now fails fast if any required method is missing.
+- Hardened position-read path against transient corruption:
+  - `UE4Scanner.read_player_xy()` now sanitizes output (finite float + world bounds check) and returns `None` on invalid values.
+- Hardened overlay event/guard snapshot feed in `BotEngine`:
+  - drops non-finite/out-of-range event and guard markers before caching snapshot,
+  - exposes dropped-count diagnostics in snapshot payload (`dropped_event_markers`, `dropped_guard_markers`).
+- Updated native adapter read path in `src/core/native_scanner_adapter.py`:
+  - sampling loop now prefers public `read_player_xy()` API,
+  - private `_read_player_xy()` is used only as compatibility fallback.
+- Version bump: `APP_VERSION` -> `v5.76.0`.
+- Next required validation:
+  - in-game native run to confirm Carjack/Sandlord behavior unchanged,
+  - verify startup fails clearly on intentionally missing native scanner methods,
+  - verify overlay remains stable with no phantom out-of-range event/guard markers during transitions.
+
+### Mar 05, 2026 — v5.75.0 (Bot-loop native API integration hardening)
+- Continued native-only bot-loop integration while preserving existing map-cycle features.
+- Removed `BotEngine` dependence on scanner private fields:
+  - replaced direct writes/reads of `_cached_gworld_static`, `_fightmgr_ptr`, `_gobjects_addr` with scanner public APIs.
+- Added scanner public runtime APIs in `src/core/scanner.py`:
+  - `set_cached_gworld_static(...)`
+  - `clear_fightmgr_cache()`
+  - `read_player_xy()`
+- `BotEngine` now uses native scanner runtime position API for critical loops via `_read_player_xy_runtime()` with safe fallback:
+  - zone-change detection,
+  - startup map-position resolution fallback,
+  - wall-scan grid-center sampling,
+  - zone position sampler.
+- FightMgr cache invalidation on zone transition now uses scanner public API (`clear_fightmgr_cache`) so runtime remains adapter-safe.
+- Version bump: `APP_VERSION` -> `v5.75.0`.
+- Next required validation:
+  - user in-game run to confirm unchanged behavior across attach/start/map-enter/zone-exit flows and no regressions in event/portal handling.
+
+### Mar 05, 2026 — v5.74.0 (Qt-only engine overlay snapshot cutover)
+- Implemented production overlay cutover on active Qt path without adding tkinter maintenance work:
+  - moved heavy marker collection (portals/events/guards/nav-collision) from Qt app worker into `BotEngine` as a single engine-owned snapshot worker,
+  - added `BotEngine.get_overlay_snapshot()` so UI consumes cached data only,
+  - Qt overlay tick now reads engine snapshot and applies markers; per-UI heavy-read worker was removed from `src/gui_qt/app.py`.
+- Preserved existing marker semantics/features during cutover:
+  - hardcoded portal merge,
+  - portal position coalescing with exit-priority,
+  - nav-collision raw/inflated debug marker styles.
+- Native overlay worker policy hardened:
+  - `DEFAULT_SETTINGS["native_overlay_worker_enabled"]` switched to `True`,
+  - `ConfigManager` policy lock now enforces `native_overlay_worker_enabled=True` together with strict native runtime/scanner keys.
+- Version bump: `APP_VERSION` -> `v5.74.0`.
+- Next required validation:
+  - user runtime smoke on Qt overlay (`Overlay: ON`) to confirm marker parity and stable responsiveness in combat-dense scenes.
+
+### Mar 05, 2026 — v5.73.0 (Attach-state UI correctness + attach race hardening)
+- Fixed false-positive `Attached/Connected` status after failed dump-chain resolution:
+  - Qt `AddressesPage` and tkinter `AddressManagerTab` now reset attach UI to `Attach to Game` + `Failed` when chain scan fails.
+  - On chain failure, bot now detaches memory and clears active scanner reference to keep UI state consistent with runtime usability.
+- Prevent stale failure state from poisoning subsequent attach attempts:
+  - `last_scan_failed` is reset at the start of manual attach.
+  - Successful scan completion explicitly clears `last_scan_failed`.
+- Added attach-race safety guards:
+  - Qt auto-attach callback now wraps page attach invocation in guarded logging (no unhandled callback crash).
+  - Deferred scanner-extra thread in `BotEngine` now has attach-state checks + exception-safe callback dispatch.
+- Version bump: `APP_VERSION` -> `v5.73.0`.
+
+### Mar 05, 2026 — v5.72.0 (Launcher admin-flow cleanup + native build/deploy reliability)
+- Native build workflow hardened for Windows strict-native startup:
+  - `scripts/build_native.ps1` now defaults to Visual Studio 2022 generator (`x64`) instead of environment-dependent `nmake` fallback.
+  - Build script now resolves `pybind11` CMake dir from venv, forces modern Python discovery (`PYBIND11_FINDPYTHON=ON`), binds to venv interpreter, and fails fast on configure/build errors.
+  - Build output `.pyd` is auto-copied into `src/native/` so runtime import candidate `src.native.tli_native` resolves without manual file moves.
+- Native CMake setup updated:
+  - `src/native/cpp/CMakeLists.txt` now uses explicit `find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)` with `PYBIND11_FINDPYTHON ON` to avoid legacy ABI mis-detection.
+- Launcher reliability/admin UX cleanup:
+  - Removed duplicate self-elevation path from `scripts/fast_launcher.py`; elevation is now single-source via `Launch bot.bat`.
+  - Non-admin fast-launcher runs now return clear guidance to launch via batch/UAC.
+  - `Launch bot.bat` failure block now preserves real launcher diagnostics instead of generic/misleading fallback suggestions.
+- Version bump: `APP_VERSION` -> `v5.72.0`.
+- Validation:
+  - Native module builds with MSVC and correct venv ABI suffix (`cp314`).
+  - `import src.native.tli_native` succeeds and exposes `create_scanner`.
+
+### Mar 05, 2026 — v5.71.0 (Native scanner bootstrap + 120 Hz position cache metrics)
+- Completed full `scanner.py` interface audit before migration work (method inventory + runtime call-site mapping across core/gui).
+- Fixed strict-native startup blocker in `src/native/cpp/module.cpp`:
+  - `create_scanner(...)` no longer returns `None`.
+  - Native module now constructs and returns `UE4Scanner(memory, addresses, progress_callback)` via module-owned creation path.
+- Added `src/core/native_scanner_adapter.py`:
+  - wraps scanner with internal 120 Hz sampling loop,
+  - serves cached `_read_player_xy()` for hot-path callers,
+  - tracks cadence metrics (`hz`, `jitter_ms`, `stale_frames`, `samples`, `age_ms`),
+  - preserves full scanner API via `__getattr__` delegation,
+  - integrates cancel lifecycle (thread stop + underlying scanner cancel).
+- `src/core/native_runtime.py` now wraps native scanner in `NativeScannerAdapter` and exports `scanner_metrics` in runtime status snapshot.
+- `src/core/bot_engine.py` stats now expose native scanner cadence fields:
+  - `native_scanner_hz`
+  - `native_scanner_jitter_ms`
+  - `native_scanner_stale_frames`
+  - `native_scanner_age_ms`
+- Version bump: `APP_VERSION` -> `v5.71.0`.
+- Validation:
+  - no diagnostics errors in modified Python/C++ files,
+  - strict-native scanner null-return path removed.
+
+### Mar 05, 2026 — v5.70.0 (Strict native runtime enforcement; no Python scanner fallback)
+- Policy pivot implemented from updated `plan.md`: scanner runtime is now native-required.
+- `NativeRuntimeManager` (`src/core/native_runtime.py`) changed from fail-open to fail-fast behavior:
+  - raises when native runtime is disabled,
+  - raises when native module import fails,
+  - raises when `create_scanner` API is missing,
+  - raises when native scanner init throws or returns null.
+- Python `UE4Scanner` fallback path removed from native manager scanner creation flow.
+- Native defaults/policy hardened:
+  - `DEFAULT_SETTINGS`: `native_runtime_enabled=true`, `native_scanner_enabled=true`, `native_strict_mode=true`.
+  - `ConfigManager` policy lock now enforces those native keys, preventing stale `config.json` from disabling native scanner path.
+- `BotEngine.stats` native labels updated to remove fallback phrasing and reflect strict-native diagnostics.
+- Version bump: `APP_VERSION` -> `v5.70.0`.
+
 ### Mar 05, 2026 — v5.69.0 (Native runtime foundation + fail-open scanner wiring)
 - Implemented first migration milestone from `plan.md` without changing gameplay behavior paths.
 - Added optional native scaffold:

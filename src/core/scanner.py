@@ -59,6 +59,7 @@ from src.utils.constants import (
 # guard movement speed (~60u per 1 s scan cycle).
 _ABP_REUSE_THRESHOLD = 4000.0
 _ABP_REUSE_THRESHOLD_SQ = _ABP_REUSE_THRESHOLD ** 2
+_WORLD_POS_SANITY_MAX = 120000.0
 
 UE4_GWORLD_PATTERNS = [
     b"\x48\x8B\x05\x00\x00\x00\x00\x48\x3B\xC3",
@@ -1052,6 +1053,46 @@ class UE4Scanner:
     @property
     def gobjects_addr(self) -> int:
         return self._gobjects_addr if hasattr(self, '_gobjects_addr') else 0
+
+    def set_cached_gworld_static(self, gworld_static: int) -> None:
+        """Set validated GWorld static pointer cache for fast reuse.
+
+        Public API used by BotEngine to avoid direct access to scanner internals.
+        """
+        try:
+            self._cached_gworld_static = int(gworld_static)
+        except Exception:
+            self._cached_gworld_static = None
+
+    def set_fnamepool_addr(self, fnamepool_addr: int) -> None:
+        """Set FNamePool address explicitly after external validation.
+
+        This is used by Address Setup manual override flows and avoids callers
+        mutating private fields directly (important for wrapper/adapter parity).
+        """
+        try:
+            self._fnamepool_addr = int(fnamepool_addr)
+        except Exception:
+            self._fnamepool_addr = 0
+
+    def clear_fightmgr_cache(self) -> None:
+        """Invalidate cached FightMgr pointer so next read rebinds via GObjects."""
+        self._fightmgr_ptr = 0
+
+    def read_player_xy(self) -> Optional[Tuple[float, float]]:
+        """Public wrapper for current player world position with sanity filtering."""
+        pos = self._read_player_xy()
+        if pos is None:
+            return None
+        try:
+            x, y = float(pos[0]), float(pos[1])
+        except Exception:
+            return None
+        if not (math.isfinite(x) and math.isfinite(y)):
+            return None
+        if abs(x) > _WORLD_POS_SANITY_MAX or abs(y) > _WORLD_POS_SANITY_MAX:
+            return None
+        return (x, y)
 
     def scan_fnamepool(self, module_base: int = 0, module_size: int = 0) -> int:
         """Find FNamePool address via sig scan. Returns address or 0."""

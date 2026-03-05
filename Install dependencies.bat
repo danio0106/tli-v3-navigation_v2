@@ -75,6 +75,34 @@ if errorlevel 1 (
 )
 echo.
 
+echo Installing cmake...
+"%PYTHON_EXE%" -m pip install cmake
+if errorlevel 1 (
+    echo WARNING: Failed to install cmake
+)
+echo.
+
+echo Installing ninja...
+"%PYTHON_EXE%" -m pip install ninja
+if errorlevel 1 (
+    echo WARNING: Failed to install ninja
+)
+echo.
+
+echo Installing pybind11...
+"%PYTHON_EXE%" -m pip install pybind11
+if errorlevel 1 (
+    echo WARNING: Failed to install pybind11
+)
+echo.
+
+echo Installing scikit-build-core...
+"%PYTHON_EXE%" -m pip install scikit-build-core
+if errorlevel 1 (
+    echo WARNING: Failed to install scikit-build-core
+)
+echo.
+
 echo ======================================
 echo Installation complete!
 echo ======================================

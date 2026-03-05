@@ -185,6 +185,23 @@ The bot is structured around a `main.py` entry point, with core logic in `src/co
 - **Qt Professional Theme + DnD Card Reorder (v5.68.0):** `src/gui_qt/theme.py` upgraded with semantic button variants and improved card/control/table styling; Qt Card Priority supports drag-and-drop row reordering (rank edit retained).
 - **Qt Side-by-Side Placement + Hidden Console Default (v5.68.0):** Qt window default geometry now left-docks with safe frame margins for 2k side-by-side usage; console is hidden by default on Windows (`TLI_HIDE_CONSOLE=1`, set `0` to show).
 - **Native Runtime Foundation (v5.69.0):** added opt-in native runtime scaffold (`src/native/` + `src/native/cpp/`), `NativeRuntimeManager` fail-open loader in `src/core/native_runtime.py`, and centralized scanner creation in `BotEngine` via native manager with automatic Python fallback. New config keys: `native_runtime_enabled`, `native_scanner_enabled`, `native_overlay_worker_enabled`, `native_preferred_module`, `native_strict_mode`. Dashboard now shows native backend/error diagnostics.
+- **Strict Native Runtime Policy (v5.70.0):** runtime scanner path is native-required (no Python scanner fallback). `NativeRuntimeManager` fails fast on module import/API/init failures and null scanner creation. Historical config-lock toggles were removed in v5.80.0.
+- **Native Scanner Bootstrap + 120 Hz Position Cache (v5.71.0):** `src/native/cpp/module.cpp:create_scanner(...)` now returns a concrete scanner object (no null stub), and runtime wraps it with `NativeScannerAdapter` (`src/core/native_scanner_adapter.py`) that samples player position at 120 Hz and serves cached `_read_player_xy()` responses to navigation hot paths. Native diagnostics now expose scanner cadence metrics (`native_scanner_hz`, `native_scanner_jitter_ms`, `native_scanner_stale_frames`, `native_scanner_age_ms`) through `BotEngine.stats`.
+- **Native Build/Launcher Reliability Alignment (v5.72.0):** `scripts/build_native.ps1` now hardens Windows builds (VS2022 x64 generator, venv-bound Python/pybind11 CMake resolution, fail-fast errors, and post-build `.pyd` deploy to `src/native/`). `scripts/fast_launcher.py` no longer performs duplicate self-elevation; admin elevation remains single-source in `Launch bot.bat`, reducing double-window failure flows.
+- **Attach-State UI Consistency + Race Guards (v5.73.0):** Address Setup pages (Qt + tkinter) no longer keep green `Attached/Connected` after dump-chain scan failure. On chain-fail, UI reverts to failed attach state and clears active memory/scanner attachment. Qt auto-attach callback and deferred scanner-extra worker paths now include exception/race guards to prevent unhandled startup-time attach errors when game process state changes.
+- **Qt-Only Engine Overlay Snapshot Cutover (v5.74.0):** heavy overlay marker reads are now centralized in `BotEngine` (`EngineOverlaySnapshotWorker` + `get_overlay_snapshot()`), and active Qt UI path consumes cached engine snapshots on render ticks. This removes Qt app-side heavy-read worker logic while preserving portal hardcoded merge/coalescing and nav-collision raw/inflated overlay semantics.
+- **Native Overlay Worker Policy Lock (v5.74.0):** historical config-lock key (`native_overlay_worker_enabled`) was retired in v5.80.0 with strict-native behavior made unconditional.
+- **UI Maintenance Scope (v5.74.0):** active feature maintenance target is Qt path (`src/gui_qt/*`). tkinter path is legacy/fallback and should not receive new feature work unless explicitly requested for compatibility hotfixes.
+- **Bot-Loop Scanner API Decoupling (v5.75.0):** `BotEngine` runtime path must not read/write scanner private fields directly. Use scanner public APIs (`set_cached_gworld_static`, `clear_fightmgr_cache`, `read_player_xy`) so native adapter/runtime modules can evolve without engine-side private-attribute coupling.
+- **Native Guard/Event Feed Hardening (v5.76.0):** native scanner startup now validates required runtime APIs (`read_player_xy`, `get_typed_events`, `get_carjack_guard_positions`, `clear_fightmgr_cache`, `set_cached_gworld_static`) before activation. `BotEngine` Carjack/Sandlord control loops now use public `read_player_xy()` only (no private `_read_player_xy` coupling), and Qt overlay snapshot collection drops non-finite/out-of-range event/guard markers to reduce transient corruption artifacts.
+- **Qt Quick Overlay Pilot (v5.77.0):** Qt app overlay toggle now prefers `QtQuickOverlay` (`src/gui_qt/quick_overlay.py` + `src/gui_qt/qml/overlay.qml`) and consumes engine-owned snapshot markers directly (player/path/portal/event/guard layers). Legacy tkinter `DebugOverlay` remains temporary compatibility fallback when Qt Quick initialization fails or is explicitly disabled.
+- **Qt Quick Overlay Full-Layer + LOD (v5.78.0):** `QtQuickOverlay` now supports grid/nav-collision/entities/stuck debug layers in addition to core markers, with persisted decimation caps (`overlay_lod_*`) for heavy scenes. Qt Quick path is the primary runtime overlay; legacy tkinter overlay is available only via explicit env override (`TLI_QT_LEGACY_OVERLAY=1`).
+- **Native Scanner Necessity-Based API Contract (v5.79.0):** `NativeRuntimeManager` strict scanner API validation now targets full map-cycle/runtime-critical methods only (attach/scan/zone/event/monster/Carjack/portal/nav-collision/minimap/boss + lifecycle). Diagnostics/UI helpers (`read_player_hp`, manual FNamePool setter, truck guard roster probe) are optional warn-only so native migration does not force redundant debug-only ports.
+- **Manual FNamePool Setter Public API (v5.79.0):** `UE4Scanner` now exposes `set_fnamepool_addr(...)`; Qt and tkinter Address Setup pages call this setter (with wrapped-scanner fallback) instead of writing `scanner._fnamepool_addr` directly. This avoids adapter-shadow writes when scanner is wrapped (native adapter) and preserves manual Set behavior.
+- **Python Runtime Scanner Retirement (v5.80.0):** runtime bot-loop position reads no longer fall back to legacy chain reads when scanner data is unavailable, and `NativeScannerAdapter` no longer falls back to private `_read_player_xy`. Deprecated dual-path native toggle keys were removed from runtime config surface (`native_runtime_enabled`, `native_scanner_enabled`, `native_overlay_worker_enabled`, `native_strict_mode`); strict native behavior is unconditional.
+- **Overlay Snapshot Worker Stability Fix (v5.81.0):** fixed malformed `_start_overlay_snapshot_worker()` loop body in `BotEngine` and restored dropped-marker counters (`dropped_event_markers`, `dropped_guard_markers`) in overlay snapshot payload. This removes parser risk and restores overlay diagnostics fidelity before deeper native-worker migration.
+- **Qt Overlay Parity + Visibility Restore (v5.82.0):** Qt Quick overlay now restores legacy readability semantics: larger high-contrast player coordinate label, labels for portals/events/guards/waypoints/entities, and a minimap/radar panel. `BotEngine` overlay snapshot now exposes `entity_markers` (bounded alive-nearby monsters), and `BotAppQt` forwards them to Qt overlay. Nav-target line anchoring uses player center in Qt payload to remain visually attached during movement.
+- **Phase-B Native Scanner Slice 1 (v5.83.0):** `src/native/cpp/module.cpp` now defines a concrete `NativeScanner` pybind object and `create_scanner(...)` returns it directly (no C++-side import of `src.core.scanner`). `read_player_xy()` is first native-owned hot-path method using `AddressManager` chains + `MemoryReader` pointer-chain reads; non-ported scanner APIs are currently delegated through an injected Python backend scanner created by `NativeRuntimeManager` to preserve strict-runtime map-cycle behavior during migration.
 - **Input & Control:** Simulates Windows input and manages the game window.
 - **Map Interaction:** Detects and selects map cards, identifies portals, and manages UI-open detection with retry logic.
 - **Computer Vision:** Used for fast screen capturing, vertex-based active card detection, RGB glow rarity classification, and hexagon position calibration.
@@ -921,27 +938,75 @@ ESkeletalMeshComponent + 0x758  → UClass* AnimClass (fallback)
 
 #### 25. Native runtime loader + scanner fallback wiring (v5.69.0)
 
-**What breaks:** native module builds/imports can fail after Python or toolchain updates; if fallback wiring regresses, scanner initialization may fail instead of gracefully returning to Python `UE4Scanner`.
+**What breaks:** native module builds/imports can fail after Python or toolchain updates; scanner initialization then hard-fails (no runtime fallback path).
 
 **Where in code:**
 - `src/core/native_runtime.py`
   - `NativeRuntimeManager.initialize()` (module import candidates)
-  - `NativeRuntimeManager.create_scanner(...)` (native scanner handoff + Python fallback)
+  - `NativeRuntimeManager.create_scanner(...)` (native scanner handoff)
 - `src/core/bot_engine.py`
   - `_create_scanner(...)` centralized scanner creation path
   - `stats` native diagnostics fields (`native_*`)
 - `src/utils/constants.py`
-  - native feature toggles in `DEFAULT_SETTINGS`
+  - native module preference (`native_preferred_module`) in `DEFAULT_SETTINGS`
 - `src/native/cpp/CMakeLists.txt` and `src/native/cpp/module.cpp`
   - optional native extension scaffold (`tli_native`)
 
 **How originally found (Mar 2026):** roadmap migration kickoff required a safe native foundation with strict no-regression behavior for existing scanner-dependent map-cycle logic.
 
 **How to fix after update / verify:**
-1. Keep native runtime toggles off by default (`native_runtime_enabled=false`, `native_scanner_enabled=false`) unless explicitly testing native mode.
-2. If native mode is enabled and import fails, verify bot logs show fallback warning and scanner still initializes via Python.
+1. Ensure native module import path resolves (`native_preferred_module` -> `tli_native` default).
+2. If native module import fails, startup should fail fast with clear `native_error` diagnostics.
 3. If native build stops working, re-check local build prerequisites (`cmake`, `ninja`, `pybind11`) and regenerate build in `build/native`.
 4. Confirm dashboard native diagnostics remain populated (`native_status_label`, `native_error`) so failures are visible without digging through raw logs.
+
+---
+
+#### 26. Strict native runtime enforcement (v5.70.0)
+
+**What breaks:** app attach/start may hard-fail on machines where native module import/build is missing or outdated; unlike v5.69.0 there is no Python scanner fallback path.
+
+**Where in code:**
+- `src/core/native_runtime.py`
+  - `initialize()` raises on module import failure
+  - `create_scanner(...)` raises on missing module API, init exception, null scanner, or missing required runtime methods
+- `src/utils/config_manager.py`
+  - deprecated native fallback-control keys are pruned from persisted config
+- `src/utils/constants.py`
+  - runtime config keeps native module preference only (`native_preferred_module`)
+
+**How originally found (Mar 2026):** roadmap policy pivot to full native-only runtime (`plan.md`) removed dual-path/shadow/fallback strategy.
+
+**How to fix after update / verify:**
+1. Ensure native module import path resolves (`tli_native` or configured preferred module).
+2. If startup fails, rebuild native extension (`scripts/build_native.ps1`) and verify module exports `create_scanner`.
+3. Ensure stale `config.json` entries are pruned; runtime disable toggles are no longer supported.
+4. Validate dashboard native diagnostics after attach: backend should report native module, and `native_error` should be empty.
+
+---
+
+#### 27. Native scanner bootstrap return + 120 Hz position adapter (v5.71.0)
+
+**What breaks:** strict-native startup can fail immediately if native module `create_scanner(...)` returns null; navigation loops can exhibit position starvation/jitter if position reads are fetched ad-hoc without a stable high-rate cache.
+
+**Where in code:**
+- `src/native/cpp/module.cpp`
+  - `create_scanner(...)` must return a non-null scanner object (not `py::none()`).
+- `src/core/native_scanner_adapter.py`
+  - 120 Hz position sampling loop and cached `_read_player_xy()` hot-path reads.
+  - cadence metrics: `hz`, `jitter_ms`, `stale_frames`, `age_ms`.
+- `src/core/native_runtime.py`
+  - wraps native scanner with `NativeScannerAdapter` and publishes `scanner_metrics` in status snapshot.
+- `src/core/bot_engine.py`
+  - surfaces `native_scanner_*` metrics via `stats` for dashboard/debug use.
+
+**How originally found (Mar 2026):** after v5.70 strict-native enforcement, the native C++ module still returned null scanner stub, making startup fail-fast by design. Position hot-paths also needed explicit cadence telemetry for v5.71 migration gate tracking.
+
+**How to fix after update / verify:**
+1. Build native module (`scripts/build_native.ps1`) and confirm `create_scanner(...)` returns an object.
+2. Attach and verify startup no longer fails with `native create_scanner returned null`.
+3. In dashboard/debug stats, verify non-zero `native_scanner_hz` in-map and bounded `native_scanner_age_ms`.
+4. If cadence collapses, inspect adapter thread liveness and ensure scanner cancel lifecycle stops/starts cleanly across attach/rescan.
 
 ---
 

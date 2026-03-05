@@ -23,6 +23,7 @@ class AddressesPage(QFrame):
         self._engine = bridge.engine
         self._on_debug_ui_changed = on_debug_ui_changed
         self._active_scanner = None
+        self._attach_in_progress = False
         self._debug_ui_enabled = bool(self._engine.config.get("debug_ui_enabled", False))
         self._updating_debug_switch = False
         self._build_ui()
@@ -33,7 +34,10 @@ class AddressesPage(QFrame):
         Using a QObject context avoids worker-thread singleShot delivery issues
         where callbacks may never execute.
         """
-        QTimer.singleShot(0, self, fn)
+        try:
+            QTimer.singleShot(0, self, fn)
+        except Exception:
+            pass
 
     def _build_ui(self):
         root = QVBoxLayout(self)
@@ -166,6 +170,10 @@ class AddressesPage(QFrame):
                 pass
 
     def _on_attach(self):
+        if self._attach_in_progress:
+            return
+        self._engine.last_scan_failed = False
+        self._attach_in_progress = True
         self._attach_btn.setEnabled(False)
         self._attach_btn.setText("Attaching...")
         self._attach_status.setText("Connecting...")
@@ -181,6 +189,11 @@ class AddressesPage(QFrame):
         threading.Thread(target=_run, daemon=True).start()
 
     def _finish_attach(self, success: bool, message: str):
+        self._attach_in_progress = False
+        if success and getattr(self._engine, "last_scan_failed", False):
+            success = False
+            message = "Dump chain scan failed - address chain could not be resolved"
+
         if success:
             self._attach_btn.setText("Attached")
             self._attach_btn.setEnabled(False)
@@ -259,6 +272,7 @@ class AddressesPage(QFrame):
         self._active_scanner = None
 
         if success:
+            self._engine.last_scan_failed = False
             self._chain_status.setText("Chain: OK")
             self._set_body_color(self._chain_status, "#3FB950")
             self._global_status.setText("Scan complete")
@@ -269,6 +283,16 @@ class AddressesPage(QFrame):
             self._global_status.setText("Scan failed - see log above")
             self._set_body_color(self._global_status, "#F85149")
             self._engine.last_scan_failed = True
+            self._attach_btn.setText("Attach to Game")
+            self._attach_btn.setEnabled(True)
+            self._attach_status.setText("Failed")
+            self._set_body_color(self._attach_status, "#F85149")
+            try:
+                self._engine.memory.detach()
+            except Exception:
+                pass
+            if hasattr(self._engine, "_scanner"):
+                self._engine._scanner = None
             self._show_outdated_popup()
 
     def _show_outdated_popup(self):
@@ -366,7 +390,12 @@ class AddressesPage(QFrame):
             for test_idx in (1, 2, 3, 5, 10):
                 test_name = self._engine.memory.read_fname(candidate, test_idx)
                 if test_name and len(test_name) > 1 and test_name.isprintable():
-                    scanner._fnamepool_addr = candidate
+                    if hasattr(scanner, "set_fnamepool_addr"):
+                        scanner.set_fnamepool_addr(candidate)
+                    elif hasattr(scanner, "_scanner") and hasattr(scanner._scanner, "set_fnamepool_addr"):
+                        scanner._scanner.set_fnamepool_addr(candidate)
+                    else:
+                        scanner._fnamepool_addr = candidate
                     if candidate != addr:
                         diff = candidate - addr
                         self._append_scan_log(

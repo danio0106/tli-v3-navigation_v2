@@ -1,161 +1,179 @@
-## Plan: Versioned C++ Migration Roadmap
+## Plan: Native-Only Full-Throttle Roadmap
 
-Deliver scanner + overlay performance gains quickly with low regression risk by migrating in staged releases: C++ data workers first, renderer migration second, full-C++ runway last. Every release has explicit gates and rollback criteria.
+Hard pivot: native runtime becomes the only runtime path. No Python fallback, no shadow mode, no dual execution.
 
-**Steps**
-1. `v5.69.0` - Native foundation + flags
+## Non-Negotiable Direction
+1. Python scanner path is removed from production flow.
+2. Python overlay worker path is removed from production flow.
+3. Runtime startup must fail fast if required native components are unavailable.
+4. Any milestone that cannot run native-only is considered incomplete.
+
+## Baseline (Completed)
+1. `v5.70.0` - Native-only runtime enforcement completed
+2. `v5.71.0` - Native scanner bootstrap + 120 Hz position cache completed
+3. Python scanner fallback removed from `NativeRuntimeManager`.
+4. Config policy locked to strict native runtime/scanner enablement.
+5. Runtime now fails fast when native scanner cannot initialize.
+
+## Recently Completed
+1. `v5.72.0` - Events and portals in native scanner.
+2. `v5.73.0` - Native overlay worker cutover (Qt consumes engine snapshot cache, no app-side heavy reader).
+3. `v5.74.0` - Native-only bot loop integration (engine no longer depends on scanner private fields in runtime path; critical reads now use scanner runtime API wrapper).
+4. `v5.76.0` - Native guard/event feed hardening (required scanner API validation + corruption-resistant overlay/event feed filtering + public player-position API-only control loops).
+5. `v5.77.0` - Qt Quick native renderer pilot for core overlay layers (player/path/portal/event/guard) consuming engine snapshots directly.
+6. `v5.78.0` - Qt Quick full-layer completion (grid/nav-collision/debug layers + overlay LOD controls; Qt Quick is now the primary overlay runtime path).
+
+## Next Versioned Steps (from v5.82.0)
+1. `v5.83.0` - Native profiling implementation kickoff.
 2. Deliverables:
-3. Add `src/native/` skeleton (`CMakeLists.txt`, `python_bridge.cpp`, `scanner_worker.cpp`, `overlay_worker.cpp` stubs).
-4. Add build workflow in `pyproject.toml` for pybind11/CMake on Windows.
-5. Add runtime flags: `native_scanner_enabled`, `native_overlay_worker_enabled`, `native_bridge_mode=off|shadow|active`.
-6. Add diagnostics panel/log fields for native status (loaded, thread alive, errors).
+3. Instrument top runtime hotspots selected in v5.81 backlog.
+4. Collect baseline timings from real map-cycle runs.
+5. Produce implementation-priority migration queue from measured bottlenecks.
+6. Gate criteria:
+7. Profiling artifacts are reproducible from one-click run instructions.
+8. Next native module target is chosen from measured top bottleneck.
+
+9. `v5.84.0` - Native overlay worker implementation.
+11. Deliverables:
+12. Add C++ overlay worker implementation (threaded) in native module path.
+13. Move heavy overlay marker aggregation into native worker-backed feed.
+14. Keep Qt feed contract (`get_overlay_snapshot()` shape) stable.
+15. Gate criteria:
+16. Runtime status reports overlay worker as implemented.
+17. High-load overlays remain responsive without Python heavy-read worker.
+
+## Newly Completed (Earlier)
+1. `v5.81.0` - Phase A immediate stability fix.
+2. Deliverables:
+3. Fixed malformed overlay snapshot worker body in `src/core/bot_engine.py`.
+4. Restored dropped-marker counters in snapshot payload (`dropped_event_markers`, `dropped_guard_markers`).
+5. Verified core runtime file syntax is clean (`bot_engine.py` no parser errors).
+6. Version bump completed to `v5.81.0`.
 7. Gate criteria:
-8. Native module imports successfully in venv.
-9. App startup unaffected when native module missing (graceful fallback).
-10. No behavior change with all native flags off.
-11. Rollback: set `native_bridge_mode=off`.
+8. Overlay worker function compiles/loads correctly.
+9. In-game smoke verification pending user run (attach + overlay ON).
 
-12. `v5.70.0` - C++ scanner worker (position channel only)
-13. Deliverables:
-14. Implement 120 Hz native thread reading only player position chain.
-15. Expose bridge APIs: `start_scanner`, `stop_scanner`, `get_latest_scanner_snapshot`, `get_scanner_metrics`.
-16. Keep Python `PositionPoller` active in parallel shadow mode.
-17. Gate criteria:
-18. Scanner cadence >=120 Hz mean, jitter p95 <=1.5 ms.
-19. Position parity with Python poller >=99.9% within tolerance.
-20. Zero crash/hang over 30 min continuous run.
-21. Rollback: disable `native_scanner_enabled`.
+## Newly Completed
+1. `v5.82.0` - Qt overlay parity/visibility restoration pass.
+2. Deliverables:
+3. Player coordinates label readability upgraded (larger bold green text with dark halo).
+4. Restored on-map labels for portal/event/guard/waypoint/entity markers in Qt Quick renderer.
+5. Added minimap/radar panel to Qt Quick overlay (bottom-right).
+6. Restored entity marker feed on Qt path via `BotEngine` snapshot (`entity_markers`) + app forwarding.
+7. Nav-line anchoring corrected to player center in Qt payload.
+8. Gate criteria:
+9. User confirms readability improvement and marker/radar/nav-line parity in live map run.
 
-22. `v5.71.0` - C++ scanner expansion (events/portals minimum set)
-23. Deliverables:
-24. Add native reads for fields required by overlay and routing diagnostics: typed event primitives and portal markers including exit semantic flag.
-25. Add schema versioning for snapshot payloads.
-26. Implement shadow comparator for semantic mismatches.
-27. Gate criteria:
-28. >=99.5% agreement on numeric fields.
-29. Zero critical semantic mismatches across 20 full cycles:
-30. wrong event type, missing exit portal, impossible zero markers while Python has stable markers.
-31. Rollback: native snapshots ignored, Python scanner authoritative.
+## Relevant Files
+- `src/core/native_runtime.py` - native module loading and scanner creation policy.
+- `src/core/bot_engine.py` - strict native scanner wiring and lifecycle.
+- `src/gui_qt/app.py` - native snapshot consumption path.
+- `src/core/scanner.py` - migration source for logic moved into native side.
+- `src/core/portal_detector.py` - portal/event semantics to mirror natively.
+- `src/native/cpp/module.cpp` - pybind module entry points.
+- `src/core/bot_engine.py` - engine-owned overlay snapshot worker (active Qt path).
+- `pyproject.toml` - native build dependencies/workflow.
+- `.github/copilot-instructions.md` - architecture and maintenance notes.
+- `CHAT_LOG.md` - version-by-version implementation evidence.
 
-32. `v5.72.0` - C++ overlay worker (marker packing)
-33. Deliverables:
-34. Add second native thread to coalesce/filter/pack render-ready marker batches from native scanner state.
-35. Expose `get_latest_overlay_snapshot` and drop/stale counters.
-36. Keep current Python overlay worker in parallel for comparison.
-37. Gate criteria:
-38. Snapshot age p95 <=25 ms.
-39. No unbounded queue growth.
-40. Marker count parity within accepted tolerance in shadow mode.
-41. Rollback: `native_overlay_worker_enabled=false`.
+## Verification
+1. Build native module in clean venv and verify strict startup behavior.
+2. Validate attach -> scan -> map run flow with native scanner only.
+3. Validate overlay feed and event/portal markers with native snapshot only.
+4. Run long stability sessions (>=4h) with native-only data path.
+5. Confirm no runtime imports or calls reintroduce Python fallback scanner path.
 
-42. `v5.73.0` - Qt app consumption cutover (data path)
-43. Deliverables:
-44. In `src/gui_qt/app.py`, switch 60 Hz `QTimer` feed to pull native overlay snapshot in active mode.
-45. Remove heavy memory reads from Python overlay feed path when native active.
-46. Keep tkinter overlay backend operational.
-47. Gate criteria:
-48. Overlay render >=60 FPS mean, frame p95 <=20 ms in active maps.
-49. UI remains responsive under heavy marker load (no freeze).
-50. Startup-to-first-overlay-frame <=1.2 s.
-51. Rollback: `native_bridge_mode=shadow` or `off`.
+## Decisions
+- Architecture is now native-first and native-required.
+- Reliability is achieved by hardening native components, not by fallback paths.
+- Migration sequencing remains versioned, but each milestone is native-only complete before moving forward.
 
-52. `v5.74.0` - Shadow soak and parity hardening
-53. Deliverables:
-54. Run native scanner + overlay in shadow by default; Python remains authoritative.
-55. Add automated cycle-level parity reports and mismatch classification in logs.
-56. Add watchdog auto-fallback when native thread stalls or snapshot schema invalid.
-57. Gate criteria:
-58. >=4h soak with no deadlocks/leaks.
-59. 0 critical mismatches across >=40 cycles.
-60. Auto-fallback triggers correctly in fault-injection test.
-61. Rollback: remain in shadow mode by default.
+## Global Rules (Native-Only Runtime)
+1. No Python fallback in scanner or overlay runtime paths.
+2. No shadow comparison mode in production runtime path.
+3. Any missing native component is a startup failure, not a downgrade trigger.
+4. Map selection safety logic must remain fully functional while moving data sourcing to native.
+5. Event/portal/guard semantics must remain intact under native-only sourcing.
+6. All new runtime reads are added to native path first; Python implementation is not the source of truth.
+7. Runtime config must not expose fallback toggles that re-enable Python scanner paths.
 
-62. `v5.75.0` - Active mode default for scanner + overlay workers
-63. Deliverables:
-64. Make native scanner/overlay workers default in production profile.
-65. Keep Python paths hot-standby behind config.
-66. Add one-click runtime toggle in settings for emergency fallback.
-67. Gate criteria:
-68. 3 consecutive user validation sessions pass with no blocker regressions.
-69. Performance gain confirmed over Python baseline in same maps.
-70. Rollback: switch profile to Python-only instantly.
+## Remediation Plan (Fix All 6 Gaps)
 
-71. `v5.76.0` - Qt Quick renderer pilot (GPU path)
-72. Deliverables:
-73. Introduce opt-in Qt Quick overlay renderer (`QQuickWindow`/QML) consuming the same native snapshot schema.
-74. Keep tkinter renderer as stable fallback.
-75. Port core layers first: player/path/portals/events/guards.
-76. Gate criteria:
-77. Visual parity with current overlay semantics.
-78. 60 FPS stable on pilot maps.
-79. Click-through and focus-hide behavior correct on Windows.
-80. Rollback: renderer backend switch back to tkinter.
+Goal in plain terms:
+- Make the app stable again first.
+- Replace bridge/stub native parts with real native scanner + native overlay worker.
+- Keep bot behavior the same (or safer) while migrating.
 
-81. `v5.77.0` - Qt Quick full parity + debug layers
-82. Deliverables:
-83. Port remaining layers (grid/nav-collision/debug annotations).
-84. Add LOD/decimation for heavy debug markers.
-85. Keep debug-heavy layers default-off in production profile.
-86. Gate criteria:
-87. No regressions in diagnostic workflows.
-88. No frame-time spikes >33 ms p99 in heavy debug sessions.
-89. Rollback: disable debug layers or renderer switch.
+### Phase A - Immediate Stability Fix (Issue #1)
+1. Fix malformed overlay worker function body in `src/core/bot_engine.py`.
+2. Re-run syntax + import checks on core runtime files.
+3. Smoke test: app starts, can attach, overlay ON does not crash.
+4. Exit criteria:
+- no parser/syntax errors,
+- no startup failure in normal launch,
+- overlay snapshot thread starts/stops cleanly.
 
-90. `v5.78.0` - Python scanner retirement preparation
-91. Deliverables:
-92. Mark Python scanner hot loops as legacy path; keep minimal compatibility wrappers.
-93. Freeze native snapshot schema v1 and document migration rules.
-94. Reduce duplicate Python polling when native active.
-95. Gate criteria:
-96. Native-only data path stable for >=2 weeks of normal testing.
-97. No required feature still dependent on Python scanner internals.
-98. Rollback: unfreeze wrappers and re-enable Python polling.
+### Phase B - Remove Native Scanner Bridge Stub (Issue #2)
+1. Replace `src/native/cpp/module.cpp:create_scanner(...)` bridge implementation (currently returns Python `UE4Scanner`) with a true native scanner object.
+2. Implement required runtime API methods in native scanner backend used by `NativeRuntimeManager` strict contract:
+- chain scan/fnamepool/gobjects,
+- player position + zone reads,
+- typed events + monster/entity reads,
+- carjack truck/guards,
+- interactive items + boss room,
+- minimap visited positions,
+- nav collision markers,
+- fightmgr pointer + object lookup + cancel lifecycle.
+3. Keep method names/signatures stable so existing engine logic does not need broad rewrites.
+4. Exit criteria:
+- `create_scanner(...)` no longer imports Python scanner,
+- runtime map-cycle works with native scanner implementation only.
 
-99. `v5.79.0` - Full-C++ runway checkpoint
-100. Deliverables:
-101. Decision checkpoint: continue hybrid or start broader C++ behavior migration.
-102. If proceeding, prioritize next modules by profile data: portal detector internals, FightMgr-heavy scans, then selected navigation preprocessing.
-103. Gate criteria:
-104. Clear measured ROI and test coverage plan for each next module.
-105. No simultaneous rewrite of behavior logic and transport in same release.
+### Phase C - Implement Real Native Overlay Worker (Issues #3 and #4)
+1. Add C++ overlay worker implementation (threaded) in native module path.
+2. Move heavy overlay marker aggregation into native worker-backed feed.
+3. Keep Qt feed contract unchanged (`get_overlay_snapshot()` shape remains stable) so UI migration risk stays low.
+4. Update runtime status reporting so `overlay_worker` no longer shows `not_implemented`.
+5. Exit criteria:
+- overlay worker is native-backed,
+- high-load overlays remain responsive,
+- no Python-only heavy overlay scan loop required for runtime.
 
-**Relevant files**
-- `pyproject.toml` - native build integration.
-- `src/gui_qt/app.py` - 60 Hz pull integration and backend switching.
-- `src/gui/overlay.py` - fallback renderer parity reference.
-- `src/core/position_poller.py` - baseline comparator for v5.70.0.
-- `src/core/scanner.py` - parity source and gradual retirement target.
-- `src/core/portal_detector.py` - parity-critical semantic source.
-- `src/core/bot_engine.py` - lifecycle, fallback orchestration, mode flags.
-- `src/utils/constants.py` - feature flags and KPI thresholds.
-- `src/native/CMakeLists.txt` - native build target definitions.
-- `src/native/python_bridge.cpp` - pybind module API.
-- `src/native/scanner_worker.cpp` - 120 Hz producer.
-- `src/native/overlay_worker.cpp` - packed snapshot producer.
-- `.github/copilot-instructions.md` - document architecture and maintenance.
-- `CHAT_LOG.md` - release-by-release evidence and decisions.
+### Phase D - Align Documentation and Operational Truth (Issue #5)
+1. Update `src/native/README.md` to reflect strict-native architecture and current startup behavior.
+2. Remove stale statements about opt-in mode and Python fallback.
+3. Add a short operator section: build, verify, and failure meaning in plain language.
+4. Exit criteria:
+- docs match real runtime behavior,
+- no contradictory migration guidance remains.
 
-**Verification**
-1. Build/import checks on Windows venv for every release that touches native code.
-2. Per-release KPI report generated and attached to session logs.
-3. Shadow-mode parity reports for scanner and overlay fields before any active cutover.
-4. Long soak tests at v5.74.0 and v5.75.0 milestones.
-5. Manual in-game validation for portal/event/guard overlays each cutover step.
+### Phase E - Add Behavior Parity Validation (Issue #6)
+1. Expand validation beyond "method exists":
+- add behavior checks for critical reads (position, zone, event types, guards, portals, nav markers).
+2. Add side-by-side debug harness for controlled test mode only (not production fallback):
+- compare native outputs vs reference expectations/log baselines.
+3. Add reliability thresholds and fail-fast policy when native output is invalid/out-of-range.
+4. Exit criteria:
+- parity checks pass for core gameplay cycle,
+- regressions are detected early by automated checks.
 
-**Decisions**
-- Use hybrid migration as default strategy; full rewrite deferred.
-- C++ workers migrate first because they target the main bottleneck with lowest behavioral risk.
-- Renderer migration (Qt Quick) is sequenced after data-path stabilization.
-- Python fallback remains mandatory until native path proves long-run stability.
+### Versioned Delivery Sequence
+1. `v5.81.0` - Phase A complete (stability fix) + migration scaffolding for Phase B.
+2. `v5.82.0` - Qt overlay parity/visibility restoration pass (readability + labels + radar + nav-line anchoring).
+3. `v5.83.0` - Phase B first native scanner runtime slice complete (native scanner object + C++-owned `read_player_xy`; remaining runtime APIs delegated via injected backend during transition).
+4. `v5.84.0` - Phase C native overlay worker integration complete.
+5. `v5.85.0` - Phase B full scanner completion + doc alignment (Phase D).
+6. `v5.86.0` - Phase E parity/reliability harness + gate criteria enforcement.
 
-**Global Rules (Must-Preserve Scanner Feature Parity)**
-1. No active cutover unless all critical scanner-dependent features are present and parity-verified; missing any item blocks promotion.
-2. Position polling parity: 120 Hz player `x/y` feed, stable chain reads, and equivalent consumer freshness for RTNav + overlay.
-3. Typed event parity: Carjack/Sandlord classification, `is_target_event`, event coordinates, and lifecycle timing transitions must match Python semantics.
-4. Portal parity: in-map portal markers, exit-portal semantic flag (`is_exit`), and transition-time resilience (stale FightMgr recovery behavior equivalent).
-5. Guard-feed parity: Carjack guard positions/count feed used by overlay/event flow must remain non-regressive under active fight conditions.
-6. Navigation data parity: nav-collision marker extraction used by grid composition, wall/grid signals required by pathfinding, and any scanner-provided nav priors must be functionally equivalent.
-7. Zone/map-state parity: real zone name reads and map-state transitions consumed by bot loop must not regress.
-8. Map selection safety parity (critical): scanner/memory data used by map-selection process must preserve current behavior guarantees, including card UI-open detection, card identity inputs, and active-card safety checks that prevent wrong-card clicks.
-9. Diagnostics parity: portal debug artifacts, key scanner KPIs, and reliability counters required for triage must remain available (or native-equivalent) during migration.
-10. Shadow-mode comparator is mandatory for all above fields; active mode allowed only after passing parity gates across multi-cycle real runs.
+### Non-Developer Test Checklist (What You Will Do)
+1. Start bot and confirm it opens without immediate errors.
+2. Attach to game and confirm coordinates/zone update.
+3. Run one full map cycle and note:
+- did it finish,
+- did overlay markers appear correctly,
+- any freeze/crash.
+4. Run 5 consecutive maps and report:
+- total successful runs,
+- where it failed (if any),
+- whether performance feels smoother/same/worse.
+5. After final phase, run long session (target 4h) and report stability only (no code decisions needed).

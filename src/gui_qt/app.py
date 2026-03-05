@@ -21,7 +21,6 @@ from PySide6.QtWidgets import (
 )
 
 from src.core.bot_engine import BotEngine
-from src.gui.overlay import DebugOverlay
 from src.gui_qt.engine_bridge import EngineBridge
 from src.gui_qt.pages import (
     AddressesPage,
@@ -32,7 +31,7 @@ from src.gui_qt.pages import (
     SettingsPage,
 )
 from src.gui_qt.theme import WINDOW_STYLESHEET, set_button_variant
-from src.utils.constants import APP_NAME, APP_VERSION, HARDCODED_MAP_PORTALS, WALL_GRID_CELL_SIZE
+from src.utils.constants import APP_NAME, APP_VERSION, WALL_GRID_CELL_SIZE
 from src.utils.logger import log
 
 IS_WINDOWS = sys.platform == "win32"
@@ -65,18 +64,9 @@ class BotAppQt(QMainWindow):
 
         self._buttons: Dict[str, QPushButton] = {}
         self._pages: Dict[str, QFrame] = {}
-        self._overlay: Optional[DebugOverlay] = None
+        self._overlay: Optional[Any] = None
         self._last_zone_fname = ""
         self._last_zone_english = ""
-        self._overlay_data_lock = threading.Lock()
-        self._overlay_data: Dict[str, Any] = {
-            "portal_positions": [],
-            "event_markers": [],
-            "guard_markers": [],
-            "nav_collision_markers": [],
-        }
-        self._overlay_worker_stop = threading.Event()
-        self._overlay_worker_thread: Optional[threading.Thread] = None
         self._overlay_last_map_check_t = 0.0
         self._pos_poll_stop: Optional[threading.Event] = None
         self._hotkey_thread = None
@@ -146,7 +136,7 @@ class BotAppQt(QMainWindow):
 
         title = QLabel("TL Bot")
         title.setObjectName("Title")
-        subtitle = QLabel(f"v{APP_VERSION} | Qt Phase 4")
+        subtitle = QLabel(f"v{APP_VERSION} | Qt Quick")
         subtitle.setObjectName("Subtitle")
         side_layout.addWidget(title)
         side_layout.addWidget(subtitle)
@@ -186,8 +176,9 @@ class BotAppQt(QMainWindow):
 
         note = QLabel(
             "Safe preview mode:\n"
-            "- Core logic unchanged\n"
-            "- Tk GUI remains fallback"
+            "- Native runtime path active\n"
+            "- Qt Quick overlay full-layer path active\n"
+            "- Legacy overlay via TLI_QT_LEGACY_OVERLAY=1"
         )
         note.setObjectName("PageBody")
         note.setWordWrap(True)
@@ -301,7 +292,10 @@ class BotAppQt(QMainWindow):
                 log.info(f"[AutoAttach] {game_process} detected - attaching automatically")
                 page = self._pages.get("addresses")
                 if page and hasattr(page, "_on_attach"):
-                    page._on_attach()
+                    try:
+                        page._on_attach()
+                    except Exception as exc:
+                        log.warning(f"[AutoAttach] Attach callback failed: {exc}")
         except Exception:
             pass
 
@@ -540,14 +534,14 @@ class BotAppQt(QMainWindow):
 
     def _on_grid_data_update(self, walkable_xy, frontier_xy, cell_size: float = WALL_GRID_CELL_SIZE):
         overlay = self._overlay
-        if overlay and overlay._running:
+        if overlay and getattr(overlay, "_running", False) and hasattr(overlay, "set_grid_data"):
             overlay.set_grid_data(walkable_xy, frontier_xy, cell_size)
-            overlay.set_layer_visible(DebugOverlay.LAYER_GRID, True)
+            if hasattr(overlay, "set_layer_visible"):
+                overlay.set_layer_visible("grid", True)
 
     def _toggle_overlay(self):
-        if self._overlay and self._overlay._running:
+        if self._overlay and getattr(self._overlay, "_running", False):
             self._stop_position_poll()
-            self._stop_overlay_worker()
             self._overlay_feed_timer.stop()
             self._overlay.stop()
             self._overlay = None
@@ -557,18 +551,41 @@ class BotAppQt(QMainWindow):
             return
 
         window_mgr = getattr(self._engine, "window", None)
+        use_legacy = os.environ.get("TLI_QT_LEGACY_OVERLAY", "0").strip().lower() in {
+            "1", "true", "yes", "on"
+        }
+        overlay_rect = None
         if window_mgr and hasattr(window_mgr, "get_client_rect"):
             try:
                 rect = window_mgr.get_client_rect()
                 if rect:
                     x, y, x2, y2 = rect
-                    self._overlay = DebugOverlay(game_window_rect=(x, y, x2 - x, y2 - y))
-                else:
-                    self._overlay = DebugOverlay()
+                    overlay_rect = (x, y, x2 - x, y2 - y)
             except Exception:
-                self._overlay = DebugOverlay()
+                overlay_rect = None
+
+        if use_legacy:
+            try:
+                from src.gui.overlay import DebugOverlay
+
+                self._overlay = DebugOverlay(game_window_rect=overlay_rect) if overlay_rect else DebugOverlay()
+                log.info("[Overlay] Using legacy tkinter overlay (explicit env override)")
+            except Exception as exc:
+                log.error(f"[Overlay] Legacy overlay init failed: {exc}")
+                return
         else:
-            self._overlay = DebugOverlay()
+            try:
+                from src.gui_qt.quick_overlay import QtQuickOverlay
+
+                self._overlay = QtQuickOverlay(
+                    game_window_rect=overlay_rect,
+                    lod_settings=self._build_overlay_lod_settings(),
+                )
+                log.info("[Overlay] Using Qt Quick renderer")
+            except Exception as exc:
+                self._overlay = None
+                log.error(f"[Overlay] Qt Quick overlay init failed: {exc}")
+                return
 
         paths = self._pages.get("paths")
         if paths is not None and hasattr(paths, "_loaded_waypoints"):
@@ -585,120 +602,21 @@ class BotAppQt(QMainWindow):
         self._overlay_btn.setText("Overlay: ON")
         self._engine.set_debug_overlay(self._overlay)
         self._start_position_poll()
-        self._start_overlay_worker()
         self._overlay_feed_timer.start()
         log.info("[Overlay] Debug overlay started")
 
-    def _start_overlay_worker(self):
-        self._overlay_worker_stop.clear()
-        if self._overlay_worker_thread and self._overlay_worker_thread.is_alive():
-            return
-
-        def _worker_loop():
-            interval = 0.20
-            while not self._overlay_worker_stop.is_set():
-                t0 = time.monotonic()
-                try:
-                    overlay = self._overlay
-                    if not overlay or not overlay._running:
-                        break
-
-                    portal_positions = []
-                    event_markers = []
-                    guard_markers = []
-                    nav_collision_markers = []
-
-                    portal_det = getattr(self._engine, "portal_detector", None)
-                    if portal_det:
-                        try:
-                            if hasattr(portal_det, "get_portal_markers"):
-                                portal_positions = portal_det.get_portal_markers() or []
-                            elif hasattr(portal_det, "get_portal_positions"):
-                                portal_positions = portal_det.get_portal_positions() or []
-                        except Exception:
-                            portal_positions = []
-
-                    try:
-                        current_map = self._resolve_current_map()
-                        hardcoded = HARDCODED_MAP_PORTALS.get(current_map, []) or []
-                        existing = {
-                            (int(round(float(p.get("x", 0.0)))), int(round(float(p.get("y", 0.0)))))
-                            for p in portal_positions if isinstance(p, dict)
-                        }
-                        for hp in hardcoded:
-                            key = (int(round(float(hp.get("x", 0.0)))), int(round(float(hp.get("y", 0.0)))))
-                            if key in existing:
-                                continue
-                            portal_positions.append({
-                                "x": float(hp.get("x", 0.0)),
-                                "y": float(hp.get("y", 0.0)),
-                                "is_exit": bool(hp.get("is_exit", False)),
-                            })
-                            existing.add(key)
-                    except Exception:
-                        pass
-
-                    scanner = getattr(self._engine, "scanner", None)
-                    if scanner:
-                        try:
-                            events = scanner.get_typed_events() or []
-                            for e in events:
-                                if abs(e.position[0]) <= 1.0 and abs(e.position[1]) <= 1.0:
-                                    continue
-                                event_markers.append({
-                                    "x": e.position[0],
-                                    "y": e.position[1],
-                                    "type": e.event_type,
-                                    "wave": e.wave_counter,
-                                    "guards": -1,
-                                    "guard_classes": "",
-                                    "is_target": e.is_target_event,
-                                })
-                        except Exception:
-                            event_markers = []
-
-                        try:
-                            _raw_guards = scanner.get_carjack_guard_positions() or []
-                            guard_markers = [
-                                {
-                                    "x": g["x"],
-                                    "y": g["y"],
-                                    "abp": g.get("abp", ""),
-                                    "score": 0.0,
-                                    "dist_truck": g.get("dist_truck", -1.0),
-                                }
-                                for g in _raw_guards
-                            ]
-                        except Exception:
-                            guard_markers = []
-
-                        try:
-                            if self._engine.config.get("nav_collision_overlay_enabled", False):
-                                nav_collision_markers = scanner.get_nav_collision_markers() or []
-                        except Exception:
-                            nav_collision_markers = []
-
-                    with self._overlay_data_lock:
-                        self._overlay_data["portal_positions"] = portal_positions
-                        self._overlay_data["event_markers"] = event_markers
-                        self._overlay_data["guard_markers"] = guard_markers
-                        self._overlay_data["nav_collision_markers"] = nav_collision_markers
-                except Exception:
-                    pass
-
-                sleep_for = interval - (time.monotonic() - t0)
-                if sleep_for > 0.001:
-                    time.sleep(sleep_for)
-
-        self._overlay_worker_thread = threading.Thread(target=_worker_loop, daemon=True, name="QtOverlayDataWorker")
-        self._overlay_worker_thread.start()
-
-    def _stop_overlay_worker(self):
-        self._overlay_worker_stop.set()
-        t = self._overlay_worker_thread
-        if t and t.is_alive():
-            t.join(timeout=0.5)
-        self._overlay_worker_thread = None
+    def _build_overlay_lod_settings(self) -> Dict[str, Any]:
+        cfg = self._engine.config
+        return {
+            "enabled": bool(cfg.get("overlay_lod_enabled", True)),
+            "max_portals": int(cfg.get("overlay_lod_max_portals", 120) or 120),
+            "max_events": int(cfg.get("overlay_lod_max_events", 100) or 100),
+            "max_guards": int(cfg.get("overlay_lod_max_guards", 100) or 100),
+            "max_entities": int(cfg.get("overlay_lod_max_entities", 150) or 150),
+            "max_nav_collision": int(cfg.get("overlay_lod_max_nav_collision", 200) or 200),
+            "max_grid_walkable": int(cfg.get("overlay_lod_max_grid_walkable", 2200) or 2200),
+            "max_grid_frontier": int(cfg.get("overlay_lod_max_grid_frontier", 900) or 900),
+        }
 
     def _resolve_current_map(self) -> str:
         scanner = getattr(self._engine, "_scanner", None)
@@ -811,16 +729,20 @@ class BotAppQt(QMainWindow):
                     cal = calibrator.get_calibration(current_map)
                     overlay.set_calibration(cal, current_map)
 
-            with self._overlay_data_lock:
-                portal_positions = self._overlay_data["portal_positions"]
-                event_markers = self._overlay_data["event_markers"]
-                guard_markers = self._overlay_data["guard_markers"]
-                nav_collision_markers = self._overlay_data["nav_collision_markers"]
+            snapshot = self._engine.get_overlay_snapshot()
+            portal_positions = snapshot.get("portal_positions", [])
+            event_markers = snapshot.get("event_markers", [])
+            guard_markers = snapshot.get("guard_markers", [])
+            entity_markers = snapshot.get("entity_markers", [])
+            nav_collision_markers = snapshot.get("nav_collision_markers", [])
 
             overlay.set_portal_positions(portal_positions)
             overlay.set_event_markers(event_markers)
             overlay.set_guard_markers(guard_markers)
+            overlay.set_entity_positions(entity_markers)
             overlay.set_nav_collision_markers(nav_collision_markers)
+            if hasattr(overlay, "flush"):
+                overlay.flush()
         except Exception:
             pass
 
@@ -839,7 +761,6 @@ class BotAppQt(QMainWindow):
         except Exception:
             pass
         self._stop_position_poll()
-        self._stop_overlay_worker()
         if self._overlay:
             try:
                 self._overlay.stop()

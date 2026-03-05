@@ -2,7 +2,7 @@ from enum import Enum, auto
 
 
 APP_NAME = "Torchlight Infinite Bot V2"
-APP_VERSION = 'v5.69.0'
+APP_VERSION = 'v5.83.0'
 GAME_PROCESS_NAME = "torchlight_infinite.exe"
 GAME_WINDOW_TITLE = "Torchlight Infinite"
 
@@ -600,13 +600,9 @@ DEFAULT_SETTINGS = {
     "input_debug_logging": False,
     # UI debug tooling visibility (Address Probe Events + Entity Scanner tab).
     "debug_ui_enabled": False,
-    # Native runtime toggles (v5.69.0 foundation).
-    # All native paths are opt-in and fail-open to Python.
-    "native_runtime_enabled": False,
-    "native_scanner_enabled": False,
-    "native_overlay_worker_enabled": False,
+    # Native runtime module preference.
+    # Scanner path is native-required; Python fallback is not allowed.
     "native_preferred_module": "tli_native",
-    "native_strict_mode": False,
     "nav_mode": "manual",  # "manual" (recorded path) or "auto" (A* autonomous)
     "auto_behavior": "rush_events",  # rush_events | kill_all | boss_rush
     # Wall model mode: "legacy" = current binary grid only, "hybrid" =
@@ -621,6 +617,15 @@ DEFAULT_SETTINGS = {
     "nav_collision_overlay_show_raw": True,
     # Overlay debug: draw pairwise bridge segments used by grid gap-closing.
     "nav_collision_overlay_show_bridges": False,
+    # Qt Quick overlay LOD/decimation controls (high-load debug scenes).
+    "overlay_lod_enabled": True,
+    "overlay_lod_max_portals": 120,
+    "overlay_lod_max_events": 100,
+    "overlay_lod_max_guards": 100,
+    "overlay_lod_max_entities": 150,
+    "overlay_lod_max_nav_collision": 200,
+    "overlay_lod_max_grid_walkable": 2200,
+    "overlay_lod_max_grid_frontier": 900,
     # Apply decoded NavModifierVolume boxes as blocked priors in A* grid.
     "nav_collision_grid_blocking_enabled": True,
     # Global box inflation remains off by default; production pathing applies

@@ -4,7 +4,7 @@ import math
 import time
 import threading
 from collections import deque
-from typing import Optional, Callable
+from typing import Optional, Callable, Dict, Any
 
 from src.core.memory_reader import MemoryReader
 from src.core.game_state import GameState
@@ -43,6 +43,7 @@ from src.utils.constants import (
     EXIT_PORTAL_TEMPLATE_PATH, EXIT_PORTAL_MATCH_THRESHOLD,
     EXIT_PORTAL_SEARCH_REGION,
     HARDCODED_MAP_FINAL_DESTINATIONS,
+    HARDCODED_MAP_PORTALS,
 )
 
 # Bot-controlled runtime tick cadence (not user-configurable in UI).
@@ -135,6 +136,21 @@ class BotEngine:
         self._debug_overlay = None
         self._current_map_name = self.config.get("current_map", "")
         self._zone_watcher_active = False  # set True when zone-watcher thread is running
+        self._overlay_zone_fname = ""
+        self._overlay_zone_english = ""
+        self._overlay_snapshot_lock = threading.Lock()
+        self._overlay_snapshot: Dict[str, Any] = {
+            "portal_positions": [],
+            "event_markers": [],
+            "guard_markers": [],
+            "entity_markers": [],
+            "nav_collision_markers": [],
+            "dropped_event_markers": 0,
+            "dropped_guard_markers": 0,
+            "updated_at": 0.0,
+        }
+        self._overlay_worker_stop = threading.Event()
+        self._overlay_worker_thread: Optional[threading.Thread] = None
 
         self._entering_phase = ""
         self._entering_start = 0.0
@@ -223,6 +239,268 @@ class BotEngine:
     def set_debug_overlay(self, overlay):
         """Store overlay reference.  Passed to RTNavigator for live A* path display."""
         self._debug_overlay = overlay
+        if overlay is not None:
+            self._start_overlay_snapshot_worker()
+        else:
+            self._stop_overlay_snapshot_worker()
+
+    def _resolve_overlay_current_map(self) -> str:
+        scanner = self._scanner
+        if scanner:
+            try:
+                internal = scanner.read_real_zone_name()
+                if internal:
+                    if internal != self._overlay_zone_fname:
+                        self._overlay_zone_fname = internal
+                        self._overlay_zone_english = internal
+                        mapping_file = os.path.join("data", "zone_name_mapping.json")
+                        if os.path.exists(mapping_file):
+                            try:
+                                with open(mapping_file, "r", encoding="utf-8") as f:
+                                    mapping = json.load(f)
+                                english = mapping.get(internal, "")
+                                if english:
+                                    self._overlay_zone_english = english
+                            except Exception:
+                                pass
+                    return self._overlay_zone_english
+            except Exception:
+                pass
+        return self.config.get("current_map", "hideout")
+
+    def _collect_overlay_snapshot_data(self) -> Dict[str, Any]:
+        portal_positions = []
+        event_markers = []
+        guard_markers = []
+        entity_markers = []
+        nav_collision_markers = []
+        dropped_event_markers = 0
+        dropped_guard_markers = 0
+
+        def _valid_world_xy(x: Any, y: Any) -> bool:
+            try:
+                xf = float(x)
+                yf = float(y)
+            except Exception:
+                return False
+            if not (math.isfinite(xf) and math.isfinite(yf)):
+                return False
+            return abs(xf) <= 120000.0 and abs(yf) <= 120000.0
+
+        portal_det = self._portal_detector
+        if portal_det:
+            try:
+                if hasattr(portal_det, "get_portal_markers"):
+                    portal_positions = portal_det.get_portal_markers() or []
+                elif hasattr(portal_det, "get_portal_positions"):
+                    portal_positions = portal_det.get_portal_positions() or []
+            except Exception:
+                portal_positions = []
+
+        try:
+            current_map = self._resolve_overlay_current_map()
+            hardcoded = HARDCODED_MAP_PORTALS.get(current_map, []) or []
+            existing = {
+                (int(round(float(p.get("x", 0.0)))), int(round(float(p.get("y", 0.0)))))
+                for p in portal_positions if isinstance(p, dict)
+            }
+            for hp in hardcoded:
+                key = (int(round(float(hp.get("x", 0.0)))), int(round(float(hp.get("y", 0.0)))))
+                if key in existing:
+                    continue
+                portal_positions.append({
+                    "x": float(hp.get("x", 0.0)),
+                    "y": float(hp.get("y", 0.0)),
+                    "is_exit": bool(hp.get("is_exit", False)),
+                })
+                existing.add(key)
+        except Exception:
+            pass
+
+        # Keep one portal marker per rounded (x,y), preferring exit semantics.
+        try:
+            dedup = {}
+            for p in portal_positions:
+                if not isinstance(p, dict):
+                    continue
+                x = float(p.get("x", 0.0))
+                y = float(p.get("y", 0.0))
+                key = (int(round(x)), int(round(y)))
+                prev = dedup.get(key)
+                if prev is None:
+                    dedup[key] = dict(p)
+                    continue
+                if (not bool(prev.get("is_exit", False))) and bool(p.get("is_exit", False)):
+                    dedup[key] = dict(p)
+            portal_positions = list(dedup.values())
+        except Exception:
+            pass
+
+        scanner = self._scanner
+        if scanner:
+            try:
+                events = scanner.get_typed_events() or []
+                for e in events:
+                    if abs(e.position[0]) <= 1.0 and abs(e.position[1]) <= 1.0:
+                        continue
+                    if not _valid_world_xy(e.position[0], e.position[1]):
+                        dropped_event_markers += 1
+                        continue
+                    event_markers.append({
+                        "x": e.position[0],
+                        "y": e.position[1],
+                        "type": e.event_type,
+                        "wave": e.wave_counter,
+                        "guards": -1,
+                        "guard_classes": "",
+                        "is_target": e.is_target_event,
+                    })
+            except Exception:
+                event_markers = []
+
+            try:
+                raw_guards = scanner.get_carjack_guard_positions() or []
+                for g in raw_guards:
+                    gx = g.get("x", 0.0)
+                    gy = g.get("y", 0.0)
+                    if not _valid_world_xy(gx, gy):
+                        dropped_guard_markers += 1
+                        continue
+                    guard_markers.append(
+                        {
+                            "x": gx,
+                            "y": gy,
+                            "abp": g.get("abp", ""),
+                            "score": 0.0,
+                            "dist_truck": g.get("dist_truck", -1.0),
+                        }
+                    )
+            except Exception:
+                guard_markers = []
+
+            try:
+                # Keep overlay entities lightweight: only alive monsters near the player.
+                monsters = scanner.get_monster_entities() or []
+                px, py = self._pos_poller.get_pos()
+                near_alive: List[Tuple[float, Any]] = []
+                for m in monsters:
+                    if int(getattr(m, "bvalid", 0) or 0) == 0:
+                        continue
+                    mx = float(m.position[0])
+                    my = float(m.position[1])
+                    if not _valid_world_xy(mx, my):
+                        continue
+                    if abs(px) > 1.0 or abs(py) > 1.0:
+                        d2 = (mx - px) * (mx - px) + (my - py) * (my - py)
+                    else:
+                        d2 = 0.0
+                    near_alive.append((d2, m))
+                near_alive.sort(key=lambda it: it[0])
+
+                for _, m in near_alive[:120]:
+                    cls = str(getattr(m, "class_name", "") or "")
+                    if cls:
+                        cls = cls.split(".")[-1]
+                    entity_markers.append(
+                        {
+                            "x": float(m.position[0]),
+                            "y": float(m.position[1]),
+                            "name": cls or "EMonster",
+                        }
+                    )
+            except Exception:
+                entity_markers = []
+
+            try:
+                if self.config.get("nav_collision_overlay_enabled", False):
+                    raw_markers = scanner.get_nav_collision_markers() or []
+                    show_raw = bool(self.config.get("nav_collision_overlay_show_raw", True))
+                    show_inflated = bool(self.config.get("nav_collision_overlay_inflate_debug", False))
+                    try:
+                        inflate_u = float(self.config.get("nav_collision_grid_inflate_u", 0.0) or 0.0)
+                    except Exception:
+                        inflate_u = 0.0
+
+                    if show_raw:
+                        for m in raw_markers:
+                            mm = dict(m)
+                            mm["overlay_style"] = "raw"
+                            mm["overlay_label"] = ""
+                            nav_collision_markers.append(mm)
+
+                    if show_inflated and inflate_u > 0.0:
+                        for m in raw_markers:
+                            mm = dict(m)
+                            mm["extent_x"] = max(1.0, float(m.get("extent_x", 0.0)) + inflate_u)
+                            mm["extent_y"] = max(1.0, float(m.get("extent_y", 0.0)) + inflate_u)
+                            mm["overlay_style"] = "inflated"
+                            mm["overlay_label"] = "NAV+"
+                            nav_collision_markers.append(mm)
+            except Exception:
+                nav_collision_markers = []
+
+        return {
+            "portal_positions": portal_positions,
+            "event_markers": event_markers,
+            "guard_markers": guard_markers,
+            "entity_markers": entity_markers,
+            "nav_collision_markers": nav_collision_markers,
+            "dropped_event_markers": dropped_event_markers,
+            "dropped_guard_markers": dropped_guard_markers,
+            "updated_at": time.monotonic(),
+        }
+
+    def _start_overlay_snapshot_worker(self):
+        if self._overlay_worker_thread and self._overlay_worker_thread.is_alive():
+            self._native_runtime.set_overlay_worker_state("native:engine-overlay-snapshot", True)
+            return
+
+        self._overlay_worker_stop.clear()
+
+        def _worker_loop():
+            interval_s = 0.20
+            while not self._overlay_worker_stop.is_set():
+                t0 = time.monotonic()
+                try:
+                    if self.memory.is_attached and self._scanner:
+                        snapshot = self._collect_overlay_snapshot_data()
+                        with self._overlay_snapshot_lock:
+                            self._overlay_snapshot = snapshot
+                except Exception:
+                    pass
+
+                sleep_for = interval_s - (time.monotonic() - t0)
+                if sleep_for > 0.001:
+                    time.sleep(sleep_for)
+
+        self._overlay_worker_thread = threading.Thread(
+            target=_worker_loop,
+            daemon=True,
+            name="EngineOverlaySnapshotWorker",
+        )
+        self._overlay_worker_thread.start()
+        self._native_runtime.set_overlay_worker_state("native:engine-overlay-snapshot", True)
+
+    def _stop_overlay_snapshot_worker(self):
+        self._overlay_worker_stop.set()
+        t = self._overlay_worker_thread
+        if t and t.is_alive():
+            t.join(timeout=0.5)
+        self._overlay_worker_thread = None
+        self._native_runtime.set_overlay_worker_state("native:engine-overlay-snapshot", False)
+
+    def get_overlay_snapshot(self) -> Dict[str, Any]:
+        with self._overlay_snapshot_lock:
+            return {
+                "portal_positions": list(self._overlay_snapshot.get("portal_positions", [])),
+                "event_markers": list(self._overlay_snapshot.get("event_markers", [])),
+                "guard_markers": list(self._overlay_snapshot.get("guard_markers", [])),
+                "entity_markers": list(self._overlay_snapshot.get("entity_markers", [])),
+                "nav_collision_markers": list(self._overlay_snapshot.get("nav_collision_markers", [])),
+                "dropped_event_markers": int(self._overlay_snapshot.get("dropped_event_markers", 0) or 0),
+                "dropped_guard_markers": int(self._overlay_snapshot.get("dropped_guard_markers", 0) or 0),
+                "updated_at": float(self._overlay_snapshot.get("updated_at", 0.0) or 0.0),
+            }
 
     @property
     def portal_detector(self) -> Optional[PortalDetector]:
@@ -255,10 +533,9 @@ class BotEngine:
             avg_cycle = (sum(self._cycle_durations_s) / len(self._cycle_durations_s)) if self._cycle_durations_s else 0.0
             success_rate = (self._cycle_success_count / self._cycle_total_count * 100.0) if self._cycle_total_count else 0.0
         native_status = self._native_runtime.get_status_snapshot()
-        native_label = native_status.get("scanner_backend", "python")
+        native_label = native_status.get("scanner_backend", "native:uninitialized")
         native_error = str(native_status.get("last_error", "") or "").strip()
-        if native_error:
-            native_label = f"{native_label} (fallback)"
+        native_metrics = native_status.get("scanner_metrics", {}) or {}
         return {
             "state": state_name,
             "maps_completed": maps,
@@ -274,11 +551,15 @@ class BotEngine:
             "native_runtime_enabled": bool(native_status.get("runtime_enabled", False)),
             "native_module_loaded": bool(native_status.get("module_loaded", False)),
             "native_module_name": native_status.get("module_name", ""),
-            "native_scanner_backend": native_status.get("scanner_backend", "python"),
-            "native_overlay_backend": native_status.get("overlay_backend", "python"),
+            "native_scanner_backend": native_status.get("scanner_backend", "native:uninitialized"),
+            "native_overlay_backend": native_status.get("overlay_backend", "native:pending"),
             "native_overlay_worker_alive": bool(native_status.get("overlay_worker_alive", False)),
             "native_error": native_error,
             "native_status_label": native_label,
+            "native_scanner_hz": float(native_metrics.get("hz", 0.0) or 0.0),
+            "native_scanner_jitter_ms": float(native_metrics.get("jitter_ms", 0.0) or 0.0),
+            "native_scanner_stale_frames": int(native_metrics.get("stale_frames", 0) or 0),
+            "native_scanner_age_ms": float(native_metrics.get("age_ms", 0.0) or 0.0),
         }
 
     def _create_scanner(self, log_prefix: str = "[Scanner]"):
@@ -287,6 +568,19 @@ class BotEngine:
             self.addresses,
             lambda msg_s: log.info(f"{log_prefix} {msg_s}"),
         )
+
+    def _read_player_xy_runtime(self) -> tuple:
+        """Return player XY from active runtime scanner API only."""
+        scanner = self._scanner
+        if scanner and hasattr(scanner, "read_player_xy"):
+            try:
+                pos = scanner.read_player_xy()
+                if pos is not None:
+                    x, y = float(pos[0]), float(pos[1])
+                    return x, y
+            except Exception:
+                pass
+        return 0.0, 0.0
 
     def _cycle_begin(self):
         """Mark start of a map cycle (highest-priority KPI: cycle time)."""
@@ -425,20 +719,28 @@ class BotEngine:
                             gworld_static = modules[0][1] + saved_addr["base_offset"]
                             ptr = self.memory.read_value(gworld_static, "ulong")
                             if ptr and 0x10000 < ptr < 0x7FFFFFFFFFFF:
-                                self._scanner._cached_gworld_static = gworld_static
+                                self._scanner.set_cached_gworld_static(gworld_static)
                                 import threading
                                 def _deferred_extras():
-                                    self._scanner.scan_fnamepool(modules[0][1], modules[0][2])
-                                    self._scanner.scan_gobjects(modules[0][1], modules[0][2])
-                                    if self._scanner.fnamepool_addr and self._scanner.gobjects_addr:
-                                        self._portal_detector = self._create_portal_detector(self._scanner)
-                                        log.info("Portal detector initialized (deferred)")
-                                        self._init_memory_card_selector()
-                                    for cb in getattr(self, '_deferred_scan_callbacks', []):
-                                        try:
-                                            cb()
-                                        except Exception:
-                                            pass
+                                    try:
+                                        if not self.memory.is_attached:
+                                            return
+                                        self._scanner.scan_fnamepool(modules[0][1], modules[0][2])
+                                        self._scanner.scan_gobjects(modules[0][1], modules[0][2])
+                                        fnamepool_addr = getattr(self._scanner, "fnamepool_addr", 0)
+                                        gobjects_addr = getattr(self._scanner, "gobjects_addr", 0)
+                                        if fnamepool_addr and gobjects_addr:
+                                            self._portal_detector = self._create_portal_detector(self._scanner)
+                                            log.info("Portal detector initialized (deferred)")
+                                            self._init_memory_card_selector()
+                                    except Exception as exc:
+                                        log.warning(f"[Attach] Deferred scanner extras failed: {exc}")
+                                    finally:
+                                        for cb in getattr(self, '_deferred_scan_callbacks', []):
+                                            try:
+                                                cb()
+                                            except Exception:
+                                                pass
                                 threading.Thread(target=_deferred_extras, daemon=True, name="DeferredExtras").start()
                 self._configure_scanner_probes(self._scanner)
             else:
@@ -596,10 +898,9 @@ class BotEngine:
         log.info("Main loop exited")
 
     def _check_zone_change(self):
-        x = self.game_state.read_chain("player_x")
-        y = self.game_state.read_chain("player_y")
+        x, y = self._read_player_xy_runtime()
 
-        if x is not None and y is not None:
+        if x != 0.0 or y != 0.0:
             self._consecutive_read_failures = 0
             self._last_valid_position = (x, y)
         else:
@@ -621,7 +922,7 @@ class BotEngine:
             # Invalidate FightMgr cache immediately so entity scanner uses the new
             # map's instance rather than reading stale data from the previous map.
             if self._scanner:
-                self._scanner._fightmgr_ptr = 0
+                self._scanner.clear_fightmgr_cache()
             for _ in range(6):
                 if not self._running:
                     return
@@ -735,9 +1036,8 @@ class BotEngine:
             if detected:
                 self.config.set("current_map", detected)
             else:
-                x = self.game_state.read_chain("player_x")
-                y = self.game_state.read_chain("player_y")
-                if x is not None and y is not None:
+                x, y = self._read_player_xy_runtime()
+                if x != 0.0 or y != 0.0:
                     self.detect_map_from_position_and_update(x, y)
 
         if zone and self._is_hideout_zone(zone):
@@ -1147,8 +1447,7 @@ class BotEngine:
                 cached = ws.load_wall_data(map_name) if map_name else None
                 if cached and not force_rescan:
                     log.info(f"[WallScan] Cache hit: {len(cached)} visited-position points for '{map_name}'")
-                    cx = self.game_state.read_chain("player_x") or 0.0
-                    cy = self.game_state.read_chain("player_y") or 0.0
+                    cx, cy = self._read_player_xy_runtime()
                     grid = self._build_navigation_grid_for_map(ws, map_name, cx, cy, cached)
                     if grid is not None:
                         self._pathfinder.set_grid(grid)
@@ -1179,8 +1478,7 @@ class BotEngine:
                             f"[WallScan] Re-scan: MinimapSaveObject empty for '{map_name}' "
                             f"in {elapsed:.2f}s — keeping {old_count} cached pts"
                         )
-                        cx = self.game_state.read_chain("player_x") or 0.0
-                        cy = self.game_state.read_chain("player_y") or 0.0
+                        cx, cy = self._read_player_xy_runtime()
                         grid = self._build_navigation_grid_for_map(ws, map_name, cx, cy, cached)
                         if grid is not None:
                             self._pathfinder.set_grid(grid)
@@ -1190,8 +1488,7 @@ class BotEngine:
                             f"— map '{map_name}' not yet visited or GObjects not ready; "
                             f"trying atlas/fail-open composition"
                         )
-                        cx = self.game_state.read_chain("player_x") or 0.0
-                        cy = self.game_state.read_chain("player_y") or 0.0
+                        cx, cy = self._read_player_xy_runtime()
                         grid = self._build_navigation_grid_for_map(ws, map_name, cx, cy, [])
                         if grid is not None:
                             self._pathfinder.set_grid(grid)
@@ -1220,8 +1517,7 @@ class BotEngine:
                 else:
                     log.info(f"[WallScan] Saved {new_count} visited-position points for '{map_name}'")
 
-                cx = self.game_state.read_chain("player_x") or 0.0
-                cy = self.game_state.read_chain("player_y") or 0.0
+                cx, cy = self._read_player_xy_runtime()
                 grid = self._build_navigation_grid_for_map(ws, map_name, cx, cy, points)
                 if grid is not None:
                     self._pathfinder.set_grid(grid)
@@ -1345,7 +1641,7 @@ class BotEngine:
                 while self.memory.is_attached:
                     time.sleep(POLL_S)
                     try:
-                        if not self._scanner or not self._scanner._gobjects_addr:
+                        if not self._scanner or not self._scanner.gobjects_addr:
                             continue
 
                         zone    = self._scanner.read_zone_name()
@@ -1387,7 +1683,7 @@ class BotEngine:
                             # Flush FightMgr cache on map exit: the previous map's
                             # instance is no longer valid in the hideout / loading screen.
                             if self._scanner:
-                                self._scanner._fightmgr_ptr = 0
+                                self._scanner.clear_fightmgr_cache()
                             continue
 
                         # Back in a map zone — reset non-map counter
@@ -1416,7 +1712,7 @@ class BotEngine:
                             # get_monster_entities() and get_typed_events() re-resolve it
                             # via GObjects instead of reading the previous map's instance.
                             if self._scanner:
-                                self._scanner._fightmgr_ptr = 0
+                                self._scanner.clear_fightmgr_cache()
                             self._start_wall_scan_background(map_name)
                             last_scan_at = now
                             # Start direct position sampler for this map
@@ -1627,7 +1923,7 @@ class BotEngine:
 
         def _truck_lock() -> bool:
             """Keep character on truck and hard-stop movement unless chasing guards."""
-            p0 = scanner._read_player_xy() if scanner else None
+            p0 = scanner.read_player_xy() if scanner else None
             if p0 is None:
                 return False
             tx0, ty0 = truck_pos
@@ -1640,11 +1936,11 @@ class BotEngine:
             self._get_helper_rt_nav().stop_character()
             self.input.move_mouse(*CHARACTER_CENTER)
 
-            p1 = scanner._read_player_xy() if scanner else None
+            p1 = scanner.read_player_xy() if scanner else None
             if p1 is None:
                 return False
             time.sleep(0.12)
-            p2 = scanner._read_player_xy() if scanner else None
+            p2 = scanner.read_player_xy() if scanner else None
             if p2 is None:
                 return False
 
@@ -1655,7 +1951,7 @@ class BotEngine:
 
             self.input.move_mouse(*CHARACTER_CENTER)
             time.sleep(0.12)
-            p3 = scanner._read_player_xy() if scanner else None
+            p3 = scanner.read_player_xy() if scanner else None
             if p3 is None:
                 return False
             d_truck2 = math.hypot(p3[0] - tx0, p3[1] - ty0)
@@ -1719,7 +2015,7 @@ class BotEngine:
                 break
 
             guard_positions = scanner.get_carjack_guard_positions() if scanner else []
-            player_xy = scanner._read_player_xy() if scanner else None
+            player_xy = scanner.read_player_xy() if scanner else None
             if not player_xy:
                 time.sleep(0.2)
                 continue
@@ -1800,7 +2096,7 @@ class BotEngine:
             3) Immediately place cursor on CHARACTER_CENTER to hard-stop drift.
             4) Verify both proximity and low movement over short interval.
             """
-            pxy0 = scanner._read_player_xy() if scanner else None
+            pxy0 = scanner.read_player_xy() if scanner else None
             if pxy0 is None:
                 return False
             px0, py0 = pxy0
@@ -1814,11 +2110,11 @@ class BotEngine:
             self.input.move_mouse(*CHARACTER_CENTER)
 
             # Verify: close enough + movement has settled.
-            p1 = scanner._read_player_xy() if scanner else None
+            p1 = scanner.read_player_xy() if scanner else None
             if p1 is None:
                 return False
             time.sleep(0.12)
-            p2 = scanner._read_player_xy() if scanner else None
+            p2 = scanner.read_player_xy() if scanner else None
             if p2 is None:
                 return False
 
@@ -1830,7 +2126,7 @@ class BotEngine:
             # One quick retry to absorb late follow-drift.
             self.input.move_mouse(*CHARACTER_CENTER)
             time.sleep(0.12)
-            p3 = scanner._read_player_xy() if scanner else None
+            p3 = scanner.read_player_xy() if scanner else None
             if p3 is None:
                 return False
             d_platform2 = math.hypot(p3[0] - ex, p3[1] - ey)
@@ -1902,7 +2198,7 @@ class BotEngine:
                 log.info("[Events] Sandlord: 90s hard cap — resuming navigation")
                 sandlord_done_reason = "timeout"
                 break
-            pxy = scanner._read_player_xy() if scanner else None
+            pxy = scanner.read_player_xy() if scanner else None
             if pxy is not None:
                 d_platform = math.hypot(pxy[0] - ex, pxy[1] - ey)
                 if d_platform > 500.0:
@@ -2044,7 +2340,7 @@ class BotEngine:
                 continue
 
             no_new_streak = 0
-            px, py = scanner._read_player_xy() or (tx, ty)
+            px, py = scanner.read_player_xy() or (tx, ty)
             candidates.sort(key=lambda it: (it.position[0] - px) ** 2 + (it.position[1] - py) ** 2)
             target = candidates[0]
             ix, iy, _ = target.position
@@ -2548,8 +2844,7 @@ class BotEngine:
                 continue
 
             try:
-                x = self.game_state.read_chain("player_x") or 0.0
-                y = self.game_state.read_chain("player_y") or 0.0
+                x, y = self._read_player_xy_runtime()
             except Exception:
                 time.sleep(MAP_EXPLORER_POSITION_POLL_S)
                 continue

@@ -14,6 +14,12 @@ class ConfigManager:
         "nav_collision_overlay_show_bridges": False,
         "nav_collision_overlay_inflate_debug": False,
     }
+    _DEPRECATED_KEYS = {
+        "native_runtime_enabled",
+        "native_scanner_enabled",
+        "native_overlay_worker_enabled",
+        "native_strict_mode",
+    }
 
     def __new__(cls):
         if cls._instance is None:
@@ -35,13 +41,15 @@ class ConfigManager:
                 with open(self._path, "r") as f:
                     saved = json.load(f)
                 self._config.update(saved)
-                if self._enforce_policy(log_changes=True):
+                pruned = self._prune_deprecated_keys(log_changes=True)
+                if pruned or self._enforce_policy(log_changes=True):
                     self.save()
                 log.info(f"Config loaded from {self._path}")
             except Exception as e:
                 log.error(f"Failed to load config: {e}")
         else:
             log.info("No config file found, using defaults")
+            self._prune_deprecated_keys(log_changes=False)
             self._enforce_policy(log_changes=False)
             self.save()
 
@@ -63,6 +71,7 @@ class ConfigManager:
             log.info(f"[Config] '{key}' is policy-locked → forcing {forced}")
         else:
             self._config[key] = value
+        self._prune_deprecated_keys(log_changes=False)
         self._enforce_policy(log_changes=False)
         self.save()
 
@@ -71,9 +80,20 @@ class ConfigManager:
 
     def reset(self):
         self._config = dict(DEFAULT_SETTINGS)
+        self._prune_deprecated_keys(log_changes=False)
         self._enforce_policy(log_changes=False)
         self.save()
         log.info("Config reset to defaults")
+
+    def _prune_deprecated_keys(self, log_changes: bool = False) -> bool:
+        changed = False
+        for key in self._DEPRECATED_KEYS:
+            if key in self._config:
+                del self._config[key]
+                changed = True
+                if log_changes:
+                    log.info(f"[Config] Removed deprecated key: {key}")
+        return changed
 
     def _enforce_policy(self, log_changes: bool = False) -> bool:
         changed = False
