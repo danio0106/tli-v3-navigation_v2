@@ -68,8 +68,14 @@ public:
     py::object get_carjack_truck_position() { return call_backend0("get_carjack_truck_position"); }
     py::object get_carjack_guard_positions() { return call_backend0("get_carjack_guard_positions"); }
 
-    py::object get_nearby_interactive_items(py::object x, py::object y, py::object radius) {
-        return call_backend0("get_nearby_interactive_items", std::move(x), std::move(y), std::move(radius));
+    py::object get_nearby_interactive_items(py::object x, py::object y,
+                                            py::object radius, py::object require_valid) {
+        return call_backend0("get_nearby_interactive_items",
+                             std::move(x), std::move(y), std::move(radius), std::move(require_valid));
+    }
+
+    py::object set_nav_collision_probe(py::object enabled, py::object interval_s) {
+        return call_backend0("set_nav_collision_probe", std::move(enabled), std::move(interval_s));
     }
 
     py::object scan_boss_room() { return call_backend0("scan_boss_room"); }
@@ -109,7 +115,29 @@ public:
         return call_backend0("set_fnamepool_addr", std::move(value));
     }
 
-    py::object _read_truck_guard_roster() { return call_backend0("_read_truck_guard_roster"); }
+    // Compatibility aliases for private attributes accessed by WallScanner
+    // and fallback UI paths.
+    py::int_ _fnamepool_addr_compat() const { return fnamepool_addr(); }
+    py::int_ _gobjects_addr_compat() const { return gobjects_addr(); }
+
+    py::object get_memory_compat() const {
+        if (backend_scanner_.is_none() || !py::hasattr(backend_scanner_, "_memory")) {
+            return py::none();
+        }
+        try {
+            return backend_scanner_.attr("_memory");
+        } catch (const py::error_already_set&) {
+            return py::none();
+        }
+    }
+
+    py::object get_scanner_compat() const {
+        return backend_scanner_;
+    }
+
+    py::object _read_truck_guard_roster(py::object truck_addr, py::object fnamepool) {
+        return call_backend0("_read_truck_guard_roster", std::move(truck_addr), std::move(fnamepool));
+    }
 
     void cancel() {
         cancelled_ = true;
@@ -198,10 +226,14 @@ PYBIND11_MODULE(tli_native, m) {
         .def("read_real_zone_name", &NativeScanner::read_real_zone_name)
         .def("get_typed_events", &NativeScanner::get_typed_events)
         .def("get_monster_entities", &NativeScanner::get_monster_entities)
-        .def("count_nearby_monsters", &NativeScanner::count_nearby_monsters)
+        .def("count_nearby_monsters", &NativeScanner::count_nearby_monsters,
+             py::arg("x"), py::arg("y"), py::arg("radius") = 2500.0)
         .def("get_carjack_truck_position", &NativeScanner::get_carjack_truck_position)
         .def("get_carjack_guard_positions", &NativeScanner::get_carjack_guard_positions)
-        .def("get_nearby_interactive_items", &NativeScanner::get_nearby_interactive_items)
+        .def("get_nearby_interactive_items", &NativeScanner::get_nearby_interactive_items,
+             py::arg("x"), py::arg("y"), py::arg("radius") = 3000.0, py::arg("require_valid") = true)
+        .def("set_nav_collision_probe", &NativeScanner::set_nav_collision_probe,
+             py::arg("enabled"), py::arg("interval_s") = 2.0)
         .def("scan_boss_room", &NativeScanner::scan_boss_room)
         .def("read_minimap_visited_positions", &NativeScanner::read_minimap_visited_positions)
         .def("get_nav_collision_markers", &NativeScanner::get_nav_collision_markers)
@@ -210,8 +242,13 @@ PYBIND11_MODULE(tli_native, m) {
         .def("read_player_hp", &NativeScanner::read_player_hp)
         .def_property_readonly("fnamepool_addr", &NativeScanner::fnamepool_addr)
         .def_property_readonly("gobjects_addr", &NativeScanner::gobjects_addr)
+        .def_property_readonly("_fnamepool_addr", &NativeScanner::_fnamepool_addr_compat)
+        .def_property_readonly("_gobjects_addr", &NativeScanner::_gobjects_addr_compat)
+        .def_property_readonly("_memory", &NativeScanner::get_memory_compat)
+        .def_property_readonly("_scanner", &NativeScanner::get_scanner_compat)
         .def("set_fnamepool_addr", &NativeScanner::set_fnamepool_addr)
-        .def("_read_truck_guard_roster", &NativeScanner::_read_truck_guard_roster)
+        .def("_read_truck_guard_roster", &NativeScanner::_read_truck_guard_roster,
+             py::arg("truck_addr"), py::arg("fnamepool"))
         .def("cancel", &NativeScanner::cancel);
 
     m.def("get_runtime_info", &get_runtime_info, "Return native runtime metadata");
